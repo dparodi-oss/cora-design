@@ -6,15 +6,16 @@ Continental (Perú). Fase 2.
 Son **13 pantallas en HTML plano**. Sin build, sin framework, sin backend: se
 clona, se abre y se edita.
 
-> **Tablero en vivo:** _(pendiente de publicar)_
+> ### 🔗 **[cora-design.vercel.app](https://cora-design.vercel.app)**
+> El tablero en vivo. Ábrelo para ver las 13 pantallas sin instalar nada.
 
 ---
 
 ## Empezar en 30 segundos
 
 ```bash
-git clone <URL-DEL-REPO>
-cd CoraDesign
+git clone https://github.com/brunogo25/cora-design.git
+cd cora-design
 python3 -m http.server 8000
 ```
 

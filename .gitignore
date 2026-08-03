@@ -13,3 +13,4 @@
 # Nada de esto debería aparecer aquí: el proyecto no tiene build.
 node_modules/
 dist/
+.vercel

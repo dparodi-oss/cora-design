@@ -18,8 +18,8 @@ No hay `npm install`. No hay build. No hay variables de entorno.
 ## 1. Clona y levanta el proyecto
 
 ```bash
-git clone <URL-DEL-REPO>
-cd CoraDesign
+git clone https://github.com/brunogo25/cora-design.git
+cd cora-design
 python3 -m http.server 8000
 ```
 
