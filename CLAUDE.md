@@ -45,6 +45,11 @@ python3 -m http.server 8000
 6. **Si añades o quitas una pantalla, actualiza `screens.js`** en el mismo cambio.
 7. **No conviertas esto en una app.** Nada de React, Vite, npm ni componentes.
    Si te piden una función nueva, es una maqueta de esa función.
+8. **Los colores con significado llevan leyenda.** Tipos de ruta, categorías de
+   curso de la malla y niveles de riesgo son códigos, no decoración: si cambias
+   un color, cambia también su leyenda. Están tabulados en `DESIGN.md`.
+9. **Las cifras de ejemplo salen de los datos, no del HTML.** `STUDENT`, `TAKEN`,
+   `CURRICULUM` y `ROUTES` son la fuente; no escribas números sueltos en el marcado.
 
 ## Sintaxis de la plantilla
 

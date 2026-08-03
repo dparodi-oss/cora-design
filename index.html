@@ -178,12 +178,12 @@
     Las 13 pantallas de CORA, tal cual salen del sistema de diseño. Cada tarjeta es una
     vista en vivo del diseño real — no una captura — así que lo que ves aquí es
     exactamente lo que se está construyendo. Haz clic en cualquiera para abrirla a
-    tamaño completo.
+    tamaño completo. Al final del tablero están las variantes pendientes de decisión.
   </p>
   <div class="facts">
     <div class="fact"><strong>13</strong><span>Pantallas</span></div>
     <div class="fact"><strong>3</strong><span>Módulos</span></div>
-    <div class="fact"><strong>1</strong><span>Archivo de diseño</span></div>
+    <div class="fact"><strong>3</strong><span>Variantes a comparar</span></div>
     <div class="fact"><strong>HTML</strong><span>Sin build, sin framework</span></div>
   </div>
 </div>
@@ -234,8 +234,16 @@
   var jump  = document.getElementById('jump');
   var frames = [];
 
-  CORA_GROUPS.forEach(function (g) {
-    var mine = CORA_SCREENS.filter(function (s) { return s.group === g.label; });
+  /* Las variantes se muestran como un grupo más, al final del tablero. */
+  var GROUPS = CORA_GROUPS.concat([{
+    id: 'variantes', label: '🎨 Variantes a comparar', variants: true,
+    desc: 'La misma pantalla con tres tratamientos distintos del bloque de contexto del estudiante. Elige una y la fijamos como definitiva.'
+  }]);
+
+  GROUPS.forEach(function (g) {
+    var mine = g.variants
+      ? CORA_VARIANTS
+      : CORA_SCREENS.filter(function (s) { return s.group === g.label; });
 
     var a = document.createElement('a');
     a.href = '#' + g.id;
@@ -251,7 +259,7 @@
     head.innerHTML =
       '<h3></h3><span class="count"></span><p></p>';
     head.querySelector('h3').textContent = g.label;
-    head.querySelector('.count').textContent = mine.length + ' pantallas';
+    head.querySelector('.count').textContent = mine.length + (g.variants ? ' variantes' : ' pantallas');
     head.querySelector('p').textContent = g.desc;
     sec.appendChild(head);
 
@@ -259,8 +267,10 @@
     grid.className = 'grid';
 
     mine.forEach(function (s) {
-      var n = CORA_SCREENS.indexOf(s) + 1;
-      var href = './pantalla.html?s=' + encodeURIComponent(s.id);
+      var n = g.variants ? CORA_VARIANTS.indexOf(s) + 1 : CORA_SCREENS.indexOf(s) + 1;
+      var href = g.variants
+        ? './pantalla.html?v=' + encodeURIComponent(s.id)
+        : './pantalla.html?s=' + encodeURIComponent(s.id);
 
       var card = document.createElement('article');
       card.className = 'card';
@@ -310,7 +320,11 @@
 
       card.append(link, meta);
       grid.appendChild(card);
-      frames.push({ el: frame, wrap: link, section: s.id });
+      frames.push({
+        el: frame, wrap: link,
+        section: g.variants ? s.screen : s.id,
+        props: g.variants ? s.props : null
+      });
     });
 
     sec.appendChild(grid);
@@ -334,10 +348,10 @@
     var f = frames.find(function (x) { return x.el.contentWindow === e.source; });
     if (!f) return;
     try {
-      f.el.contentWindow.__dcSetProps(e.data.rootName, {
+      f.el.contentWindow.__dcSetProps(e.data.rootName, Object.assign({
         startSection: f.section,
         unlockAll: true
-      });
+      }, f.props || {}));
     } catch (err) { /* la vista previa se queda en el estado por defecto */ }
     f.el.classList.add('ready');
     f.wrap.classList.add('ready');

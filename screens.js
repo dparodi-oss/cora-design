@@ -15,23 +15,23 @@ var CORA_GROUPS = [
 
 var CORA_SCREENS = [
   {
-    id: 'formulario', emoji: '⭕', label: 'Formulario', group: '🟣 Recomendador',
-    desc: 'Cuestionario inicial que alimenta el motor de recomendación. Ofrece una opción rápida de 4 preguntas y guarda el avance automáticamente.',
+    id: 'formulario', emoji: '⭕', label: 'Inicio y formulario', group: '🟣 Recomendador',
+    desc: 'Qué es CORA, el contexto académico del estudiante y el cuestionario que alimenta el motor de recomendación.',
     requiere: null
   },
   {
     id: 'mis-rutas', emoji: '📖', label: 'Mis Rutas', group: '🟣 Recomendador',
-    desc: 'Las 7 carreras recomendadas, ordenadas por porcentaje de compatibilidad, con sus etiquetas y descripción.',
+    desc: 'Las rutas que devuelve el algoritmo, con sus cursos consultables antes de elegir y distinguiendo malla regular de ruta compuesta.',
     requiere: 'formulario'
   },
   {
-    id: 'ecosistema', emoji: '🌍', label: 'Ecosistema UC y CIE', group: '🟣 Recomendador',
-    desc: 'Contexto institucional: 11.529 cursos, 80+ idiomas y 101 posgrados como complemento opcional a la carrera.',
+    id: 'ecosistema', emoji: '🌍', label: 'Ecosistema CIE', group: '🟣 Recomendador',
+    desc: 'CORA recomienda primero cursos de continua, posgrado, instituto e idiomas; después se explora la oferta completa del CIE.',
     requiere: 'mis-rutas'
   },
   {
     id: 'malla', emoji: '📋', label: 'Elijo mi Ruta', group: '🟣 Recomendador',
-    desc: 'Malla curricular por ciclos: créditos, tipo de curso, docente, horario y modalidad, con cursos electivos añadibles.',
+    desc: 'Los 10 ciclos con tres categorías de curso — ruta, matrícula regular y electivos — unidas por el hilo de tu ruta.',
     requiere: 'ecosistema'
   },
   {
@@ -46,7 +46,7 @@ var CORA_SCREENS = [
   },
   {
     id: 'acompanamiento', emoji: '⚠️', label: 'Acompañamiento', group: '🟣 Recomendador',
-    desc: 'Plan personalizado para estudiantes en riesgo, con los tipos de apoyo disponibles: tutor, asesor y recursos.',
+    desc: 'Predictibilidad académica: cruza tus notas con el histórico del curso, anticipa los que se te pueden complicar y propone plan y tutoría.',
     requiere: 'horizonte'
   },
 
@@ -61,8 +61,8 @@ var CORA_SCREENS = [
     requiere: 'acompanamiento'
   },
   {
-    id: 'tutor', emoji: '👨‍🏫', label: 'Tutor CORA', group: '📚 Académico',
-    desc: 'Chat de tutoría académica 24/7 que resuelve dudas y explica conceptos, diferenciado del rol de asesor.',
+    id: 'tutor', emoji: '💬', label: 'Asistente CORA', group: '📚 Académico',
+    desc: 'Chat académico 24/7. Vive también como widget flotante accesible desde cualquier pantalla de la plataforma.',
     requiere: 'acompanamiento'
   },
 
@@ -78,7 +78,31 @@ var CORA_SCREENS = [
   },
   {
     id: 'configuracion', emoji: '⚙️', label: 'Configuración', group: '⚙️ Ajustes',
-    desc: 'Accesibilidad (tamaño de texto), tema visual, notificaciones e información de ayuda.',
+    desc: 'Tema claro/oscuro, notificaciones, reporte de problemas, soporte, términos y cierre de sesión individual o en todos los dispositivos.',
     requiere: 'formulario'
+  }
+];
+
+/* Variantes visuales pendientes de decisión.
+ *
+ * Son la MISMA pantalla renderizada con una prop distinta, para poder
+ * compararlas una al lado de otra en el tablero. Cuando se elija una,
+ * se fija como valor por defecto de la prop y se borra este bloque.
+ */
+var CORA_VARIANTS = [
+  {
+    id: 'ctx-dashboard', screen: 'formulario', props: { contextVariant: 'dashboard' },
+    emoji: '📊', label: 'Contexto · Dashboard',
+    desc: 'Cuatro métricas en rejilla, barra de avance y chips con las notas de los últimos cursos. La más informativa.'
+  },
+  {
+    id: 'ctx-tarjeta', screen: 'formulario', props: { contextVariant: 'tarjeta' },
+    emoji: '🗂️', label: 'Contexto · Tarjeta',
+    desc: 'Dos tarjetas enfrentadas: el ciclo en morado sólido y el detalle de notas al lado. La más jerárquica.'
+  },
+  {
+    id: 'ctx-banner', screen: 'formulario', props: { contextVariant: 'banner' },
+    emoji: '📐', label: 'Contexto · Banner',
+    desc: 'Una sola franja horizontal con lo esencial. La más discreta: deja el foco en el formulario.'
   }
 ];

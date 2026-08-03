@@ -62,14 +62,22 @@
 (function () {
   var params  = new URLSearchParams(location.search);
   var current = params.get('s');
+
+  /* ?v=<id> muestra una variante visual: la misma pantalla con otra prop. */
+  var variant = CORA_VARIANTS.find(function (x) { return x.id === params.get('v'); });
+  var extraProps = variant ? variant.props : {};
+  if (variant) current = variant.screen;
+
   if (!CORA_SCREENS.some(function (s) { return s.id === current; })) current = CORA_SCREENS[0].id;
 
   var frame = document.getElementById('app');
   var meta  = CORA_SCREENS.find(function (s) { return s.id === current; });
 
-  document.getElementById('title').textContent = meta.emoji + '  ' + meta.label;
-  document.getElementById('group').textContent = meta.group;
-  document.title = 'CORA · ' + meta.label;
+  document.getElementById('title').textContent = variant
+    ? variant.emoji + '  ' + variant.label
+    : meta.emoji + '  ' + meta.label;
+  document.getElementById('group').textContent = variant ? 'Variante a comparar' : meta.group;
+  document.title = 'CORA · ' + (variant ? variant.label : meta.label);
 
   var picker = document.getElementById('picker');
   CORA_GROUPS.forEach(function (g) {
@@ -93,10 +101,10 @@
   window.addEventListener('message', function (e) {
     if (e.source !== frame.contentWindow) return;
     if (!e.data || e.data.type !== '__dc_booted') return;
-    frame.contentWindow.__dcSetProps(e.data.rootName, {
+    frame.contentWindow.__dcSetProps(e.data.rootName, Object.assign({
       startSection: current,
       unlockAll: true
-    });
+    }, extraProps));
   });
 })();
 </script>

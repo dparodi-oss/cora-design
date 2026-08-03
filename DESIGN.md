@@ -199,9 +199,24 @@ Tres grupos fijos, en este orden:
 
 | Grupo | Encabezado | Pantallas |
 |---|---|---|
-| Recomendador | `🟣 RECOMENDADOR` | Formulario · Mis Rutas · Ecosistema UC y CIE · Elijo mi Ruta · Mi Perfil CoRA · Veo mi Horizonte · Acompañamiento |
-| Académico | `📚 ACADÉMICO` | Práctico para examen · Mis flashcards · Tutor CORA |
+| Recomendador | `🟣 RECOMENDADOR` | Formulario · Mis Rutas · Ecosistema CIE · Elijo mi Ruta · Mi Perfil CoRA · Veo mi Horizonte · Acompañamiento |
+| Académico | `📚 ACADÉMICO` | Práctico para examen · Mis flashcards · Asistente CORA |
 | Ajustes | `⚙️ AJUSTES` | Mi progreso · Perfil · Configuración |
+
+### Elementos presentes en todas las pantallas
+
+Cuatro piezas viven fuera de `<main>` y acompañan al estudiante en todo momento.
+Si añades una pantalla, no tienes que hacer nada: aparecen solas.
+
+| Pieza | Dónde | Qué hace |
+|---|---|---|
+| **Perfil resumido** | Derecha de la barra superior | Nombre, ciclo y carrera. Lleva a *Perfil* al pulsarlo. |
+| **Ventanita stepper** | Bajo la barra, sobre `<main>` | Guía la sección actual del recorrido. Se cierra con la ✕ y no vuelve. |
+| **Asistente CORA** | Botón flotante abajo a la derecha | Chat en cualquier pantalla. Se expande a 360 px sin perder el contexto. |
+| **Guía de onboarding** | Modal a pantalla completa | Presentación de la plataforma en 4 pasos. Se abre con el botón «Guía». |
+
+El stepper se define en el mapa `STEPPER` de la lógica; la guía, en `ONBOARDING`.
+Para añadir la ventanita a una pantalla nueva, basta con darle su entrada en `STEPPER`.
 
 Estado activo: fondo `#7B68EE`, texto blanco, sombra morada.
 Estado inactivo: fondo transparente, texto `#4b5563`.
@@ -210,6 +225,51 @@ Completado: insignia circular verde con un check.
 El **recorrido está bloqueado en orden** (mapa `REQ` en la lógica): cada pantalla
 del Recomendador exige la anterior. La prop `unlockAll` salta el bloqueo para
 poder revisar el diseño.
+
+---
+
+## 4.b Códigos de color con significado
+
+Tres lugares del producto usan el color para clasificar, no para decorar. **No los
+cambies sin cambiar también su leyenda**: la leyenda es parte del patrón.
+
+### Tipos de ruta (Mis Rutas)
+
+El borde izquierdo de 5 px de cada tarjeta dice de qué tipo es la ruta:
+
+| Tipo | Acento | Cuándo |
+|---|---|---|
+| 🎓 Malla regular | `#7B68EE` | La ruta se cursa íntegra con cursos de la malla |
+| 🧩 Ruta compuesta | `#0ea5e9` | Combina malla con electivos y extracurriculares del CIE |
+
+Se define en el campo `kind` de `ROUTES` (`"regular"` \| `"mixta"`).
+
+### Categorías de curso (Malla)
+
+Borde izquierdo de 4 px, más el **hilo** para los cursos de la ruta:
+
+| Categoría | Fondo · Borde · Texto | Acento |
+|---|---|---|
+| Cursos de tu ruta | `#faf5ff` · `#e9d5ff` · `#4A3FA0` | `#7B68EE` |
+| Matrícula regular | `#f9fafb` · `#e5e7eb` · `#374151` | `#9ca3af` |
+| Electivos fuera de ruta | `#fff7ed` · `#ffedd5` · `#b45309` | `#f59e0b` |
+| Electivos que eligió el estudiante | `#f0f9ff` · `#bae6fd` · `#0369a1` | `#0ea5e9` |
+
+Se define en el campo `track` de `CURRICULUM` (`"ruta"` \| `"regular"` \| `"electivo"`).
+
+**El hilo** es una línea punteada vertical (`repeating-linear-gradient`) posicionada
+en absoluto dentro de la columna del ciclo, con un punto de 10 px junto a cada curso
+de la ruta. Solo se dibuja en los ciclos que contienen algún curso de la ruta.
+
+### Niveles de riesgo (Acompañamiento)
+
+| Nivel | Fondo · Borde · Acento |
+|---|---|
+| Alto (≥ 70 %) | `#fef2f2` · `#fee2e2` · `#dc2626` |
+| Medio (50-69 %) | `#fff7ed` · `#ffedd5` · `#b45309` |
+| Bajo (< 50 %) | `#f0fdf4` · `#bbf7d0` · `#15803d` |
+
+El umbral de «riesgo» que dispara la propuesta de plan es **50 %**.
 
 ---
 
@@ -311,6 +371,23 @@ que el runtime (`support.js`) convierte en React en el navegador. Respeta su sin
 </script>
 ```
 
+### Props del componente
+
+Se declaran en el atributo `data-props` del `<script data-dc-script>` y sirven para
+ver el diseño en distintos estados sin tocar el código:
+
+| Prop | Valores | Para qué |
+|---|---|---|
+| `startSection` | los 13 `id` de sección | Qué pantalla se muestra al abrir |
+| `unlockAll` | booleano | Salta el bloqueo del recorrido para poder revisar |
+| `studentName` | texto | Nombre del estudiante de ejemplo |
+| `contextVariant` | `dashboard` · `tarjeta` · `banner` | **Provisional.** Variante del bloque de contexto del estudiante |
+| `showOnboarding` | booleano | Abre la guía de bienvenida al cargar |
+
+> `contextVariant` existe solo para poder comparar las tres propuestas en el tablero.
+> Cuando la universidad elija una, fija ese valor como `default`, borra las dos
+> ramas `sc-if` sobrantes y elimina `CORA_VARIANTS` de `screens.js`.
+
 ### Sintaxis de plantilla
 
 | Sintaxis | Qué hace |
@@ -340,6 +417,18 @@ condiciones inversas.
    (`@layer base`) y los tokens; el diseño no usa sus clases.
 6. **Verifica siempre en el navegador.** El archivo se sirve por HTTP: abrirlo
    con doble clic no funciona.
+7. **Los datos de ejemplo tienen que cuadrar entre pantallas.** El estudiante va
+   por el ciclo 4, lleva 9 cursos y su promedio es 14,9: esas cifras salen de
+   `STUDENT`, `TAKEN` y `CURRICULUM`, no de números escritos a mano en el HTML.
+
+### Pendientes marcados en el código
+
+Búscalos con `grep -n "TODO(UC)\|TEXTO PROPUESTO" "CORA App.dc.html"`:
+
+| Marca | Qué falta |
+|---|---|
+| `TODO(UC)` en `ecoLangCount` | La cifra real de idiomas del Centro de Idiomas. Ahora muestra 6, que es lo que la propia pantalla lista. |
+| `TEXTO PROPUESTO` en la sección «Qué es CORA» | El copy original de la versión anterior. El actual es una redacción en el tono del producto, para sustituir. |
 
 ---
 

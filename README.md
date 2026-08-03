@@ -45,12 +45,16 @@ real ejecutándose. Cuando edites el diseño, el tablero se actualiza solo.
 
 **🟣 Recomendador** — el recorrido guiado, en este orden:
 
-1. Formulario · 2. Mis Rutas · 3. Ecosistema UC y CIE · 4. Elijo mi Ruta ·
+1. Inicio y formulario · 2. Mis Rutas · 3. Ecosistema CIE · 4. Elijo mi Ruta ·
 5. Mi Perfil CoRA · 6. Veo mi Horizonte · 7. Acompañamiento
 
-**📚 Académico** — 8. Práctico para examen · 9. Mis flashcards · 10. Tutor CORA
+**📚 Académico** — 8. Práctico para examen · 9. Mis flashcards · 10. Asistente CORA
 
 **⚙️ Ajustes** — 11. Mi progreso · 12. Perfil · 13. Configuración
+
+Además, el tablero termina con **3 variantes a comparar**: el mismo bloque de
+contexto del estudiante resuelto como dashboard, como tarjeta y como banner. Están
+ahí para elegir una; cuando se decida, se fija y se borran las otras dos.
 
 ---
 
