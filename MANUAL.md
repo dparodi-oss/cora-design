@@ -57,13 +57,12 @@ problema a mí a menos que necesites una contraseña o una decisión mía.
    nada: MANUAL.md, CLAUDE.md y DESIGN.md. Son las reglas del proyecto y quiero
    que trabajes según ellas siempre, sin que tenga que recordártelo.
 
-4. Levanta un servidor local para poder ver el diseño en el navegador. Prueba
-   `python3 -m http.server 8000` y, si no hay Python, `npx serve -l 8000`.
-   Déjalo corriendo en segundo plano.
+4. Comprueba que la vista previa está en marcha en http://localhost:8000. El
+   proyecto la arranca sola al abrir la sesión; si no responde, arráncala tú con
+   `python3 -m http.server 8000` en segundo plano.
 
-5. Verifica tú mismo que funciona de verdad antes de decirme que está listo:
-   comprueba que http://localhost:8000 responde y que el tablero muestra las 13
-   pantallas. Si algo no carga, arréglalo.
+5. Verifica tú mismo que funciona de verdad antes de decirme que está listo: que
+   el tablero muestre las 13 pantallas. Si algo no carga, arréglalo.
 
 6. Cuando esté todo listo, dime en un mensaje corto:
    - qué enlace tengo que abrir en el navegador,
@@ -221,21 +220,18 @@ git clone https://github.com/brunogo25/cora-design.git
 Después elige **Local** → **Select folder** y selecciona la carpeta `cora-design`
 que se acaba de crear.
 
-### 4. Levanta la vista previa
+### 4. La vista previa se abre sola
 
-En ese mismo terminal:
+No tienes que hacer nada: al empezar cada sesión, el proyecto arranca solo la
+vista previa en **http://localhost:8000**. Ábrela en el navegador y ahí tienes el
+tablero con las 13 pantallas.
 
-```bash
-python3 -m http.server 8000
-```
+Cada vez que Claude cambie algo, **recarga esa pestaña** y verás el resultado.
 
-Y abre **http://localhost:8000**. Ahí tienes el tablero con las 13 pantallas.
-
-> Esto tiene que estar arrancado mientras trabajas. Si cierras el terminal, la
-> vista previa deja de funcionar.
+> Si alguna vez no carga, pídeselo con estas palabras: *«arranca la vista previa»*.
 >
-> **Importante:** abrir los archivos con doble clic **no funciona**. El diseño
-> carga sus piezas por HTTP y el navegador lo bloquea.
+> **Nunca abras los archivos con doble clic**: el diseño carga sus piezas por HTTP
+> y así no funciona.
 
 ### 5. Pide cambios y acéptalos uno a uno
 
