@@ -58,12 +58,17 @@ ahí para elegir una; cuando se decida, se fija y se borran las otras dos.
 
 ---
 
-## Modificar el diseño con Claude Code
+## Modificar el diseño con Claude
+
+> 📘 **¿Es tu primera vez? Lee el [MANUAL](MANUAL.md).**
+> Explica paso a paso cómo conectar tu Claude al repositorio y pedir cambios,
+> con tres caminos según lo técnico que quieras ponerte — el más simple no
+> requiere instalar nada.
 
 Este repositorio está preparado para que lo edites conversando:
 
 ```bash
-cd CoraDesign
+cd cora-design
 claude
 ```
 
@@ -92,6 +97,7 @@ Cuando termines, sigue **[`CONTRIBUTING.md`](CONTRIBUTING.md)** para publicar.
 ├── support.js            Runtime de Design Component (generado, no editar)
 ├── _ds/                  Tokens y normalización de estilos (no editar)
 │
+├── MANUAL.md             ← EMPIEZA AQUÍ. Cómo conectar tu Claude y pedir cambios.
 ├── DESIGN.md             ← EL CONTRATO DE DISEÑO. Léelo antes de editar.
 ├── CLAUDE.md             Instrucciones para el agente
 └── CONTRIBUTING.md       Cómo publicar un cambio
