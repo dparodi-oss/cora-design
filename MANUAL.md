@@ -14,11 +14,72 @@ Vale **Pro**, **Max**, **Team** o **Enterprise**. El plan gratuito de Claude **n
 incluye** Claude Code y no sirve para esto.
 → [claude.com/pricing](https://claude.com/pricing)
 
-**2. Una cuenta de GitHub con acceso al repositorio.**
-El repositorio es privado. Pídele acceso a Bruno con tu usuario de GitHub; él te
-invita y te llega un correo con la invitación. Acéptala antes de seguir.
+**2. Nada más.**
+El repositorio es público: puedes descargarlo sin permisos ni contraseñas. Solo
+necesitarás una cuenta de GitHub cuando quieras **proponer** un cambio, y crearla
+es gratis y lleva un minuto.
 
-Eso es todo. No hace falta instalar nada si eliges el primer camino.
+---
+
+## Atajo · Deja que Claude lo monte todo
+
+Si no quieres leerte nada más, esto es lo mínimo:
+
+1. Instala la aplicación de Claude:
+   **[macOS](https://claude.ai/api/desktop/darwin/universal/dmg/latest/redirect)** ·
+   **[Windows](https://claude.ai/api/desktop/win32/x64/setup/latest/redirect)**
+2. Ábrela, inicia sesión y entra en la pestaña **Code**.
+3. Elige **Local** → **Select folder** y selecciona una carpeta vacía cualquiera
+   (por ejemplo, una nueva en tu Escritorio).
+4. Pega este texto y envíalo:
+
+```text
+Hola Claude. Voy a trabajar en el diseño de CORA, un proyecto de la Universidad
+Continental. No soy programadora: necesito que hagas tú todo el montaje y que me
+hables siempre en español, sin tecnicismos y explicándome qué estás haciendo.
+
+Haz esto en orden. Si algo falla, arréglalo tú antes de continuar; no me pases el
+problema a mí a menos que necesites una contraseña o una decisión mía.
+
+1. Comprueba si tengo Git instalado. Si no lo tengo, instálalo:
+   - macOS: `xcode-select --install` o, si tengo Homebrew, `brew install git`
+   - Windows: `winget install --id Git.Git -e`
+
+2. Clona este repositorio en la carpeta actual. Es público, no hace falta usuario
+   ni contraseña:
+   https://github.com/brunogo25/cora-design
+
+3. Entra en la carpeta `cora-design` y lee estos tres archivos completos antes de
+   nada: MANUAL.md, CLAUDE.md y DESIGN.md. Son las reglas del proyecto y quiero
+   que trabajes según ellas siempre, sin que tenga que recordártelo.
+
+4. Levanta un servidor local para poder ver el diseño en el navegador. Prueba
+   `python3 -m http.server 8000` y, si no hay Python, `npx serve -l 8000`.
+   Déjalo corriendo en segundo plano.
+
+5. Verifica tú mismo que funciona de verdad antes de decirme que está listo:
+   comprueba que http://localhost:8000 responde y que el tablero muestra las 13
+   pantallas. Si algo no carga, arréglalo.
+
+6. Cuando esté todo listo, dime en un mensaje corto:
+   - qué enlace tengo que abrir en el navegador,
+   - qué es este proyecto y en qué archivo vive el diseño, en 5 líneas,
+   - tres ejemplos concretos de cómo pedirte cambios de diseño.
+
+Dos cosas importantes: no instales nada que no sea necesario para lo anterior, y
+no conviertas esto en una aplicación (nada de React, Vite ni npm install). Es una
+maqueta en HTML plano y tiene que seguir siéndolo.
+```
+
+Claude instalará lo que falte, descargará el proyecto, lo pondrá en marcha y te
+dirá qué abrir. A partir de ahí, ya solo tienes que pedirle cambios.
+
+> **La primera vez tardará unos minutos** y puede pedirte permiso para ejecutar
+> algún comando: dile que sí. Si te pregunta la contraseña de tu ordenador para
+> instalar Git, es normal — la pide el sistema, no Claude.
+
+Cuando quieras entender el resto (cómo revisar, cómo publicar, cómo pedir las
+cosas para que salgan a la primera), sigue leyendo.
 
 ---
 
@@ -47,8 +108,10 @@ autorizar la **aplicación de GitHub de Claude**. Le das acceso una sola vez.
 
 En el selector de repositorio, busca **`brunogo25/cora-design`**.
 
-> Si no aparece, es que todavía no has aceptado la invitación de Bruno, o la
-> autorizaste con otra cuenta de GitHub distinta a la que él invitó.
+> Si no aparece, escribe la dirección completa
+> `https://github.com/brunogo25/cora-design`. Es público, así que se puede
+> descargar sin permisos; los permisos solo hacen falta para **proponer**
+> cambios, y de eso se encarga el Pull Request.
 
 ### 3. Pide el cambio
 
@@ -237,7 +300,14 @@ Si necesitas algo de eso, es una conversación con Bruno, no un cambio de diseñ
 ## Si algo sale mal
 
 **«No encuentro el repositorio»**
-No has aceptado la invitación, o autorizaste Claude con otra cuenta de GitHub.
+Pega la dirección completa: `https://github.com/brunogo25/cora-design`. Es
+público y no requiere permisos para descargarlo.
+
+**«No me deja subir mis cambios»**
+Normal: no tienes permiso de escritura en el repositorio, y no lo necesitas.
+Pídele a Claude que **haga un fork y abra el Pull Request desde ahí** — funciona
+igual y el equipo lo revisa exactamente igual. Si vas a colaborar a menudo,
+pídele a Bruno acceso directo y te ahorras el fork.
 
 **«Me pide mejorar de plan»**
 Tu cuenta de Claude es gratuita. Claude Code necesita Pro, Max, Team o Enterprise.
@@ -265,9 +335,11 @@ git log -1 --format=%ae     # comprueba cuál se usó
 
 ---
 
-## Para el equipo — cómo dar acceso a alguien
+## Para el equipo — dar acceso de escritura
 
-Con permiso de escritura, para que pueda abrir Pull Requests:
+El repositorio es público: cualquiera puede clonarlo y proponer cambios por fork
+sin que hagas nada. Solo hace falta darle acceso a quien colabore a menudo, para
+que trabaje con ramas directas en vez de forks:
 
 ```bash
 gh api -X PUT repos/brunogo25/cora-design/collaborators/USUARIO \
@@ -276,7 +348,9 @@ gh api -X PUT repos/brunogo25/cora-design/collaborators/USUARIO \
 
 O desde GitHub: **Settings → Collaborators → Add people**.
 
-Pásale a la persona este manual y el enlace del tablero. Con eso tiene todo.
+Al ser público, ten presente que el diseño y su historial son visibles para
+cualquiera. No metas en el repositorio datos reales de estudiantes ni credenciales:
+los datos que ves en la maqueta son inventados y tienen que seguir siéndolo.
 
 ---
 

@@ -7,7 +7,9 @@ saber usar Git y seguir el contrato de diseño.
 
 ## 0. Requisitos
 
-- **Git** y una cuenta de GitHub con acceso a este repositorio.
+- **Git** y una cuenta de GitHub. El repositorio es público: puedes clonarlo sin
+  permisos. Si no tienes acceso de escritura, haz un fork y abre el Pull Request
+  desde ahí.
 - **Python 3** (viene con macOS y Linux) o Node, para levantar un servidor local.
 - **Claude Code** con tu propia suscripción, si quieres editar conversando.
 
