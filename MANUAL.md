@@ -14,10 +14,14 @@ Vale **Pro**, **Max**, **Team** o **Enterprise**. El plan gratuito de Claude **n
 incluye** Claude Code y no sirve para esto.
 → [claude.com/pricing](https://claude.com/pricing)
 
-**2. Nada más.**
-El repositorio es público: puedes descargarlo sin permisos ni contraseñas. Solo
-necesitarás una cuenta de GitHub cuando quieras **proponer** un cambio, y crearla
-es gratis y lleva un minuto.
+**2. Una cuenta de GitHub — solo para proponer cambios.**
+El repositorio es público: para mirar y descargar no hace falta nada. Para
+proponer un cambio sí, porque un Pull Request va firmado.
+[Crearla es gratis](https://github.com/signup) y lleva un minuto; después pásale
+tu usuario a Bruno y te añade al proyecto.
+
+Tú nunca publicas directamente: propones, y Bruno fusiona. Está explicado en
+[Cómo se publica un cambio](#cómo-se-publica-un-cambio).
 
 ---
 
@@ -131,18 +135,57 @@ mismo chat y lo corrige.
 
 Cuando estés conforme, pídele que **cree un Pull Request**.
 
-### 5. Mira el resultado de verdad
+### 5. Avisa al equipo
 
-En el Pull Request de GitHub, Vercel deja automáticamente un enlace de **vista
-previa**. Ábrelo: es el diseño real con tu cambio aplicado, funcionando.
-
-Ese enlace es público, así que puedes pasárselo a quien tenga que dar el visto bueno.
-
-### 6. Avisa al equipo
-
-Deja el enlace del Pull Request en el canal que uséis. Bruno lo revisa y lo
-fusiona. Cuando se fusiona, **[cora-design.vercel.app](https://cora-design.vercel.app)**
+Deja el enlace del Pull Request en el canal que uséis. Bruno lo revisa, lo aprueba
+y lo fusiona. Al fusionarse, **[cora-design.vercel.app](https://cora-design.vercel.app)**
 se actualiza solo.
+
+---
+
+## Cómo se publica un cambio
+
+Esto es lo que conviene entender antes de proponer nada. Son dos minutos y evita
+sustos.
+
+### Sí, necesitas una cuenta de GitHub
+
+Para **ver** el diseño y **descargarlo** no hace falta nada: el repositorio es
+público. Para **proponer** un cambio sí, porque un Pull Request va firmado por
+alguien.
+
+Crearla es gratis y lleva un minuto: [github.com/signup](https://github.com/signup).
+Pásale tu nombre de usuario a Bruno y te añade al proyecto.
+
+### No puedes publicar sin querer
+
+La rama `main` está protegida. Nadie puede escribir en ella directamente: todo
+entra por Pull Request y con una aprobación. Y el sitio publicado solo se
+reconstruye desde `main`.
+
+Traducido: **tú no puedes tocar lo que ve el cliente final aunque quieras.** Como
+mucho puedes proponer. Trabaja con tranquilidad.
+
+```
+   tu cambio  →  Pull Request  →  Bruno aprueba y fusiona  →  se publica
+                                   ↑
+                         aquí es donde se decide
+```
+
+### Cómo ves tu cambio antes de proponerlo
+
+En tu propio ordenador, en `http://localhost:8000`. Esa es tu vista previa real y
+la tienes en cuanto guardas: recargas el navegador y ahí está.
+
+> **Por qué no hay vista previa automática en el Pull Request**
+>
+> Vercel, donde está publicado el sitio, solo construye lo que firma alguien de
+> su cuenta. Como tú no lo eres, tu Pull Request no genera enlace de vista previa
+> y verás su comprobación en gris o en rojo. **No es un error tuyo ni significa
+> que tu cambio esté mal.** Bruno lo ve al fusionarlo.
+>
+> Si necesitas enseñárselo a alguien antes de fusionar, haz una captura y súbela
+> al Pull Request: para eso está el hueco de «Antes y después» en la plantilla.
 
 ---
 
@@ -324,14 +367,39 @@ git restore .      # descarta lo que no has guardado
 git switch main    # vuelve a la rama principal
 ```
 
-**«Vercel no despliega mi cambio»**
-Comprueba el correo de tus commits: Vercel bloquea los despliegues cuyo autor no
-reconoce. Tiene que ser un correo verificado en tu cuenta de GitHub.
+**«La comprobación de Vercel sale en rojo o en gris en mi Pull Request»**
+Es lo esperado y no es culpa tuya: Vercel solo construye lo que firma alguien de
+su cuenta. Tu cambio se publica igual cuando Bruno lo fusiona. Tu vista previa de
+verdad es `http://localhost:8000`.
 
-```bash
-git config user.email "tu-correo-verificado-en-github.com"
-git log -1 --format=%ae     # comprueba cuál se usó
-```
+**«No me deja fusionar mi propio Pull Request»**
+Correcto, es a propósito. `main` está protegida y necesita la aprobación de otra
+persona. Avisa a Bruno.
+
+---
+
+## Para el equipo — revisar y fusionar
+
+`main` está protegida: exige Pull Request y una aprobación, y no admite
+force-push. Como administrador puedes saltártelo, pero el flujo normal es:
+
+1. Abre el Pull Request y mira el diff.
+2. Si quieres verlo funcionando, tráete la rama y levanta el servidor:
+   ```bash
+   git fetch origin && git switch LA-RAMA
+   python3 -m http.server 8000
+   ```
+3. Aprueba y fusiona con **«Create a merge commit»**.
+
+> **Solo está habilitado el merge commit, a propósito.** Con *squash* o *rebase*
+> el commit que llega a `main` queda a nombre de quien propuso el cambio, y
+> Vercel bloquea el despliegue de producción con `COMMIT_AUTHOR_REQUIRED` porque
+> esa persona no está en la cuenta de Vercel. Con merge commit, el commit lo
+> firmas tú y despliega sin problema.
+>
+> Si algún día pasas la cuenta de Vercel a un plan de pago y añades a esa persona
+> como miembro, puedes volver a habilitar los otros métodos y sus Pull Requests
+> generarán vista previa automática.
 
 ---
 
