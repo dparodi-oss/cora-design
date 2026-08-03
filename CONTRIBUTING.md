@@ -89,12 +89,11 @@ git push -u origin diseno/mis-rutas-compatibilidad
 Luego abre un **Pull Request** en GitHub.
 
 Vercel publica una **vista previa** de cada PR y deja el enlace en el propio PR.
-Hoy esas vistas previas están protegidas: solo las abre quien tenga acceso al
-proyecto en Vercel. Si tú no lo tienes, adjunta una captura en el PR y el equipo
-revisa la vista previa por ti.
+El enlace es público: se abre sin cuenta ni login, así que puedes compartirlo con
+quien tenga que dar el visto bueno.
 
 Cuando el PR se fusiona en `main`, **[cora-design.vercel.app](https://cora-design.vercel.app)**
-se actualiza solo. Esa URL sí es pública.
+se actualiza solo.
 
 > **Importante — el correo de tus commits.** Vercel bloquea los despliegues cuyo
 > autor no reconoce. Usa el mismo correo que tienes verificado en GitHub:
