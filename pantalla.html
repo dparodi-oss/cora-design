@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CORA · Pantalla</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap">
+<style>
+  *, *::before, *::after { box-sizing: border-box }
+  html, body { height: 100%; margin: 0 }
+  body {
+    font-family: Inter, system-ui, sans-serif; color: #1A1040; background: #F8F7FF;
+    display: flex; flex-direction: column;
+  }
+  .bar {
+    flex: 0 0 auto; display: flex; align-items: center; gap: 14px;
+    padding: 10px 18px; background: #fff; border-bottom: 1px solid rgba(243,232,255,.9);
+    box-shadow: 0 1px 3px rgba(26,16,64,.06);
+  }
+  .back {
+    display: inline-flex; align-items: center; gap: 7px; text-decoration: none;
+    font-size: 13px; font-weight: 600; color: #6A58DC;
+    padding: 7px 12px; border-radius: 10px; background: #F3F0FF; transition: background .15s;
+  }
+  .back:hover { background: #E9E4FF }
+  .title { font-family: Poppins, sans-serif; font-weight: 700; font-size: 15px; margin: 0 }
+  .group { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #9CA3AF; margin: 0 }
+  .spacer { flex: 1 }
+  select {
+    font: inherit; font-size: 13px; color: #1A1040; background: #F3F0FF;
+    border: 1px solid transparent; border-radius: 10px; padding: 7px 11px; cursor: pointer;
+  }
+  select:focus-visible { outline: 2px solid #7B68EE; outline-offset: 1px }
+  .raw {
+    font-size: 12px; font-weight: 600; color: #6B7280; text-decoration: none;
+    padding: 7px 11px; border-radius: 10px; border: 1px solid #EDE9FE;
+  }
+  .raw:hover { color: #6A58DC; border-color: #C9BFFA }
+  iframe { flex: 1 1 auto; width: 100%; border: 0; display: block }
+  @media (max-width: 640px) { .group, .raw { display: none } }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <a class="back" href="./index.html">&larr; Tablero</a>
+  <div>
+    <p class="group" id="group">&nbsp;</p>
+    <h1 class="title" id="title">Cargando…</h1>
+  </div>
+  <div class="spacer"></div>
+  <select id="picker" aria-label="Cambiar de pantalla"></select>
+  <a class="raw" href="./CORA%20App.dc.html">Archivo de diseño</a>
+</div>
+
+<iframe id="app" src="./CORA%20App.dc.html" title="CORA — pantalla"></iframe>
+
+<script src="./screens.js"></script>
+<script>
+(function () {
+  var params  = new URLSearchParams(location.search);
+  var current = params.get('s');
+  if (!CORA_SCREENS.some(function (s) { return s.id === current; })) current = CORA_SCREENS[0].id;
+
+  var frame = document.getElementById('app');
+  var meta  = CORA_SCREENS.find(function (s) { return s.id === current; });
+
+  document.getElementById('title').textContent = meta.emoji + '  ' + meta.label;
+  document.getElementById('group').textContent = meta.group;
+  document.title = 'CORA · ' + meta.label;
+
+  var picker = document.getElementById('picker');
+  CORA_GROUPS.forEach(function (g) {
+    var og = document.createElement('optgroup');
+    og.label = g.label;
+    CORA_SCREENS.filter(function (s) { return s.group === g.label; }).forEach(function (s) {
+      var o = document.createElement('option');
+      o.value = s.id;
+      o.textContent = s.emoji + '  ' + s.label;
+      o.selected = s.id === current;
+      og.appendChild(o);
+    });
+    picker.appendChild(og);
+  });
+  picker.addEventListener('change', function () {
+    location.search = '?s=' + encodeURIComponent(picker.value);
+  });
+
+  // The design file exposes its props through the dc-runtime. It announces itself
+  // with a `__dc_booted` message; we answer by pinning the screen we want to show.
+  window.addEventListener('message', function (e) {
+    if (e.source !== frame.contentWindow) return;
+    if (!e.data || e.data.type !== '__dc_booted') return;
+    frame.contentWindow.__dcSetProps(e.data.rootName, {
+      startSection: current,
+      unlockAll: true
+    });
+  });
+})();
+</script>
+</body>
+</html>

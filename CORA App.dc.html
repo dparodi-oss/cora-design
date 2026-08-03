@@ -1,0 +1,1922 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="_ds/corav2-9d4988f6-df57-40ac-b271-8f4451a55acf/styles.css">
+  <style>
+    body { margin: 0; background: #F8F7FF; }
+    a { color: #7B68EE; text-decoration: none; }
+    a:hover { color: #6A58DC; text-decoration: underline; }
+    @keyframes coraPulse { 0%,100% { opacity: 1 } 50% { opacity: .5 } }
+  </style>
+</helmet>
+<div style="min-height:100vh;background:#F8F7FF;display:flex;font-family:Inter,sans-serif;color:#1A1040">
+
+  <aside style="display:flex;flex-direction:column;width:240px;background:#fff;border-right:1px solid rgba(243,232,255,.6);height:100vh;position:fixed;left:0;top:0;z-index:30;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+    <div style="padding:20px;border-bottom:1px solid rgba(243,232,255,.6)">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="width:36px;height:36px;background:#7B68EE;border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 6px -1px #e9d5ff,0 2px 4px -2px #e9d5ff">
+          <dc-import name="Icon" i="compass" s="18" c="#ffffff" hint-size="18px,18px"></dc-import>
+        </div>
+        <div>
+          <h1 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:18px;line-height:1;margin:0">CORA</h1>
+          <p style="font-size:10px;color:#7B68EE;font-weight:500;letter-spacing:.025em;margin:3px 0 0">Orientación Académica 2.0</p>
+        </div>
+      </div>
+    </div>
+    <nav style="flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:20px">
+      <div>
+        <p style="font-size:9px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.1em;padding:0 8px;margin:0 0 6px">🟣 RECOMENDADOR</p>
+        <sc-for list="{{ navRec }}" as="item" hint-placeholder-count="7">
+          <button onClick="{{ item.go }}" style="{{ item.style }}">
+            <span style="font-size:16px;line-height:1;width:20px">{{ item.em }}</span>
+            <span style="flex:1;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ item.label }}</span>
+            <sc-if value="{{ item.done }}" hint-placeholder-val="{{ false }}">
+              <span style="{{ item.badgeStyle }}"><dc-import name="Icon" i="check" s="9" c="{{ item.checkColor }}" hint-size="9px,9px"></dc-import></span>
+            </sc-if>
+          </button>
+        </sc-for>
+      </div>
+      <div>
+        <p style="font-size:9px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.1em;padding:0 8px;margin:0 0 6px">📚 ACADÉMICO</p>
+        <sc-for list="{{ navAca }}" as="item" hint-placeholder-count="3">
+          <button onClick="{{ item.go }}" style="{{ item.style }}">
+            <span style="font-size:16px;line-height:1;width:20px">{{ item.em }}</span>
+            <span style="flex:1;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ item.label }}</span>
+            <sc-if value="{{ item.done }}" hint-placeholder-val="{{ false }}">
+              <span style="{{ item.badgeStyle }}"><dc-import name="Icon" i="check" s="9" c="{{ item.checkColor }}" hint-size="9px,9px"></dc-import></span>
+            </sc-if>
+          </button>
+        </sc-for>
+      </div>
+      <div>
+        <p style="font-size:9px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.1em;padding:0 8px;margin:0 0 6px">⚙️ AJUSTES</p>
+        <sc-for list="{{ navSet }}" as="item" hint-placeholder-count="3">
+          <button onClick="{{ item.go }}" style="{{ item.style }}">
+            <span style="font-size:16px;line-height:1;width:20px">{{ item.em }}</span>
+            <span style="flex:1;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ item.label }}</span>
+            <sc-if value="{{ item.done }}" hint-placeholder-val="{{ false }}">
+              <span style="{{ item.badgeStyle }}"><dc-import name="Icon" i="check" s="9" c="{{ item.checkColor }}" hint-size="9px,9px"></dc-import></span>
+            </sc-if>
+          </button>
+        </sc-for>
+      </div>
+    </nav>
+    <div style="padding:16px;border-top:1px solid #faf5ff">
+      <p style="font-size:10px;color:#9ca3af;text-align:center;margin:0">CORA 2.0 © 2026 UC Continental</p>
+    </div>
+  </aside>
+
+  <div style="flex:1;margin-left:240px;display:flex;flex-direction:column;min-height:100vh">
+    <header style="position:sticky;top:0;z-index:20;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);border-bottom:1px solid rgba(243,232,255,.6);padding:12px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+      <div style="flex:1"></div>
+      <div style="display:flex;align-items:center;gap:6px;background:#fff7ed;border:1px solid #ffedd5;border-radius:9999px;padding:6px 12px">
+        <dc-import name="Icon" i="flame" s="13" c="#f97316" hint-size="13px,13px"></dc-import>
+        <span style="font-size:12px;font-weight:600;color:#c2410c;white-space:nowrap">{{ streak }} días</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;background:#faf5ff;border:1px solid #f3e8ff;border-radius:9999px;padding:6px 12px">
+        <dc-import name="Icon" i="star" s="13" c="#7B68EE" hint-size="13px,13px"></dc-import>
+        <span style="font-size:12px;font-weight:600;color:#7B68EE;white-space:nowrap">{{ xpLabel }} XP</span>
+      </div>
+      <button style="padding:8px;border-radius:12px;background:none;border:0;cursor:pointer;color:#9ca3af;display:flex" style-hover="background:#faf5ff;color:#7B68EE">
+        <dc-import name="Icon" i="bell" s="18" hint-size="18px,18px"></dc-import>
+      </button>
+      <div style="width:32px;height:32px;border-radius:9999px;background:linear-gradient(to bottom right,#c084fc,#4f46e5);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:700;user-select:none">A</div>
+    </header>
+
+    <main style="flex:1;padding:24px;max-width:1024px;width:100%;box-sizing:border-box">
+
+      <sc-if value="{{ isAnalyzing }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;justify-content:center;min-height:60vh">
+          <div style="text-align:center;max-width:384px;width:100%">
+            <div style="width:80px;height:80px;border-radius:9999px;background:#f3e8ff;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;animation:coraPulse 2s infinite">
+              <dc-import name="Icon" i="compass" s="36" c="#7B68EE" hint-size="36px,36px"></dc-import>
+            </div>
+            <h2 style="font-family:Poppins,sans-serif;font-size:20px;line-height:28px;font-weight:700;color:#1A1040;margin:0 0 4px">Analizando tu perfil...</h2>
+            <p style="color:#9ca3af;font-size:14px;margin:0 0 24px">Esto puede tomar 10-30 segundos</p>
+            <div style="margin-bottom:24px">
+              <div style="height:8px;background:#f3f4f6;border-radius:9999px;overflow:hidden">
+                <div style="height:100%;background:#7B68EE;border-radius:9999px;transition:all .7s;width:{{ analysisPct }}"></div>
+              </div>
+              <p style="font-size:12px;color:#9ca3af;margin:6px 0 0">{{ analysisLabel }} completado</p>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px;text-align:left;margin-bottom:32px">
+              <sc-for list="{{ analysisTasks }}" as="t" hint-placeholder-count="5">
+                <div style="{{ t.style }}">
+                  <sc-if value="{{ t.done }}" hint-placeholder-val="{{ false }}">
+                    <dc-import name="Icon" i="check-circle" s="15" c="#22c55e" hint-size="15px,15px"></dc-import>
+                  </sc-if>
+                  <sc-if value="{{ t.pending }}" hint-placeholder-val="{{ true }}">
+                    <div style="width:16px;height:16px;border-radius:9999px;border:2px solid #e5e7eb;flex-shrink:0"></div>
+                  </sc-if>
+                  {{ t.label }}
+                </div>
+              </sc-for>
+            </div>
+            <div style="background:#faf5ff;border:1px solid #f3e8ff;border-radius:16px;padding:16px;text-align:left">
+              <p style="font-size:12px;font-weight:600;color:#7B68EE;margin:0 0 4px">💡 ¿Sabías que?</p>
+              <p style="font-size:12px;color:#4b5563;margin:0">El 87% de estudiantes que usan CORA completo logran mejores decisiones académicas.</p>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showFormIntro }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
+            <span style="white-space:nowrap">⭕ Recomendador</span>
+            <span style="display:flex;align-items:center;gap:6px"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Formulario</span></span>
+          </nav>
+          <div style="max-width:672px">
+            <div style="display:flex;align-items:flex-start;gap:16px;margin-bottom:24px">
+              <div style="width:48px;height:48px;background:#7B68EE;border-radius:16px;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff;flex-shrink:0">
+                <dc-import name="Icon" i="compass" s="22" c="#ffffff" hint-size="22px,22px"></dc-import>
+              </div>
+              <div>
+                <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:1.25;font-weight:700;color:#1A1040;margin:0">CORA va a encontrar tu ruta ideal</h1>
+                <p style="color:#6b7280;font-size:14px;margin:4px 0 0">Cuéntanos sobre ti para personalizar tu experiencia académica completa.</p>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#9ca3af;margin-bottom:32px">
+              <dc-import name="Icon" i="clock" s="12" hint-size="12px,12px"></dc-import>
+              <span>Se guarda automáticamente · Puedes pausar y continuar en cualquier momento</span>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px">
+              <div style="position:relative" onMouseEnter="{{ hoverQuick }}" onMouseLeave="{{ hoverNone }}">
+                <button onClick="{{ pickQuick }}" style="width:100%;text-align:left;border:2px solid #e5e7eb;border-radius:16px;padding:20px;background:#fff;cursor:pointer;font-family:inherit;transition:all .15s" style-hover="border-color:#7B68EE;box-shadow:0 10px 15px -3px #f3e8ff,0 4px 6px -4px #f3e8ff">
+                  <div style="font-size:30px;line-height:36px;margin-bottom:12px">⚡</div>
+                  <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:16px;margin:0 0 4px">Opción Rápida</h3>
+                  <p style="font-size:12px;color:#9ca3af;margin:0 0 12px">4 preguntas concisas</p>
+                  <ul style="list-style:none;padding:0;margin:0 0 16px;display:flex;flex-direction:column;gap:6px">
+                    <li style="display:flex;align-items:center;gap:8px;font-size:12px;color:#4b5563"><dc-import name="Icon" i="check" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Análisis rápido de tu perfil</li>
+                    <li style="display:flex;align-items:center;gap:8px;font-size:12px;color:#4b5563"><dc-import name="Icon" i="check" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Recomendaciones básicas</li>
+                    <li style="display:flex;align-items:center;gap:8px;font-size:12px;color:#4b5563"><dc-import name="Icon" i="check" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Acceso a malla y Horizonte</li>
+                  </ul>
+                  <span style="font-size:12px;background:#f3f4f6;color:#6b7280;padding:4px 10px;border-radius:9999px">⏱️ ~2 minutos</span>
+                  <div style="margin-top:16px;width:100%;background:#f3f4f6;color:#4b5563;border-radius:12px;padding:10px 0;font-size:14px;font-weight:600;text-align:center;transition:all .15s">Empezar formulario rápido</div>
+                </button>
+                <sc-if value="{{ isQuickHover }}" hint-placeholder-val="{{ false }}">
+                  <div style="position:absolute;top:0;left:100%;margin-left:12px;z-index:20;width:224px;background:#7B68EE;color:#fff;font-size:12px;border-radius:12px;padding:14px;box-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1)">
+                    <p style="font-weight:700;margin:0 0 6px">💡 Opción Rápida</p>
+                    <p style="color:rgba(255,255,255,.8);margin:0 0 8px;line-height:1.625">Ideal si tienes poco tiempo o ya tienes una idea clara de tu carrera.</p>
+                    <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:2px;color:rgba(255,255,255,.8)"><li>✓ Completa en ~2 minutos</li><li>✓ Recomendaciones generales</li><li>✓ Perfecto para empezar</li></ul>
+                  </div>
+                </sc-if>
+              </div>
+
+              <div style="position:relative" onMouseEnter="{{ hoverDetailed }}" onMouseLeave="{{ hoverNone }}">
+                <button onClick="{{ pickDetailed }}" style="position:relative;width:100%;text-align:left;border:2px solid #7B68EE;border-radius:16px;padding:20px;background:rgba(250,245,255,.5);cursor:pointer;font-family:inherit;transition:all .15s" style-hover="background:#faf5ff;box-shadow:0 20px 25px -5px #e9d5ff,0 8px 10px -6px #e9d5ff">
+                  <div style="position:absolute;top:12px;right:12px;background:#7B68EE;color:#fff;font-size:10px;font-weight:700;padding:4px 8px;border-radius:9999px">⭐ RECOMENDADO</div>
+                  <div style="font-size:30px;line-height:36px;margin-bottom:12px">🔥</div>
+                  <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:16px;margin:0 0 4px">Opción Detallada</h3>
+                  <p style="font-size:12px;color:#9ca3af;margin:0 0 12px">16 preguntas, más detalle</p>
+                  <ul style="list-style:none;padding:0;margin:0 0 16px;display:flex;flex-direction:column;gap:6px">
+                    <li style="display:flex;align-items:center;gap:8px;font-size:12px;color:#4b5563"><dc-import name="Icon" i="check" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Análisis profundo y personalizado</li>
+                    <li style="display:flex;align-items:center;gap:8px;font-size:12px;color:#4b5563"><dc-import name="Icon" i="check" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Recomendaciones precisas</li>
+                    <li style="display:flex;align-items:center;gap:8px;font-size:12px;color:#4b5563"><dc-import name="Icon" i="check" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Acceso COMPLETO al ecosistema</li>
+                    <li style="display:flex;align-items:center;gap:8px;font-size:12px;color:#4b5563"><dc-import name="Icon" i="check" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Plan de acompañamiento activo</li>
+                  </ul>
+                  <span style="font-size:12px;background:#f3e8ff;color:#7B68EE;padding:4px 10px;border-radius:9999px">⏱️ ~5 minutos</span>
+                  <div style="margin-top:16px;width:100%;background:#7B68EE;color:#fff;border-radius:12px;padding:10px 0;font-size:14px;font-weight:600;text-align:center;transition:all .15s">Empezar formulario detallado</div>
+                </button>
+                <sc-if value="{{ isDetailedHover }}" hint-placeholder-val="{{ false }}">
+                  <div style="position:absolute;top:0;right:100%;margin-right:12px;z-index:20;width:224px;background:#7B68EE;color:#fff;font-size:12px;border-radius:12px;padding:14px;box-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1)">
+                    <p style="font-weight:700;margin:0 0 6px">💡 Opción Detallada ⭐</p>
+                    <p style="color:rgba(255,255,255,.8);margin:0 0 8px;line-height:1.625">La mejor opción para decisiones académicas importantes.</p>
+                    <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:2px;color:rgba(255,255,255,.8)"><li>✓ Análisis profundo (+200 combos)</li><li>✓ Recomendaciones precisas</li><li>✓ Acceso a TODO el ecosistema</li><li>✓ Plan personalizado de apoyo</li></ul>
+                  </div>
+                </sc-if>
+              </div>
+            </div>
+
+            <div style="background:#eff6ff;border:1px solid #dbeafe;border-radius:16px;padding:16px;display:flex;align-items:flex-start;gap:12px">
+              <div style="margin-top:2px;color:#3b82f6;display:flex"><dc-import name="Icon" i="info" s="16" c="#3b82f6" hint-size="16px,16px"></dc-import></div>
+              <div>
+                <p style="font-weight:600;color:#1e3a8a;font-size:14px;margin:0 0 4px">🔍 ¿Qué significa "Análisis"?</p>
+                <p style="color:#1d4ed8;font-size:12px;line-height:1.625;margin:0">El formulario detallado analiza 200+ combinaciones de carreras disponibles para encontrar las más compatibles contigo. Revisamos todas las opciones, cruzamos con tu perfil, y mostramos el top 5-7 con % de compatibilidad.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showFormQuestions }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
+            <span style="white-space:nowrap">⭕ Recomendador</span>
+            <span style="display:flex;align-items:center;gap:6px"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import>Formulario</span>
+            <span style="display:flex;align-items:center;gap:6px"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">{{ qStepLabel }}</span></span>
+          </nav>
+          <div style="max-width:576px">
+            <div style="margin-bottom:24px">
+              <div style="display:flex;justify-content:space-between;font-size:12px;color:#9ca3af;margin-bottom:6px"><span>Progreso</span><span>{{ qPctLabel }}</span></div>
+              <div style="height:8px;background:#f3f4f6;border-radius:9999px;overflow:hidden"><div style="height:100%;background:#7B68EE;border-radius:9999px;transition:all .7s;width:{{ qPct }}"></div></div>
+            </div>
+            <div style="background:#fff;border:1px solid rgba(243,232,255,.6);border-radius:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1);padding:24px;margin-bottom:16px">
+              <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:20px">
+                <h2 style="font-family:Poppins,sans-serif;font-size:18px;line-height:28px;font-weight:700;color:#1A1040;flex:1;margin:0">{{ qText }}</h2>
+                <dc-import name="Tip" text="{{ qHint }}" hint-size="14px,14px"></dc-import>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <sc-for list="{{ qOptions }}" as="opt" hint-placeholder-count="5">
+                  <button onClick="{{ opt.onClick }}" style="{{ opt.style }}">
+                    <span style="{{ opt.boxStyle }}">
+                      <sc-if value="{{ opt.sel }}" hint-placeholder-val="{{ false }}">
+                        <dc-import name="Icon" i="check" s="11" c="#ffffff" hint-size="11px,11px"></dc-import>
+                      </sc-if>
+                    </span>
+                    {{ opt.label }}
+                  </button>
+                </sc-for>
+              </div>
+              <sc-if value="{{ qIsCheckbox }}" hint-placeholder-val="{{ false }}">
+                <p style="font-size:12px;color:#9ca3af;margin:12px 0 0">Selecciona 2-3 opciones</p>
+              </sc-if>
+            </div>
+            <div style="display:flex;gap:12px">
+              <button onClick="{{ qPrev }}" style="{{ qPrevStyle }}"><dc-import name="Icon" i="chevron-left" s="15" hint-size="15px,15px"></dc-import> Anterior</button>
+              <button onClick="{{ qNext }}" style="{{ qNextStyle }}">{{ qNextLabel }}<sc-if value="{{ qShowNextIcon }}" hint-placeholder-val="{{ true }}"><dc-import name="Icon" i="chevron-right" s="15" hint-size="15px,15px"></dc-import></sc-if></button>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isRutas }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
+            <span style="white-space:nowrap">⭕ Recomendador</span>
+            <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Mis Rutas</span></span>
+          </nav>
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:20px">
+            <div>
+              <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:32px;font-weight:700;color:#1A1040;margin:0 0 4px">📚 Tus Rutas Recomendadas</h1>
+              <p style="color:#6b7280;font-size:14px;margin:0">Basadas en tu análisis, CORA encontró estas 7 opciones ordenadas por compatibilidad.</p>
+            </div>
+            <dc-import name="Tip" text="Estas son las mejores opciones de carrera para ti. Selecciona una para continuar." hint-size="14px,14px"></dc-import>
+          </div>
+          <sc-if value="{{ hasSelected }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-bottom:16px;display:flex;align-items:center;gap:8px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:12px 16px">
+              <dc-import name="Icon" i="check-circle" s="15" c="#22c55e" hint-size="15px,15px"></dc-import>
+              <span style="font-size:14px;color:#15803d">Ruta seleccionada: <strong>{{ selectedRouteName }}</strong></span>
+            </div>
+          </sc-if>
+          <div style="display:flex;align-items:center;gap:8px;font-size:14px;color:#9ca3af;margin-bottom:20px">
+            <span>¿No te convence?</span>
+            <button onClick="{{ onGoBackForm }}" style="color:#7B68EE;background:none;border:0;padding:0;cursor:pointer;display:flex;align-items:center;gap:4px;font-size:12px;font-family:inherit" style-hover="text-decoration:underline"><dc-import name="Icon" i="chevron-left" s="13" hint-size="13px,13px"></dc-import> Volver a formulario</button>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:24px">
+            <sc-for list="{{ routes }}" as="r" hint-placeholder-count="7">
+              <div style="{{ r.cardStyle }}">
+                <sc-if value="{{ r.top }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:inline-block;background:#7B68EE;color:#fff;font-size:10px;font-weight:700;padding:4px 10px;border-radius:9999px;margin-bottom:12px">🏆 Más recomendada</div>
+                </sc-if>
+                <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:14px;margin:0 0 8px">{{ r.title }}</h3>
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+                  <div style="flex:1;height:6px;background:#f3f4f6;border-radius:9999px;overflow:hidden"><div style="{{ r.barStyle }}"></div></div>
+                  <div style="display:flex;align-items:center;gap:4px">
+                    <span style="font-size:14px;font-weight:700;color:#7B68EE">{{ r.matchLabel }}</span>
+                    <dc-import name="Tip" text="{{ r.tipText }}" hint-size="14px,14px"></dc-import>
+                  </div>
+                </div>
+                <p style="font-size:12px;color:#6b7280;margin:0 0 12px;line-height:1.625">{{ r.desc }}</p>
+                <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:16px">
+                  <sc-for list="{{ r.tagList }}" as="t" hint-placeholder-count="3">
+                    <span style="font-size:10px;background:#faf5ff;color:#7B68EE;padding:2px 8px;border-radius:9999px">{{ t.label }}</span>
+                  </sc-for>
+                </div>
+                <div style="display:flex;gap:8px">
+                  <button style="flex:1;border:1px solid #e5e7eb;background:#fff;border-radius:12px;padding:8px 0;font-size:12px;font-weight:500;color:#4b5563;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;font-family:inherit" style-hover="background:#f9fafb"><dc-import name="Icon" i="eye" s="11" hint-size="11px,11px"></dc-import> Ver detalle</button>
+                  <button onClick="{{ r.onAccept }}" style="{{ r.btnStyle }}">{{ r.btnLabel }}</button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ confirmShow }}" hint-placeholder-val="{{ false }}">
+            <div style="position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.5);padding:16px">
+              <div style="background:#fff;border-radius:16px;box-shadow:0 25px 50px -12px rgba(0,0,0,.25);padding:28px;max-width:384px;width:100%;text-align:center">
+                <div style="width:56px;height:56px;background:#7B68EE;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+                  <dc-import name="Icon" i="check-circle" s="26" c="#ffffff" hint-size="26px,26px"></dc-import>
+                </div>
+                <h2 style="font-family:Poppins,sans-serif;font-size:18px;line-height:28px;font-weight:700;color:#1A1040;margin:0 0 4px">¿Confirmar selección?</h2>
+                <p style="color:#6b7280;font-size:14px;margin:0 0 4px">Has elegido:</p>
+                <p style="font-weight:700;color:#7B68EE;margin:0 0 16px">{{ confirmName }}</p>
+                <p style="font-size:12px;color:#9ca3af;margin:0 0 24px">Próximo paso: Explorar opciones del Ecosistema UC y CIE</p>
+                <div style="display:flex;gap:12px">
+                  <button onClick="{{ cancelConfirm }}" style="flex:1;border:1px solid #e5e7eb;background:#fff;border-radius:12px;padding:10px 0;font-size:14px;font-weight:500;color:#4b5563;cursor:pointer;font-family:inherit" style-hover="background:#f9fafb">Cancelar</button>
+                  <button onClick="{{ doConfirm }}" style="flex:1;background:#7B68EE;color:#fff;border:0;border-radius:12px;padding:10px 0;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit" style-hover="background:#6A58DC">Confirmar →</button>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isEco }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
+            <span style="white-space:nowrap">⭕ Recomendador</span>
+            <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import>Ecosistema UC y CIE</span>
+            <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Paso 3 de 4</span></span>
+          </nav>
+          <div style="background:linear-gradient(to right,#7B68EE,#5346C8);border-radius:16px;padding:24px;color:#fff;margin-bottom:24px;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff">
+            <h1 style="font-family:Poppins,sans-serif;font-size:20px;line-height:28px;font-weight:700;margin:0 0 4px">🌍 Ecosistema UC y CIE</h1>
+            <p style="color:#e9d5ff;font-size:12px;margin:0 0 16px">Universidad Continental · Continental International Education · Oportunidades opcionales que complementan tu carrera.</p>
+            <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;text-align:center">
+              <div><p style="font-size:24px;line-height:32px;font-weight:900;margin:0">11,529</p><p style="font-size:12px;color:#d8b4fe;margin:0">Cursos</p></div>
+              <div><p style="font-size:24px;line-height:32px;font-weight:900;margin:0">80+</p><p style="font-size:12px;color:#d8b4fe;margin:0">Idiomas</p></div>
+              <div><p style="font-size:24px;line-height:32px;font-weight:900;margin:0">101</p><p style="font-size:12px;color:#d8b4fe;margin:0">Posgrados</p></div>
+            </div>
+          </div>
+          <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:16px;padding:16px;margin-bottom:20px">
+            <div style="display:flex;align-items:flex-start;gap:12px">
+              <div style="margin-top:2px"><dc-import name="Icon" i="alert-triangle" s="16" c="#f59e0b" hint-size="16px,16px"></dc-import></div>
+              <div style="font-size:12px">
+                <p style="font-weight:700;color:#78350f;margin:0 0 4px">⚠️ IMPORTANTE — LEE ESTO PRIMERO</p>
+                <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:2px;color:#b45309">
+                  <li>✓ EXPLORAR es <strong>OBLIGATORIO</strong> antes de aceptar tu ruta final</li>
+                  <li>✓ PERO es <strong>FLEXIBLE</strong>: puedes cambiar tu selección en cualquier momento</li>
+                  <li>✓ El botón ACEPTAR RUTA se activa después de explorar las secciones</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div style="margin-bottom:20px">
+            <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;color:#6b7280;margin-bottom:8px">
+              <span>Has expandido: {{ ecoCountLabel }} secciones</span>
+            </div>
+            <div style="height:8px;background:#f3f4f6;border-radius:9999px;overflow:hidden"><div style="height:100%;background:#7B68EE;border-radius:9999px;transition:all .7s;width:{{ ecoPct }}"></div></div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px">
+            <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;overflow:hidden;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+              <button onClick="{{ ecoToggleExtra }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:16px;background:#fff;border:0;cursor:pointer;font-family:inherit" style-hover="background:rgba(250,245,255,.5)">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span>📚</span>
+                  <span style="font-weight:600;color:#1A1040;font-size:14px">Extracurriculares Recomendados</span>
+                  <dc-import name="Tip" text="Cursos complementarios que fortalecen tu perfil académico" hint-size="14px,14px"></dc-import>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <sc-if value="{{ ecoExtraClosed }}" hint-placeholder-val="{{ true }}"><span style="font-size:12px;color:#9ca3af">Expandir</span></sc-if>
+                  <dc-import name="Icon" i="{{ ecoExtraChevron }}" s="15" c="#9ca3af" hint-size="15px,15px"></dc-import>
+                </div>
+              </button>
+              <sc-if value="{{ ecoExtraOpen }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:0 16px 16px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
+                  <sc-for list="{{ ecoExtra }}" as="it" hint-placeholder-count="3">
+                    <div style="border:1px solid #f3f4f6;border-radius:12px;padding:12px">
+                      <p style="font-weight:600;color:#1A1040;font-size:12px;margin:0 0 2px">{{ it.name }}</p>
+                      <p style="font-size:12px;color:#9ca3af;margin:0 0 8px">{{ it.meta }}</p>
+                      <div style="display:flex;align-items:center;justify-content:space-between">
+                        <span style="{{ it.costStyle }}">{{ it.cost }}</span>
+                        <button onClick="{{ it.onAdd }}" style="{{ it.btnStyle }}">{{ it.btnLabel }}</button>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+
+            <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;overflow:hidden;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+              <button onClick="{{ ecoToggleInter }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:16px;background:#fff;border:0;cursor:pointer;font-family:inherit" style-hover="background:rgba(250,245,255,.5)">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span>🌍</span>
+                  <span style="font-weight:600;color:#1A1040;font-size:14px">Experiencias Internacionales</span>
+                  <dc-import name="Tip" text="Estudia en universidades aliadas en el extranjero" hint-size="14px,14px"></dc-import>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <sc-if value="{{ ecoInterClosed }}" hint-placeholder-val="{{ true }}"><span style="font-size:12px;color:#9ca3af">Expandir</span></sc-if>
+                  <dc-import name="Icon" i="{{ ecoInterChevron }}" s="15" c="#9ca3af" hint-size="15px,15px"></dc-import>
+                </div>
+              </button>
+              <sc-if value="{{ ecoInterOpen }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:0 16px 16px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
+                  <sc-for list="{{ ecoInter }}" as="it" hint-placeholder-count="3">
+                    <div style="border:1px solid #f3f4f6;border-radius:12px;padding:12px">
+                      <p style="font-weight:600;color:#1A1040;font-size:12px;margin:0 0 2px">{{ it.name }}</p>
+                      <p style="font-size:12px;color:#9ca3af;margin:0 0 8px">{{ it.meta }}</p>
+                      <div style="display:flex;align-items:center;justify-content:space-between">
+                        <span style="{{ it.costStyle }}">{{ it.cost }}</span>
+                        <button onClick="{{ it.onAdd }}" style="{{ it.btnStyle }}">{{ it.btnLabel }}</button>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+
+            <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;overflow:hidden;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+              <button onClick="{{ ecoToggleIdiomas }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:16px;background:#fff;border:0;cursor:pointer;font-family:inherit" style-hover="background:rgba(250,245,255,.5)">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span>🗣️</span>
+                  <span style="font-weight:600;color:#1A1040;font-size:14px">Centro de Idiomas</span>
+                  <dc-import name="Tip" text="Domina nuevos idiomas para mejorar tu perfil internacional" hint-size="14px,14px"></dc-import>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <sc-if value="{{ ecoIdiomasClosed }}" hint-placeholder-val="{{ true }}"><span style="font-size:12px;color:#9ca3af">Expandir</span></sc-if>
+                  <dc-import name="Icon" i="{{ ecoIdiomasChevron }}" s="15" c="#9ca3af" hint-size="15px,15px"></dc-import>
+                </div>
+              </button>
+              <sc-if value="{{ ecoIdiomasOpen }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:0 16px 16px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+                  <sc-for list="{{ ecoLangs }}" as="l" hint-placeholder-count="6">
+                    <div style="border:1px solid #f3f4f6;border-radius:12px;padding:10px;font-size:12px;text-align:center;color:#374151">{{ l.label }}</div>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+
+            <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;text-align:center;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+              <div style="width:44px;height:44px;background:#f3f4f6;border-radius:9999px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px">
+                <dc-import name="Icon" i="lock" s="18" c="#9ca3af" hint-size="18px,18px"></dc-import>
+              </div>
+              <h3 style="font-weight:600;color:#6b7280;font-size:14px;margin:0 0 4px">🔒 Certificaciones &amp; Posgrado</h3>
+              <p style="font-size:12px;color:#9ca3af;margin:0 0 8px">Se desbloqueará cuando ingreses al 7° ciclo de tu carrera.</p>
+              <div style="display:inline-flex;align-items:center;gap:8px;background:#f9fafb;border-radius:12px;padding:8px 16px;font-size:12px;color:#6b7280">Tu ciclo: <strong>1</strong> · Ciclos restantes: <strong>6</strong></div>
+              <div style="margin-top:8px;display:flex;justify-content:center"><dc-import name="Tip" text="¿Por qué ciclo 7? Muchos postgrados requieren prerrequisitos de la carrera base cursados hasta esa etapa." hint-size="14px,14px"></dc-import></div>
+            </div>
+          </div>
+
+          <button onClick="{{ ecoCtaClick }}" style="{{ ecoCtaStyle }}">{{ ecoCtaLabel }}</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isMalla }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
+            <span style="white-space:nowrap">📋 Recomendador</span>
+            <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import>Elijo mi Ruta (Malla)</span>
+            <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Paso 4 de 4</span></span>
+          </nav>
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px">
+            <div>
+              <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:32px;font-weight:700;color:#1A1040;margin:0 0 4px">📋 Tu Malla Curricular</h1>
+              <p style="color:#6b7280;font-size:14px;margin:0">Carrera: <strong>{{ mallaCareer }}</strong> · 8 semestres · 180 créditos totales</p>
+            </div>
+            <dc-import name="Tip" text="Esta es tu malla oficial personalizada. Puedes agregar extracurriculares al final de cada ciclo (máx. 3 por ciclo)." hint-size="14px,14px"></dc-import>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px">
+            <span style="font-size:12px;font-weight:500;padding:4px 12px;border-radius:9999px;background:#dbeafe;color:#1d4ed8">🔵 Teórico</span>
+            <span style="font-size:12px;font-weight:500;padding:4px 12px;border-radius:9999px;background:#dcfce7;color:#15803d">🟢 Teórico-Práctico</span>
+            <span style="font-size:12px;font-weight:500;padding:4px 12px;border-radius:9999px;background:#ffedd5;color:#c2410c">🟠 Práctico</span>
+            <span style="font-size:12px;font-weight:500;padding:4px 12px;border-radius:9999px;background:#f3e8ff;color:#7e22ce">🟣 Electivo</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:24px">
+            <sc-for list="{{ cycles }}" as="cyc" hint-placeholder-count="4">
+              <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;overflow:hidden;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+                <div style="background:rgba(123,104,238,.1);padding:12px 16px;border-bottom:1px solid #f3e8ff">
+                  <p style="font-family:Poppins,sans-serif;font-weight:700;color:#7B68EE;font-size:14px;margin:0">{{ cyc.title }}</p>
+                  <p style="font-size:12px;color:#9ca3af;margin:0">{{ cyc.creditsLabel }}</p>
+                </div>
+                <div style="padding:12px;display:flex;flex-direction:column;gap:8px">
+                  <sc-for list="{{ cyc.courses }}" as="c" hint-placeholder-count="3">
+                    <div style="{{ c.style }}">
+                      <p style="font-weight:600;margin:0 0 2px">{{ c.name }}</p>
+                      <p style="opacity:.7;margin:0">{{ c.meta }}</p>
+                      <p style="opacity:.6;margin:2px 0 0;font-size:10px">{{ c.professor }}</p>
+                      <p style="opacity:.6;margin:0;font-size:10px">{{ c.schedule }}</p>
+                      <div style="display:flex;gap:4px;margin-top:8px">
+                        <button style="background:rgba(255,255,255,.6);border:0;border-radius:8px;padding:2px 8px;font-size:12px;color:inherit;cursor:pointer;font-family:inherit" style-hover="background:#fff">Syllabus</button>
+                        <button style="background:rgba(255,255,255,.6);border:0;border-radius:8px;padding:2px 8px;font-size:12px;color:inherit;cursor:pointer;font-family:inherit" style-hover="background:#fff">Cambiar</button>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="padding:0 12px 12px">
+                  <sc-if value="{{ cyc.hasExtras }}" hint-placeholder-val="{{ false }}">
+                    <div style="background:#faf5ff;border:1px solid #f3e8ff;border-radius:12px;padding:8px;margin-bottom:8px">
+                      <p style="font-size:12px;font-weight:600;color:#7B68EE;margin:0 0 4px">⭐ Extracurriculares:</p>
+                      <sc-for list="{{ cyc.extras }}" as="e" hint-placeholder-count="1">
+                        <div style="display:flex;align-items:center;justify-content:space-between;font-size:10px;color:#4b5563;padding:2px 0">
+                          <span>{{ e.label }}</span>
+                          <button onClick="{{ e.onRemove }}" style="color:#f87171;background:none;border:0;cursor:pointer;margin-left:4px;display:flex;padding:0" style-hover="color:#dc2626"><dc-import name="Icon" i="x" s="9" hint-size="9px,9px"></dc-import></button>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ cyc.canAdd }}" hint-placeholder-val="{{ true }}">
+                    <button onClick="{{ cyc.onAdd }}" style="width:100%;font-size:12px;background:#faf5ff;color:#7B68EE;border:0;border-radius:12px;padding:8px 0;font-weight:500;display:flex;align-items:center;justify-content:center;gap:4px;cursor:pointer;font-family:inherit" style-hover="background:#f3e8ff">
+                      <dc-import name="Icon" i="plus" s="11" hint-size="11px,11px"></dc-import> Agregar extracurricular
+                    </button>
+                  </sc-if>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:12px;position:sticky;bottom:16px">
+            <button style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border:1px solid #e5e7eb;border-radius:16px;font-size:14px;font-weight:500;color:#4b5563;background:#fff;cursor:pointer;font-family:inherit" style-hover="background:#f9fafb">
+              <dc-import name="Icon" i="download" s="15" hint-size="15px,15px"></dc-import> Descargar malla PDF
+            </button>
+            <button onClick="{{ mallaConfirm }}" style="flex:1;background:#7B68EE;color:#fff;border:0;border-radius:16px;padding:12px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff" style-hover="background:#6A58DC">✓ Confirmar malla final →</button>
+          </div>
+          <sc-if value="{{ extModalShow }}" hint-placeholder-val="{{ false }}">
+            <div style="position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.5);padding:16px">
+              <div style="background:#fff;border-radius:16px;box-shadow:0 25px 50px -12px rgba(0,0,0,.25);padding:24px;max-width:384px;width:100%">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+                  <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:14px;margin:0">{{ extModalTitle }}</h3>
+                  <button onClick="{{ extModalClose }}" style="padding:6px;background:none;border:0;border-radius:8px;cursor:pointer;display:flex;color:#1A1040" style-hover="background:#f3f4f6"><dc-import name="Icon" i="x" s="15" hint-size="15px,15px"></dc-import></button>
+                </div>
+                <p style="font-size:12px;color:#9ca3af;margin:0 0 16px">{{ extModalCount }} · Máximo 3 por ciclo</p>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <sc-for list="{{ extOptions }}" as="o" hint-placeholder-count="5">
+                    <button onClick="{{ o.onClick }}" style="{{ o.style }}">
+                      <span>{{ o.label }}</span>
+                      <dc-import name="Icon" i="{{ o.icon }}" s="13" c="{{ o.iconColor }}" hint-size="13px,13px"></dc-import>
+                    </button>
+                  </sc-for>
+                </div>
+                <button onClick="{{ extModalClose }}" style="width:100%;margin-top:16px;background:#7B68EE;color:#fff;border:0;border-radius:12px;padding:10px 0;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit" style-hover="background:#6A58DC">Confirmar selección</button>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isPerfilCora }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
+            <span style="white-space:nowrap">✨ Recomendador</span>
+            <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Mi Perfil CoRA</span></span>
+          </nav>
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:24px">
+            <div>
+              <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:32px;font-weight:700;color:#1A1040;margin:0 0 4px">👤 Tu Perfil Personalizado</h1>
+              <p style="color:#6b7280;font-size:14px;margin:0">Basado en tus respuestas. 6 dimensiones que definen tu potencial académico.</p>
+            </div>
+            <dc-import name="Tip" text="Tu perfil único basado en tus respuestas del formulario. Analiza A=Aptitud, G=Gestión, L=Liderazgo, D=Determinación, E=Empatía, F=Flexibilidad." hint-size="14px,14px"></dc-import>
+          </div>
+          <div style="background:#fff;border:1px solid rgba(243,232,255,.6);border-radius:16px;padding:20px;margin-bottom:24px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <h2 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:14px;margin:0 0 16px">Gráfico Radar — 6 Dimensiones</h2>
+            <svg viewBox="0 0 600 260" width="100%" height="260" style="display:block;overflow:visible">
+              <sc-for list="{{ radarRings }}" as="g" hint-placeholder-count="5">
+                <polygon points="{{ g.points }}" fill="none" stroke="#e5e7eb"></polygon>
+              </sc-for>
+              <sc-for list="{{ radarSpokes }}" as="k" hint-placeholder-count="6">
+                <line x1="{{ k.x1 }}" y1="{{ k.y1 }}" x2="{{ k.x2 }}" y2="{{ k.y2 }}" stroke="#e5e7eb"></line>
+              </sc-for>
+              <polygon points="{{ radarArea }}" fill="#7B68EE" fill-opacity="0.2" stroke="#7B68EE" stroke-width="2"></polygon>
+              <sc-for list="{{ radarDots }}" as="d" hint-placeholder-count="6">
+                <circle cx="{{ d.x }}" cy="{{ d.y }}" r="4" fill="#7B68EE"></circle>
+              </sc-for>
+              <sc-for list="{{ radarLabels }}" as="l" hint-placeholder-count="6">
+                <text x="{{ l.x }}" y="{{ l.y }}" text-anchor="{{ l.anchor }}" font-size="10" fill="#6B6080" font-family="Inter, sans-serif">{{ l.text }}</text>
+              </sc-for>
+              <sc-for list="{{ radarTicks }}" as="t" hint-placeholder-count="6">
+                <text x="{{ t.x }}" y="{{ t.y }}" font-size="9" fill="#9CA3AF" font-family="Inter, sans-serif">{{ t.text }}</text>
+              </sc-for>
+            </svg>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:24px">
+            <sc-for list="{{ dims }}" as="d" hint-placeholder-count="6">
+              <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1);transition:box-shadow .15s" style-hover="box-shadow:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1)">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+                  <span style="font-family:Poppins,sans-serif;font-weight:900;color:#7B68EE;font-size:20px;line-height:28px">{{ d.k }}</span>
+                  <div style="display:flex;align-items:center;gap:4px">
+                    <span style="font-size:12px;font-weight:700;color:#1A1040">{{ d.scoreLabel }}</span>
+                    <dc-import name="Tip" text="{{ d.tip }}" hint-size="14px,14px"></dc-import>
+                  </div>
+                </div>
+                <h3 style="font-weight:600;color:#1A1040;font-size:12px;margin:0 0 8px">{{ d.label }}</h3>
+                <div style="height:6px;background:#f3f4f6;border-radius:9999px;margin-bottom:8px;overflow:hidden"><div style="{{ d.barStyle }}"></div></div>
+                <p style="font-size:12px;color:#6b7280;line-height:1.625;margin:0">{{ d.desc }}</p>
+                <button style="margin-top:12px;font-size:12px;color:#7B68EE;background:none;border:0;padding:0;cursor:pointer;display:flex;align-items:center;gap:4px;font-family:inherit" style-hover="text-decoration:underline">Ver recomendaciones <dc-import name="Icon" i="chevron-right" s="11" hint-size="11px,11px"></dc-import></button>
+              </div>
+            </sc-for>
+          </div>
+          <div style="background:linear-gradient(to bottom right,#faf5ff,#eef2ff);border:1px solid #f3e8ff;border-radius:16px;padding:20px;margin-bottom:24px">
+            <h2 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:14px;margin:0 0 12px">💡 Recomendaciones para Ti</h2>
+            <div style="display:flex;flex-direction:column;gap:12px;font-size:14px">
+              <div>
+                <p style="font-weight:600;color:#15803d;font-size:12px;margin:0 0 4px">✓ Fortalezas:</p>
+                <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px;font-size:12px;color:#4b5563">
+                  <li>• <strong>Aptitud Académica (8.5/10)</strong> → Ideal para investigación y análisis</li>
+                  <li>• <strong>Empatía &amp; Determinación (8.1/10)</strong> → Perfecto para liderazgo empático</li>
+                </ul>
+              </div>
+              <div>
+                <p style="font-weight:600;color:#b45309;font-size:12px;margin:0 0 4px">⚠️ Áreas de mejora:</p>
+                <ul style="list-style:none;padding:0;margin:0;font-size:12px;color:#4b5563">
+                  <li>• <strong>Liderazgo (6.8/10)</strong> → Recomendamos: Curso de liderazgo + proyectos grupales</li>
+                </ul>
+              </div>
+              <div>
+                <p style="font-weight:600;color:#1d4ed8;font-size:12px;margin:0 0 4px">📚 Recursos recomendados:</p>
+                <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:2px;font-size:12px;color:#4b5563">
+                  <li>• Libro: "Los 7 Hábitos de la Gente Altamente Efectiva" (Covey)</li>
+                  <li>• Podcast: "Leadership Daily"</li>
+                  <li>• Curso: "Liderazgo en Negocios" (Ecosistema UC)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <button onClick="{{ perfilCoraNext }}" style="width:100%;background:#7B68EE;color:#fff;border:0;border-radius:16px;padding:14px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff" style-hover="background:#6A58DC">Continuar a Veo mi Horizonte →</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isHorizonte }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
+            <span style="white-space:nowrap">🌅 Recomendador</span>
+            <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Veo mi Horizonte</span></span>
+          </nav>
+          <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:32px;font-weight:700;color:#1A1040;margin:0 0 4px">🌅 Tu Horizonte Laboral</h1>
+          <p style="color:#6b7280;font-size:14px;margin:0 0 20px">Carrera: <strong>{{ mallaCareer }}</strong></p>
+          <div style="background:#fffbeb;border:1px solid #fef3c7;border-radius:16px;padding:16px;margin-bottom:24px;display:flex;align-items:flex-start;gap:12px">
+            <span style="font-size:20px;line-height:28px">🔗</span>
+            <div>
+              <p style="font-weight:600;color:#78350f;font-size:14px;margin:0 0 2px">RUTA vs HORIZONTE: La diferencia</p>
+              <p style="font-size:12px;color:#b45309;margin:0"><strong>RUTA</strong> = Los CURSOS que cursarás · <strong>HORIZONTE</strong> = Los TRABAJOS que obtendrás · 💡 Ambos están conectados</p>
+            </div>
+            <dc-import name="Tip" text="Tu ruta académica está diseñada para llevarte exactamente a estas oportunidades laborales." hint-size="14px,14px"></dc-import>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:24px">
+            <sc-for list="{{ stages }}" as="st" hint-placeholder-count="3">
+              <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1);transition:box-shadow .15s" style-hover="box-shadow:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1)">
+                <div style="{{ st.iconStyle }}">{{ st.icon }}</div>
+                <p style="font-size:12px;color:#9ca3af;margin:0 0 2px">{{ st.period }}</p>
+                <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:14px;margin:0 0 4px">{{ st.title }}</h3>
+                <p style="color:#7B68EE;font-weight:700;font-size:14px;margin:0 0 12px">{{ st.salary }}</p>
+                <p style="font-size:12px;color:#6b7280;margin:0 0 4px;font-weight:500">Skills:</p>
+                <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px">
+                  <sc-for list="{{ st.skills }}" as="sk" hint-placeholder-count="3">
+                    <span style="font-size:10px;background:#faf5ff;color:#7B68EE;padding:2px 8px;border-radius:9999px">{{ sk.label }}</span>
+                  </sc-for>
+                </div>
+                <p style="font-size:12px;color:#6b7280;margin:0 0 4px;font-weight:500">Empresas:</p>
+                <p style="font-size:12px;color:#4b5563;margin:0">{{ st.companies }}</p>
+                <div style="display:flex;gap:8px;margin-top:16px">
+                  <button style="flex:1;border:1px solid #e5e7eb;background:#fff;border-radius:12px;padding:8px 0;font-size:12px;font-weight:500;color:#4b5563;cursor:pointer;font-family:inherit" style-hover="background:#f9fafb">Alumni</button>
+                  <button style="flex:1;background:#7B68EE;color:#fff;border:0;border-radius:12px;padding:8px 0;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit" style-hover="background:#6A58DC">Ver ofertas</button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;overflow:hidden;margin-bottom:24px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <div style="background:rgba(123,104,238,.1);padding:12px 20px;border-bottom:1px solid #f3e8ff">
+              <h2 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:14px;margin:0">📊 Salarios por Nivel de Experiencia</h2>
+            </div>
+            <div style="padding:20px">
+              <svg viewBox="0 0 900 180" width="100%" height="180" preserveAspectRatio="none" style="display:block">
+                <sc-for list="{{ barGrid }}" as="g" hint-placeholder-count="5">
+                  <line x1="{{ g.x1 }}" y1="{{ g.y }}" x2="880" y2="{{ g.y }}" stroke="#f0edf8" stroke-dasharray="3 3"></line>
+                </sc-for>
+                <sc-for list="{{ bars }}" as="b" hint-placeholder-count="5">
+                  <rect x="{{ b.x }}" y="{{ b.y }}" width="{{ b.w }}" height="{{ b.h }}" rx="6" fill="#7B68EE"></rect>
+                </sc-for>
+              </svg>
+              <div style="display:flex;margin-top:4px;padding-left:56px">
+                <sc-for list="{{ barLabels }}" as="l" hint-placeholder-count="5">
+                  <div style="flex:1;text-align:center;font-size:10px;color:#666">{{ l.label }}</div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+          <button onClick="{{ horizonteNext }}" style="width:100%;background:#7B68EE;color:#fff;border:0;border-radius:16px;padding:14px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff" style-hover="background:#6A58DC">Continuar a Acompañamiento →</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isAcomp }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
+            <span style="white-space:nowrap">⚠️ Recomendador</span>
+            <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Acompañamiento</span></span>
+          </nav>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+            <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:32px;font-weight:700;color:#1A1040;margin:0">Acompañamiento</h1>
+            <span style="background:#fee2e2;color:#dc2626;font-size:12px;font-weight:700;padding:4px 10px;border-radius:9999px">🔴 Activo</span>
+          </div>
+          <div style="background:linear-gradient(to right,#7B68EE,#4f46e5);border-radius:16px;padding:20px;color:#fff;margin-bottom:20px;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff">
+            <h2 style="font-family:Poppins,sans-serif;font-weight:700;font-size:14px;margin:0 0 8px">📋 Plan de Acompañamiento Personalizado</h2>
+            <p style="font-size:12px;color:#e9d5ff;margin:0 0 12px">Tipos de apoyo disponibles:</p>
+            <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;font-size:12px">
+              <div style="background:rgba(255,255,255,.15);border-radius:12px;padding:8px 12px">👨‍🎓 Tutor CORA = Dudas académicas</div>
+              <div style="background:rgba(255,255,255,.15);border-radius:12px;padding:8px 12px">👨‍💼 Asesor = Seguimiento personal</div>
+              <div style="background:rgba(255,255,255,.15);border-radius:12px;padding:8px 12px">📚 Recursos = Libros, videos, guías</div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:20px">
+            <div style="background:#eff6ff;border:1px solid #dbeafe;border-radius:16px;padding:16px">
+              <h3 style="font-weight:700;color:#1e40af;font-size:14px;margin:0 0 4px">👨‍🎓 Tutor CORA</h3>
+              <p style="font-size:12px;color:#2563eb;margin:0 0 12px">Dudas académicas, fórmulas, ejercicios y conceptos específicos.</p>
+              <button onClick="{{ goTutor }}" style="width:100%;background:#2563eb;color:#fff;border:0;border-radius:12px;padding:8px 0;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit" style-hover="background:#1d4ed8">Ir a Tutor CORA</button>
+            </div>
+            <div style="background:#faf5ff;border:1px solid #f3e8ff;border-radius:16px;padding:16px">
+              <h3 style="font-weight:700;color:#4A3FA0;font-size:14px;margin:0 0 4px">👨‍💼 Asesor Académico</h3>
+              <p style="font-size:12px;color:#9333ea;margin:0 0 12px">Seguimiento personal, consejería de carrera y apoyo integral.</p>
+              <button style="width:100%;background:#7B68EE;color:#fff;border:0;border-radius:12px;padding:8px 0;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit" style-hover="background:#6A58DC">Agendar con asesor</button>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:20px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <h2 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:14px;margin:0 0 16px;display:flex;align-items:center;gap:8px">
+              📌 Ciclo 1 — Acciones Recomendadas
+              <span style="background:#7B68EE;color:#fff;font-size:10px;padding:2px 8px;border-radius:9999px;font-weight:500">Actual</span>
+            </h2>
+            <div style="display:flex;flex-direction:column;gap:16px">
+              <sc-for list="{{ weeks }}" as="wk" hint-placeholder-count="4">
+                <div>
+                  <p style="font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;margin:0 0 8px">{{ wk.label }}</p>
+                  <sc-for list="{{ wk.items }}" as="a" hint-placeholder-count="1">
+                    <div style="{{ a.rowStyle }}">
+                      <div style="display:flex;align-items:center;gap:8px">
+                        <sc-if value="{{ a.done }}" hint-placeholder-val="{{ false }}">
+                          <dc-import name="Icon" i="check-circle" s="14" c="#22c55e" hint-size="14px,14px"></dc-import>
+                        </sc-if>
+                        <sc-if value="{{ a.pending }}" hint-placeholder-val="{{ true }}">
+                          <div style="width:16px;height:16px;border-radius:9999px;border:2px solid #d1d5db;flex-shrink:0"></div>
+                        </sc-if>
+                        <span style="{{ a.labelStyle }}">{{ a.label }}</span>
+                      </div>
+                      <button onClick="{{ a.onClick }}" style="{{ a.btnStyle }}">{{ a.cta }}</button>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <button onClick="{{ acompFinish }}" style="width:100%;background:#7B68EE;color:#fff;border:0;border-radius:16px;padding:14px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff" style-hover="background:#6A58DC">✨ Finalizar Recomendador — Desbloquear Académico</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isPracticoSetup }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
+            <span style="white-space:nowrap">⭕ Académico</span>
+            <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Práctico para examen</span></span>
+          </nav>
+          <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:32px;font-weight:700;color:#1A1040;margin:0 0 4px">📝 Práctico para mi Examen</h1>
+          <p style="color:#6b7280;font-size:14px;margin:0 0 24px">Prepárate con simulacros basados en exámenes reales.</p>
+
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <h2 style="font-weight:700;color:#1A1040;margin:0 0 12px;display:flex;align-items:center;gap:8px;font-size:14px">
+              <span style="width:24px;height:24px;background:#7B68EE;color:#fff;border-radius:9999px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">1</span>
+              Selecciona el Curso <dc-import name="Tip" text="Elige un curso de tu malla actual" hint-size="14px,14px"></dc-import>
+            </h2>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{ pCourses }}" as="c" hint-placeholder-count="5">
+                <button onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <h2 style="font-weight:700;color:#1A1040;margin:0 0 12px;display:flex;align-items:center;gap:8px;font-size:14px">
+              <span style="width:24px;height:24px;background:#7B68EE;color:#fff;border-radius:9999px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">2</span>
+              Elige los Temas <dc-import name="Tip" text="Selecciona los temas que quieres practicar" hint-size="14px,14px"></dc-import>
+            </h2>
+            <div>
+              <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+                <sc-for list="{{ pTopics }}" as="t" hint-placeholder-count="5">
+                  <button onClick="{{ t.onClick }}" style="{{ t.style }}">
+                    <span style="{{ t.boxStyle }}">
+                      <sc-if value="{{ t.sel }}" hint-placeholder-val="{{ false }}"><dc-import name="Icon" i="check" s="9" c="#ffffff" hint-size="9px,9px"></dc-import></sc-if>
+                    </span>{{ t.label }}
+                  </button>
+                </sc-for>
+              </div>
+              <div style="border-top:1px solid #f3f4f6;padding-top:16px">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+                  <p style="font-size:12px;font-weight:600;color:#374151;margin:0">🆕 O agrega tus propios temas (opcional):</p>
+                  <dc-import name="Tip" text="Escribe temas específicos separados por comas" hint-size="14px,14px"></dc-import>
+                </div>
+                <textarea value="{{ pCustom }}" onChange="{{ pCustomChange }}" placeholder="Ej: Derivadas, Integrales, Matrices..." rows="2" style="width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:12px;font-size:14px;resize:none;font-family:inherit;box-sizing:border-box;color:#374151"></textarea>
+                <p style="font-size:12px;color:#9ca3af;margin:4px 0 0">Máximo 5 temas adicionales</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <h2 style="font-weight:700;color:#1A1040;margin:0 0 12px;display:flex;align-items:center;gap:8px;font-size:14px">
+              <span style="width:24px;height:24px;background:#7B68EE;color:#fff;border-radius:9999px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">3</span>
+              Nivel de Dificultad <dc-import name="Tip" text="Elige el nivel que mejor se ajuste a tu preparación" hint-size="14px,14px"></dc-import>
+            </h2>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{ pDiffs }}" as="d" hint-placeholder-count="3">
+                <button onClick="{{ d.onClick }}" style="{{ d.style }}">
+                  <div style="display:flex;align-items:center;gap:8px">{{ d.em }}<span style="font-weight:500;font-size:14px;color:#1A1040">{{ d.label }}</span>
+                    <sc-if value="{{ d.rec }}" hint-placeholder-val="{{ false }}">
+                      <span style="margin-left:auto;background:#7B68EE;color:#fff;font-size:10px;padding:2px 8px;border-radius:9999px">RECOMENDADO</span>
+                    </sc-if>
+                  </div>
+                  <p style="font-size:12px;color:#6b7280;margin:2px 0 0 24px">{{ d.desc }}</p>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+
+          <button onClick="{{ pStart }}" style="{{ pStartStyle }}"><dc-import name="Icon" i="play" s="15" hint-size="15px,15px"></dc-import> 🚀 Comenzar simulacro · Estimado: 90 minutos</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isPracticoQuiz }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+            <div>
+              <p style="font-size:12px;color:#9ca3af;margin:0 0 4px">{{ pQLabel }}</p>
+              <div style="height:8px;background:#f3f4f6;border-radius:9999px;overflow:hidden;width:160px"><div style="height:100%;background:#7B68EE;border-radius:9999px;transition:all .7s;width:{{ pQPct }}"></div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;background:#fff7ed;border:1px solid #ffedd5;border-radius:12px;padding:8px 12px">
+              <dc-import name="Icon" i="clock" s="13" c="#f97316" hint-size="13px,13px"></dc-import>
+              <span style="font-family:ui-monospace,monospace;color:#c2410c;font-weight:700;font-size:14px">85:32</span>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:24px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <p style="font-size:12px;color:#7B68EE;margin:0 0 8px">{{ pQTopic }}</p>
+            <p style="font-family:Poppins,sans-serif;font-size:16px;font-weight:700;color:#1A1040;margin:0 0 20px">{{ pQText }}</p>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <sc-for list="{{ pQOptions }}" as="o" hint-placeholder-count="4">
+                <button onClick="{{ o.onClick }}" style="{{ o.style }}">
+                  <span style="{{ o.dotStyle }}">
+                    <sc-if value="{{ o.sel }}" hint-placeholder-val="{{ false }}"><span style="width:8px;height:8px;background:#fff;border-radius:9999px;display:block"></span></sc-if>
+                  </span>{{ o.label }}
+                </button>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px">
+            <button onClick="{{ pPrev }}" style="{{ pPrevStyle }}"><dc-import name="Icon" i="chevron-left" s="15" hint-size="15px,15px"></dc-import>Anterior</button>
+            <button onClick="{{ pNext }}" style="{{ pNextStyle }}">{{ pNextLabel }}<dc-import name="Icon" i="chevron-right" s="15" hint-size="15px,15px"></dc-import></button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isPracticoDetail }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <button onClick="{{ pCloseDetail }}" style="display:flex;align-items:center;gap:8px;font-size:14px;color:#7B68EE;background:none;border:0;padding:0;margin-bottom:16px;cursor:pointer;font-family:inherit" style-hover="text-decoration:underline"><dc-import name="Icon" i="chevron-left" s="15" hint-size="15px,15px"></dc-import>Volver</button>
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:24px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <div style="{{ pDetailBadgeStyle }}">
+              <dc-import name="Icon" i="{{ pDetailIcon }}" s="14" hint-size="14px,14px"></dc-import>{{ pDetailBadge }}
+            </div>
+            <p style="font-size:12px;color:#7B68EE;margin:0 0 8px">{{ pDetailTopic }}</p>
+            <p style="font-weight:700;color:#1A1040;margin:0 0 20px;font-size:14px">{{ pDetailQ }}</p>
+            <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px">
+              <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#dc2626;background:#fef2f2;border-radius:12px;padding:10px 12px">
+                <dc-import name="Icon" i="x-circle" s="13" hint-size="13px,13px"></dc-import>Tu respuesta: <strong>{{ pDetailUser }}</strong>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#15803d;background:#f0fdf4;border-radius:12px;padding:10px 12px">
+                <dc-import name="Icon" i="check-circle" s="13" hint-size="13px,13px"></dc-import>Respuesta correcta: <strong>{{ pDetailCorrect }}</strong>
+              </div>
+            </div>
+            <div style="background:#eff6ff;border:1px solid #dbeafe;border-radius:12px;padding:16px">
+              <p style="font-weight:600;color:#1e3a8a;font-size:12px;margin:0 0 6px">📖 Explicación:</p>
+              <p style="font-size:12px;color:#1d4ed8;line-height:1.625;margin:0">{{ pDetailExplain }}</p>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:16px">
+              <button style="flex:1;border:1px solid #e5e7eb;background:#fff;border-radius:12px;padding:8px 0;font-size:12px;font-weight:500;color:#4b5563;display:flex;align-items:center;justify-content:center;gap:4px;cursor:pointer;font-family:inherit" style-hover="background:#f9fafb"><dc-import name="Icon" i="play" s="11" hint-size="11px,11px"></dc-import>Ver video (2:35 min)</button>
+              <button style="flex:1;background:#7B68EE;color:#fff;border:0;border-radius:12px;padding:8px 0;font-size:12px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:4px;cursor:pointer;font-family:inherit" style-hover="background:#6A58DC"><dc-import name="Icon" i="message-circle" s="11" hint-size="11px,11px"></dc-import>Preguntar al Tutor</button>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isPracticoResults }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
+            <span style="white-space:nowrap">⭕ Académico</span>
+            <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import>Práctico</span>
+            <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Resultados</span></span>
+          </nav>
+          <div style="text-align:center;margin-bottom:28px">
+            <div style="{{ pScoreCircleStyle }}">{{ pScoreEmoji }}</div>
+            <h1 style="font-family:Poppins,sans-serif;font-size:30px;line-height:36px;font-weight:900;color:#1A1040;margin:0 0 4px">{{ pScoreLabel }}</h1>
+            <p style="color:#9ca3af;font-size:14px;margin:0">Simulacro completado — {{ pCourseName }}</p>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:20px">
+            <div style="background:#f0fdf4;border:1px solid #dcfce7;border-radius:16px;padding:16px;text-align:center">
+              <div style="display:flex;justify-content:center;margin-bottom:4px"><dc-import name="Icon" i="check-circle" s="18" c="#22c55e" hint-size="18px,18px"></dc-import></div>
+              <p style="font-size:20px;line-height:28px;font-weight:700;color:#15803d;margin:0">{{ pCorrectLabel }}</p><p style="font-size:12px;color:#16a34a;margin:0">Correctas</p>
+            </div>
+            <div style="background:#fef2f2;border:1px solid #fee2e2;border-radius:16px;padding:16px;text-align:center">
+              <div style="display:flex;justify-content:center;margin-bottom:4px"><dc-import name="Icon" i="x-circle" s="18" c="#ef4444" hint-size="18px,18px"></dc-import></div>
+              <p style="font-size:20px;line-height:28px;font-weight:700;color:#b91c1c;margin:0">{{ pWrongLabel }}</p><p style="font-size:12px;color:#dc2626;margin:0">Incorrectas</p>
+            </div>
+            <div style="background:#faf5ff;border:1px solid #f3e8ff;border-radius:16px;padding:16px;text-align:center">
+              <div style="display:flex;justify-content:center;margin-bottom:4px"><dc-import name="Icon" i="star" s="18" c="#7B68EE" hint-size="18px,18px"></dc-import></div>
+              <p style="font-size:20px;line-height:28px;font-weight:700;color:#7B68EE;margin:0">{{ pXpLabel }}</p><p style="font-size:12px;color:#7B68EE;margin:0">XP ganados</p>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <h2 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:14px;margin:0 0 12px">Revisión por pregunta:</h2>
+            <sc-for list="{{ pReview }}" as="r" hint-placeholder-count="5">
+              <button onClick="{{ r.onClick }}" style="width:100%;display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;background:none;border:0;cursor:pointer;text-align:left;font-family:inherit" style-hover="background:#f9fafb">
+                <dc-import name="Icon" i="{{ r.icon }}" s="14" c="{{ r.iconColor }}" hint-size="14px,14px"></dc-import>
+                <span style="font-size:12px;color:#374151;flex:1">{{ r.label }}</span>
+                <dc-import name="Icon" i="chevron-right" s="13" c="#9ca3af" hint-size="13px,13px"></dc-import>
+              </button>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:12px">
+            <button onClick="{{ pRestart }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;border:2px solid #7B68EE;background:#fff;color:#7B68EE;border-radius:16px;padding:12px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit" style-hover="background:#faf5ff"><dc-import name="Icon" i="rotate-ccw" s="15" hint-size="15px,15px"></dc-import>🔄 Repetir otro simulacro</button>
+            <button onClick="{{ goTutor }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:#2563eb;color:#fff;border:0;border-radius:16px;padding:12px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit" style-hover="background:#1d4ed8"><dc-import name="Icon" i="message-circle" s="15" hint-size="15px,15px"></dc-import>Ir a Tutor CORA</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isFlashSetup }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
+            <span style="white-space:nowrap">🎴 Académico</span>
+            <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Mis Flashcards</span></span>
+          </nav>
+          <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:32px;font-weight:700;color:#1A1040;margin:0 0 4px">🎴 Mis Flashcards</h1>
+          <p style="color:#6b7280;font-size:14px;margin:0 0 24px">Crea y practica tarjetas para memorizar conceptos clave.</p>
+
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <h2 style="font-weight:700;color:#1A1040;margin:0 0 12px;display:flex;align-items:center;gap:8px;font-size:14px">
+              <span style="width:24px;height:24px;background:#7B68EE;color:#fff;border-radius:9999px;display:flex;align-items:center;justify-content:center;font-size:12px">1</span>
+              Selecciona el Curso <dc-import name="Tip" text="Elige un curso de tu malla" hint-size="14px,14px"></dc-import>
+            </h2>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{ fCourses }}" as="c" hint-placeholder-count="3">
+                <button onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <h2 style="font-weight:700;color:#1A1040;margin:0 0 12px;display:flex;align-items:center;gap:8px;font-size:14px">
+              <span style="width:24px;height:24px;background:#7B68EE;color:#fff;border-radius:9999px;display:flex;align-items:center;justify-content:center;font-size:12px">2</span>
+              Elige un Set <dc-import name="Tip" text="Selecciona o crea tu set de flashcards" hint-size="14px,14px"></dc-import>
+            </h2>
+            <div>
+              <div style="border:1px solid #f3f4f6;border-radius:12px;padding:16px;margin-bottom:12px">
+                <p style="font-weight:600;font-size:14px;color:#1A1040;margin:0 0 2px">📚 Economía I — Capítulo 3</p>
+                <p style="font-size:12px;color:#9ca3af;margin:0 0 12px">5 tarjetas · 6 min de estudio</p>
+                <button style="width:100%;background:#7B68EE;color:#fff;border:0;border-radius:12px;padding:8px 0;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit" style-hover="background:#6A58DC">Usar este set</button>
+              </div>
+              <button style="width:100%;border:1px dashed #d1d5db;background:#fff;border-radius:12px;padding:10px 0;font-size:12px;color:#6b7280;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;margin-bottom:8px;font-family:inherit" style-hover="border-color:#7B68EE;color:#7B68EE"><dc-import name="Icon" i="plus" s="13" hint-size="13px,13px"></dc-import>Crear mi propio set</button>
+              <button style="width:100%;border:1px dashed #d1d5db;background:#fff;border-radius:12px;padding:10px 0;font-size:12px;color:#6b7280;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:inherit" style-hover="border-color:#7B68EE;color:#7B68EE"><dc-import name="Icon" i="upload" s="13" hint-size="13px,13px"></dc-import>Cargar PDF/Word — CORA extrae términos</button>
+            </div>
+          </div>
+
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <h2 style="font-weight:700;color:#1A1040;margin:0 0 12px;display:flex;align-items:center;gap:8px;font-size:14px">
+              <span style="width:24px;height:24px;background:#7B68EE;color:#fff;border-radius:9999px;display:flex;align-items:center;justify-content:center;font-size:12px">3</span>
+              Modo de Estudio <dc-import name="Tip" text="Elige cómo quieres estudiar" hint-size="14px,14px"></dc-import>
+            </h2>
+            <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
+              <sc-for list="{{ fModes }}" as="m" hint-placeholder-count="4">
+                <button onClick="{{ m.onClick }}" style="{{ m.style }}">
+                  <p style="font-size:18px;line-height:28px;margin:0 0 2px">{{ m.em }}</p>
+                  <p style="font-weight:600;font-size:12px;color:#1A1040;margin:0">{{ m.label }}</p>
+                  <p style="font-size:12px;color:#9ca3af;margin:0">{{ m.desc }}</p>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+
+          <button onClick="{{ fStart }}" style="width:100%;background:#7B68EE;color:#fff;border:0;border-radius:16px;padding:16px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff" style-hover="background:#6A58DC">Comenzar estudio →</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isFlashCards }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+            <p style="font-size:14px;color:#6b7280;margin:0">{{ fCardLabel }}</p>
+            <button onClick="{{ fEnd }}" style="font-size:12px;color:#9ca3af;background:none;border:0;cursor:pointer;font-family:inherit" style-hover="color:#4b5563">Terminar</button>
+          </div>
+          <div style="height:8px;background:#f3f4f6;border-radius:9999px;overflow:hidden;margin-bottom:20px"><div style="height:100%;background:#7B68EE;border-radius:9999px;transition:all .7s;width:{{ fPct }}"></div></div>
+          <div onClick="{{ fFlip }}" style="{{ fCardStyle }}">
+            <div style="text-align:center">
+              <sc-if value="{{ fFlipped }}" hint-placeholder-val="{{ false }}">
+                <div>
+                  <p style="font-size:12px;color:#7B68EE;font-weight:600;margin:0 0 16px">REVERSO</p>
+                  <p style="font-family:Poppins,sans-serif;font-size:18px;line-height:28px;font-weight:700;color:#1A1040;white-space:pre-line;margin:0">{{ fBack }}</p>
+                </div>
+              </sc-if>
+              <sc-if value="{{ fNotFlipped }}" hint-placeholder-val="{{ true }}">
+                <div>
+                  <p style="font-size:12px;color:#9ca3af;margin:0 0 16px">FRENTE · Click para voltear</p>
+                  <p style="font-family:Poppins,sans-serif;font-size:16px;font-weight:700;color:#1A1040;margin:0">{{ fFront }}</p>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+          <sc-if value="{{ fFlipped }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-bottom:16px">
+              <p style="font-size:14px;font-weight:600;text-align:center;color:#4b5563;margin:0 0 12px">¿Sabías esta respuesta?</p>
+              <div style="display:flex;gap:12px">
+                <sc-for list="{{ fRatingBtns }}" as="r" hint-placeholder-count="3">
+                  <button onClick="{{ r.onClick }}" style="{{ r.style }}">{{ r.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+          <div style="display:flex;gap:12px">
+            <button onClick="{{ fPrev }}" style="{{ fPrevStyle }}"><dc-import name="Icon" i="chevron-left" s="13" hint-size="13px,13px"></dc-import>Anterior</button>
+            <button onClick="{{ fNext }}" style="{{ fNextStyle }}">Siguiente<dc-import name="Icon" i="chevron-right" s="13" hint-size="13px,13px"></dc-import></button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isFlashDone }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <div style="text-align:center;margin-bottom:28px">
+            <div style="width:80px;height:80px;background:#dcfce7;border-radius:9999px;display:flex;align-items:center;justify-content:center;font-size:36px;line-height:40px;margin:0 auto 16px">✅</div>
+            <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:32px;font-weight:700;color:#1A1040;margin:0 0 4px">¡Set Completado!</h1>
+            <p style="color:#9ca3af;font-size:14px;margin:0">5 tarjetas revisadas</p>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:20px">
+            <div style="background:#f0fdf4;border:1px solid #dcfce7;border-radius:16px;padding:16px;text-align:center"><p style="font-size:24px;line-height:32px;font-weight:700;color:#15803d;margin:0">{{ fKnow }}</p><p style="font-size:12px;color:#16a34a;margin:0">😊 Dominadas</p></div>
+            <div style="background:#fefce8;border:1px solid #fef9c3;border-radius:16px;padding:16px;text-align:center"><p style="font-size:24px;line-height:32px;font-weight:700;color:#a16207;margin:0">{{ fMaybe }}</p><p style="font-size:12px;color:#ca8a04;margin:0">🤔 Dudosas</p></div>
+            <div style="background:#fef2f2;border:1px solid #fee2e2;border-radius:16px;padding:16px;text-align:center"><p style="font-size:24px;line-height:32px;font-weight:700;color:#b91c1c;margin:0">{{ fNo }}</p><p style="font-size:12px;color:#dc2626;margin:0">😞 Para repasar</p></div>
+          </div>
+          <div style="background:#faf5ff;border:1px solid #f3e8ff;border-radius:16px;padding:16px;margin-bottom:24px">
+            <p style="font-weight:700;color:#7B68EE;margin:0 0 2px">{{ fXpLabel }}</p>
+            <p style="font-size:12px;color:#6b7280;margin:0">{{ fXpDetail }}</p>
+          </div>
+          <div style="display:flex;gap:12px">
+            <button onClick="{{ fRepeat }}" style="flex:1;border:2px solid #7B68EE;background:#fff;color:#7B68EE;border-radius:16px;padding:12px 0;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:inherit" style-hover="background:#faf5ff"><dc-import name="Icon" i="rotate-ccw" s="14" hint-size="14px,14px"></dc-import>Repetir set</button>
+            <button onClick="{{ fNewSet }}" style="flex:1;background:#7B68EE;color:#fff;border:0;border-radius:16px;padding:12px 0;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:inherit" style-hover="background:#6A58DC"><dc-import name="Icon" i="plus" s="14" hint-size="14px,14px"></dc-import>Nuevo set</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isTutor }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:8px;flex-wrap:wrap">
+            <span style="white-space:nowrap">👨‍🏫 Académico</span>
+            <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Tutor CORA</span></span>
+          </nav>
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px">
+            <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+              <h2 style="font-weight:700;color:#1A1040;font-size:14px;margin:0 0 8px">💬 Tutor CORA — 24/7</h2>
+              <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px;font-size:12px;color:#6b7280">
+                <li style="display:flex;align-items:center;gap:8px"><dc-import name="Icon" i="check-circle" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Responder dudas académicas</li>
+                <li style="display:flex;align-items:center;gap:8px"><dc-import name="Icon" i="check-circle" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Explicar conceptos difíciles</li>
+                <li style="display:flex;align-items:center;gap:8px"><dc-import name="Icon" i="check-circle" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Guiarte en tu perfil y rutas</li>
+                <li style="display:flex;align-items:center;gap:8px"><dc-import name="Icon" i="check-circle" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Disponible 24/7 — Respuesta inmediata</li>
+              </ul>
+            </div>
+            <div style="background:linear-gradient(to right,#eff6ff,#faf5ff);border:1px solid #f3e8ff;border-radius:16px;padding:16px">
+              <h3 style="font-weight:700;color:#1A1040;font-size:12px;margin:0 0 6px">👨‍🎓 Tutor CORA vs 👨‍💼 Asesor</h3>
+              <p style="font-size:12px;color:#4b5563;margin:0"><strong>Tutor CORA (aquí):</strong> Dudas académicas, ejercicios</p>
+              <p style="font-size:12px;color:#4b5563;margin:2px 0 0"><strong>Asesor Académico:</strong> Consejería de carrera, seguimiento</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <sc-for list="{{ tutorCourses }}" as="c" hint-placeholder-count="4">
+              <button onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.label }}</button>
+            </sc-for>
+          </div>
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1);min-height:420px">
+            <div style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ msgs }}" as="m" hint-placeholder-count="2">
+                <div style="{{ m.rowStyle }}">
+                  <sc-if value="{{ m.isBot }}" hint-placeholder-val="{{ true }}">
+                    <div style="width:28px;height:28px;background:#7B68EE;border-radius:9999px;display:flex;align-items:center;justify-content:center;margin-right:8px;flex-shrink:0;box-shadow:0 1px 3px 0 rgba(0,0,0,.1)"><span style="color:#fff;font-size:12px;font-weight:700">C</span></div>
+                  </sc-if>
+                  <div style="{{ m.bubbleStyle }}">{{ m.text }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="border-top:1px solid #f3f4f6;padding:12px;display:flex;gap:8px">
+              <button style="padding:8px;color:#9ca3af;background:none;border:0;border-radius:12px;cursor:pointer;display:flex" style-hover="color:#7B68EE;background:#faf5ff"><dc-import name="Icon" i="paperclip" s="15" hint-size="15px,15px"></dc-import></button>
+              <button style="padding:8px;color:#9ca3af;background:none;border:0;border-radius:12px;cursor:pointer;display:flex" style-hover="color:#7B68EE;background:#faf5ff"><dc-import name="Icon" i="mic" s="15" hint-size="15px,15px"></dc-import></button>
+              <input value="{{ tutorInput }}" onChange="{{ tutorChange }}" onKeyDown="{{ tutorKey }}" placeholder="{{ tutorPlaceholder }}" style="flex:1;border:1px solid #e5e7eb;border-radius:12px;padding:8px 16px;font-size:14px;font-family:inherit;color:#374151;outline:none">
+              <button onClick="{{ tutorSend }}" style="background:#7B68EE;color:#fff;border:0;padding:10px;border-radius:12px;cursor:pointer;display:flex" style-hover="background:#6A58DC"><dc-import name="Icon" i="send" s="15" hint-size="15px,15px"></dc-import></button>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isProgreso }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
+            <span style="white-space:nowrap">📊 Ajustes</span>
+            <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Mi Progreso</span></span>
+          </nav>
+          <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:32px;font-weight:700;color:#1A1040;margin:0 0 24px">📊 Tu Progreso en CORA</h1>
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+              <h2 style="font-weight:700;color:#1A1040;font-size:14px;margin:0">Progreso General</h2>
+              <span style="font-size:24px;line-height:32px;font-weight:900;color:#7B68EE">{{ overallLabel }}</span>
+            </div>
+            <div style="height:8px;background:#f3f4f6;border-radius:9999px;overflow:hidden;margin-bottom:16px"><div style="height:100%;background:#7B68EE;border-radius:9999px;transition:all .7s;width:{{ overallPct }}"></div></div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ progressGroups }}" as="g" hint-placeholder-count="3">
+                <div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;color:#6b7280;margin-bottom:4px">
+                    <span style="font-weight:500">{{ g.label }}</span><span>{{ g.count }}</span>
+                  </div>
+                  <div style="height:8px;background:#f3f4f6;border-radius:9999px;overflow:hidden"><div style="{{ g.barStyle }}"></div></div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <h2 style="font-weight:700;color:#1A1040;font-size:14px;margin:0 0 12px">Desglose — Recomendador</h2>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{ recBreakdown }}" as="r" hint-placeholder-count="7">
+                <div style="display:flex;align-items:center;gap:8px;font-size:12px">
+                  <sc-if value="{{ r.done }}" hint-placeholder-val="{{ false }}"><dc-import name="Icon" i="check-circle" s="13" c="#22c55e" hint-size="13px,13px"></dc-import></sc-if>
+                  <sc-if value="{{ r.pending }}" hint-placeholder-val="{{ true }}"><div style="width:14px;height:14px;border-radius:9999px;border:2px solid #e5e7eb"></div></sc-if>
+                  <span style="{{ r.style }}">{{ r.name }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="background:linear-gradient(to bottom right,#faf5ff,#eef2ff);border:1px solid #f3e8ff;border-radius:16px;padding:20px;margin-bottom:16px">
+            <h2 style="font-weight:700;color:#1A1040;font-size:14px;margin:0 0 16px">✨ Tu Progreso en XP</h2>
+            <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:8px">
+              <div><p style="font-size:30px;line-height:36px;font-weight:900;color:#7B68EE;margin:0">{{ xpLabel }}</p><p style="font-size:12px;color:#6b7280;margin:0">XP acumulados</p></div>
+              <div style="text-align:right"><p style="font-size:14px;font-weight:700;color:#4A3FA0;margin:0">Nivel: Explorador</p><p style="font-size:12px;color:#6b7280;margin:0">Próximo: {{ xpNext }} XP</p></div>
+            </div>
+            <div style="height:8px;background:#f3f4f6;border-radius:9999px;overflow:hidden;margin-bottom:12px"><div style="height:100%;background:#7B68EE;border-radius:9999px;transition:all .7s;width:{{ xpPct }}"></div></div>
+            <div style="display:flex;align-items:center;gap:8px;background:#ffedd5;border-radius:12px;padding:8px 12px;width:fit-content">
+              <dc-import name="Icon" i="flame" s="13" c="#f97316" hint-size="13px,13px"></dc-import>
+              <span style="font-size:12px;font-weight:700;color:#c2410c">🔥 {{ streak }} días consecutivos</span>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <h2 style="font-weight:700;color:#1A1040;font-size:14px;margin:0 0 12px">🎯 ¿Cómo gano XP?</h2>
+            <div>
+              <sc-for list="{{ xpTable }}" as="x" hint-placeholder-count="8">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f9fafb;font-size:12px">
+                  <span style="color:#4b5563">{{ x.act }}</span><span style="font-weight:700;color:#7B68EE">{{ x.xp }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <h2 style="font-weight:700;color:#1A1040;font-size:14px;margin:0 0 12px">📈 Estadísticas Detalladas</h2>
+            <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;font-size:12px">
+              <div>
+                <p style="font-weight:600;color:#374151;margin:0 0 6px">Simulacros:</p>
+                <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:2px;color:#6b7280">
+                  <li>Total: <strong>3</strong></li><li>Promedio: <strong>76/100</strong></li><li>Mejor: <strong>85/100 (Matemática)</strong></li>
+                </ul>
+              </div>
+              <div>
+                <p style="font-weight:600;color:#374151;margin:0 0 6px">Flashcards:</p>
+                <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:2px;color:#6b7280">
+                  <li>Sets: <strong>12</strong></li><li>Tarjetas: <strong>284</strong></li><li>Dominadas: <strong>67%</strong></li>
+                </ul>
+              </div>
+            </div>
+            <button style="margin-top:16px;width:100%;border:1px solid #e5e7eb;background:#fff;border-radius:12px;padding:10px 0;font-size:12px;font-weight:500;color:#4b5563;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:inherit" style-hover="background:#f9fafb"><dc-import name="Icon" i="download" s="13" hint-size="13px,13px"></dc-import>Descargar reporte completo en PDF</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isPerfil }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
+            <span style="white-space:nowrap">👤 Ajustes</span>
+            <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Mi Perfil</span></span>
+          </nav>
+          <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:32px;font-weight:700;color:#1A1040;margin:0 0 24px">👤 Mi Perfil</h1>
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;display:flex;align-items:center;gap:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <div style="width:64px;height:64px;border-radius:9999px;background:linear-gradient(to bottom right,#c084fc,#4f46e5);display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px;line-height:32px;font-weight:700;flex-shrink:0">A</div>
+            <div style="flex:1">
+              <h2 style="font-weight:700;color:#1A1040;margin:0;font-size:16px">{{ studentName }}</h2>
+              <p style="font-size:12px;color:#6b7280;margin:0">alejandro.garcia@continental.edu.pe</p>
+              <p style="font-size:12px;color:#7B68EE;margin:0">Ciclo 1 · Ingeniería Comercial</p>
+            </div>
+            <button onClick="{{ toggleEditing }}" style="font-size:12px;color:#7B68EE;background:none;border:0;cursor:pointer;display:flex;align-items:center;gap:4px;font-family:inherit" style-hover="text-decoration:underline"><dc-import name="Icon" i="edit" s="12" hint-size="12px,12px"></dc-import>{{ editLabel }}</button>
+          </div>
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <h2 style="font-weight:700;color:#1A1040;font-size:14px;margin:0 0 16px">📝 Información Personal</h2>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ personalFields }}" as="f" hint-placeholder-count="3">
+                <div>
+                  <label style="font-size:12px;color:#9ca3af;margin-bottom:4px;display:block">{{ f.label }}</label>
+                  <input defaultValue="{{ f.value }}" disabled="{{ f.disabled }}" style="{{ f.style }}">
+                </div>
+              </sc-for>
+            </div>
+            <sc-if value="{{ editing }}" hint-placeholder-val="{{ false }}">
+              <button style="margin-top:16px;background:#7B68EE;color:#fff;border:0;border-radius:12px;padding:8px 20px;font-size:12px;font-weight:500;display:flex;align-items:center;gap:6px;cursor:pointer;font-family:inherit" style-hover="background:#6A58DC"><dc-import name="Icon" i="save" s="13" hint-size="13px,13px"></dc-import>Guardar cambios</button>
+            </sc-if>
+          </div>
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <h2 style="font-weight:700;color:#1A1040;font-size:14px;margin:0 0 12px">📚 Información Académica</h2>
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f9fafb"><span style="font-size:12px;color:#9ca3af">Universidad</span><span style="font-size:12px;font-weight:500;color:#374151">Universidad Continental</span></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f9fafb"><span style="font-size:12px;color:#9ca3af">Carrera</span><span style="font-size:12px;font-weight:500;color:#374151">Ingeniería Comercial</span></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f9fafb"><span style="font-size:12px;color:#9ca3af">Ciclo actual</span><span style="font-size:12px;font-weight:500;color:#374151">1° Ciclo</span></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0"><span style="font-size:12px;color:#9ca3af">Código de alumno</span><span style="font-size:12px;font-weight:500;color:#374151">UC-2024-0123</span></div>
+            <button style="margin-top:12px;font-size:12px;color:#7B68EE;background:none;border:0;padding:0;cursor:pointer;display:flex;align-items:center;gap:4px;font-family:inherit" style-hover="text-decoration:underline"><dc-import name="Icon" i="download" s="11" hint-size="11px,11px"></dc-import>Descargar constancia</button>
+          </div>
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <h2 style="font-weight:700;color:#1A1040;font-size:14px;margin:0 0 12px">🔐 Privacidad y Datos</h2>
+            <label style="display:flex;align-items:center;gap:12px;padding:8px 0;cursor:pointer"><input type="checkbox" defaultChecked="{{ true }}" style="width:16px;height:16px;accent-color:#7B68EE;border-radius:4px"><span style="font-size:12px;color:#4b5563">Compartir mi progreso con tutores</span></label>
+            <label style="display:flex;align-items:center;gap:12px;padding:8px 0;cursor:pointer"><input type="checkbox" defaultChecked="{{ true }}" style="width:16px;height:16px;accent-color:#7B68EE;border-radius:4px"><span style="font-size:12px;color:#4b5563">Recibir sugerencias personalizadas</span></label>
+            <label style="display:flex;align-items:center;gap:12px;padding:8px 0;cursor:pointer"><input type="checkbox" defaultChecked="{{ true }}" style="width:16px;height:16px;accent-color:#7B68EE;border-radius:4px"><span style="font-size:12px;color:#4b5563">Aparecer en leaderboard anónimo</span></label>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isConfig }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
+            <span style="white-space:nowrap">⚙️ Ajustes</span>
+            <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Configuración</span></span>
+          </nav>
+          <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:32px;font-weight:700;color:#1A1040;margin:0 0 24px">⚙️ Configuración</h1>
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <h2 style="font-weight:700;color:#1A1040;font-size:14px;margin:0 0 16px">♿ Accesibilidad — Tamaño de texto</h2>
+            <div style="display:flex;gap:8px">
+              <sc-for list="{{ fontSizes }}" as="f" hint-placeholder-count="3">
+                <button onClick="{{ f.onClick }}" style="{{ f.style }}">{{ f.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <h2 style="font-weight:700;color:#1A1040;font-size:14px;margin:0 0 16px">🎨 Tema Visual</h2>
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div style="display:flex;align-items:center;gap:8px">
+                <dc-import name="Icon" i="{{ themeIcon }}" s="15" c="{{ themeIconColor }}" hint-size="15px,15px"></dc-import>
+                <span style="font-size:14px;color:#374151">{{ themeLabel }}</span>
+              </div>
+              <button onClick="{{ toggleDark }}" style="{{ darkTrackStyle }}"><span style="{{ darkKnobStyle }}"></span></button>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <h2 style="font-weight:700;color:#1A1040;font-size:14px;margin:0 0 12px">🔔 Notificaciones</h2>
+            <sc-for list="{{ notifRows }}" as="n" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f9fafb">
+                <div>
+                  <p style="font-size:12px;font-weight:500;color:#374151;margin:0">{{ n.label }}</p>
+                  <p style="font-size:10px;color:#9ca3af;margin:0">{{ n.desc }}</p>
+                </div>
+                <button onClick="{{ n.onClick }}" style="{{ n.trackStyle }}"><span style="{{ n.knobStyle }}"></span></button>
+              </div>
+            </sc-for>
+          </div>
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <h2 style="font-weight:700;color:#1A1040;font-size:14px;margin:0 0 12px">ℹ️ Información y Ayuda</h2>
+            <div>
+              <sc-for list="{{ helpLinks }}" as="h" hint-placeholder-count="5">
+                <button style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:8px 0;font-size:12px;color:#4b5563;background:none;border:0;cursor:pointer;font-family:inherit" style-hover="color:#7B68EE">
+                  <span>{{ h.label }}</span><dc-import name="Icon" i="chevron-right" s="13" c="#9ca3af" hint-size="13px,13px"></dc-import>
+                </button>
+              </sc-for>
+            </div>
+            <div style="margin-top:16px;padding-top:16px;border-top:1px solid #f3f4f6">
+              <p style="font-size:10px;color:#9ca3af;margin:0 0 12px">CORA 2.0 — Versión 2.1.0 — © 2026 Universidad Continental</p>
+              <button style="width:100%;border:1px solid #fecaca;background:#fff;color:#ef4444;border-radius:12px;padding:10px 0;font-size:12px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:inherit" style-hover="background:#fef2f2"><dc-import name="Icon" i="log-out" s="13" hint-size="13px,13px"></dc-import>Cerrar sesión</button>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+    </main>
+  </div>
+
+  <sc-if value="{{ blockedShow }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.5);padding:16px">
+      <div style="background:#fff;border-radius:16px;box-shadow:0 25px 50px -12px rgba(0,0,0,.25);padding:28px;max-width:448px;width:100%">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+          <div style="width:40px;height:40px;border-radius:9999px;background:#fef3c7;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <dc-import name="Icon" i="alert-triangle" s="18" c="#d97706" hint-size="18px,18px"></dc-import>
+          </div>
+          <h2 style="font-family:Poppins,sans-serif;font-size:16px;font-weight:700;color:#1A1040;margin:0">Acceso Bloqueado</h2>
+        </div>
+        <p style="font-size:14px;color:#4b5563;margin:0 0 4px">Debes completar primero:</p>
+        <p style="font-weight:700;color:#7B68EE;margin:0 0 12px">"{{ blockedName }}" en RECOMENDADOR</p>
+        <p style="font-size:12px;color:#9ca3af;margin:0 0 20px">Todos los análisis, rutas y recomendaciones se basan en tus respuestas del formulario.</p>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:24px">
+          <sc-for list="{{ blockedFlow }}" as="f" hint-placeholder-count="7">
+            <div style="display:flex;align-items:center;gap:8px;font-size:12px">
+              <dc-import name="Icon" i="{{ f.icon }}" s="13" c="{{ f.iconColor }}" hint-size="13px,13px"></dc-import>
+              <span style="{{ f.style }}">{{ f.name }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;gap:12px">
+          <button onClick="{{ closeBlocked }}" style="flex:1;border:1px solid #e5e7eb;background:#fff;border-radius:12px;padding:10px 0;font-size:14px;font-weight:500;color:#4b5563;cursor:pointer;font-family:inherit" style-hover="background:#f9fafb">← Volver</button>
+          <button onClick="{{ goBlocked }}" style="flex:1;background:#7B68EE;color:#fff;border:0;border-radius:12px;padding:10px 0;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit" style-hover="background:#6A58DC">{{ blockedGoLabel }}</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;startSection&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;formulario&quot;,&quot;options&quot;:[&quot;formulario&quot;,&quot;mis-rutas&quot;,&quot;ecosistema&quot;,&quot;malla&quot;,&quot;perfil-cora&quot;,&quot;horizonte&quot;,&quot;acompanamiento&quot;,&quot;practico&quot;,&quot;flashcards&quot;,&quot;tutor&quot;,&quot;progreso&quot;,&quot;perfil&quot;,&quot;configuracion&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Demo&quot;},&quot;unlockAll&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Demo&quot;},&quot;studentName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Alejandro García&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Demo&quot;}}">
+class Component extends DCLogic {
+  ROUTES = [
+    { id:1, name:"Ingeniería Comercial", match:94, top:true, tags:["Gestión","Análisis","Negocios"], desc:"Carrera enfocada en gestión, análisis y administración de empresas. Alta demanda laboral.", icon:"🏆" },
+    { id:2, name:"Administración de Empresas", match:89, top:false, tags:["Liderazgo","Estrategia","Planificación"], desc:"Formación integral en dirección, planificación y organización de empresas medianas y grandes.", icon:"📊" },
+    { id:3, name:"Marketing y Gestión Comercial", match:85, top:false, tags:["Marketing","Digital","Ventas"], desc:"Especialización en estrategias de mercado, branding y comunicación en entornos digitales.", icon:"📣" },
+    { id:4, name:"Contabilidad y Finanzas", match:81, top:false, tags:["Finanzas","Contabilidad","Análisis"], desc:"Dominio de gestión financiera, auditoría y análisis económico en organizaciones públicas y privadas.", icon:"💼" },
+    { id:5, name:"Economía", match:78, top:false, tags:["Economía","Política","Investigación"], desc:"Análisis macroeconómico y microeconómico con enfoque en políticas públicas e investigación.", icon:"📈" },
+    { id:6, name:"Ingeniería Industrial", match:74, top:false, tags:["Ingeniería","Procesos","Logística"], desc:"Optimización de procesos productivos, gestión de operaciones y sistemas industriales.", icon:"⚙️" },
+    { id:7, name:"Negocios Internacionales", match:70, top:false, tags:["Internacional","Comercio","Idiomas"], desc:"Comercio exterior, relaciones internacionales y gestión de negocios en mercados globales.", icon:"🌍" }
+  ];
+  CURRICULUM = [
+    { cycle:1, credits:10, courses:[
+      { name:"Matemática I", credits:4, type:"Teórico", professor:"Dr. Carlos Mendoza", schedule:"Lun-Mié 10-12h", modality:"Presencial", color:"blue" },
+      { name:"Química General", credits:3, type:"Teórico-Práctico", professor:"Dra. Ana Torres", schedule:"Mar-Jue 14-16h", modality:"Presencial", color:"green" },
+      { name:"Economía I", credits:3, type:"Teórico", professor:"Dr. Luis Paredes", schedule:"Vie 16-19h", modality:"Presencial", color:"blue" }]},
+    { cycle:2, credits:9, courses:[
+      { name:"Matemática II", credits:4, type:"Teórico", professor:"Dr. Carlos Mendoza", schedule:"Lun-Mié 10-12h", modality:"Presencial", color:"blue" },
+      { name:"Contabilidad I", credits:3, type:"Teórico-Práctico", professor:"Mg. Rosa Quispe", schedule:"Mar 14-17h", modality:"Presencial", color:"green" },
+      { name:"Estadística I", credits:2, type:"Práctico", professor:"Dr. Jorge Vargas", schedule:"Jue 18-20h", modality:"Presencial", color:"orange" }]},
+    { cycle:3, credits:11, courses:[
+      { name:"Fundamentos de Gestión", credits:4, type:"Teórico", professor:"Mg. Sandra Lima", schedule:"Lun-Mié 08-10h", modality:"Presencial", color:"blue" },
+      { name:"Microeconomía", credits:3, type:"Teórico", professor:"Dr. Roberto Díaz", schedule:"Mar-Jue 16-18h", modality:"Híbrido", color:"blue" },
+      { name:"Marketing I", credits:4, type:"Teórico-Práctico", professor:"Mg. Patricia Vera", schedule:"Vie 14-18h", modality:"Presencial", color:"green" }]},
+    { cycle:4, credits:10, courses:[
+      { name:"Finanzas Corporativas", credits:4, type:"Teórico-Práctico", professor:"Dr. Manuel Ríos", schedule:"Lun-Mié 10-12h", modality:"Presencial", color:"green" },
+      { name:"Gestión de Operaciones", credits:3, type:"Práctico", professor:"Mg. Claudia Santos", schedule:"Mar 14-17h", modality:"Presencial", color:"orange" },
+      { name:"Electivo I", credits:3, type:"Electivo", professor:"Por confirmar", schedule:"A elegir", modality:"Flexible", color:"purple" }]}
+  ];
+  QUESTIONS = [
+    { id:"q1", text:"¿Cuáles son tus intereses principales?", hint:"Selecciona 2-3 áreas que más te llamen la atención", type:"checkbox",
+      options:["Tecnología e Innovación","Administración y Negocios","Ingeniería","Humanidades","Ciencias Sociales","Salud","Finanzas","Marketing"] },
+    { id:"q2", text:"¿Cuál es tu fortaleza académica?", hint:"Elige el área en la que usualmente obtienes mejores notas", type:"radio",
+      options:["Cálculo y Análisis Matemático","Lenguaje y Comunicación","Ciencias Experimentales","Lógica y Razonamiento","Multidisciplinaria"] },
+    { id:"q3", text:"Después de la carrera, ¿qué buscas?", hint:"Considera tu visión profesional a largo plazo", type:"radio",
+      options:["Trabajar en empresa grande","Emprender mi propio negocio","Trabajar freelance / independiente","Investigación y docencia","Aún no sé"] },
+    { id:"q4", text:"¿Cuál es tu ritmo de aprendizaje?", hint:"Cómo aprendes mejor", type:"radio",
+      options:["Aprendo rápido, prefiero desafíos","Aprendo de forma consistente","Prefiero ir paso a paso","Mezcla de ritmos según el tema"] }
+  ];
+  RADAR = [
+    { dimension:"A — Aptitud", value:8.5 }, { dimension:"G — Gestión", value:7.2 }, { dimension:"L — Liderazgo", value:6.8 },
+    { dimension:"D — Determinación", value:8.1 }, { dimension:"E — Empatía", value:8.1 }, { dimension:"F — Flexibilidad", value:7.5 }
+  ];
+  REQ = { "mis-rutas":"formulario", "ecosistema":"mis-rutas", "malla":"ecosistema", "perfil-cora":"malla", "horizonte":"perfil-cora",
+    "acompanamiento":"horizonte", "practico":"acompanamiento", "flashcards":"acompanamiento", "tutor":"acompanamiento",
+    "progreso":"formulario", "perfil":"formulario", "configuracion":"formulario" };
+  NAMES = { "formulario":"Formulario", "mis-rutas":"Mis Rutas", "ecosistema":"Ecosistema UC y CIE", "malla":"Elijo mi Ruta",
+    "perfil-cora":"Mi Perfil CoRA", "horizonte":"Veo mi Horizonte", "acompanamiento":"Acompañamiento" };
+  FLOW = ["formulario","mis-rutas","ecosistema","malla","perfil-cora","horizonte","acompanamiento"];
+
+  state = {
+    section:null, completed:[], xp:350, streak:12, selectedRoute:null,
+    formType:null, formStep:0, formAnswers:{}, isAnalyzing:false, analysisStep:0,
+    blocked:null, hovered:null, confirmRoute:null,
+    expanded:[], added:[], openCycles:[1], extras:{}, extModal:null,
+    pPhase:"setup", pCourse:"", pTopics:["Ecuaciones cuadráticas","Funciones polinomiales","Trigonometría","Números complejos"],
+    pCustom:"", pDiff:"medium", pIndex:0, pAnswers:{}, pDetail:null,
+    fPhase:"setup", fCourse:"", fMode:"classic", fIdx:0, fFlipped:false, fRatings:{},
+    msgs:[{from:"bot",text:"¡Hola! Soy CORA, tu tutor académico disponible 24/7. ¿Cuál es tu pregunta de hoy?"},
+          {from:"bot",text:"Puedo ayudarte con dudas de matemática, química, economía y cualquier curso de tu malla curricular."}],
+    input:"", tutorCourse:"", editing:false, dark:false, fontSize:"medium",
+    notifs:{ email:true, platform:true, reminders:false }, accDone:[]
+  };
+
+  componentWillUnmount() { clearInterval(this._iv); }
+
+  nav(id) {
+    const req = this.REQ[id];
+    if (req && !this.state.completed.includes(req) && !this.props.unlockAll) { this.setState({ blocked:req }); return; }
+    this.setState({ section:id, isAnalyzing:false });
+  }
+  complete(id, gain) {
+    this.setState(s => ({ completed: s.completed.includes(id) ? s.completed : s.completed.concat([id]), xp: s.xp + gain }));
+  }
+  answer(qid, val, multi) {
+    this.setState(s => {
+      const cur = s.formAnswers[qid] || [];
+      const next = multi ? (cur.includes(val) ? cur.filter(v => v !== val) : cur.concat([val])) : [val];
+      return { formAnswers: Object.assign({}, s.formAnswers, { [qid]: next }) };
+    });
+  }
+  finish() {
+    this.setState({ isAnalyzing:true, analysisStep:0 });
+    let n = 0;
+    clearInterval(this._iv);
+    this._iv = setInterval(() => {
+      n++; this.setState({ analysisStep:n });
+      if (n >= 5) {
+        clearInterval(this._iv);
+        setTimeout(() => { this.complete("formulario", 50); this.setState({ isAnalyzing:false, section:"mis-rutas" }); }, 1200);
+      }
+    }, 1600);
+  }
+  toggleIn(key, val) {
+    this.setState(s => {
+      const cur = s[key];
+      return { [key]: cur.includes(val) ? cur.filter(v => v !== val) : cur.concat([val]) };
+    });
+  }
+
+  navItem(id, em, label) {
+    const s = this.state;
+    const active = (s.section || this.props.startSection || "formulario") === id && !s.isAnalyzing;
+    return {
+      em, label, done: s.completed.includes(id), go: () => this.nav(id),
+      style: Object.assign({ width:"100%", display:"flex", alignItems:"center", gap:"10px", padding:"10px 12px", borderRadius:"12px",
+        fontSize:"14px", fontWeight:500, border:0, cursor:"pointer", marginBottom:"2px", textAlign:"left", fontFamily:"inherit", transition:"all .15s" },
+        active ? { background:"#7B68EE", color:"#fff", boxShadow:"0 4px 6px -1px #e9d5ff,0 2px 4px -2px #e9d5ff" } : { background:"transparent", color:"#4b5563" }),
+      badgeStyle: { flexShrink:0, width:"16px", height:"16px", borderRadius:"9999px", display:"flex", alignItems:"center", justifyContent:"center",
+        background: active ? "rgba(255,255,255,.25)" : "#dcfce7" },
+      checkColor: active ? "#ffffff" : "#16a34a"
+    };
+  }
+
+  renderVals() {
+    const s = this.state;
+    const v = {};
+    v.streak = s.streak;
+    v.xpLabel = s.xp.toLocaleString();
+    v.navRec = [["formulario","⭕","Formulario"],["mis-rutas","📖","Mis Rutas"],["ecosistema","🌍","Ecosistema UC y CIE"],
+      ["malla","📋","Elijo mi Ruta"],["perfil-cora","✨","Mi Perfil CoRA"],["horizonte","🌅","Veo mi Horizonte"],
+      ["acompanamiento","⚠️","Acompañamiento"]].map(a => this.navItem(a[0], a[1], a[2]));
+    v.navAca = [["practico","📝","Práctico para examen"],["flashcards","🎴","Mis flashcards"],["tutor","👨‍🏫","Tutor CORA"]].map(a => this.navItem(a[0], a[1], a[2]));
+    v.navSet = [["progreso","📊","Mi progreso"],["perfil","👤","Perfil"],["configuracion","⚙️","Configuración"]].map(a => this.navItem(a[0], a[1], a[2]));
+
+    v.isAnalyzing = s.isAnalyzing;
+    const section = s.section || this.props.startSection || "formulario";
+    const on = id => !s.isAnalyzing && section === id;
+    v.showFormIntro = on("formulario") && !s.formType;
+    v.showFormQuestions = on("formulario") && !!s.formType;
+
+    v.analysisPct = Math.round((s.analysisStep / 5) * 100) + "%";
+    v.analysisLabel = Math.round((s.analysisStep / 5) * 100) + "%";
+    v.analysisTasks = ["Procesando tu perfil","Analizando 200+ combinaciones de carreras","Calculando compatibilidad",
+      "Generando perfil personalizado","Preparando recomendaciones"].map((t, i) => ({
+        label:t, done: s.analysisStep > i, pending: s.analysisStep <= i,
+        style:{ display:"flex", alignItems:"center", gap:"12px", fontSize:"14px", transition:"all .5s", color: s.analysisStep > i ? "#7B68EE" : "#d1d5db" }
+      }));
+
+    v.hoverQuick = () => this.setState({ hovered:"quick" });
+    v.hoverDetailed = () => this.setState({ hovered:"detailed" });
+    v.hoverNone = () => this.setState({ hovered:null });
+    v.isQuickHover = s.hovered === "quick";
+    v.isDetailedHover = s.hovered === "detailed";
+    v.pickQuick = () => this.setState({ formType:"quick", formStep:0 });
+    v.pickDetailed = () => this.setState({ formType:"detailed", formStep:0 });
+
+    const total = s.formType === "quick" ? 4 : 16;
+    const q = this.QUESTIONS[Math.min(s.formStep, this.QUESTIONS.length - 1)];
+    const answers = s.formAnswers[q.id] || [];
+    const multi = q.type === "checkbox";
+    const isLast = s.formStep >= total - 1;
+    v.qStepLabel = "Pregunta " + (s.formStep + 1) + "/" + total;
+    v.qPct = ((s.formStep + 1) / total) * 100 + "%";
+    v.qPctLabel = Math.round(((s.formStep + 1) / total) * 100) + "%";
+    v.qText = q.text; v.qHint = q.hint; v.qIsCheckbox = multi;
+    v.qOptions = q.options.map(opt => {
+      const sel = answers.includes(opt);
+      return {
+        label:opt, sel, onClick: () => this.answer(q.id, opt, multi),
+        style:{ width:"100%", display:"flex", alignItems:"center", gap:"12px", padding:"14px", borderRadius:"12px", fontSize:"14px",
+          textAlign:"left", cursor:"pointer", fontFamily:"inherit", transition:"all .15s",
+          border:"2px solid " + (sel ? "#7B68EE" : "#f3f4f6"), background: sel ? "#faf5ff" : "transparent",
+          color: sel ? "#4A3FA0" : "#374151", fontWeight: sel ? 500 : 400 },
+        boxStyle:{ width:"20px", height:"20px", borderRadius: multi ? "4px" : "9999px", display:"flex", alignItems:"center",
+          justifyContent:"center", flexShrink:0, transition:"all .15s",
+          border:"2px solid " + (sel ? "#7B68EE" : "#d1d5db"), background: sel ? "#7B68EE" : "transparent" }
+      };
+    });
+    v.qPrev = () => { if (s.formStep > 0) this.setState({ formStep: s.formStep - 1 }); };
+    v.qNext = () => { if (answers.length === 0) return; if (isLast) this.finish(); else this.setState({ formStep: s.formStep + 1 }); };
+    v.qNextLabel = isLast ? "Finalizar formulario ✓" : "Siguiente";
+    v.qShowNextIcon = !isLast;
+    v.qPrevStyle = { display:"flex", alignItems:"center", gap:"8px", padding:"10px 20px", border:"1px solid #e5e7eb", background:"#fff",
+      borderRadius:"12px", fontSize:"14px", fontWeight:500, color:"#4b5563", fontFamily:"inherit",
+      cursor: s.formStep === 0 ? "not-allowed" : "pointer", opacity: s.formStep === 0 ? 0.4 : 1 };
+    v.qNextStyle = { flex:1, display:"flex", alignItems:"center", justifyContent:"center", gap:"8px", padding:"10px 0", borderRadius:"12px",
+      fontSize:"14px", fontWeight:600, background:"#7B68EE", color:"#fff", border:0, fontFamily:"inherit",
+      cursor: answers.length === 0 ? "not-allowed" : "pointer", opacity: answers.length === 0 ? 0.4 : 1 };
+
+    v.blockedShow = !!s.blocked;
+    v.blockedName = s.blocked ? this.NAMES[s.blocked] : "";
+    v.blockedGoLabel = s.blocked ? "Ir a " + this.NAMES[s.blocked] + " →" : "";
+    v.blockedFlow = this.FLOW.map(id => {
+      const doneIt = s.completed.includes(id), isReq = id === s.blocked;
+      return { name:this.NAMES[id], icon: doneIt ? "check-circle" : isReq ? "clock" : "lock",
+        iconColor: doneIt ? "#22c55e" : isReq ? "#f59e0b" : "#d1d5db",
+        style:{ color: doneIt ? "#15803d" : isReq ? "#b45309" : "#9ca3af", fontWeight: isReq ? 600 : 400 } };
+    });
+    v.closeBlocked = () => this.setState({ blocked:null });
+    v.goBlocked = () => this.setState({ section:s.blocked, blocked:null, isAnalyzing:false });
+
+    v.isRutas = on("mis-rutas");
+    v.hasSelected = !!s.selectedRoute;
+    v.selectedRouteName = s.selectedRoute || "";
+    v.onGoBackForm = () => this.setState({ formType:null, formStep:0, section:"formulario" });
+    v.routes = this.ROUTES.map(r => {
+      const sel = s.selectedRoute === r.name;
+      const mc = r.match >= 90 ? "#22c55e" : r.match >= 80 ? "#fbbf24" : "#3b82f6";
+      return {
+        title: r.icon + " " + r.name, desc:r.desc, top:r.top, matchLabel: r.match + "%",
+        tagList: r.tags.map(t => ({ label:"#" + t })),
+        barStyle:{ height:"100%", background:mc, borderRadius:"9999px", width: r.match + "%" },
+        cardStyle:{ background:"#fff", borderRadius:"16px", padding:"20px", transition:"all .15s",
+          border:"2px solid " + (sel ? "#7B68EE" : "#f3f4f6"),
+          boxShadow: sel ? "0 10px 15px -3px #f3e8ff,0 4px 6px -4px #f3e8ff" : "none" },
+        btnLabel: sel ? "✓ Seleccionada" : "Aceptar ruta",
+        btnStyle:{ flex:1, borderRadius:"12px", padding:"8px 0", fontSize:"12px", fontWeight:500, border:0, cursor:"pointer",
+          fontFamily:"inherit", background: sel ? "#dcfce7" : "#7B68EE", color: sel ? "#15803d" : "#fff" },
+        onAccept: () => this.setState({ confirmRoute:r }),
+        tipText: r.match + "% de compatibilidad = qué tan probable es que esta carrera sea ideal para ti. Mayor % = Mejor match."
+      };
+    });
+    v.confirmShow = !!s.confirmRoute;
+    v.confirmName = s.confirmRoute ? s.confirmRoute.name : "";
+    v.cancelConfirm = () => this.setState({ confirmRoute:null });
+    v.doConfirm = () => {
+      const n = s.confirmRoute.name;
+      this.setState({ selectedRoute:n, confirmRoute:null, section:"ecosistema" });
+      this.complete("mis-rutas", 100);
+    };
+
+    v.isEco = on("ecosistema");
+    const ex = id => s.expanded.includes(id);
+    v.ecoToggleExtra = () => this.toggleIn("expanded", "extra");
+    v.ecoToggleInter = () => this.toggleIn("expanded", "inter");
+    v.ecoToggleIdiomas = () => this.toggleIn("expanded", "idiomas");
+    v.ecoExtraOpen = ex("extra"); v.ecoExtraClosed = !ex("extra"); v.ecoExtraChevron = ex("extra") ? "chevron-up" : "chevron-down";
+    v.ecoInterOpen = ex("inter"); v.ecoInterClosed = !ex("inter"); v.ecoInterChevron = ex("inter") ? "chevron-up" : "chevron-down";
+    v.ecoIdiomasOpen = ex("idiomas"); v.ecoIdiomasClosed = !ex("idiomas"); v.ecoIdiomasChevron = ex("idiomas") ? "chevron-up" : "chevron-down";
+    const ecoCnt = ["extra","inter","idiomas"].filter(ex).length;
+    v.ecoCountLabel = ecoCnt + "/3";
+    v.ecoPct = (ecoCnt / 3) * 100 + "%";
+    const mkEco = it => {
+      const added = s.added.includes(it.name);
+      const free = it.cost === "GRATUITO" || it.cost === "Beca disponible";
+      return {
+        name:it.name, meta: it.mode + " · " + it.dur, cost:it.cost,
+        costStyle:{ fontSize:"12px", fontWeight:700, padding:"2px 8px", borderRadius:"9999px",
+          background: free ? "#dcfce7" : "#f3f4f6", color: free ? "#15803d" : "#4b5563" },
+        btnLabel: added ? "✓ Agregado" : "+ Agregar",
+        btnStyle:{ fontSize:"12px", padding:"4px 12px", borderRadius:"8px", fontWeight:500, border:0, cursor:"pointer",
+          fontFamily:"inherit", background: added ? "#dcfce7" : "#7B68EE", color: added ? "#15803d" : "#fff" },
+        onAdd: () => this.toggleIn("added", it.name)
+      };
+    };
+    v.ecoExtra = [
+      { name:"Liderazgo Empresarial Avanzado", mode:"Virtual", dur:"4 semanas", cost:"GRATUITO" },
+      { name:"Emprendimiento Digital", mode:"Presencial", dur:"6 semanas", cost:"GRATUITO" },
+      { name:"Comunicación Efectiva", mode:"Virtual", dur:"3 semanas", cost:"S/. 150" }
+    ].map(mkEco);
+    v.ecoInter = [
+      { name:"Univ. de Salamanca", mode:"🇪🇸 España", dur:"Intercambio semestral", cost:"Beca disponible" },
+      { name:"ESADE Business School", mode:"🇪🇸 España", dur:"Summer School", cost:"USD 2,500" },
+      { name:"UC Berkeley Extension", mode:"🇺🇸 USA", dur:"Online Certificate", cost:"USD 1,800" }
+    ].map(mkEco);
+    v.ecoLangs = ["🇬🇧 Inglés (incluido)","🇵🇹 Portugués","🇫🇷 Francés","🇨🇳 Chino Mandarín","🇩🇪 Alemán","🇯🇵 Japonés"].map(l => ({ label:l }));
+    const allExp = ecoCnt === 3;
+    v.ecoCtaLabel = allExp ? "✨ Aceptar Ruta → Continuar a Malla" : "🔒 Expande las 3 secciones disponibles para continuar";
+    v.ecoCtaStyle = Object.assign({ width:"100%", padding:"16px 0", borderRadius:"16px", fontSize:"14px", fontWeight:700, border:0,
+      fontFamily:"inherit", transition:"all .15s", position:"sticky", bottom:"16px" },
+      allExp ? { background:"#7B68EE", color:"#fff", cursor:"pointer", boxShadow:"0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff" }
+             : { background:"#f3f4f6", color:"#9ca3af", cursor:"not-allowed" });
+    v.ecoCtaClick = () => { if (allExp) { this.complete("ecosistema", 75); this.setState({ section:"malla" }); } };
+
+    v.isMalla = on("malla");
+    v.mallaCareer = s.selectedRoute || "Ingeniería Comercial";
+    const CMAP = { blue:["#eff6ff","#bfdbfe","#1e40af"], green:["#f0fdf4","#bbf7d0","#166534"],
+      orange:["#fff7ed","#fed7aa","#9a3412"], purple:["#faf5ff","#e9d5ff","#6b21a8"] };
+    v.cycles = this.CURRICULUM.map(cyc => {
+      const list = s.extras[cyc.cycle] || [];
+      return {
+        title: "Ciclo " + cyc.cycle, creditsLabel: "📌 " + cyc.credits + " créditos",
+        courses: cyc.courses.map(c => ({
+          name:c.name, professor:c.professor, schedule:c.schedule,
+          meta: c.credits + " cr · " + c.type,
+          style:{ border:"1px solid " + CMAP[c.color][1], background:CMAP[c.color][0], color:CMAP[c.color][2],
+            borderRadius:"12px", padding:"10px", fontSize:"12px" }
+        })),
+        hasExtras: list.length > 0,
+        extras: list.map((e, i) => ({ label: (i + 1) + ". " + e.split("(")[0].trim(),
+          onRemove: () => this.setState(st => ({ extras: Object.assign({}, st.extras, { [cyc.cycle]: (st.extras[cyc.cycle] || []).filter((_, j) => j !== i) }) })) })),
+        canAdd: list.length < 3,
+        onAdd: () => this.setState({ extModal: cyc.cycle })
+      };
+    });
+    v.mallaConfirm = () => { this.complete("malla", 150); this.setState({ section:"perfil-cora" }); };
+    const extList = s.extModal !== null ? (s.extras[s.extModal] || []) : [];
+    v.extModalShow = s.extModal !== null;
+    v.extModalTitle = "✨ Extracurriculares — Ciclo " + s.extModal;
+    v.extModalCount = "Seleccionados: " + extList.length + "/3";
+    v.extModalClose = () => this.setState({ extModal:null });
+    v.extOptions = ["Liderazgo Empresarial (GRATUITO)","Inglés B1 (INCLUIDO)","Emprendimiento Digital (GRATUITO)","Excel Avanzado (S/. 80)","Power BI Intermedio (S/. 120)"].map(opt => {
+      const isAdded = extList.includes(opt), full = extList.length >= 3, disabled = !isAdded && full;
+      return {
+        label:opt, icon: isAdded ? "check" : "plus", iconColor: isAdded ? "#7B68EE" : "#9ca3af",
+        style:{ width:"100%", display:"flex", alignItems:"center", justifyContent:"space-between", padding:"12px", borderRadius:"12px",
+          fontSize:"14px", textAlign:"left", fontFamily:"inherit", transition:"all .15s", background: isAdded ? "#faf5ff" : "#fff",
+          border:"1px solid " + (isAdded ? "#7B68EE" : "#f3f4f6"), color: isAdded ? "#7B68EE" : "#374151",
+          opacity: disabled ? 0.4 : 1, cursor: disabled ? "not-allowed" : "pointer" },
+        onClick: () => { if (disabled) return;
+          this.setState(st => { const cur = st.extras[s.extModal] || [];
+            return { extras: Object.assign({}, st.extras, { [s.extModal]: isAdded ? cur.filter(e => e !== opt) : cur.concat([opt]) }) }; }); }
+      };
+    });
+
+    v.isPerfilCora = on("perfil-cora");
+    v.perfilCoraNext = () => { this.complete("perfil-cora", 60); this.setState({ section:"horizonte" }); };
+    v.dims = [
+      { k:"A", label:"Aptitud Académica", score:8.5, desc:"Fortaleza en temas teóricos y comprensión de conceptos académicos.", tip:"Se calcula analizando cómo aprendes, tu afinidad a diferentes áreas y tus resultados académicos estimados." },
+      { k:"G", label:"Gestión", score:7.2, desc:"Capacidad para organizar proyectos, recursos y equipos eficientemente.", tip:"Evalúa tu orientación hacia la planificación y administración de tareas y recursos." },
+      { k:"L", label:"Liderazgo", score:6.8, desc:"Habilidad para guiar, motivar e influir en grupos de trabajo.", tip:"Analiza tu disposición a tomar iniciativa y dirigir equipos en entornos desafiantes." },
+      { k:"D", label:"Determinación", score:8.1, desc:"Persistencia y enfoque para alcanzar metas a largo plazo.", tip:"Mide tu capacidad para mantener el esfuerzo constante ante obstáculos." },
+      { k:"E", label:"Empatía", score:8.1, desc:"Capacidad de comprender y conectar con perspectivas de otros.", tip:"Evalúa tu sensibilidad social y habilidad para trabajar en entornos colaborativos." },
+      { k:"F", label:"Flexibilidad", score:7.5, desc:"Adaptabilidad ante cambios, nuevos aprendizajes y contextos variados.", tip:"Analiza qué tan bien te adaptas a situaciones nuevas e inciertas." }
+    ].map(d => ({ k:d.k, label:d.label, desc:d.desc, tip:d.tip, scoreLabel: d.score + "/10",
+      barStyle:{ height:"100%", borderRadius:"9999px", width:(d.score / 10) * 100 + "%",
+        background: d.score >= 8 ? "#22c55e" : d.score >= 7 ? "#7B68EE" : "#fbbf24" } }));
+
+    const cx = 300, cy = 130, R = 100, N = this.RADAR.length;
+    const pt = (i, rad) => { const a = -Math.PI / 2 + (i * 2 * Math.PI) / N;
+      return [cx + rad * Math.cos(a), cy + rad * Math.sin(a)]; };
+    const poly = rad => this.RADAR.map((_, i) => pt(i, rad).map(n => n.toFixed(1)).join(",")).join(" ");
+    v.radarRings = [1,2,3,4,5].map(k => ({ points: poly(R * k / 5) }));
+    v.radarSpokes = this.RADAR.map((_, i) => { const p = pt(i, R); return { x1:cx, y1:cy, x2:p[0].toFixed(1), y2:p[1].toFixed(1) }; });
+    v.radarArea = this.RADAR.map((d, i) => pt(i, R * d.value / 10).map(n => n.toFixed(1)).join(",")).join(" ");
+    v.radarDots = this.RADAR.map((d, i) => { const p = pt(i, R * d.value / 10); return { x:p[0].toFixed(1), y:p[1].toFixed(1) }; });
+    v.radarLabels = this.RADAR.map((d, i) => { const p = pt(i, R + 22);
+      const anchor = Math.abs(p[0] - cx) < 6 ? "middle" : p[0] > cx ? "start" : "end";
+      return { x:p[0].toFixed(1), y:(p[1] + 3).toFixed(1), anchor, text:d.dimension }; });
+    v.radarTicks = [0,2,4,6,8,10].map(t => ({ x:cx + 5, y:(cy - R * t / 10 + 3).toFixed(1), text:String(t) }));
+
+    v.isHorizonte = on("horizonte");
+    v.horizonteNext = () => { this.complete("horizonte", 60); this.setState({ section:"acompanamiento" }); };
+    v.stages = [
+      { period:"Año 1-2", title:"Junior Analyst", salary:"S/. 1,500–2,200/mes", skills:["Excel avanzado","Análisis de datos","Comunicación efectiva"], companies:["BCP","Interbank","Alicorp","Gloria"], icon:"💼", grad:"linear-gradient(to bottom right,#60a5fa,#2563eb)" },
+      { period:"Año 3-4", title:"Senior Analyst", salary:"S/. 2,800–4,000/mes", skills:["Power BI","Gestión de proyectos","Liderazgo de equipo"], companies:["McKinsey","Deloitte","BBVA","Scotiabank"], icon:"📊", grad:"linear-gradient(to bottom right,#7B68EE,#4f46e5)" },
+      { period:"Año 5+", title:"Manager Operaciones", salary:"S/. 4,500–7,000/mes", skills:["Planificación estratégica","Gestión P&L","Negociación"], companies:["Empresas Top 100","Startups Serie B+","Internacionales"], icon:"👔", grad:"linear-gradient(to bottom right,#6366f1,#7e22ce)" }
+    ].map(st => ({ period:st.period, title:st.title, salary:st.salary, icon:st.icon,
+      skills: st.skills.map(x => ({ label:x })), companies: st.companies.join(", "),
+      iconStyle:{ width:"48px", height:"48px", borderRadius:"16px", background:st.grad, display:"flex", alignItems:"center",
+        justifyContent:"center", fontSize:"24px", lineHeight:"32px", marginBottom:"16px",
+        boxShadow:"0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1)" } }));
+    const salary = [["Junior",1850],["Semi-Senior",2800],["Senior",4000],["Manager",5500],["Director",8500]];
+    const bMax = 9000, bTop = 8, bBottom = 168, bLeft = 56, bRight = 880;
+    const bandW = (bRight - bLeft) / salary.length;
+    v.barGrid = [0,2250,4500,6750,9000].map(t => ({ x1:bLeft, y:(bBottom - (t / bMax) * (bBottom - bTop)).toFixed(1) }));
+    v.bars = salary.map((d, i) => {
+      const h = (d[1] / bMax) * (bBottom - bTop);
+      return { x:(bLeft + i * bandW + bandW * 0.2).toFixed(1), w:(bandW * 0.6).toFixed(1), h:h.toFixed(1), y:(bBottom - h).toFixed(1) };
+    });
+    v.barLabels = salary.map(d => ({ label:d[0] }));
+
+    v.isAcomp = on("acompanamiento");
+    v.goTutor = () => this.nav("tutor");
+    v.acompFinish = () => this.complete("acompanamiento", 80);
+    v.weeks = [
+      { w:"Semana 1", items:[{ id:"s1a1", label:"📞 Reunión con tutor académico", cta:"Agendar" }, { id:"s1a2", label:"📚 Leer 'Guía del estudiante'", cta:"Marcar completado" }] },
+      { w:"Semana 4", items:[{ id:"s4a1", label:"📝 Simulacro de Matemática I", cta:"Ir a simulacro" }] },
+      { w:"Semana 8", items:[{ id:"s8a1", label:"📊 Revisión de progreso con tutor", cta:"Ver progreso" }] },
+      { w:"Semana 12", items:[{ id:"s12a1", label:"📚 Preparación examen final", cta:"Ver recursos" }] }
+    ].map(wk => ({ label:"📅 " + wk.w, items: wk.items.map(a => {
+      const isDone = s.accDone.includes(a.id);
+      return { label:a.label, done:isDone, pending:!isDone, cta: isDone ? "✓ Hecho" : a.cta,
+        rowStyle:{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"12px", borderRadius:"12px",
+          marginBottom:"8px", transition:"all .15s",
+          border:"1px solid " + (isDone ? "#bbf7d0" : "#f3f4f6"), background: isDone ? "#f0fdf4" : "transparent" },
+        labelStyle:{ fontSize:"12px", color: isDone ? "#15803d" : "#374151", textDecoration: isDone ? "line-through" : "none" },
+        btnStyle:{ fontSize:"12px", padding:"6px 12px", borderRadius:"8px", fontWeight:500, flexShrink:0, border:0, cursor:"pointer",
+          fontFamily:"inherit", background: isDone ? "#dcfce7" : "#7B68EE", color: isDone ? "#15803d" : "#fff" },
+        onClick: () => this.toggleIn("accDone", a.id) };
+    }) }));
+
+    const QS = [
+      { q:"¿Cuál es la solución de x² + 5x = 0?", opts:["x = 0","x = 5","x = 0 o x = -5","x = -5"], correct:2, topic:"Ecuaciones cuadráticas" },
+      { q:"¿Cuánto es sin(45°)?", opts:["1","0","√2/2","√3/2"], correct:2, topic:"Trigonometría" },
+      { q:"El dominio de f(x) = √(x-2) es:", opts:["x > 2","x ≥ 2","x < 2","Todos los reales"], correct:1, topic:"Funciones polinomiales" },
+      { q:"¿Cuál es el módulo de 3 + 4i?", opts:["3","4","5","7"], correct:2, topic:"Números complejos" },
+      { q:"lím(x→0) [sin(x)/x] =", opts:["0","∞","1","No existe"], correct:2, topic:"Límites" }
+    ];
+    const isP = on("practico");
+    v.isPracticoSetup = isP && s.pPhase === "setup";
+    v.isPracticoQuiz = isP && s.pPhase === "quiz" && s.pDetail === null;
+    v.isPracticoDetail = isP && s.pPhase === "quiz" && s.pDetail !== null;
+    v.isPracticoResults = isP && s.pPhase === "results";
+    const selBtn = sel => ({ width:"100%", textAlign:"left", padding:"12px 16px", borderRadius:"12px", fontSize:"14px",
+      fontFamily:"inherit", cursor:"pointer", transition:"all .15s", background: sel ? "#faf5ff" : "#fff",
+      border:"2px solid " + (sel ? "#7B68EE" : "#f3f4f6"), color: sel ? "#7B68EE" : "#374151", fontWeight: sel ? 500 : 400 });
+    v.pCourses = ["Matemática I","Química General","Economía I","Contabilidad I","Estadística I"].map(c => ({
+      label:c, style:selBtn(s.pCourse === c), onClick: () => this.setState({ pCourse:c }) }));
+    v.pTopics = ["Ecuaciones cuadráticas","Funciones polinomiales","Trigonometría","Números complejos","Límites"].map(t => {
+      const sel = s.pTopics.includes(t);
+      return { label:t, sel, onClick: () => this.toggleIn("pTopics", t),
+        style:{ width:"100%", display:"flex", alignItems:"center", gap:"12px", padding:"10px 16px", borderRadius:"12px", fontSize:"14px",
+          textAlign:"left", fontFamily:"inherit", cursor:"pointer", transition:"all .15s", background: sel ? "#faf5ff" : "#fff",
+          border:"2px solid " + (sel ? "#7B68EE" : "#f3f4f6"), color: sel ? "#7B68EE" : "#374151" },
+        boxStyle:{ width:"16px", height:"16px", borderRadius:"4px", display:"flex", alignItems:"center", justifyContent:"center",
+          flexShrink:0, border:"2px solid " + (sel ? "#7B68EE" : "#d1d5db"), background: sel ? "#7B68EE" : "transparent" } };
+    });
+    v.pCustom = s.pCustom;
+    v.pCustomChange = e => this.setState({ pCustom:e.target.value });
+    v.pDiffs = [
+      { id:"basic", em:"🟢", label:"Básico (Práctico)", desc:"Preguntas más simples. Ideal para empezar.", rec:false },
+      { id:"medium", em:"🟡", label:"Intermedio (Más realista)", desc:"Combinación de niveles. Parecido al examen real.", rec:true },
+      { id:"advanced", em:"🔴", label:"Avanzado (Como examen real)", desc:"Solo si estás preparado.", rec:false }
+    ].map(d => ({ em:d.em, label:d.label, desc:d.desc, rec:d.rec, onClick: () => this.setState({ pDiff:d.id }),
+      style:{ width:"100%", textAlign:"left", padding:"12px 16px", borderRadius:"12px", fontFamily:"inherit", cursor:"pointer",
+        transition:"all .15s", background: s.pDiff === d.id ? "#faf5ff" : "#fff",
+        border:"2px solid " + (s.pDiff === d.id ? "#7B68EE" : "#f3f4f6") } }));
+    v.pStartStyle = { width:"100%", background:"#7B68EE", color:"#fff", border:0, borderRadius:"16px", padding:"16px 0", fontSize:"14px",
+      fontWeight:700, fontFamily:"inherit", display:"flex", alignItems:"center", justifyContent:"center", gap:"8px",
+      boxShadow:"0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff",
+      cursor: s.pCourse ? "pointer" : "not-allowed", opacity: s.pCourse ? 1 : 0.5 };
+    v.pStart = () => { if (s.pCourse) this.setState({ pPhase:"quiz", pIndex:0, pAnswers:{}, pDetail:null }); };
+
+    const pq = QS[s.pIndex] || QS[0];
+    const pAns = s.pAnswers[s.pIndex];
+    v.pQLabel = "Pregunta " + (s.pIndex + 1) + "/" + QS.length;
+    v.pQPct = ((s.pIndex + 1) / QS.length) * 100 + "%";
+    v.pQTopic = pq.topic; v.pQText = pq.q;
+    v.pQOptions = pq.opts.map(opt => {
+      const sel = pAns === opt;
+      return { label:opt, sel, onClick: () => this.setState(st => ({ pAnswers: Object.assign({}, st.pAnswers, { [st.pIndex]: opt }) })),
+        style:{ width:"100%", display:"flex", alignItems:"center", gap:"12px", padding:"14px 16px", borderRadius:"12px", fontSize:"14px",
+          textAlign:"left", fontFamily:"inherit", cursor:"pointer", transition:"all .15s", background: sel ? "#faf5ff" : "#fff",
+          border:"2px solid " + (sel ? "#7B68EE" : "#f3f4f6"), color: sel ? "#4A3FA0" : "#374151", fontWeight: sel ? 500 : 400 },
+        dotStyle:{ width:"20px", height:"20px", borderRadius:"9999px", display:"flex", alignItems:"center", justifyContent:"center",
+          flexShrink:0, border:"2px solid " + (sel ? "#7B68EE" : "#d1d5db"), background: sel ? "#7B68EE" : "transparent" } };
+    });
+    v.pPrev = () => this.setState({ pIndex: Math.max(0, s.pIndex - 1) });
+    v.pPrevStyle = { display:"flex", alignItems:"center", gap:"8px", padding:"10px 20px", border:"1px solid #e5e7eb", background:"#fff",
+      borderRadius:"12px", fontSize:"14px", fontWeight:500, color:"#4b5563", fontFamily:"inherit",
+      cursor: s.pIndex === 0 ? "not-allowed" : "pointer", opacity: s.pIndex === 0 ? 0.4 : 1 };
+    v.pNextLabel = s.pIndex === QS.length - 1 ? "Finalizar simulacro" : "Siguiente";
+    v.pNextStyle = { flex:1, background:"#7B68EE", color:"#fff", border:0, borderRadius:"12px", padding:"10px 0", fontSize:"14px",
+      fontWeight:500, fontFamily:"inherit", display:"flex", alignItems:"center", justifyContent:"center", gap:"8px",
+      cursor: pAns ? "pointer" : "not-allowed", opacity: pAns ? 1 : 0.4 };
+    v.pNext = () => { if (!pAns) return; if (s.pIndex === QS.length - 1) this.setState({ pPhase:"results" }); else this.setState({ pIndex: s.pIndex + 1 }); };
+
+    const di = s.pDetail;
+    if (di !== null && QS[di]) {
+      const dq = QS[di], ua = s.pAnswers[di], ca = dq.opts[dq.correct], ok = ua === ca;
+      v.pDetailIcon = ok ? "check-circle" : "x-circle";
+      v.pDetailBadge = ok ? "¡Correcta!" : "Incorrecta";
+      v.pDetailBadgeStyle = { display:"inline-flex", alignItems:"center", gap:"8px", padding:"6px 12px", borderRadius:"9999px",
+        fontSize:"12px", fontWeight:600, marginBottom:"16px",
+        background: ok ? "#dcfce7" : "#fee2e2", color: ok ? "#15803d" : "#b91c1c" };
+      v.pDetailTopic = dq.topic; v.pDetailQ = dq.q; v.pDetailUser = ua; v.pDetailCorrect = ca;
+      v.pDetailExplain = "En el tema de " + dq.topic.toLowerCase() + ", la respuesta correcta es " + ca + ". Se basa en los principios fundamentales del tema. Te recomendamos revisar el material del módulo correspondiente en tu syllabus.";
+    }
+    v.pCloseDetail = () => this.setState({ pDetail:null });
+
+    const pCorrect = Object.keys(s.pAnswers).filter(i => QS[+i] && QS[+i].opts[QS[+i].correct] === s.pAnswers[i]).length;
+    const pScore = Math.round((pCorrect / QS.length) * 100);
+    v.pScoreLabel = pScore + "/100";
+    v.pScoreEmoji = pScore >= 90 ? "🏆" : pScore >= 70 ? "🎉" : "💪";
+    v.pScoreCircleStyle = { width:"96px", height:"96px", borderRadius:"9999px", display:"flex", alignItems:"center",
+      justifyContent:"center", fontSize:"36px", lineHeight:"40px", margin:"0 auto 16px", background: pScore >= 70 ? "#dcfce7" : "#ffedd5" };
+    v.pCourseName = s.pCourse;
+    v.pCorrectLabel = pCorrect + "/" + QS.length;
+    v.pWrongLabel = (QS.length - pCorrect) + "/" + QS.length;
+    v.pXpLabel = "+" + (pCorrect * 5 + 50 + (s.pDiff === "advanced" ? 20 : s.pDiff === "medium" ? 10 : 0));
+    v.pReview = QS.map((qq, i) => {
+      const ok = s.pAnswers[i] === qq.opts[qq.correct];
+      return { label:"Pregunta " + (i + 1) + ": " + qq.topic, icon: ok ? "check-circle" : "x-circle",
+        iconColor: ok ? "#22c55e" : "#ef4444", onClick: () => this.setState({ pPhase:"quiz", pDetail:i }) };
+    });
+    v.pRestart = () => this.setState({ pPhase:"setup", pAnswers:{} });
+
+    const CARDS = [
+      { front:"¿Cuál es la fórmula del ácido sulfúrico?", back:"H₂SO₄\n(Ácido fuerte, diatómico)", topic:"Reacciones Químicas" },
+      { front:"¿Qué es el Producto Bruto Interno (PBI)?", back:"Valor total de bienes y servicios finales producidos en un país en un período determinado.", topic:"Macroeconomía" },
+      { front:"¿Cuál es la Ley de Oferta y Demanda?", back:"A mayor precio, menor demanda. A mayor demanda, mayor precio. El mercado tiende al equilibrio.", topic:"Microeconomía" },
+      { front:"Define 'Valor Presente Neto (VPN)'", back:"Valor actual de los flujos de caja futuros descontados al costo de capital, menos la inversión inicial.", topic:"Finanzas Corporativas" },
+      { front:"¿Qué es la Ventaja Comparativa?", back:"Capacidad de producir un bien con menor costo de oportunidad que otro país, según la teoría de Ricardo.", topic:"Comercio Internacional" }
+    ];
+    const isF = on("flashcards");
+    v.isFlashSetup = isF && s.fPhase === "setup";
+    v.isFlashCards = isF && s.fPhase === "cards";
+    v.isFlashDone = isF && s.fPhase === "done";
+    v.fCourses = ["Matemática I","Química General","Economía I"].map(c => ({
+      label:c, onClick: () => this.setState({ fCourse:c }),
+      style:{ width:"100%", textAlign:"left", padding:"12px 16px", borderRadius:"12px", fontSize:"14px", fontFamily:"inherit",
+        cursor:"pointer", transition:"all .15s", background: s.fCourse === c ? "#faf5ff" : "#fff",
+        border:"2px solid " + (s.fCourse === c ? "#7B68EE" : "#f3f4f6"), color: s.fCourse === c ? "#7B68EE" : "#374151" } }));
+    v.fModes = [{ id:"classic", l:"Clásico", d:"Una por una", e:"📚" }, { id:"test", l:"Test", d:"Múltiple opción", e:"📝" },
+      { id:"random", l:"Aleatorio", d:"Sin orden fijo", e:"🎲" }, { id:"speed", l:"Rápido", d:"Contra el tiempo", e:"⚡" }].map(m => ({
+      em:m.e, label:m.l, desc:m.d, onClick: () => this.setState({ fMode:m.id }),
+      style:{ padding:"12px", borderRadius:"12px", textAlign:"left", fontFamily:"inherit", cursor:"pointer", transition:"all .15s",
+        background: s.fMode === m.id ? "#faf5ff" : "#fff", border:"2px solid " + (s.fMode === m.id ? "#7B68EE" : "#f3f4f6") } }));
+    v.fStart = () => { if (s.fCourse) this.setState({ fPhase:"cards", fIdx:0, fFlipped:false, fRatings:{} }); };
+    const fc = CARDS[s.fIdx] || CARDS[0];
+    v.fCardLabel = "Tarjeta " + (s.fIdx + 1) + "/" + CARDS.length + " · " + fc.topic;
+    v.fPct = ((s.fIdx + 1) / CARDS.length) * 100 + "%";
+    v.fFront = fc.front; v.fBack = fc.back;
+    v.fFlipped = s.fFlipped; v.fNotFlipped = !s.fFlipped;
+    v.fFlip = () => this.setState({ fFlipped: !s.fFlipped });
+    v.fEnd = () => this.setState({ fPhase:"done" });
+    v.fCardStyle = { background: s.fFlipped ? "rgba(250,245,255,.5)" : "#fff", borderRadius:"16px", padding:"32px", minHeight:"224px",
+      display:"flex", alignItems:"center", justifyContent:"center", cursor:"pointer", marginBottom:"16px", transition:"all .15s",
+      userSelect:"none", boxShadow:"0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)",
+      border:"2px solid " + (s.fFlipped ? "#7B68EE" : "#f3f4f6") };
+    v.fRatingBtns = [{ id:"no", e:"😞", l:"No lo sabía", b:"#fecaca", c:"#dc2626", h:"#fef2f2" },
+      { id:"maybe", e:"🤔", l:"Dudoso", b:"#fef08a", c:"#ca8a04", h:"#fefce8" },
+      { id:"know", e:"😊", l:"Lo sé", b:"#bbf7d0", c:"#15803d", h:"#f0fdf4" }].map(r => ({
+      label: r.e + " " + r.l,
+      style:{ flex:1, border:"2px solid " + r.b, background:"#fff", color:r.c, borderRadius:"12px", padding:"12px 0", fontSize:"12px",
+        fontWeight:500, cursor:"pointer", fontFamily:"inherit", transition:"all .15s" },
+      onClick: () => this.setState(st => {
+        const ratings = Object.assign({}, st.fRatings, { [st.fIdx]: r.id });
+        if (st.fIdx < CARDS.length - 1) return { fRatings:ratings, fFlipped:false, fIdx: st.fIdx + 1 };
+        return { fRatings:ratings, fFlipped:false, fPhase:"done" };
+      }) }));
+    v.fPrev = () => this.setState({ fIdx: Math.max(0, s.fIdx - 1), fFlipped:false });
+    v.fNext = () => this.setState({ fIdx: Math.min(CARDS.length - 1, s.fIdx + 1), fFlipped:false });
+    v.fPrevStyle = { padding:"10px 16px", border:"1px solid #e5e7eb", background:"#fff", borderRadius:"12px", fontSize:"12px",
+      fontWeight:500, color:"#4b5563", display:"flex", alignItems:"center", gap:"6px", fontFamily:"inherit",
+      cursor: s.fIdx === 0 ? "not-allowed" : "pointer", opacity: s.fIdx === 0 ? 0.4 : 1 };
+    v.fNextStyle = { flex:1, background:"#7B68EE", color:"#fff", border:0, borderRadius:"12px", padding:"10px 0", fontSize:"12px",
+      fontWeight:500, display:"flex", alignItems:"center", justifyContent:"center", gap:"6px", fontFamily:"inherit",
+      cursor: s.fIdx === CARDS.length - 1 ? "not-allowed" : "pointer", opacity: s.fIdx === CARDS.length - 1 ? 0.4 : 1 };
+    const rvals = Object.keys(s.fRatings).map(k => s.fRatings[k]);
+    const dominated = rvals.filter(r => r === "know").length;
+    v.fKnow = dominated; v.fMaybe = rvals.filter(r => r === "maybe").length; v.fNo = rvals.filter(r => r === "no").length;
+    v.fXpLabel = "✨ +" + (50 + dominated * 2) + " XP ganados";
+    v.fXpDetail = "Completar set: +50 XP · Dominadas: " + dominated + " × 2 = +" + (dominated * 2) + " XP";
+    v.fRepeat = () => this.setState({ fPhase:"cards", fIdx:0, fFlipped:false, fRatings:{} });
+    v.fNewSet = () => this.setState({ fPhase:"setup", fIdx:0, fFlipped:false, fRatings:{} });
+
+    v.isTutor = on("tutor");
+    v.tutorCourses = ["Matemática I","Química General","Economía I","General"].map(c => ({
+      label:c, onClick: () => this.setState({ tutorCourse:c }),
+      style:{ padding:"6px 12px", borderRadius:"12px", fontSize:"12px", fontWeight:500, border:0, cursor:"pointer", fontFamily:"inherit",
+        transition:"all .15s", background: s.tutorCourse === c ? "#7B68EE" : "#f3f4f6", color: s.tutorCourse === c ? "#fff" : "#4b5563" } }));
+    v.msgs = s.msgs.map(m => ({
+      text:m.text, isBot: m.from === "bot",
+      rowStyle:{ display:"flex", justifyContent: m.from === "user" ? "flex-end" : "flex-start" },
+      bubbleStyle:{ maxWidth:"384px", borderRadius:"16px", padding:"10px 16px", fontSize:"14px", lineHeight:1.625,
+        background: m.from === "user" ? "#7B68EE" : "#f3f4f6", color: m.from === "user" ? "#fff" : "#1f2937",
+        borderTopRightRadius: m.from === "user" ? "2px" : "16px", borderTopLeftRadius: m.from === "user" ? "16px" : "2px" } }));
+    v.tutorInput = s.input;
+    v.tutorPlaceholder = "Escribe tu pregunta" + (s.tutorCourse ? " sobre " + s.tutorCourse : "") + "...";
+    v.tutorChange = e => this.setState({ input:e.target.value });
+    const send = () => {
+      const text = this.state.input;
+      if (!text.trim()) return;
+      this.setState(st => ({ input:"", msgs: st.msgs.concat([{ from:"user", text },
+        { from:"bot", text:"Gracias por tu pregunta. Analicemos esto paso a paso: \"" + text.substring(0, 50) + "...\". Primero revisemos los conceptos fundamentales del tema, luego aplicaremos los pasos metodológicos. ¿Te gustaría profundizar en algún aspecto específico?" }]) }));
+    };
+    v.tutorSend = send;
+    v.tutorKey = e => { if (e.key === "Enter") send(); };
+
+    v.isProgreso = on("progreso");
+    const overall = Math.round((s.completed.length / 13) * 100);
+    v.overallLabel = overall + "%"; v.overallPct = overall + "%";
+    const recIds = ["formulario","mis-rutas","ecosistema","malla","perfil-cora","horizonte","acompanamiento"];
+    const acaIds = ["practico","flashcards","tutor"];
+    v.progressGroups = [
+      { l:"🟣 Recomendador", done: recIds.filter(x => s.completed.includes(x)).length, total:7, c:"#7B68EE" },
+      { l:"📚 Académico", done: acaIds.filter(x => s.completed.includes(x)).length, total:3, c:"#3b82f6" },
+      { l:"⚙️ Ajustes", done:0, total:3, c:"#9ca3af" }
+    ].map(g => ({ label:g.l, count: g.done + "/" + g.total,
+      barStyle:{ height:"100%", background:g.c, borderRadius:"9999px", transition:"all .7s", width:(g.done / g.total) * 100 + "%" } }));
+    v.recBreakdown = recIds.map(id => {
+      const d = s.completed.includes(id);
+      return { name:this.NAMES[id], done:d, pending:!d, style:{ color: d ? "#15803d" : "#6b7280" } };
+    });
+    v.xpNext = (2000 - s.xp).toLocaleString();
+    v.xpPct = Math.min(100, (s.xp / 2000) * 100) + "%";
+    v.xpTable = [["Completar formulario","50"],["Aceptar ruta","100"],["Completar Ecosistema","75"],["Completar malla","150"],
+      ["Completar simulacro","50"],["Crear flashcard","30"],["Streak 7 días","25"],["Streak 30 días","100"]]
+      .map(x => ({ act:x[0], xp:"+" + x[1] + " XP" }));
+
+    v.isPerfil = on("perfil");
+    v.studentName = this.props.studentName ?? "Alejandro García";
+    v.editing = s.editing;
+    v.editLabel = s.editing ? "Cancelar" : "Editar";
+    v.toggleEditing = () => this.setState({ editing: !s.editing });
+    v.personalFields = [["Nombre completo","Alejandro García Pérez"],["Email","alejandro.garcia@continental.edu.pe"],["Teléfono","+51 987 654 321"]]
+      .map(f => ({ label:f[0], value:f[1], disabled: !s.editing,
+        style:{ width:"100%", padding:"10px 16px", borderRadius:"12px", fontSize:"14px", fontFamily:"inherit", boxSizing:"border-box",
+          border:"1px solid " + (s.editing ? "#7B68EE" : "#f3f4f6"), background: s.editing ? "#fff" : "#f9fafb",
+          color: s.editing ? "#1A1040" : "#4b5563", outline:"none" } }));
+
+    v.isConfig = on("configuracion");
+    v.fontSizes = [["small","Pequeño"],["medium","Normal"],["large","Grande"]].map(f => ({
+      label:f[1], onClick: () => this.setState({ fontSize:f[0] }),
+      style:{ flex:1, padding:"8px 0", borderRadius:"12px", fontSize:"12px", fontWeight:500, fontFamily:"inherit", cursor:"pointer",
+        transition:"all .15s", background: s.fontSize === f[0] ? "#faf5ff" : "#fff",
+        border:"2px solid " + (s.fontSize === f[0] ? "#7B68EE" : "#f3f4f6"), color: s.fontSize === f[0] ? "#7B68EE" : "#6b7280" } }));
+    v.themeIcon = s.dark ? "moon" : "sun";
+    v.themeIconColor = s.dark ? "#7B68EE" : "#f59e0b";
+    v.themeLabel = s.dark ? "Modo oscuro" : "Modo claro";
+    v.toggleDark = () => this.setState({ dark: !s.dark });
+    v.darkTrackStyle = { width:"44px", height:"24px", borderRadius:"9999px", position:"relative", border:0, cursor:"pointer",
+      padding:0, transition:"background .15s", background: s.dark ? "#7B68EE" : "#e5e7eb" };
+    v.darkKnobStyle = { width:"16px", height:"16px", background:"#fff", borderRadius:"9999px", position:"absolute", top:"4px",
+      display:"block", transition:"transform .15s", boxShadow:"0 1px 2px 0 rgba(0,0,0,.05)",
+      left:0, transform: s.dark ? "translateX(24px)" : "translateX(4px)" };
+    v.notifRows = [["email","Notificaciones por email","Resúmenes semanales y recordatorios"],
+      ["platform","Notificaciones en plataforma","Alertas en tiempo real"],
+      ["reminders","Recordatorios de estudio","Avisos para mantener tu racha"]].map(n => {
+      const val = s.notifs[n[0]];
+      return { label:n[1], desc:n[2],
+        onClick: () => this.setState(st => ({ notifs: Object.assign({}, st.notifs, { [n[0]]: !st.notifs[n[0]] }) })),
+        trackStyle:{ width:"40px", height:"20px", borderRadius:"9999px", position:"relative", border:0, cursor:"pointer", padding:0,
+          flexShrink:0, transition:"background .15s", background: val ? "#7B68EE" : "#e5e7eb" },
+        knobStyle:{ width:"14px", height:"14px", background:"#fff", borderRadius:"9999px", position:"absolute", top:"3px", left:0,
+          display:"block", transition:"transform .15s", boxShadow:"0 1px 2px 0 rgba(0,0,0,.05)",
+          transform: val ? "translateX(22px)" : "translateX(3px)" } };
+    });
+    v.helpLinks = ["Centro de ayuda","Reportar un problema","Contactar soporte","Términos de servicio","Política de privacidad"].map(l => ({ label:l }));
+
+    return v;
+  }
+}
+</script>
+</body>
+</html>

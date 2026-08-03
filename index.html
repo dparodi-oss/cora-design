@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CORA · Tablero de pantallas</title>
+<meta name="description" content="Tablero de las 13 pantallas de CORA, el sistema de orientación académica de la Universidad Continental.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --primary:#7B68EE; --primary-dark:#6A58DC; --primary-soft:#F3F0FF;
+    --bg:#F8F7FF; --surface:#fff; --ink:#1A1040;
+    --muted:#6B7280; --faint:#9CA3AF; --line:#EDE9FE;
+    --shadow:0 1px 3px rgba(26,16,64,.07), 0 1px 2px -1px rgba(26,16,64,.06);
+    --shadow-lg:0 18px 34px -12px rgba(123,104,238,.30), 0 6px 14px -8px rgba(26,16,64,.14);
+  }
+  *, *::before, *::after { box-sizing: border-box }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: Inter, system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: Poppins, sans-serif; margin: 0 }
+  a { color: inherit; text-decoration: none }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 28px }
+
+  /* ---------- barra superior ---------- */
+  header {
+    position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,.86);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(243,232,255,.9);
+  }
+  .bar { display: flex; align-items: center; gap: 13px; height: 62px }
+  .mark {
+    width: 34px; height: 34px; border-radius: 11px; background: var(--primary);
+    display: grid; place-items: center; flex-shrink: 0;
+    box-shadow: 0 4px 8px -2px rgba(123,104,238,.5);
+  }
+  .brand h1 { font-size: 17px; font-weight: 700; line-height: 1.05 }
+  .brand p  { margin: 2px 0 0; font-size: 10.5px; color: var(--faint); letter-spacing: .045em; text-transform: uppercase; font-weight: 600 }
+  .grow { flex: 1 }
+  .btn {
+    display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600;
+    padding: 9px 15px; border-radius: 11px; background: var(--primary); color: #fff;
+    box-shadow: 0 4px 8px -3px rgba(123,104,238,.6); transition: background .15s, transform .15s;
+  }
+  .btn:hover { background: var(--primary-dark); transform: translateY(-1px) }
+  .btn-ghost { background: var(--primary-soft); color: var(--primary-dark); box-shadow: none }
+  .btn-ghost:hover { background: #E9E4FF }
+
+  /* ---------- portada ---------- */
+  .hero { padding: 58px 0 34px }
+  .eyebrow {
+    display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .11em;
+    text-transform: uppercase; color: var(--primary-dark);
+    background: var(--primary-soft); padding: 6px 12px; border-radius: 999px; margin-bottom: 20px;
+  }
+  .hero h2 { font-size: clamp(30px, 5vw, 45px); font-weight: 800; line-height: 1.08; letter-spacing: -.02em; max-width: 17ch }
+  .hero .lede { margin: 18px 0 0; font-size: 16.5px; line-height: 1.62; color: var(--muted); max-width: 62ch }
+  .facts { display: flex; flex-wrap: wrap; gap: 30px; margin-top: 32px }
+  .fact strong { display: block; font-family: Poppins, sans-serif; font-size: 26px; font-weight: 800; line-height: 1 }
+  .fact span   { display: block; margin-top: 5px; font-size: 12px; color: var(--faint); font-weight: 500 }
+
+  /* ---------- índice ---------- */
+  .jump { display: flex; flex-wrap: wrap; gap: 9px; padding: 6px 0 40px }
+  .jump a {
+    font-size: 13px; font-weight: 600; padding: 8px 14px; border-radius: 999px;
+    background: var(--surface); border: 1px solid var(--line); color: var(--muted); transition: .15s;
+  }
+  .jump a:hover { border-color: var(--primary); color: var(--primary-dark) }
+
+  /* ---------- grupos ---------- */
+  .group { padding-bottom: 22px; scroll-margin-top: 78px }
+  .group-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 6px }
+  .group-head h3 { font-size: 21px; font-weight: 700; letter-spacing: -.01em }
+  .count {
+    font-size: 11px; font-weight: 700; color: var(--primary-dark); background: var(--primary-soft);
+    padding: 3px 9px; border-radius: 999px;
+  }
+  .group-head p { margin: 0; flex-basis: 100%; font-size: 14px; color: var(--muted); max-width: 74ch; line-height: 1.6 }
+  .grid { display: grid; gap: 22px; margin: 24px 0 52px; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)) }
+
+  /* ---------- tarjeta ---------- */
+  .card {
+    display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line);
+    border-radius: 18px; overflow: hidden; box-shadow: var(--shadow);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: #D6CCFB }
+  .card:focus-within { border-color: var(--primary) }
+
+  .frame {
+    position: relative; display: block; aspect-ratio: 16 / 10; overflow: hidden;
+    background: var(--bg); border-bottom: 1px solid var(--line);
+  }
+  .frame iframe {
+    position: absolute; top: 0; left: 0; width: 1440px; height: 900px;
+    border: 0; transform-origin: top left; pointer-events: none;
+    opacity: 0; transition: opacity .45s ease;
+  }
+  .frame iframe.ready { opacity: 1 }
+  .skeleton {
+    position: absolute; inset: 0; display: grid; place-items: center;
+    font-size: 30px; opacity: .22; animation: pulse 1.7s ease-in-out infinite;
+  }
+  .frame.ready .skeleton { display: none }
+  @keyframes pulse { 0%,100% { opacity: .22 } 50% { opacity: .07 } }
+  .num {
+    position: absolute; top: 11px; left: 11px; z-index: 2;
+    font-size: 10.5px; font-weight: 700; letter-spacing: .05em; color: var(--primary-dark);
+    background: rgba(255,255,255,.94); padding: 4px 8px; border-radius: 7px;
+    box-shadow: 0 1px 3px rgba(26,16,64,.12);
+  }
+  .veil {
+    position: absolute; inset: 0; z-index: 3; display: grid; place-items: center;
+    background: rgba(123,104,238,0); transition: background .18s;
+  }
+  .veil span {
+    font-size: 12.5px; font-weight: 700; color: var(--primary-dark); background: #fff;
+    padding: 9px 16px; border-radius: 999px; box-shadow: 0 6px 16px rgba(26,16,64,.18);
+    opacity: 0; transform: translateY(6px); transition: .18s;
+  }
+  .card:hover .veil { background: rgba(123,104,238,.13) }
+  .card:hover .veil span, .frame:focus-visible .veil span { opacity: 1; transform: none }
+  .frame:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px }
+
+  .meta { padding: 17px 18px 19px; display: flex; flex-direction: column; flex: 1 }
+  .meta h4 { font-family: Poppins, sans-serif; font-size: 15.5px; font-weight: 700; margin: 0 0 7px; letter-spacing: -.005em }
+  .meta h4 .em { margin-right: 7px }
+  .meta p { margin: 0; font-size: 13.2px; line-height: 1.58; color: var(--muted); flex: 1 }
+  .gate {
+    margin-top: 13px; font-size: 11px; font-weight: 600; color: var(--faint);
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .gate code { font-family: inherit; color: var(--primary-dark); background: var(--primary-soft); padding: 2px 7px; border-radius: 6px }
+
+  /* ---------- pie ---------- */
+  footer { border-top: 1px solid var(--line); background: var(--surface); margin-top: 26px; padding: 46px 0 56px }
+  footer h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px }
+  footer p  { margin: 0 0 14px; font-size: 14px; line-height: 1.68; color: var(--muted); max-width: 68ch }
+  footer code { font-size: 12.5px; background: var(--primary-soft); color: var(--primary-dark); padding: 2px 7px; border-radius: 6px }
+  .cols { display: grid; gap: 34px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) }
+  .sig { margin-top: 38px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--faint) }
+
+  @media (max-width: 640px) {
+    .wrap { padding: 0 18px }
+    .hero { padding: 40px 0 26px }
+    .facts { gap: 22px }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <div class="mark">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"></path>
+      </svg>
+    </div>
+    <div class="brand">
+      <h1>CORA</h1>
+      <p>Orientación Académica 2.0</p>
+    </div>
+    <div class="grow"></div>
+    <a class="btn btn-ghost" href="./CORA%20App.dc.html">Archivo de diseño</a>
+    <a class="btn" href="./pantalla.html?s=formulario">Abrir la app</a>
+  </div>
+</header>
+
+<div class="wrap hero">
+  <span class="eyebrow">Universidad Continental · Fase 2</span>
+  <h2>Tablero de pantallas</h2>
+  <p class="lede">
+    Las 13 pantallas de CORA, tal cual salen del sistema de diseño. Cada tarjeta es una
+    vista en vivo del diseño real — no una captura — así que lo que ves aquí es
+    exactamente lo que se está construyendo. Haz clic en cualquiera para abrirla a
+    tamaño completo.
+  </p>
+  <div class="facts">
+    <div class="fact"><strong>13</strong><span>Pantallas</span></div>
+    <div class="fact"><strong>3</strong><span>Módulos</span></div>
+    <div class="fact"><strong>1</strong><span>Archivo de diseño</span></div>
+    <div class="fact"><strong>HTML</strong><span>Sin build, sin framework</span></div>
+  </div>
+</div>
+
+<nav class="wrap jump" id="jump" aria-label="Ir a un módulo"></nav>
+
+<main class="wrap" id="board"></main>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h3>Cómo modificar el diseño</h3>
+        <p>
+          Clona el repositorio, abre la carpeta con Claude Code y pide los cambios en
+          lenguaje natural. Todo el diseño vive en <code>CORA App.dc.html</code>.
+        </p>
+        <p>
+          Lee <code>DESIGN.md</code> antes de tocar nada: ahí están los tokens de color,
+          la tipografía, el espaciado y las reglas que mantienen la coherencia visual.
+        </p>
+      </div>
+      <div>
+        <h3>Cómo verlo en local</h3>
+        <p>
+          Hace falta un servidor estático — abrir el archivo con doble clic no funciona,
+          porque el diseño carga sus piezas por HTTP.
+        </p>
+        <p><code>python3 -m http.server 8000</code> y luego <code>http://localhost:8000</code>.</p>
+      </div>
+      <div>
+        <h3>Cómo publicar tus cambios</h3>
+        <p>
+          Crea una rama, haz commit y abre un Pull Request. Vercel genera una vista
+          previa de cada PR, así que el equipo puede revisar el cambio antes de fusionarlo.
+        </p>
+        <p>El detalle del flujo está en <code>CONTRIBUTING.md</code>.</p>
+      </div>
+    </div>
+    <p class="sig">CORA · Universidad Continental — Fase 2. Diseño exportado desde Claude Design.</p>
+  </div>
+</footer>
+
+<script src="./screens.js"></script>
+<script>
+(function () {
+  var board = document.getElementById('board');
+  var jump  = document.getElementById('jump');
+  var frames = [];
+
+  CORA_GROUPS.forEach(function (g) {
+    var mine = CORA_SCREENS.filter(function (s) { return s.group === g.label; });
+
+    var a = document.createElement('a');
+    a.href = '#' + g.id;
+    a.textContent = g.label + ' · ' + mine.length;
+    jump.appendChild(a);
+
+    var sec = document.createElement('section');
+    sec.className = 'group';
+    sec.id = g.id;
+
+    var head = document.createElement('div');
+    head.className = 'group-head';
+    head.innerHTML =
+      '<h3></h3><span class="count"></span><p></p>';
+    head.querySelector('h3').textContent = g.label;
+    head.querySelector('.count').textContent = mine.length + ' pantallas';
+    head.querySelector('p').textContent = g.desc;
+    sec.appendChild(head);
+
+    var grid = document.createElement('div');
+    grid.className = 'grid';
+
+    mine.forEach(function (s) {
+      var n = CORA_SCREENS.indexOf(s) + 1;
+      var href = './pantalla.html?s=' + encodeURIComponent(s.id);
+
+      var card = document.createElement('article');
+      card.className = 'card';
+
+      var link = document.createElement('a');
+      link.className = 'frame';
+      link.href = href;
+      link.setAttribute('aria-label', 'Abrir ' + s.label);
+
+      var num = document.createElement('span');
+      num.className = 'num';
+      num.textContent = String(n).padStart(2, '0');
+
+      var skel = document.createElement('span');
+      skel.className = 'skeleton';
+      skel.textContent = s.emoji;
+
+      var veil = document.createElement('span');
+      veil.className = 'veil';
+      veil.innerHTML = '<span>Abrir pantalla ↗</span>';
+
+      var frame = document.createElement('iframe');
+      frame.title = 'Vista previa de ' + s.label;
+      frame.setAttribute('tabindex', '-1');
+      frame.setAttribute('aria-hidden', 'true');
+      frame.dataset.section = s.id;
+
+      link.append(num, skel, frame, veil);
+
+      var meta = document.createElement('div');
+      meta.className = 'meta';
+      meta.innerHTML = '<h4><span class="em"></span><a></a></h4><p></p>';
+      meta.querySelector('.em').textContent = s.emoji;
+      var titleLink = meta.querySelector('h4 a');
+      titleLink.href = href;
+      titleLink.textContent = s.label;
+      meta.querySelector('p').textContent = s.desc;
+
+      if (s.requiere) {
+        var req = CORA_SCREENS.find(function (x) { return x.id === s.requiere; });
+        var gate = document.createElement('span');
+        gate.className = 'gate';
+        gate.innerHTML = '🔒 Se desbloquea tras <code></code>';
+        gate.querySelector('code').textContent = req ? req.label : s.requiere;
+        meta.appendChild(gate);
+      }
+
+      card.append(link, meta);
+      grid.appendChild(card);
+      frames.push({ el: frame, wrap: link, section: s.id });
+    });
+
+    sec.appendChild(grid);
+    board.appendChild(sec);
+  });
+
+  /* Escala la vista previa de 1440×900 al ancho real de la tarjeta. */
+  function rescale() {
+    frames.forEach(function (f) {
+      var w = f.wrap.clientWidth;
+      if (w) f.el.style.transform = 'scale(' + (w / 1440) + ')';
+    });
+  }
+  rescale();
+  window.addEventListener('resize', rescale);
+
+  /* El diseño anuncia su arranque con `__dc_booted`; le respondemos fijando
+     la pantalla que esta tarjeta debe mostrar. */
+  window.addEventListener('message', function (e) {
+    if (!e.data || e.data.type !== '__dc_booted') return;
+    var f = frames.find(function (x) { return x.el.contentWindow === e.source; });
+    if (!f) return;
+    try {
+      f.el.contentWindow.__dcSetProps(e.data.rootName, {
+        startSection: f.section,
+        unlockAll: true
+      });
+    } catch (err) { /* la vista previa se queda en el estado por defecto */ }
+    f.el.classList.add('ready');
+    f.wrap.classList.add('ready');
+  });
+
+  /* Arranque perezoso y por turnos: 13 copias del diseño a la vez saturan
+     el navegador, así que sólo cargamos las que se acercan a la pantalla y
+     como mucho dos en paralelo. */
+  var queue = [], active = 0, MAX = 2;
+
+  function pump() {
+    while (active < MAX && queue.length) {
+      var f = queue.shift();
+      active++;
+      f.el.addEventListener('load', function () {
+        active--;
+        pump();
+      }, { once: true });
+      f.el.src = './CORA%20App.dc.html';
+    }
+  }
+
+  var queued = [];
+  function enqueue(f) {
+    if (queued.indexOf(f) !== -1) return;
+    queued.push(f);
+    queue.push(f);
+    pump();
+  }
+
+  /* Las primeras tarjetas se cargan siempre: IntersectionObserver no dispara
+     mientras la pestaña está en segundo plano, y el tablero no debe quedarse
+     vacío si alguien lo abre en una pestaña de fondo. */
+  frames.slice(0, 3).forEach(enqueue);
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        io.unobserve(entry.target);
+        var f = frames.find(function (x) { return x.wrap === entry.target; });
+        if (f) enqueue(f);
+      });
+    }, { rootMargin: '400px 0px' });
+    frames.forEach(function (f) { io.observe(f.wrap); });
+  } else {
+    frames.forEach(enqueue);
+  }
+})();
+</script>
+</body>
+</html>
