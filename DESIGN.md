@@ -233,33 +233,271 @@ poder revisar el diseño.
 Tres lugares del producto usan el color para clasificar, no para decorar. **No los
 cambies sin cambiar también su leyenda**: la leyenda es parte del patrón.
 
+### El % de compatibilidad no es una caja negra
+
+Cada tarjeta de ruta desglosa su `match` en tres criterios (`ROUTES[].matchWhy`:
+intereses, fortaleza académica, objetivo profesional) con mini-barras, más una
+frase "🎯 Mejor si buscas: …". El objetivo es que el estudiante entienda *para
+qué* sirve cada ruta, no solo compare números.
+
+Debajo de la lista de rutas hay una aclaración fija "¿Cuál es la diferencia?"
+que distingue Ruta (los cursos que se toman) de Horizonte (los trabajos a los
+que lleva) — son las dos palabras que más se confunden en el producto.
+
 ### Tipos de ruta (Mis Rutas)
 
-El borde izquierdo de 5 px de cada tarjeta dice de qué tipo es la ruta:
+El borde izquierdo de 5 px de cada tarjeta, más una etiqueta junto al título, dicen de qué
+tipo es la ruta. Cada ruta es siempre de un solo tipo, nunca una mezcla de los dos:
 
 | Tipo | Acento | Cuándo |
 |---|---|---|
-| 🎓 Malla regular | `#7B68EE` | La ruta se cursa íntegra con cursos de la malla |
-| 🧩 Ruta compuesta | `#0ea5e9` | Combina malla con electivos y extracurriculares del CIE |
+| 📚 Ruta de asignaturas de la malla | `#7B68EE` | Se cursa íntegra con obligatorios (casi siempre de ciclos avanzados) y electivos de la propia carrera |
+| 🌐 Ruta extracurricular | `#0ea5e9` | Se arma solo con oferta del ecosistema CIE (idiomas, institutos, diplomados), sin cursos de la malla |
 
-Se define en el campo `kind` de `ROUTES` (`"regular"` \| `"mixta"`).
+Se define en el campo `kind` de `ROUTES` (`"malla"` \| `"extracurricular"`).
+
+**Al confirmar una ruta, se ve reflejada en la malla.** La pantalla *Elijo mi
+Ruta* resuelve en vivo, por nombre contra `ROUTES[].courses`, qué cursos de
+`CURRICULUM` son "de tu ruta" — no es un dato grabado en el curso. Si la ruta
+es de asignaturas de la malla, esos cursos quedan unidos por el hilo morado,
+sin atenuar el resto: la categoría (General/Facultad/Carrera/Electivo) de un
+curso debe leerse igual de bien esté o no en la ruta elegida. Si la ruta es
+extracurricular, ningún curso de la malla cambia — sus cursos aparecen debajo
+del ciclo que les corresponde (ver `courseCycles` en `ROUTES`), con el mismo
+trato visual que un electivo elegido pero con su propia etiqueta ("🌐 De tu
+ruta extracurricular").
+
+**Tres momentos de ciclo, según `STUDENT.cycle`:**
+
+| Momento | Cuándo | Trato |
+|---|---|---|
+| Aprobado | Ciclo menor al actual | Todo el bloque al 60 % de opacidad, título gris, cabecera gris |
+| Actual | `cyc.cycle === STUDENT.cycle` | Título y borde morados, cabecera teñida, etiqueta "(Actual)" y "EN CURSO" en cada curso |
+| Próximo | Ciclo mayor al actual | Trato normal — sin atenuar ni resaltar |
+
+### De Mis Rutas al Ecosistema CIE
+
+Confirmar una ruta no salta directo a Ecosistema CIE: primero se ve la vista
+previa de la malla, todo dentro de la pantalla *Mis Rutas* (`s.mallaPreview` /
+`s.extraStep`). Desde ahí hay dos caminos, no uno solo:
+
+```
+                              ┌─ 🎓 Explorar más extracurriculares ─┐
+elegir ruta → confirmar → vista previa de la malla ─┤                                    ├─→ Ecosistema CIE
+                              └──────── Continuar a Ecosistema CIE ────────┘
+```
+
+1. **Vista previa de la malla** — cómo queda tu malla con la ruta elegida (ver arriba).
+   Al pie tiene dos botones, cada uno con su propio tooltip al pasar el mouse:
+   - **🎓 Explorar más extracurriculares** — abre el paso opcional de abajo.
+   - **Continuar a Ecosistema CIE →** — se salta ese paso e ingresa directo.
+2. **Explorar extracurriculares** (opcional) — los extracurriculares recomendados
+   (`ECO_RECO` vía `ecoExtra`) se revisan aquí, no en Ecosistema CIE.
+
+**Se puede retroceder en cualquier punto** — cada pantalla de este tramo tiene su
+"← Volver": de la vista previa a la lista de rutas, del paso de extracurriculares
+a la vista previa, y de Ecosistema CIE de vuelta a la vista previa
+(`backToMallaFromEco`), sin importar por cuál de los dos caminos se llegó.
+
+### Ecosistema CIE
+
+Son cinco piezas fijas, en este orden, cada una su propia sección desplegable:
+
+| # | Sección | Contenido |
+|---|---|---|
+| 1 | 🌍 Experiencias Internacionales | Equivalencias UC ↔ CFU (`EQUIV_CFU`) |
+| 2 | 🛠️ Instituto Continental | Sin información cargada todavía — aviso explícito, no datos inventados |
+| 3 | 🗣️ Centro de Idiomas | `IDIOMAS_PROGRAMS` — 5 programas destacados de `idiomasProgramCount` totales |
+| 4 | 🎓 Continua | `CONTINUA_PLATFORMS` — plataformas externas (LinkedIn Learning, Coursera…) |
+| 5 | 🎯 Escuela de Posgrado | `POSGRADO_PROGRAMS`, por área |
+
+Ya no está bloqueada por ciclo: la universidad pidió que las cinco se vean
+siempre. El contador "Has explorado: X/5" es solo informativo — **explorar ya
+no es obligatorio para continuar**: la ruta se elige y confirma antes, en Mis
+Rutas, así que el botón "Continuar malla →" está siempre activo. El estudiante
+puede ver una sección ahora y el resto después, sin tener que hacerlo todo de
+una vez.
+
+**Costo, siempre visible y consistente.** Todo curso o programa del ecosistema
+dice si es gratis o pagado — nunca queda ambiguo comparado con uno similar:
+
+| Sección | Costo |
+|---|---|
+| Centro de Idiomas | Inglés = `INCLUIDO`; Portugués, Italiano, Quechua = pagado |
+| Continua | Todo `INCLUIDO` — por eso "Continua" no cobra aparte |
+| Escuela de Posgrado | Pagado, con `"Con becas disponibles"` |
+
+Se define en el campo `cost` de `IDIOMAS_PROGRAMS`, `CONTINUA_PLATFORMS` y
+`POSGRADO_PROGRAMS`. `"INCLUIDO"` pinta verde (`#dcfce7`/`#15803d`); cualquier
+otro valor pinta gris neutro — el mismo trío que ya usa `ECO_RECO`/`ecoExtra`.
+
+**Buscador por interés.** Un solo campo de texto (`s.ecoSearch`) más chips de
+interés (Idiomas, Negocios, Tecnología, Salud, Posgrado) filtran a la vez
+Centro de Idiomas, Continua y Escuela de Posgrado por nombre. Los chips de
+categoría completa (Idiomas, Posgrado) matchean por contexto, no por nombre
+literal — ningún idioma se llama "Idiomas", así que el filtro busca también
+contra palabras de categoría (`matchesSearch(name, extra)`), no solo el
+nombre del curso.
 
 ### Categorías de curso (Malla)
 
-Borde izquierdo de 4 px, más el **hilo** para los cursos de la ruta:
+`CURRICULUM` trae la malla real y completa (10 ciclos) de la EAP
+Administración y Negocios Internacionales, plan 2024. Cada curso se codifica
+en **dos capas independientes**, tal como en el mapa curricular oficial:
 
-| Categoría | Fondo · Borde · Texto | Acento |
+**1. Categoría académica** — punto de color + etiqueta de 9 px sobre el
+nombre del curso. Es fija, viene del campo `cat` de `CURRICULUM`:
+
+| Categoría | Color | Qué agrupa |
+|---|---|---|
+| General | `#22c55e` | Comunicación, idiomas, laboratorios de liderazgo |
+| Facultad | `#3b82f6` | Base común de negocios (matemática, economía, finanzas…) |
+| Carrera | `#f97316` | Propias de Administración y Negocios Internacionales |
+| Electivo | `#6b7280` | Electivos generales y de especialidad/transversales |
+
+Se define en el campo `cat` de `CURRICULUM` (`"general"` \| `"facultad"` \|
+`"carrera"` \| `"electivo"`). El curso del ciclo en el que está el estudiante
+(`STUDENT.cycle`) además lleva una etiqueta morada **EN CURSO**.
+
+**2. Pertenencia a la ruta elegida** — borde izquierdo de 4 px + el **hilo**
+morado, explicados arriba. No es un dato grabado en el curso: se resuelve en
+vivo contra `ROUTES[].courses`. Un curso puede ser, por ejemplo, "Carrera" y
+estar a la vez en el hilo de tu ruta — son dos informaciones distintas y
+pueden coincidir.
+
+| Estado | Fondo · Borde · Texto | Acento |
 |---|---|---|
 | Cursos de tu ruta | `#faf5ff` · `#e9d5ff` · `#4A3FA0` | `#7B68EE` |
-| Matrícula regular | `#f9fafb` · `#e5e7eb` · `#374151` | `#9ca3af` |
-| Electivos fuera de ruta | `#fff7ed` · `#ffedd5` · `#b45309` | `#f59e0b` |
+| Fuera de tu ruta | `#ffffff` · `#f3f4f6` · `#1A1040` | `#e5e7eb` |
 | Electivos que eligió el estudiante | `#f0f9ff` · `#bae6fd` · `#0369a1` | `#0ea5e9` |
+| Elegido por CFU (ver abajo) | `#ecfeff` · `#a5f3fc` · `#0e7490` | `#06b6d4` |
 
-Se define en el campo `track` de `CURRICULUM` (`"ruta"` \| `"regular"` \| `"electivo"`).
+Los cuatro estados tienen su propio ítem en `v.mallaLegend`, con desc corta
+("Ruta activa: …", "Fuera de tu ruta — plan base", "Tu selección
+confirmada", "Lo tomas en Continental Florida University") — ninguno se deja
+implícito, ni siquiera "fuera de tu ruta", que antes no tenía swatch propio.
 
 **El hilo** es una línea punteada vertical (`repeating-linear-gradient`) posicionada
 en absoluto dentro de la columna del ciclo, con un punto de 10 px junto a cada curso
 de la ruta. Solo se dibuja en los ciclos que contienen algún curso de la ruta.
+
+### Electivos elegidos del Ecosistema CIE (Malla)
+
+Los extracurriculares que el estudiante agrega desde cada ciclo (botón "+
+Agregar extracurricular") ya no aparecen repartidos dentro de la tarjeta de su
+ciclo: se juntan todos en una sola franja horizontal, con scroll lateral,
+debajo de la grilla de 10 ciclos (`v.chosenElectives`, calculado sobre
+`s.extras`). Cada chip lleva su ciclo de origen y una 'x' para quitarlo. Sin
+elegidos, muestra un texto vacío invitando a usar "Agregar extracurricular".
+
+Se quitó la sección "🎓 Al terminar" que antes cerraba la malla — no aportaba
+información que no estuviera ya en la malla o en esta franja.
+
+**Sin tope, y siempre por acción explícita.** No hay límite de cuántos
+extracurriculares se pueden agregar por ciclo ni en total (`canAdd` es
+siempre `true`) — antes eran máximo 3. Agregar uno nunca es automático:
+requiere abrir el modal del ciclo, elegirlo de la lista y confirmar
+(`onClick` del modal, `extModalClose` al confirmar). Un texto junto al
+encabezado de la franja y el tooltip del hilo morado lo dejan explícito, y
+aclaran además que estos cursos **no cuentan** para los `mallaTotalCredits`
+créditos de la carrera — son extracurriculares, no créditos de malla.
+
+### Equivalencias CFU elegidas (Malla)
+
+Desde 🌍 Experiencias Internacionales, en Ecosistema CIE, el estudiante puede
+marcar un curso UC como "elegido por CFU" (botón "+ Elegir por CFU" en
+`EQUIV_CFU`, guardado en `s.cfuChosen` por nombre de curso UC). Esa elección
+se refleja de inmediato en la malla, para que sea evidente que ese curso ya
+no se cursará en la UC sino por convalidación internacional:
+
+- **Color** — el curso pasa a la paleta CFU (tabla de arriba), con prioridad
+  sobre el color de ruta o el neutro — un curso puede ser de tu ruta y a la
+  vez CFU, y el CFU manda visualmente.
+- **Nomenclatura** — el nombre mostrado cambia al nombre del curso CFU
+  equivalente (`cfuByUcName`, desde `EQUIV_CFU[].cfu`); debajo aparece
+  "Equivale a: {nombre UC}" para no perder la referencia, más una etiqueta
+  "🇺🇸 CFU".
+- **Leyenda** — "Elegido por CFU" se agregó como entrada propia en
+  `v.mallaLegend`, igual que cualquier otro color con significado.
+
+Este trato se aplica tanto en la malla principal (*Elijo mi Ruta*) como en la
+vista previa de la malla dentro de *Mis Rutas* — misma lógica, mismo dato.
+
+**Acceso directo de vuelta a la malla.** Mientras se explora Experiencias
+Internacionales, si hay al menos un curso elegido por CFU (`v.hasCfuChosen`),
+aparece un aviso con el conteo y el botón "Ver mi malla final →"
+(`v.ecoCtaClick`, el mismo que "Continuar malla →") — no hace falta terminar
+de explorar las otras secciones para ver el efecto en la malla.
+
+### Pantalla de cierre al confirmar la malla
+
+"✓ Confirmar malla final" ya no navega directo a *Mi Perfil CoRA*: dentro de
+la misma sección `malla`, cambia a una pantalla de cierre propia
+(`s.mallaDone`, análoga a `s.mallaPreview` en Mis Rutas — un sub-estado, no
+una sección nueva en `screens.js`). Dos sub-estados excluyentes:
+
+- `v.mallaEditing` (`!s.mallaDone`) — la malla editable de siempre.
+- `v.mallaShowSummary` (`s.mallaDone`) — la pantalla de cierre.
+
+**La pantalla de cierre** deja evidente que el proceso terminó, con mensaje
+inspirador, y reúne:
+
+1. **Resumen** — ruta elegida, cursos de tu ruta, electivos elegidos, cursos
+   por CFU y créditos totales (`v.summaryStats`), todo calculado de los
+   mismos datos que la malla, no repetido a mano.
+2. **Correlación con tu perfil** — reutiliza `ROUTES[].matchWhy` (intereses /
+   fortaleza académica / objetivo profesional, más `bestFor`): es literalmente
+   el desglose del % de compatibilidad que ya se mostraba en Mis Rutas, no un
+   dato nuevo inventado para esta pantalla.
+3. **Beneficios** (`v.summaryBenefits`) — 2 a 4 frases armadas a partir de lo
+   que el estudiante realmente eligió (CFU, electivos, `bestFor`), más un
+   recordatorio fijo de que puede volver a personalizar cuando quiera.
+4. **Descargar malla PDF** — se movió aquí desde el pie de la malla editable;
+   ya no vive en la pantalla de edición.
+5. **"✏️ Personalizar de nuevo"** (`v.mallaEdit`) — vuelve a `mallaEditing`
+   sin perder nada: `s.extras`, `s.cfuChosen` y `s.selectedRoute` no se tocan.
+6. **Historial de mallas guardadas** (`s.savedMallas`, nombre + fecha) — cada
+   confirmación agrega un registro arriba de la lista (`v.mallaConfirm`), con
+   la fecha del día (`this.today()`) y una etiqueta "Actual" en el más
+   reciente (`v.savedMallasList[].isLatest`). Arranca con dos registros de
+   sesiones previas para que el historial no se vea vacío la primera vez.
+
+### Veo mi Horizonte: tres capas que cambian con el ciclo
+
+Contenido real provisto por el equipo de diseño (documento "Nuevas
+Funcionalidades CoRA"), reemplaza la maqueta anterior (grilla de 3 puestos +
+gráfico de barras). La sección tiene tres capas, en `HORIZONTE` (class
+field, dos casos: `inspire` y `informDecide`):
+
+1. **Modo, según el ciclo** — `v.isInspireMode` es `STUDENT.cycle <= 5`
+   (mitad de los 10 ciclos de la carrera). Ciclos tempranos **inspiran**
+   (roles, dónde trabajar, emprender, una historia de egresado, sin cifras
+   duras todavía); ciclos avanzados **informan para decidir** (demanda,
+   salario, proyección, brecha frecuente, hacia dónde buscar trabajo ya).
+2. **Vista resumen (tablero)** — siempre visible, en tarjetas separadas (no
+   un solo bloque de texto): cada bloque tiene su icono en una cajita de
+   color (mismo patrón que "Predictibilidad académica" en Acompañamiento) y
+   sus datos como chips de color — el mismo lenguaje visual que los `#tag`
+   de Mis Rutas y los chips de habilidades que ya existían aquí. Roles,
+   empresas y habilidades son chips; la historia del egresado va en una
+   tarjeta lavanda con cita en cursiva; el modo informar-decidir usa 3
+   tarjetas de estadística (Demanda/Salario/Proyección) más una tarjeta
+   verde (cobertura) y una ámbar (brecha, mismo color que "riesgo medio").
+3. **Detalle desplegado** — oculto por defecto (`s.horizonteDetail`, un
+   botón "Ver el detalle completo" lo despliega, mismo patrón de acordeón
+   que el resto de la app). Repite cada bloque del resumen con el texto
+   completo: las empresas y emprendimientos pasan de chip a mini-tarjeta con
+   icono + descripción; las listas de habilidades usan el icono `check`
+   verde (igual que el plan de acompañamiento sugerido); la cita del
+   egresado se ve completa; microcredencial sugerida, etc.
+
+**"Pregúntale al Asistente CORA"** — chips de preguntas sugeridas, distintas
+por modo (`H.chips`). Tocar una no abre un chat nuevo: usa
+`this.askAssistant(pregunta)`, que la agrega como si el estudiante la
+hubiera escrito en el hilo "General" del Asistente CORA (`s.msgsByCourse`,
+ver Asistente CORA más abajo) y navega ahí — es la capa "interactiva y
+conversacional con IA" que pedía el documento, reutilizando el chat que ya
+existe en vez de construir uno nuevo.
 
 ### Niveles de riesgo (Acompañamiento)
 
@@ -270,6 +508,93 @@ de la ruta. Solo se dibuja en los ciclos que contienen algún curso de la ruta.
 | Bajo (< 50 %) | `#f0fdf4` · `#bbf7d0` · `#15803d` |
 
 El umbral de «riesgo» que dispara la propuesta de plan es **50 %**.
+
+### Roles: Asistente CORA vs. Asesor Académico (Acompañamiento)
+
+Dos tipos de apoyo, cada uno con su propia tarjeta (`SUPPORT_TYPES`, con
+`desc`/`duracion`/`progreso`/`porque`) — nunca se mezclan bajo el mismo nombre:
+
+| Rol | Qué es | Cuándo |
+|---|---|---|
+| 💬 Asistente CORA | IA, chat, disponible 24/7 | Dudas académicas puntuales — fórmulas, ejercicios, conceptos |
+| 👨‍💼 Asesor Académico | Persona real, sesiones agendadas (~30 min) | Seguimiento personal — CORA lo recomienda si detecta riesgo alto/medio |
+
+No existe un tercer rol "tutor académico": toda mención a agendar o dar
+seguimiento usa "Asesor Académico". El toggle de "compartir mi progreso"
+(`s.shareAdvisor`, antes eran dos toggles casi idénticos) también apunta a
+este único rol.
+
+**Plan flexible, no rígido.** El timeline semanal vive en `s.accWeeks`
+(editable: agregar/quitar semana con su propia actividad, no un arreglo fijo)
+y las dos actividades ligadas al curso de riesgo muestran su tema real
+("Tema: {curso}"), tomado del curso de mayor riesgo en `PREDICT`. Además del
+curso que CORA detecta, el estudiante puede sumar cualquier otro curso de su
+ciclo actual (`s.reinforceCourses`, sin límite) con un botón "➕ Reforzar
+otro curso de este ciclo" — cada uno etiquetado "Tú lo agregaste" para
+distinguirlo de lo que CORA detectó automáticamente.
+
+### Asistente CORA: historial por curso (`tutor` + widget flotante)
+
+`s.msgsByCourse` guarda una conversación independiente por curso — cambiar
+de curso no borra ni mezcla el historial de otro. Cada curso tiene una
+descripción de una línea (`TUTOR_COURSE_DESC`), visible bajo el selector de
+curso. El primer mensaje de cada curso aclara explícitamente que es una IA,
+no una persona, y en qué momento deriva a un humano: "Si tu situación
+necesita seguimiento personal, te conecto con tu Asesor Académico." El
+widget flotante (fuera de todo `sc-if` de sección, visible en toda la
+plataforma) comparte exactamente los mismos `v.msgs`/`v.tutorCourse`.
+
+### Progreso: XP explicado, insignias y fórmulas (`progreso`)
+
+- Un `Tip` junto al título aclara: "XP = puntos de progreso que muestran tu
+  avance." Y un chip visible muestra "Has ganado {{ xpThisCycle }} XP este
+  ciclo" (`s.xpCycleStart`, baseline separado del total acumulado).
+- `BADGES` (class field, umbrales de XP) conecta el XP con logros con
+  nombre propio — desbloqueada o 🔒 con el umbral que falta.
+- Cualquier porcentaje calculado (progreso general, XP) lleva un `Tip` con
+  la fórmula exacta, ej.: "Tu progreso se calcula como (Cursos completados /
+  Totales) × 100 = (X / 13) × 100 = Y%."
+- "🎯 Próximas actividades recomendadas" (`v.nextGoals`) no es una lista
+  fija: sale del siguiente paso pendiente del Recomendador (`FLOW`), del
+  curso de mayor riesgo en `PREDICT` y de la racha actual — si ya no aplica
+  una meta (por ejemplo, ya se completó todo el Recomendador), desaparece sola.
+
+### Perfil CoRA vs. Horizonte — y recursos por dimensión
+
+Misma caja de aclaración que "RUTA vs HORIZONTE" (ver arriba), adaptada:
+"PERFIL CORA = Quién eres HOY (tus 6 dimensiones) · HORIZONTE = A dónde te
+puede llevar eso." Cada una de las 6 dimensiones (`dims`) tiene su propio
+recurso recomendado (`resource:{tipo, titulo, desc}`) — antes solo
+Liderazgo tenía uno, y estaba escrito a mano en el HTML. El botón "Ver
+recomendaciones" de cada tarjeta usa el mismo patrón de acordeón que ya
+existía (`toggleIn("expanded", "dim-" + k)`) para mostrar el recurso con su
+descripción antes de un botón "Abrir" (mock). El bloque agregado "💡
+Recomendaciones para Ti" (fortalezas / área de mejora / recursos) también se
+calcula de `dims`, no de texto suelto.
+
+### Avatar personalizable (`perfil`, compartido con el header global)
+
+`s.avatarBg` (índice sobre `AVATAR_PALETTE`, 5 combinaciones de color) es un
+solo dato de estado — el círculo de iniciales del header (`v.avatarStyleSm`)
+y el de la pantalla Perfil (`v.avatarStyleLg`) leen del mismo degradado, así
+que personalizarlo en un lugar se refleja automáticamente en toda la
+plataforma.
+
+### Plan de estudios: una sola versión vigente
+
+`PLAN_YEAR` (class field, hoy `"2024"`) se muestra como una etiqueta junto
+al encabezado de la malla: "Plan de Estudios 2024 — el único vigente para tu
+cohorte." No hay selector de planes — evita implicar que existen varias
+versiones cuando el estudiante solo tiene una.
+
+### Configuración: temas visuales y nota de móvil
+
+"Tamaño de texto" y "Tema Visual" ahora llevan `Tip` explicando qué hacen.
+Se agregó una fila "Temas visuales" (`v.themeAccents`, 3 acentos de color,
+decorativo — no repinta la maqueta) para cubrir "estético" más allá de
+claro/oscuro. Al pie, una nota fija aclara que CoRA está pensado para
+escritorio/laptop por ahora y que la versión móvil es desarrollo futuro — no
+se tocó el layout ni se agregaron media queries.
 
 ---
 
