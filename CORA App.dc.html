@@ -23,15 +23,8 @@
 
   <aside style="display:flex;flex-direction:column;width:240px;background:#fff;border-right:1px solid rgba(243,232,255,.6);height:100vh;position:fixed;left:0;top:0;z-index:30;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
     <div style="padding:20px;border-bottom:1px solid rgba(243,232,255,.6)">
-      <div style="display:flex;align-items:center;gap:12px">
-        <div style="width:36px;height:36px;background:#7B68EE;border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 6px -1px #e9d5ff,0 2px 4px -2px #e9d5ff">
-          <dc-import name="Icon" i="compass" s="18" c="#ffffff" hint-size="18px,18px"></dc-import>
-        </div>
-        <div>
-          <h1 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:18px;line-height:1;margin:0">CORA</h1>
-          <p style="font-size:10px;color:#7B68EE;font-weight:500;letter-spacing:.025em;margin:3px 0 0">Orientación Académica 2.0</p>
-        </div>
-      </div>
+      <img src="./assets/cora-logo.png" alt="CORA — Continental Recomienda y Acompaña" style="width:150px;height:auto;display:block">
+      <p style="font-size:10px;color:#7B68EE;font-weight:500;letter-spacing:.025em;margin:6px 0 0">Orientación Académica 2.0</p>
     </div>
     <nav style="flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:20px">
       <div>
@@ -419,7 +412,7 @@
           </div>
           <!-- Leyenda: distingue rutas de malla regular de rutas compuestas -->
           <div style="display:flex;flex-wrap:wrap;gap:16px;background:#fff;border:1px solid #f3f4f6;border-radius:12px;padding:12px 16px;margin-bottom:20px">
-            <sc-for list="{{ routeLegend }}" as="lg" hint-placeholder-count="2">
+            <sc-for list="{{ routeLegend }}" as="lg" hint-placeholder-count="3">
               <div style="display:flex;align-items:center;gap:8px;min-width:0">
                 <span style="{{ lg.dotStyle }}"></span>
                 <span style="font-size:12px;font-weight:700;color:#1A1040;white-space:nowrap">{{ lg.label }}</span>
@@ -439,7 +432,7 @@
             <button onClick="{{ onGoBackForm }}" style="color:#7B68EE;background:none;border:0;padding:0;cursor:pointer;display:flex;align-items:center;gap:4px;font-size:12px;font-family:inherit" style-hover="text-decoration:underline"><dc-import name="Icon" i="chevron-left" s="13" hint-size="13px,13px"></dc-import> Volver a formulario</button>
           </div>
           <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:24px">
-            <sc-for list="{{ routes }}" as="r" hint-placeholder-count="7">
+            <sc-for list="{{ routes }}" as="r" hint-placeholder-count="11">
               <div style="{{ r.cardStyle }}">
                 <sc-if value="{{ r.top }}" hint-placeholder-val="{{ false }}">
                   <div style="display:inline-block;background:#7B68EE;color:#fff;font-size:10px;font-weight:700;padding:4px 10px;border-radius:9999px;margin-bottom:12px">🏆 Más recomendada</div>
@@ -546,7 +539,11 @@
               <p style="font-size:12px;color:#15803d;margin:0">Revisa qué cursos añade esta ruta antes de seguir al Ecosistema CIE.</p>
             </div>
           </div>
-          <div style="display:flex;flex-wrap:wrap;gap:18px;background:#fff;border:1px solid #f3f4f6;border-radius:12px;padding:12px 16px;margin-bottom:20px">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:18px;background:#fff;border:1px solid #f3f4f6;border-radius:12px;padding:12px 16px;margin-bottom:20px">
+            <div style="{{ mallaLegendRuta.style }}">
+              <span style="{{ mallaLegendRuta.labelStyle }}">{{ mallaLegendRuta.label }}</span>
+              <span style="{{ mallaLegendRuta.descStyle }}">{{ mallaLegendRuta.desc }}</span>
+            </div>
             <sc-for list="{{ mallaLegend }}" as="lg" hint-placeholder-count="4">
               <div style="display:flex;align-items:center;gap:8px">
                 <span style="{{ lg.swatchStyle }}"></span>
@@ -555,24 +552,16 @@
               </div>
             </sc-for>
           </div>
-          <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;margin-bottom:24px">
+          <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:24px">
             <sc-for list="{{ cycles }}" as="cyc" hint-placeholder-count="10">
               <div style="{{ cyc.cardOuterStyle }}">
                 <div style="{{ cyc.headerStyle }}">
                   <p style="{{ cyc.titleStyle }}">{{ cyc.titleLabel }}</p>
                   <p style="font-size:12px;color:#9ca3af;margin:0">{{ cyc.creditsLabel }}</p>
                 </div>
-                <sc-if value="{{ cyc.hasRuta }}" hint-placeholder-val="{{ true }}">
-                  <div style="{{ cyc.threadStyle }}"></div>
-                </sc-if>
-                <div style="position:relative;z-index:1;padding:12px;display:flex;flex-direction:column;gap:8px">
+                <div style="padding:12px;display:flex;flex-direction:column;gap:8px">
                   <sc-for list="{{ cyc.courses }}" as="c" hint-placeholder-count="3">
                     <div style="{{ c.wrapStyle }}">
-                      <div style="width:10px;flex-shrink:0;display:flex;justify-content:center;padding-top:8px">
-                        <sc-if value="{{ c.isRuta }}" hint-placeholder-val="{{ false }}">
-                          <span style="{{ c.dotStyle }}"></span>
-                        </sc-if>
-                      </div>
                       <div style="{{ c.style }}">
                         <div style="display:flex;align-items:center;justify-content:space-between;gap:4px;margin-bottom:3px;flex-wrap:wrap">
                           <span style="display:flex;align-items:center;gap:4px"><span style="{{ c.catDotStyle }}"></span><span style="{{ c.catTextStyle }}">{{ c.catLabel }}</span></span>
@@ -580,12 +569,15 @@
                             <sc-if value="{{ c.isCfu }}" hint-placeholder-val="{{ false }}">
                               <span style="{{ c.cfuBadgeStyle }}">🇺🇸 CFU</span>
                             </sc-if>
+                            <sc-if value="{{ c.showRutaBadge }}" hint-placeholder-val="{{ false }}">
+                              <span style="{{ c.rutaBadgeStyle }}">🧭 Tu ruta</span>
+                            </sc-if>
                             <sc-if value="{{ c.enCurso }}" hint-placeholder-val="{{ false }}">
                               <span style="{{ c.enCursoStyle }}">EN CURSO</span>
                             </sc-if>
                           </span>
                         </div>
-                        <p style="font-weight:600;margin:0">{{ c.name }}</p>
+                        <p style="{{ c.nameStyle }}">{{ c.name }}</p>
                         <sc-if value="{{ c.isCfu }}" hint-placeholder-val="{{ false }}">
                           <p style="font-size:10px;opacity:.7;margin:2px 0 0">Equivale a: {{ c.ucName }}</p>
                         </sc-if>
@@ -659,6 +651,7 @@
             <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Paso 3 de 4</span></span>
           </nav>
           <div style="background:linear-gradient(to right,#7B68EE,#5346C8);border-radius:16px;padding:24px;color:#fff;margin-bottom:24px;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff">
+            <img src="./assets/cie-logo.svg" alt="Continental International Education" style="height:22px;width:auto;display:block;margin-bottom:12px">
             <h1 style="font-family:Poppins,sans-serif;font-size:20px;line-height:28px;font-weight:700;margin:0 0 4px">🌍 Ecosistema CIE</h1>
             <p style="color:#e9d5ff;font-size:12px;margin:0 0 16px">Continental International Education · Formación que complementa tu carrera, más allá de la malla.</p>
             <!-- Los tres frentes del CIE. Los cursos de la Universidad Continental
@@ -714,20 +707,41 @@
             <div style="display:flex;align-items:flex-start;gap:12px">
               <div style="margin-top:2px"><dc-import name="Icon" i="info" s="16" c="#3b82f6" hint-size="16px,16px"></dc-import></div>
               <div style="font-size:12px">
-                <p style="font-weight:700;color:#1e3a8a;margin:0 0 4px">A tu propio ritmo</p>
+                <p style="font-weight:700;color:#1e3a8a;margin:0 0 4px">Un recorrido por el ecosistema</p>
                 <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:2px;color:#1d4ed8">
                   <li>✓ Tu ruta ya quedó elegida y confirmada en Mis Rutas</li>
-                  <li>✓ Explora ahora lo que te interese — <strong>no hace falta verlo todo de una vez</strong></li>
-                  <li>✓ Puedes volver a esta pantalla cuando quieras y seguir revisando después</li>
+                  <li>✓ Abre las 5 secciones de abajo, en el orden que quieras</li>
+                  <li>✓ Puedes ir y volver cuando quieras — <strong>lo que ya abriste queda guardado</strong>, no tienes que hacerlo todo de una sesión</li>
+                  <li>✓ Cuando termines las 5, se activa "Continuar" para seguir a tu malla</li>
                 </ul>
               </div>
             </div>
           </div>
-          <div style="margin-bottom:20px">
-            <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;color:#6b7280;margin-bottom:8px">
-              <span>Has explorado: {{ ecoCountLabel }} secciones</span>
+          <!-- La ruta: un nodo por sección, conectados por una línea que se
+               llena a medida que avanzas — para que sea evidente que es un
+               recorrido con orden, no una lista suelta. -->
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px 16px 16px;margin-bottom:20px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+              <p style="font-size:12px;font-weight:700;color:#1A1040;margin:0">🧭 Tu recorrido por el CIE</p>
+              <span style="font-size:11px;font-weight:700;color:#7B68EE;background:#faf5ff;border-radius:9999px;padding:2px 9px">{{ ecoCountLabel }}</span>
             </div>
-            <div style="height:8px;background:#f3f4f6;border-radius:9999px;overflow:hidden"><div style="height:100%;background:#7B68EE;border-radius:9999px;transition:all .7s;width:{{ ecoPct }}"></div></div>
+            <div style="position:relative;display:flex;justify-content:space-between;padding:0 4px">
+              <div style="position:absolute;top:17px;left:21px;right:21px;height:3px;background:#f3f4f6;border-radius:2px;z-index:0"></div>
+              <div style="position:absolute;top:17px;left:21px;height:3px;background:#7B68EE;border-radius:2px;z-index:0;transition:width .4s;width:{{ ecoTrailFillPct }}"></div>
+              <sc-for list="{{ ecoTrailNodes }}" as="n" hint-placeholder-count="5">
+                <button onClick="{{ n.onClick }}" style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;background:none;border:0;cursor:pointer;font-family:inherit;padding:0">
+                  <div style="{{ n.circleStyle }}">
+                    <sc-if value="{{ n.done }}" hint-placeholder-val="{{ false }}">
+                      <dc-import name="Icon" i="check" s="15" c="#ffffff" hint-size="15px,15px"></dc-import>
+                    </sc-if>
+                    <sc-if value="{{ n.notDone }}" hint-placeholder-val="{{ true }}">
+                      <span>{{ n.emoji }}</span>
+                    </sc-if>
+                  </div>
+                  <span style="{{ n.labelStyle }}">{{ n.label }}</span>
+                </button>
+              </sc-for>
+            </div>
           </div>
           <!-- Buscador/filtro por interés, compartido por Idiomas, Continua y Posgrado. -->
           <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:16px;margin-bottom:20px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
@@ -752,6 +766,10 @@
                 <div style="display:flex;align-items:center;gap:8px">
                   <span>🌍</span>
                   <span style="font-weight:600;color:#1A1040;font-size:14px">Experiencias Internacionales</span>
+                  <span style="display:flex;align-items:center;gap:5px;background:#ecfeff;border:1px solid #a5f3fc;border-radius:9999px;padding:2px 9px 2px 6px">
+                    <img src="./assets/cfu-logo.png" alt="CFU" style="height:11px;width:auto">
+                    <span style="font-size:10px;font-weight:700;color:#0e7490">CFU</span>
+                  </span>
                   <dc-import name="Tip" text="Cursos de tu malla en Perú con equivalencia confirmada en Continental Florida University, la universidad aliada en EE. UU." hint-size="14px,14px"></dc-import>
                 </div>
                 <div style="display:flex;align-items:center;gap:8px">
@@ -774,9 +792,9 @@
                     </div>
                   </sc-if>
                   <div style="border:1px solid #f3f4f6;border-radius:16px;overflow:hidden">
-                    <div style="display:grid;grid-template-columns:1fr 1fr auto;background:#faf5ff">
-                      <div style="padding:10px 12px;font-size:11px;font-weight:700;color:#4A3FA0">🇵🇪 Universidad Continental — Perú</div>
-                      <div style="padding:10px 12px;font-size:11px;font-weight:700;color:#4A3FA0;border-left:1px solid #f3e8ff">🇺🇸 Continental Florida University</div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr auto;background:#faf5ff;align-items:center">
+                      <div style="padding:8px 12px;display:flex;align-items:center;gap:8px"><img src="./assets/uc-logo.svg" alt="Universidad Continental" style="height:14px;width:auto"><span style="font-size:10px;color:#9ca3af">Perú</span></div>
+                      <div style="padding:8px 12px;display:flex;align-items:center;gap:8px;border-left:1px solid #f3e8ff"><img src="./assets/cfu-logo.png" alt="Continental Florida University" style="height:18px;width:auto"></div>
                       <div style="border-left:1px solid #f3e8ff"></div>
                     </div>
                     <sc-for list="{{ equivRows }}" as="r" hint-placeholder-count="8">
@@ -804,9 +822,8 @@
             <!-- Instituto Continental: aún no hay información cargada del CIE. -->
             <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;overflow:hidden;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
               <button onClick="{{ ecoToggleInstituto }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:16px;background:#fff;border:0;cursor:pointer;font-family:inherit" style-hover="background:rgba(250,245,255,.5)">
-                <div style="display:flex;align-items:center;gap:8px">
-                  <span>🛠️</span>
-                  <span style="font-weight:600;color:#1A1040;font-size:14px">Instituto Continental</span>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <img src="./assets/instituto-logo.png" alt="Instituto Continental" style="height:20px;width:auto">
                   <dc-import name="Tip" text="Carreras técnicas y especializaciones cortas del Instituto Continental" hint-size="14px,14px"></dc-import>
                 </div>
                 <div style="display:flex;align-items:center;gap:8px">
@@ -826,9 +843,8 @@
 
             <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;overflow:hidden;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
               <button onClick="{{ ecoToggleIdiomas }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:16px;background:#fff;border:0;cursor:pointer;font-family:inherit" style-hover="background:rgba(250,245,255,.5)">
-                <div style="display:flex;align-items:center;gap:8px">
-                  <span>🗣️</span>
-                  <span style="font-weight:600;color:#1A1040;font-size:14px">Centro de Idiomas</span>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <img src="./assets/idiomas-logo.png" alt="Centro de Idiomas" style="height:26px;width:auto">
                   <dc-import name="Tip" text="Domina nuevos idiomas para mejorar tu perfil internacional" hint-size="14px,14px"></dc-import>
                 </div>
                 <div style="display:flex;align-items:center;gap:8px">
@@ -863,9 +879,8 @@
             <!-- Continua: vitrina de educación continua del CIE con plataformas externas. -->
             <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;overflow:hidden;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
               <button onClick="{{ ecoToggleContinua }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:16px;background:#fff;border:0;cursor:pointer;font-family:inherit" style-hover="background:rgba(250,245,255,.5)">
-                <div style="display:flex;align-items:center;gap:8px">
-                  <span>🎓</span>
-                  <span style="font-weight:600;color:#1A1040;font-size:14px">Continua</span>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <img src="./assets/continua-logo.png" alt="Universidad Continental — Continua" style="height:20px;width:auto">
                   <dc-import name="Tip" text="Certifícate con las mejores plataformas del mundo, incluidas en tu matrícula" hint-size="14px,14px"></dc-import>
                 </div>
                 <div style="display:flex;align-items:center;gap:8px">
@@ -900,9 +915,8 @@
                  pidió mostrarla siempre, igual que el resto del ecosistema. -->
             <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;overflow:hidden;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
               <button onClick="{{ ecoTogglePosgrado }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:16px;background:#fff;border:0;cursor:pointer;font-family:inherit" style-hover="background:rgba(250,245,255,.5)">
-                <div style="display:flex;align-items:center;gap:8px">
-                  <span>🎯</span>
-                  <span style="font-weight:600;color:#1A1040;font-size:14px">Escuela de Posgrado</span>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <img src="./assets/posgrado-logo.png" alt="Universidad Continental — Escuela de Posgrado" style="height:20px;width:auto">
                   <dc-import name="Tip" text="Especialízate con programas de posgrado de la Universidad Continental" hint-size="14px,14px"></dc-import>
                 </div>
                 <div style="display:flex;align-items:center;gap:8px">
@@ -954,10 +968,14 @@
               <p style="color:#6b7280;font-size:14px;margin:0 0 6px">Carrera: <strong>{{ mallaCareer }}</strong> · 10 ciclos · {{ mallaTotalCredits }} créditos totales</p>
               <span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:#4A3FA0;background:#faf5ff;border-radius:9999px;padding:3px 10px">📘 {{ planLabel }}</span>
             </div>
-            <dc-import name="Tip" text="El hilo morado une los cursos de la ruta que elegiste. Puedes agregar todos los extracurriculares que quieras al final de cada ciclo: elige uno de la lista y confirma — nunca se agregan solos. No cuentan para tus créditos de carrera." hint-size="14px,14px"></dc-import>
+            <dc-import name="Tip" text="Los cursos de la ruta que elegiste se ven con borde morado grueso, fondo lleno y la insignia '🧭 Tu ruta' — mucho más resaltados que el resto. Puedes agregar todos los extracurriculares que quieras al final de cada ciclo: elige uno de la lista y confirma — nunca se agregan solos. No cuentan para tus créditos de carrera." hint-size="14px,14px"></dc-import>
           </div>
           <!-- Leyenda de las tres categorías de curso + los electivos ya elegidos -->
-          <div style="display:flex;flex-wrap:wrap;gap:18px;background:#fff;border:1px solid #f3f4f6;border-radius:12px;padding:12px 16px;margin-bottom:20px">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:18px;background:#fff;border:1px solid #f3f4f6;border-radius:12px;padding:12px 16px;margin-bottom:20px">
+            <div style="{{ mallaLegendRuta.style }}">
+              <span style="{{ mallaLegendRuta.labelStyle }}">{{ mallaLegendRuta.label }}</span>
+              <span style="{{ mallaLegendRuta.descStyle }}">{{ mallaLegendRuta.desc }}</span>
+            </div>
             <sc-for list="{{ mallaLegend }}" as="lg" hint-placeholder-count="4">
               <div style="display:flex;align-items:center;gap:8px">
                 <span style="{{ lg.swatchStyle }}"></span>
@@ -966,25 +984,16 @@
               </div>
             </sc-for>
           </div>
-          <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;margin-bottom:24px">
+          <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:24px">
             <sc-for list="{{ cycles }}" as="cyc" hint-placeholder-count="10">
               <div style="{{ cyc.cardOuterStyle }}">
                 <div style="{{ cyc.headerStyle }}">
                   <p style="{{ cyc.titleStyle }}">{{ cyc.titleLabel }}</p>
                   <p style="font-size:12px;color:#9ca3af;margin:0">{{ cyc.creditsLabel }}</p>
                 </div>
-                <!-- El hilo de la ruta recorre la columna por detrás de las tarjetas -->
-                <sc-if value="{{ cyc.hasRuta }}" hint-placeholder-val="{{ true }}">
-                  <div style="{{ cyc.threadStyle }}"></div>
-                </sc-if>
-                <div style="position:relative;z-index:1;padding:12px;display:flex;flex-direction:column;gap:8px">
+                <div style="padding:12px;display:flex;flex-direction:column;gap:8px">
                   <sc-for list="{{ cyc.courses }}" as="c" hint-placeholder-count="3">
                     <div style="{{ c.wrapStyle }}">
-                      <div style="width:10px;flex-shrink:0;display:flex;justify-content:center;padding-top:8px">
-                        <sc-if value="{{ c.isRuta }}" hint-placeholder-val="{{ false }}">
-                          <span style="{{ c.dotStyle }}"></span>
-                        </sc-if>
-                      </div>
                       <div style="{{ c.style }}">
                         <div style="display:flex;align-items:center;justify-content:space-between;gap:4px;margin-bottom:3px;flex-wrap:wrap">
                           <span style="display:flex;align-items:center;gap:4px"><span style="{{ c.catDotStyle }}"></span><span style="{{ c.catTextStyle }}">{{ c.catLabel }}</span></span>
@@ -992,12 +1001,15 @@
                             <sc-if value="{{ c.isCfu }}" hint-placeholder-val="{{ false }}">
                               <span style="{{ c.cfuBadgeStyle }}">🇺🇸 CFU</span>
                             </sc-if>
+                            <sc-if value="{{ c.showRutaBadge }}" hint-placeholder-val="{{ false }}">
+                              <span style="{{ c.rutaBadgeStyle }}">🧭 Tu ruta</span>
+                            </sc-if>
                             <sc-if value="{{ c.enCurso }}" hint-placeholder-val="{{ false }}">
                               <span style="{{ c.enCursoStyle }}">EN CURSO</span>
                             </sc-if>
                           </span>
                         </div>
-                        <p style="font-weight:600;margin:0">{{ c.name }}</p>
+                        <p style="{{ c.nameStyle }}">{{ c.name }}</p>
                         <sc-if value="{{ c.isCfu }}" hint-placeholder-val="{{ false }}">
                           <p style="font-size:10px;opacity:.7;margin:2px 0 0">Equivale a: {{ c.ucName }}</p>
                         </sc-if>
@@ -1153,24 +1165,104 @@
             </sc-if>
           </div>
 
-          <button onClick="{{ mallaSummaryNext }}" style="width:100%;background:#7B68EE;color:#fff;border:0;border-radius:16px;padding:14px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff" style-hover="background:#6A58DC">Continuar a Mi Perfil CoRA →</button>
+          <sc-if value="{{ mallaShowProfileCta }}" hint-placeholder-val="{{ false }}">
+            <div style="background:linear-gradient(to bottom right,#faf5ff,#eef2ff);border:1px solid #f3e8ff;border-radius:16px;padding:24px">
+              <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:16px;margin:0 0 8px">✨ ¿Quieres saber quién eres detrás de esta ruta?</h3>
+              <p style="font-size:13px;color:#4b5563;line-height:1.6;margin:0 0 20px">Tu ruta te dice qué vas a estudiar. Tu perfil de identidad te dice por qué esa ruta tiene sentido para ti — y hacia dónde te puede llevar.</p>
+              <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:20px">
+                <sc-for list="{{ perfilCtaItems }}" as="it" hint-placeholder-count="3">
+                  <div style="text-align:center">
+                    <div style="width:40px;height:40px;border-radius:9999px;background:{{ it.bg }};display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 8px">{{ it.icon }}</div>
+                    <p style="font-size:12px;font-weight:700;color:#1A1040;margin:0 0 2px">{{ it.label }}</p>
+                    <p style="font-size:11px;color:#6b7280;margin:0">{{ it.caption }}</p>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #f3f4f6;border-radius:12px;padding:10px 14px;margin-bottom:16px">
+                <dc-import name="Icon" i="clock" s="14" c="#9ca3af" hint-size="14px,14px"></dc-import>
+                <p style="font-size:12px;color:#6b7280;margin:0">18 preguntas · menos de 3 minutos · puedes hacerlo ahora o después</p>
+              </div>
+              <div style="display:flex;gap:12px;margin-bottom:16px">
+                <button onClick="{{ discoverProfile }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 0;border:1px solid #e9d5ff;border-radius:16px;font-size:14px;font-weight:600;color:#7B68EE;background:#fff;cursor:pointer;font-family:inherit" style-hover="background:#f3e8ff">Descubrir mi perfil <dc-import name="Icon" i="chevron-right" s="14" hint-size="14px,14px"></dc-import></button>
+                <button onClick="{{ deferProfile }}" style="flex:1;padding:12px 0;border:1px solid #e5e7eb;border-radius:16px;font-size:14px;font-weight:500;color:#4b5563;background:#fff;cursor:pointer;font-family:inherit" style-hover="background:#f9fafb">Lo hago después</button>
+              </div>
+              <p style="font-size:11px;color:#9ca3af;text-align:center;margin:0">Tu ruta ya está guardada. El perfil de identidad la enriquece, pero no la cambia.</p>
+            </div>
+          </sc-if>
+          <sc-if value="{{ !mallaShowProfileCta }}" hint-placeholder-val="{{ true }}">
+            <button onClick="{{ mallaSummaryNext }}" style="width:100%;background:#7B68EE;color:#fff;border:0;border-radius:16px;padding:14px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff" style-hover="background:#6A58DC">Continuar a Veo mi Horizonte →</button>
+          </sc-if>
         </div>
         </sc-if>
         </div>
       </sc-if>
 
-      <sc-if value="{{ isPerfilCora }}" hint-placeholder-val="{{ false }}">
+      <sc-if value="{{ showCoraQuiz }}" hint-placeholder-val="{{ false }}">
         <div>
           <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
             <span style="white-space:nowrap">✨ Recomendador</span>
             <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Mi Perfil CoRA</span></span>
           </nav>
-          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:24px">
-            <div>
-              <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:32px;font-weight:700;color:#1A1040;margin:0 0 4px">👤 Tu Perfil Personalizado</h1>
-              <p style="color:#6b7280;font-size:14px;margin:0">Basado en tus respuestas. 6 dimensiones que definen tu potencial académico.</p>
+          <div style="background:#fff;border:1px solid rgba(243,232,255,.6);border-radius:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1);padding:24px;margin-bottom:16px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px;flex-wrap:wrap">
+              <div style="display:flex;align-items:center;gap:12px">
+                <div style="width:40px;height:40px;border-radius:12px;background:#f3e8ff;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">✨</div>
+                <div>
+                  <h2 style="font-family:Poppins,sans-serif;font-size:16px;font-weight:700;color:#1A1040;margin:0">Tu perfil de identidad</h2>
+                  <p style="font-size:12px;color:#6b7280;margin:2px 0 0">Dinos qué tanto te gustaría hacer cada actividad</p>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px">
+                <span style="font-size:13px;color:#9ca3af;font-weight:600;white-space:nowrap">{{ coraAnsweredLabel }}</span>
+                <dc-import name="Tip" text="No hay respuestas correctas ni incorrectas. Puedes cambiar tu respuesta cuando quieras — el resultado aparece solo al terminar las 18." hint-size="14px,14px"></dc-import>
+              </div>
             </div>
-            <dc-import name="Tip" text="Tu perfil único basado en tus respuestas del formulario. Analiza A=Aptitud, G=Gestión, L=Liderazgo, D=Determinación, E=Empatía, F=Flexibilidad." hint-size="14px,14px"></dc-import>
+            <div style="display:flex;align-items:center;gap:12px;padding:0 0 10px;border-bottom:1px solid #f3f4f6">
+              <div style="flex:1"></div>
+              <div style="display:flex;gap:8px">
+                <span style="width:36px;text-align:center;font-size:9px;color:#9ca3af;font-weight:700;line-height:1.2">Para<br>nada</span>
+                <span style="width:36px;text-align:center;font-size:9px;color:#9ca3af;font-weight:700;line-height:1.2">Poco</span>
+                <span style="width:36px;text-align:center;font-size:9px;color:#9ca3af;font-weight:700;line-height:1.2">Bastante</span>
+                <span style="width:36px;text-align:center;font-size:9px;color:#9ca3af;font-weight:700;line-height:1.2">Mucho</span>
+              </div>
+            </div>
+            <div style="max-height:520px;overflow-y:auto;display:flex;flex-direction:column">
+              <sc-for list="{{ coraRows }}" as="row" hint-placeholder-count="18">
+                <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #f9fafb">
+                  <p style="flex:1;font-size:13px;color:#374151;margin:0;line-height:1.4">{{ row.text }}</p>
+                  <div style="display:flex;gap:8px">
+                    <sc-for list="{{ row.options }}" as="opt" hint-placeholder-count="4">
+                      <button onClick="{{ opt.onClick }}" title="{{ opt.title }}" style="{{ opt.style }}">{{ opt.value }}</button>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <p style="font-size:12px;color:#9ca3af;text-align:center;margin:0">Responde las 18 preguntas — tu resultado aparece automáticamente al terminar.</p>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showCoraResults }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
+            <span style="white-space:nowrap">✨ Recomendador</span>
+            <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Mi Perfil CoRA</span></span>
+          </nav>
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px">
+            <div>
+              <p style="font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.08em;margin:0 0 6px">✨ Tu perfil de identidad · CoRA</p>
+              <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:32px;font-weight:700;color:#1A1040;margin:0">{{ coraArchetype }}</h1>
+              <p style="color:#6b7280;font-size:14px;margin:8px 0 0;line-height:1.6">{{ coraNarrative }}</p>
+            </div>
+            <dc-import name="Tip" text="Tu perfil se calcula con el cuestionario 18REST: 18 preguntas que miden 6 dimensiones — A=Analítico, E=Emprendedor, S=Social, C=Creativo, O=Organizado, P=Práctico. Tu código son las 3 dimensiones donde puntuaste más alto." hint-size="14px,14px"></dc-import>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:24px">
+            <span style="background:#eff6ff;border:1px solid #dbeafe;color:#1d4ed8;font-weight:800;font-size:13px;letter-spacing:.05em;border-radius:9999px;padding:6px 16px">{{ coraCode }}</span>
+            <span style="font-size:10px;color:#9ca3af;font-weight:700;text-transform:uppercase;letter-spacing:.05em">Tu código CoRA</span>
+            <sc-for list="{{ coraCodeChips }}" as="c" hint-placeholder-count="3">
+              <span style="{{ c.style }}">{{ c.label }}</span>
+            </sc-for>
           </div>
           <div style="background:#fffbeb;border:1px solid #fef3c7;border-radius:16px;padding:16px;margin-bottom:24px;display:flex;align-items:flex-start;gap:12px">
             <span style="font-size:20px;line-height:28px">🔗</span>
@@ -1231,7 +1323,7 @@
               <div>
                 <p style="font-weight:600;color:#15803d;font-size:12px;margin:0 0 4px">✓ Fortalezas:</p>
                 <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px;font-size:12px;color:#4b5563">
-                  <sc-for list="{{ dimStrengths }}" as="ds" hint-placeholder-count="2">
+                  <sc-for list="{{ dimStrengths }}" as="ds" hint-placeholder-count="3">
                     <li>• <strong>{{ ds.label }}</strong> → {{ ds.why }}</li>
                   </sc-for>
                 </ul>
@@ -1253,6 +1345,7 @@
             </div>
           </div>
           <button onClick="{{ perfilCoraNext }}" style="width:100%;background:#7B68EE;color:#fff;border:0;border-radius:16px;padding:14px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff" style-hover="background:#6A58DC">Continuar a Veo mi Horizonte →</button>
+          <button onClick="{{ retakeCora }}" style="width:100%;background:none;border:0;color:#7B68EE;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;padding:10px 0 0;display:flex;align-items:center;justify-content:center;gap:4px" style-hover="text-decoration:underline"><dc-import name="Icon" i="rotate-ccw" s="12" hint-size="12px,12px"></dc-import>Repetir el cuestionario</button>
         </div>
       </sc-if>
 
@@ -2013,6 +2106,10 @@
             <span style="white-space:nowrap">👨‍🏫 Académico</span>
             <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Asistente CORA</span></span>
           </nav>
+          <div style="display:flex;align-items:center;gap:12px;background:#faf5ff;border-radius:16px;padding:14px 18px">
+            <img src="./assets/cora-logo.png" alt="CORA" style="height:34px;width:auto;display:block">
+            <span style="font-size:12px;font-weight:600;color:#4A3FA0;background:#f3e8ff;border-radius:9999px;padding:4px 10px;white-space:nowrap">24/7</span>
+          </div>
           <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px">
             <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
               <h2 style="font-weight:700;color:#1A1040;font-size:14px;margin:0 0 8px">💬 Asistente CORA — 24/7</h2>
@@ -2456,37 +2553,58 @@ class Component extends DCLogic {
      institutos, diplomados), sin cursos de la malla.
      `courses` alimenta el detalle que ahora se puede ver ANTES de elegir. */
   ROUTES = [
-    { id:1, name:"Ingeniería Comercial", match:94, top:true, kind:"malla", tags:["Gestión","Análisis","Negocios"], desc:"Carrera enfocada en gestión, análisis y administración de empresas. Alta demanda laboral.", icon:"🏆",
-      courses:["Introducción a la Administración y Negocios Internacionales","Administración Global","Comportamiento Organizacional","Gerencia de Operaciones","Estrategia Competitiva","Plan de Negocios Internacionales"],
+    /* Tres tipos de ruta, nunca una mezcla de más de uno (`kind`):
+       - "curricular": 100% malla — obligatorios y/o electivos de la propia carrera.
+       - "extracurricular": 100% Ecosistema CIE — sin cursos de la malla.
+       - "combinada": malla (obligatorios/electivos) + extracurriculares del CIE, las dos cosas.
+       En los tres casos, ningún curso pertenece a un ciclo que el estudiante
+       ya cursó — solo desde STUDENT.cycle en adelante. */
+    { id:1, name:"Ingeniería Comercial", match:94, top:true, kind:"curricular", tags:["Gestión","Análisis","Negocios"], desc:"Carrera enfocada en gestión, análisis y administración de empresas. Alta demanda laboral.", icon:"🏆",
+      courses:["Investigación de Mercados","Gestión Internacional e Intercultural","Gestión del Talento Humano","Gerencia de Operaciones","Estrategia Competitiva","Plan de Negocios Internacionales"],
       matchWhy:{ interes:95, fortaleza:96, objetivo:90, bestFor:"Trabajar en una empresa grande o liderar equipos" } },
-    { id:2, name:"Administración de Empresas", match:89, top:false, kind:"malla", tags:["Liderazgo","Estrategia","Planificación"], desc:"Formación integral en dirección, planificación y organización de empresas medianas y grandes.", icon:"📊",
-      courses:["Introducción a la Administración y Negocios Internacionales","Administración Global","Gestión del Talento Humano","Formulación y Evaluación de Proyectos","Análisis de Recursos y Capacidades Organizacionales"],
+    { id:2, name:"Administración de Empresas", match:89, top:false, kind:"curricular", tags:["Liderazgo","Estrategia","Planificación"], desc:"Formación integral en dirección, planificación y organización de empresas medianas y grandes.", icon:"📊",
+      courses:["Entorno Global para los Negocios","Decisiones Basadas en Datos","Gestión del Talento Humano","Formulación y Evaluación de Proyectos","Análisis de Recursos y Capacidades Organizacionales"],
       matchWhy:{ interes:88, fortaleza:85, objetivo:93, bestFor:"Dirigir o emprender tu propio negocio" } },
-    { id:3, name:"Marketing y Gestión Comercial", match:85, top:false, kind:"malla", tags:["Marketing","Digital","Ventas"], desc:"Especialización en estrategias de mercado, branding y comunicación en entornos digitales.", icon:"📣",
+    { id:3, name:"Marketing y Gestión Comercial", match:85, top:false, kind:"curricular", tags:["Marketing","Digital","Ventas"], desc:"Especialización en estrategias de mercado, branding y comunicación en entornos digitales.", icon:"📣",
       courses:["Marketing","Investigación de Mercados","Inteligencia de Mercados Internacionales","Desarrollo de Productos y Servicios Internacionales"],
       matchWhy:{ interes:90, fortaleza:80, objetivo:85, bestFor:"Crear estrategias de marca, ventas y comunicación" } },
-    { id:4, name:"Contabilidad y Finanzas", match:81, top:false, kind:"malla", tags:["Finanzas","Contabilidad","Análisis"], desc:"Dominio de gestión financiera, auditoría y análisis económico en organizaciones públicas y privadas.", icon:"💼",
-      courses:["Fundamentos de Contabilidad","Finanzas 1","Finanzas 2","Costos y Presupuestos","Costos, Precios y Cotizaciones Internacionales"],
+    { id:4, name:"Contabilidad y Finanzas", match:81, top:false, kind:"curricular", tags:["Finanzas","Contabilidad","Análisis"], desc:"Dominio de gestión financiera, auditoría y análisis económico en organizaciones públicas y privadas.", icon:"💼",
+      courses:["Decisiones Basadas en Datos","Finanzas 1","Finanzas 2","Costos y Presupuestos","Costos, Precios y Cotizaciones Internacionales"],
       matchWhy:{ interes:75, fortaleza:90, objetivo:78, bestFor:"Análisis financiero y control de gestión" } },
-    { id:5, name:"Economía", match:78, top:false, kind:"malla", tags:["Economía","Política","Investigación"], desc:"Análisis macroeconómico y microeconómico con enfoque en políticas públicas e investigación.", icon:"📈",
-      courses:["Economía 1","Economía 2","Matemáticas Financieras","Política Económica Internacional"],
+    { id:5, name:"Economía", match:78, top:false, kind:"curricular", tags:["Economía","Política","Investigación"], desc:"Análisis macroeconómico y microeconómico con enfoque en políticas públicas e investigación.", icon:"📈",
+      courses:["Investigación Académica","Investigación 1 en Administración","Decisiones Basadas en Datos","Política Económica Internacional"],
       matchWhy:{ interes:80, fortaleza:85, objetivo:70, bestFor:"Investigación y políticas públicas" } },
-    { id:6, name:"Ingeniería Industrial", match:74, top:false, kind:"malla", tags:["Ingeniería","Procesos","Logística"], desc:"Optimización de procesos productivos, gestión de operaciones y sistemas industriales.", icon:"⚙️",
-      courses:["Estadística y Probabilidades","Estadística Inferencial","Gerencia de Operaciones","Análisis de Recursos y Capacidades Organizacionales","Estándares Internacionales de Calidad"],
+    { id:6, name:"Ingeniería Industrial", match:74, top:false, kind:"curricular", tags:["Ingeniería","Procesos","Logística"], desc:"Optimización de procesos productivos, gestión de operaciones y sistemas industriales.", icon:"⚙️",
+      courses:["Distribución Física Internacional","Estadística Inferencial","Gerencia de Operaciones","Análisis de Recursos y Capacidades Organizacionales","Estándares Internacionales de Calidad"],
       matchWhy:{ interes:70, fortaleza:82, objetivo:70, bestFor:"Optimizar procesos y operaciones" } },
     { id:7, name:"Negocios Internacionales", match:70, top:false, kind:"extracurricular", tags:["Internacional","Comercio","Idiomas"], desc:"Formación complementaria del CIE en comercio exterior e idiomas, sin cursos de la malla.", icon:"🌍",
       /* `courseCycles` es paralelo a `courses`: el ciclo sugerido en el que se
          vería cada extracurricular dentro de la malla (no tiene malla propia,
-         así que se muestra debajo del ciclo que le corresponde). */
+         así que se muestra debajo del ciclo que le corresponde). Siempre desde
+         el ciclo actual en adelante. */
       courses:["Inglés B2 — Business English (Centro de Idiomas)","Negociación Intercultural (extracurricular CIE)","Diplomado en Comercio Exterior (extracurricular CIE)"],
-      courseCycles:[3, 6, 9],
+      courseCycles:[4, 6, 9],
       matchWhy:{ interes:75, fortaleza:65, objetivo:70, bestFor:"Sumar un perfil internacional a tu carrera" } },
-    { id:8, name:"Comercio Internacional y Negocios", match:68, top:false, kind:"malla", tags:["Comercio Exterior","Calidad","Negociación"], desc:"Línea de especialización real de la malla 2024 de Administración y Negocios Internacionales: del comercio internacional al plan de negocios.", icon:"📦",
+    { id:8, name:"Comercio Internacional y Negocios", match:68, top:false, kind:"curricular", tags:["Comercio Exterior","Calidad","Negociación"], desc:"Línea de especialización real de la malla 2024 de Administración y Negocios Internacionales: del comercio internacional al plan de negocios.", icon:"📦",
       courses:["Gestión de Comercio Internacional","Estándares Internacionales de Calidad","Desarrollo de Productos y Servicios Internacionales","Plan de Negocios Internacionales","Negociaciones y Transacciones Internacionales"],
       matchWhy:{ interes:70, fortaleza:68, objetivo:66, bestFor:"Especializarte en comercio exterior" } },
-    { id:9, name:"Logística y Gestión Aduanera Internacional", match:65, top:false, kind:"malla", tags:["Aduanas","Logística","Comercio Exterior"], desc:"Línea de especialización real de la malla 2024 de Administración y Negocios Internacionales: logística internacional y operaciones aduaneras.", icon:"🚢",
+    { id:9, name:"Logística y Gestión Aduanera Internacional", match:65, top:false, kind:"curricular", tags:["Aduanas","Logística","Comercio Exterior"], desc:"Línea de especialización real de la malla 2024 de Administración y Negocios Internacionales: logística internacional y operaciones aduaneras.", icon:"🚢",
       courses:["Gestión Internacional e Intercultural","Distribución Física Internacional","Gestión Aduanera y Cambiaria","Costos, Precios y Cotizaciones Internacionales","Gerencia Comercial Internacional"],
-      matchWhy:{ interes:62, fortaleza:68, objetivo:65, bestFor:"Operaciones aduaneras y logística internacional" } }
+      matchWhy:{ interes:62, fortaleza:68, objetivo:65, bestFor:"Operaciones aduaneras y logística internacional" } },
+    /* Ruta "curricular": combina obligatorios de la malla con electivos de la
+       propia malla — sigue siendo 100% malla, sin tocar el Ecosistema CIE. */
+    { id:10, name:"Gestión de Talento y Proyectos", match:60, top:false, kind:"curricular", tags:["Gestión","Talento","Proyectos"], desc:"Combina cursos obligatorios de gestión con electivos de tu propia malla, para personalizar tu especialización sin salir de la carrera.", icon:"🧩",
+      courses:["Gestión del Talento Humano","Formulación y Evaluación de Proyectos","Electivo General 5","Electivo de Especialidad o Transversal 1"],
+      matchWhy:{ interes:64, fortaleza:66, objetivo:60, bestFor:"Armar tu propia especialización combinando gestión y electivos" } },
+    /* Ruta "combinada": malla (obligatorios + electivos, en `courses`) MÁS
+       extracurriculares del CIE (en `extraCourses`/`extraCourseCycles`, igual
+       de campos paralelos que en una ruta extracurricular) — las dos cosas a
+       la vez, ninguna reemplaza a la otra. */
+    { id:11, name:"Negocios Digitales con Perfil Internacional", match:58, top:false, kind:"combinada", tags:["Digital","Internacional","Innovación"], desc:"Combina cursos y electivos de tu malla con formación internacional del Ecosistema CIE — lo curricular y lo extracurricular, juntos.", icon:"🌐",
+      courses:["Transformación Digital","Negocios Digitales Globales","Electivo de Especialidad o Transversal 2"],
+      extraCourses:["Inglés B2 — Business English (Centro de Idiomas)","Taller de Innovación Digital (extracurricular CIE)"],
+      extraCourseCycles:[4, 7],
+      matchWhy:{ interes:66, fortaleza:60, objetivo:64, bestFor:"Sumar perfil digital e internacional sin elegir solo uno de los dos" } }
   ];
 
   /* `track` marca lo único que es fijo pase lo que pase: "electivo" (espacio
@@ -2714,7 +2832,7 @@ class Component extends DCLogic {
     "formulario":     { step:1, of:7, title:"Cuéntale a CORA quién eres", body:"Tus respuestas alimentan el motor de recomendación. Puedes pausar y seguir después." },
     "mis-rutas":      { step:2, of:7, title:"Compara antes de decidir", body:"Abre el detalle de cada ruta para ver qué cursos incluye. Solo entonces elige." },
     "ecosistema":     { step:3, of:7, title:"Lo que suma a tu carrera", body:"CORA te propone cursos del CIE que refuerzan tu ruta. Explora antes de continuar." },
-    "malla":          { step:4, of:7, title:"Tu malla, ciclo a ciclo", body:"El hilo morado une los cursos de tu ruta. Los demás son matrícula regular o electivos." },
+    "malla":          { step:4, of:7, title:"Tu malla, ciclo a ciclo", body:"Los cursos de tu ruta se ven mucho más resaltados, con borde morado grueso e insignia propia. Los demás son matrícula regular o electivos." },
     "perfil-cora":    { step:5, of:7, title:"Tus seis dimensiones", body:"El radar resume cómo aprendes. Cada dimensión tiene recomendaciones concretas." },
     "horizonte":      { step:6, of:7, title:"Hacia dónde te lleva", body:"Roles, sueldos y empresas reales asociados a la ruta que elegiste." },
     "acompanamiento": { step:7, of:7, title:"Antes de que sea tarde", body:"CORA anticipa los cursos que se te pueden complicar y propone un plan." }
@@ -2729,10 +2847,89 @@ class Component extends DCLogic {
     { id:"q4", text:"¿Cuál es tu ritmo de aprendizaje?", hint:"Cómo aprendes mejor", type:"radio",
       options:["Aprendo rápido, prefiero desafíos","Aprendo de forma consistente","Prefiero ir paso a paso","Mezcla de ritmos según el tema"] }
   ];
-  RADAR = [
-    { dimension:"A — Aptitud", value:8.5 }, { dimension:"G — Gestión", value:7.2 }, { dimension:"L — Liderazgo", value:6.8 },
-    { dimension:"D — Determinación", value:8.1 }, { dimension:"E — Empatía", value:8.1 }, { dimension:"F — Flexibilidad", value:7.5 }
+  /* Cuestionario 18REST (Ambiel et al., 2018) adaptado — 6 dimensiones RIASEC,
+     3 preguntas por dimensión, mezcladas para reducir el sesgo de respuesta. */
+  RIASEC_QUESTIONS = [
+    { id:"p01", dimension:"P", text:"Armar, construir o reparar algo con mis propias manos" },
+    { id:"p02", dimension:"A", text:"Analizar datos o información para entender cómo funciona algo" },
+    { id:"p03", dimension:"C", text:"Crear algo original: un diseño, un video, un texto o una campaña" },
+    { id:"p04", dimension:"S", text:"Ayudar a otra persona a resolver un problema o salir adelante" },
+    { id:"p05", dimension:"E", text:"Liderar un equipo o llevar adelante un proyecto de principio a fin" },
+    { id:"p06", dimension:"O", text:"Organizar información, archivos o procesos de forma ordenada" },
+    { id:"p07", dimension:"P", text:"Trabajar con equipos, máquinas o herramientas técnicas" },
+    { id:"p08", dimension:"A", text:"Investigar un tema en profundidad hasta encontrar la respuesta" },
+    { id:"p09", dimension:"C", text:"Trabajar en entornos donde pueda experimentar y ser creativo" },
+    { id:"p10", dimension:"S", text:"Enseñar, orientar o explicar algo a otras personas" },
+    { id:"p11", dimension:"E", text:"Negociar, convencer o persuadir a otros de una idea o propuesta" },
+    { id:"p12", dimension:"O", text:"Revisar cifras, reportes o documentos con detalle y precisión" },
+    { id:"p13", dimension:"P", text:"Hacer trabajo de campo, en exteriores o en laboratorio" },
+    { id:"p14", dimension:"A", text:"Resolver problemas complejos usando lógica y razonamiento" },
+    { id:"p15", dimension:"C", text:"Pensar en ideas nuevas o soluciones poco convencionales" },
+    { id:"p16", dimension:"S", text:"Trabajar con grupos o comunidades para generar un cambio positivo" },
+    { id:"p17", dimension:"E", text:"Crear o impulsar un negocio, emprendimiento o iniciativa propia" },
+    { id:"p18", dimension:"O", text:"Seguir procedimientos establecidos para que todo funcione bien" }
   ];
+  CORA_SCALE = [
+    { value:1, label:"Para nada me gustaría" }, { value:2, label:"Poco me gustaría" },
+    { value:3, label:"Bastante me gustaría" }, { value:4, label:"Mucho me gustaría" }
+  ];
+  /* Las 6 dimensiones del Perfil CoRA (RIASEC adaptado). Los colores son los
+     mismos tokens de "Éxito/Información/Aviso/Error" que ya usa el resto de
+     la maqueta — Organizado y Práctico comparten el mismo gris muted a propósito. */
+  DIM_META = {
+    A: { label:"Analítico", desc:"Te gusta investigar, comparar datos y entender el porqué detrás de las cosas.",
+      tip:"Mide tu interés en analizar información, investigar y resolver problemas con lógica.",
+      colors:{ bg:"#eff6ff", border:"#dbeafe", text:"#1d4ed8", solid:"#3b82f6" },
+      resource:{ tipo:"Libro", titulo:"Pensar rápido, pensar despacio (Daniel Kahneman)", desc:"Cómo funciona tu forma de razonar y tomar decisiones." } },
+    E: { label:"Emprendedor", desc:"Te mueve liderar, negociar y llevar proyectos adelante con iniciativa propia.",
+      tip:"Evalúa tu disposición a liderar equipos, negociar y construir algo propio.",
+      colors:{ bg:"#fef2f2", border:"#fee2e2", text:"#dc2626", solid:"#dc2626" },
+      resource:{ tipo:"Curso", titulo:"Fundamentos de Emprendimiento (Ecosistema CIE)", desc:"Herramientas para estructurar una idea y llevarla a la acción." } },
+    S: { label:"Social", desc:"Te energiza ayudar, enseñar y conectar con las personas que te rodean.",
+      tip:"Mide tu interés en ayudar, enseñar y trabajar por el bienestar de otros.",
+      colors:{ bg:"#f0fdf4", border:"#bbf7d0", text:"#15803d", solid:"#22c55e" },
+      resource:{ tipo:"Podcast", titulo:"Leadership Daily", desc:"Episodios cortos sobre liderazgo empático y trabajo en equipo." } },
+    C: { label:"Creativo", desc:"Piensas en posibilidades: te gusta crear, diseñar e imaginar cómo podrían ser las cosas.",
+      tip:"Evalúa tu interés en crear, diseñar e imaginar soluciones poco convencionales.",
+      colors:{ bg:"#fff7ed", border:"#ffedd5", text:"#b45309", solid:"#c2410c" },
+      resource:{ tipo:"Curso", titulo:"Pensamiento Creativo y Diseño (Ecosistema CIE)", desc:"Técnicas para generar y estructurar ideas originales." } },
+    O: { label:"Organizado", desc:"Te sientes cómodo con el orden: procesos claros, detalle y seguimiento riguroso.",
+      tip:"Mide tu preferencia por el orden, la planificación y el detalle en tu trabajo.",
+      colors:{ bg:"#f9fafb", border:"#f3f4f6", text:"#6b7280", solid:"#9ca3af" },
+      resource:{ tipo:"Curso", titulo:"Gestión de Proyectos con Trello (Ecosistema CIE)", desc:"Organiza tareas y equipos con herramientas prácticas." } },
+    P: { label:"Práctico", desc:"Prefieres el trabajo concreto: construir, reparar y ver resultados tangibles.",
+      tip:"Evalúa tu interés en el trabajo manual, técnico y de campo.",
+      colors:{ bg:"#f9fafb", border:"#f3f4f6", text:"#6b7280", solid:"#9ca3af" },
+      resource:{ tipo:"Curso", titulo:"Taller de Habilidades Técnicas (Ecosistema CIE)", desc:"Práctica directa con herramientas y procesos técnicos." } }
+  };
+  /* Arquetipo según las 3 dimensiones dominantes (código ordenado de mayor a
+     menor puntaje). Si el código no tiene match exacto, se usa "default". */
+  ARCHETYPES = {
+    "A-E-S":"El estratega con propósito", "A-E-C":"El innovador analítico", "A-E-O":"El arquitecto de soluciones",
+    "A-S-C":"El comunicador experto", "A-S-O":"El investigador con impacto", "A-C-E":"El innovador analítico",
+    "A-C-S":"El comunicador experto", "A-C-O":"El diseñador metódico", "A-O-E":"El arquitecto de soluciones",
+    "A-O-S":"El investigador con impacto", "E-S-A":"El estratega con propósito", "E-S-C":"El líder creativo",
+    "E-S-O":"El gestor de equipos", "E-C-A":"El innovador analítico", "E-C-S":"El líder creativo",
+    "E-C-O":"El emprendedor estructurado", "E-O-A":"El arquitecto de soluciones", "E-O-S":"El gestor de equipos",
+    "S-C-A":"El educador creativo", "S-C-E":"El líder creativo", "S-C-O":"El facilitador organizado",
+    "S-O-A":"El investigador con impacto", "S-O-E":"El gestor de equipos", "C-O-A":"El diseñador metódico",
+    "C-O-E":"El emprendedor estructurado", "C-O-S":"El facilitador organizado",
+    "default":"El explorador con identidad propia"
+  };
+  ARCHETYPE_TEXT = {
+    "El estratega con propósito":"Eres alguien que combina la capacidad de analizar en profundidad con el impulso de llevar las cosas a la acción. Te mueve entender cómo funcionan los sistemas — y luego moverlos. Tu energía está en los proyectos que tienen impacto real sobre personas.",
+    "El innovador analítico":"Combinas el rigor del análisis con la chispa de crear algo nuevo. No te basta con entender cómo funciona algo — quieres rediseñarlo. Eres más efectivo en entornos donde puedes cuestionar y proponer, no solo ejecutar.",
+    "El arquitecto de soluciones":"Tienes la mente de alguien que ve sistemas donde otros ven problemas. Tu combinación de análisis y estructura te permite construir soluciones sólidas, paso a paso, sin perder de vista el objetivo final.",
+    "El comunicador experto":"Unes dos mundos que raramente se tocan: el rigor de quien investiga y la calidez de quien conecta con personas. Eres más poderoso cuando puedes tomar algo complejo y hacerlo accesible para otros.",
+    "El investigador con impacto":"Tu motor es la curiosidad, pero no la curiosidad abstracta — la que busca cambiar algo concreto. Eres de las personas que investigan para actuar, no solo para saber.",
+    "El líder creativo":"Tienes la energía de quien quiere mover cosas y la sensibilidad de quien imagina cómo podrían ser mejor. Eres más poderoso en proyectos donde puedes inspirar y construir al mismo tiempo.",
+    "El gestor de equipos":"Eres alguien que une a las personas y hace que las cosas pasen. Tu combinación de liderazgo y vocación de servicio te convierte en el tipo de profesional que los equipos necesitan pero rara vez encuentran.",
+    "El diseñador metódico":"Combinas la creatividad con la precisión. No creas por crear — diseñas con intención, y eso se nota en el resultado. Eres más efectivo cuando tienes estructura y libertad al mismo tiempo.",
+    "El emprendedor estructurado":"Tienes el espíritu de quien quiere construir algo propio, pero con los pies en la tierra. Unes la iniciativa emprendedora con el orden necesario para que las ideas no se queden en ideas.",
+    "El educador creativo":"Tienes algo poco común: la capacidad de conectar con personas y la de imaginar formas nuevas de hacer las cosas. Eres más efectivo cuando puedes enseñar, inspirar y crear al mismo tiempo.",
+    "El facilitador organizado":"Eres el tipo de persona que hace que los equipos funcionen. Combinas la calidez de quien trabaja para otros con la estructura de quien sabe cómo llevar las cosas a buen puerto.",
+    "El explorador con identidad propia":"Tienes un perfil singular y en construcción. Tu combinación de dimensiones es única — y eso es una fortaleza, no una indefinición. Estás en el proceso de descubrir en qué contextos brillas más."
+  };
   REQ = { "mis-rutas":"formulario", "ecosistema":"mis-rutas", "malla":"ecosistema", "perfil-cora":"malla", "horizonte":"perfil-cora",
     "acompanamiento":"horizonte", "practico":"acompanamiento", "flashcards":"acompanamiento", "tutor":"acompanamiento",
     "progreso":"formulario", "perfil":"formulario", "configuracion":"formulario" };
@@ -2865,7 +3062,7 @@ class Component extends DCLogic {
     section:null, completed:[], xp:350, xpCycleStart:200, streak:12, selectedRoute:null,
     formType:null, formStep:0, formAnswers:{}, isAnalyzing:false, analysisStep:0,
     blocked:null, hovered:null, confirmRoute:null, mallaPreview:false, extraStep:false,
-    expanded:[], added:[], openCycles:[1], extras:{}, extModal:null, mallaDone:false,
+    expanded:[], ecoVisited:[], added:[], openCycles:[1], extras:{}, extModal:null, mallaDone:false,
     /* Historial de mallas guardadas: cada vez que el estudiante confirma su malla
        final, se agrega un registro con nombre y fecha. Estos dos ya existían de
        sesiones previas, para que el historial no arranque vacío. */
@@ -2900,7 +3097,14 @@ class Component extends DCLogic {
     ],
     accWeekModal:false, accWeekWeek:"", accWeekLabel:"",
     reinforceCourses:[], reinforceModal:false,
-    avatarBg:0, horizonteDetail:false
+    avatarBg:0, horizonteDetail:false,
+    /* Cuestionario 18REST: respuestas por id de pregunta (1-4). Las 18
+       preguntas se muestran todas juntas — no hay "pregunta actual". */
+    coraAnswers:{},
+    /* Si el estudiante elige "Lo hago después" en la invitación al perfil de
+       identidad, queda esta marca — el perfil sigue disponible desde el
+       menú, no se pierde la invitación, solo se posterga. */
+    profilePending:false
   };
 
   componentWillUnmount() { clearInterval(this._iv); }
@@ -2931,6 +3135,15 @@ class Component extends DCLogic {
         setTimeout(() => { this.complete("formulario", 50); this.setState({ isAnalyzing:false, section:"mis-rutas" }); }, 1200);
       }
     }, 1600);
+  }
+  /* Las 18 preguntas se responden en cualquier orden — no hace falta un
+     botón de "atrás" ni uno de "ver resultados": el resultado aparece solo
+     al completar las 18. */
+  answerCora(qid, val) {
+    this.setState(s => ({ coraAnswers: Object.assign({}, s.coraAnswers, { [qid]: val }) }));
+  }
+  retakeCora() {
+    this.setState({ coraAnswers:{} });
   }
   toggleIn(key, val) {
     this.setState(s => {
@@ -3142,18 +3355,25 @@ class Component extends DCLogic {
     v.routeCount = String(this.ROUTES.length);
     v.routesLede = "Basadas en tu análisis, CORA encontró " + this.ROUTES.length +
       (this.ROUTES.length === 1 ? " opción compatible con tu perfil." : " opciones ordenadas por compatibilidad.");
+    /* Solo hay tres tipos de ruta — ninguna es una mezcla de más de uno. */
     const nExtra = this.ROUTES.filter(r => r.kind === "extracurricular").length;
+    const nCurricular = this.ROUTES.filter(r => r.kind === "curricular").length;
+    const nCombinada = this.ROUTES.filter(r => r.kind === "combinada").length;
     v.routeLegend = [
-      { em:"📚", label:"Asignaturas de la malla", desc:"Obligatorios (casi siempre de ciclos avanzados) y electivos de tu propia carrera.", count: String(this.ROUTES.length - nExtra),
-        dotStyle:{ width:"10px", height:"10px", borderRadius:"3px", background:"#7B68EE", flexShrink:0 } },
+      { em:"📘", label:"Curricular", desc:"Obligatorios y/o electivos de tu propia malla — sin Ecosistema CIE.", count: String(nCurricular),
+        dotStyle:{ width:"10px", height:"10px", borderRadius:"3px", background:"#f59e0b", flexShrink:0 } },
       { em:"🌐", label:"Extracurricular", desc:"Formación del ecosistema CIE, sin cursos de la malla.", count: String(nExtra),
-        dotStyle:{ width:"10px", height:"10px", borderRadius:"3px", background:"#0ea5e9", flexShrink:0 } }
+        dotStyle:{ width:"10px", height:"10px", borderRadius:"3px", background:"#0ea5e9", flexShrink:0 } },
+      { em:"🔀", label:"Combinada", desc:"Malla (obligatorios y/o electivos) más extracurriculares del CIE, las dos cosas.", count: String(nCombinada),
+        dotStyle:{ width:"10px", height:"10px", borderRadius:"3px", background:"#ec4899", flexShrink:0 } }
     ];
     v.routes = this.ROUTES.map(r => {
       const sel = s.selectedRoute === r.name;
       const open = s.routeDetail === r.name;
       const extra = r.kind === "extracurricular";
-      const accent = extra ? "#0ea5e9" : "#7B68EE";
+      const curricular = r.kind === "curricular";
+      const combinada = r.kind === "combinada";
+      const accent = extra ? "#0ea5e9" : combinada ? "#ec4899" : "#f59e0b";
       const mc = r.match >= 90 ? "#22c55e" : r.match >= 80 ? "#fbbf24" : "#3b82f6";
       /* El % de compatibilidad no es una caja negra: se desglosa en los tres
          criterios del formulario que lo componen, más para qué objetivo
@@ -3174,10 +3394,10 @@ class Component extends DCLogic {
         cardStyle:{ background:"#fff", borderRadius:"16px", padding:"20px", transition:"all .15s",
           border:"2px solid " + (sel ? accent : "#f3f4f6"), borderLeft:"5px solid " + accent,
           boxShadow: sel ? "0 10px 15px -3px #f3e8ff,0 4px 6px -4px #f3e8ff" : "none" },
-        kindLabel: extra ? "🌐 Ruta extracurricular" : "📚 Ruta de asignaturas de la malla",
+        kindLabel: extra ? "🌐 Ruta extracurricular" : combinada ? "🔀 Ruta combinada" : "📘 Ruta curricular",
         kindStyle:{ fontSize:"11px", fontWeight:700, padding:"3px 9px", borderRadius:"9999px", whiteSpace:"nowrap",
-          background: extra ? "#f0f9ff" : "#faf5ff", color: accent,
-          border:"1px solid " + (extra ? "#bae6fd" : "#f3e8ff") },
+          background: extra ? "#f0f9ff" : combinada ? "#fce7f3" : "#fffbeb", color: accent,
+          border:"1px solid " + (extra ? "#bae6fd" : combinada ? "#fbcfe8" : "#fde68a") },
         /* Detalle de cursos, visible ANTES de elegir la ruta. */
         detailOpen: open,
         detailLabel: open ? "Ocultar cursos" : "Ver cursos incluidos",
@@ -3265,19 +3485,55 @@ class Component extends DCLogic {
        CIE: Experiencias Internacionales, Instituto Continental, Centro de
        Idiomas, Continua y Escuela de Posgrado. */
     const ex = id => s.expanded.includes(id);
-    v.ecoToggleInter = () => this.toggleIn("expanded", "inter");
-    v.ecoToggleInstituto = () => this.toggleIn("expanded", "instituto");
-    v.ecoToggleIdiomas = () => this.toggleIn("expanded", "idiomas");
-    v.ecoToggleContinua = () => this.toggleIn("expanded", "continua");
-    v.ecoTogglePosgrado = () => this.toggleIn("expanded", "posgrado");
+    /* Abrir una sección la marca como "visitada" para siempre (s.ecoVisited,
+       separado de s.expanded): cerrarla después no le quita el check — es un
+       registro de que ya pasaste por ahí, no de si está abierta ahora mismo. */
+    const ecoVisit = id => this.setState(st => ({
+      expanded: st.expanded.includes(id) ? st.expanded.filter(x => x !== id) : st.expanded.concat([id]),
+      ecoVisited: st.ecoVisited.includes(id) ? st.ecoVisited : st.ecoVisited.concat([id])
+    }));
+    v.ecoToggleInter = () => ecoVisit("inter");
+    v.ecoToggleInstituto = () => ecoVisit("instituto");
+    v.ecoToggleIdiomas = () => ecoVisit("idiomas");
+    v.ecoToggleContinua = () => ecoVisit("continua");
+    v.ecoTogglePosgrado = () => ecoVisit("posgrado");
     v.ecoInterOpen = ex("inter"); v.ecoInterClosed = !ex("inter"); v.ecoInterChevron = ex("inter") ? "chevron-up" : "chevron-down";
     v.ecoInstitutoOpen = ex("instituto"); v.ecoInstitutoClosed = !ex("instituto"); v.ecoInstitutoChevron = ex("instituto") ? "chevron-up" : "chevron-down";
     v.ecoIdiomasOpen = ex("idiomas"); v.ecoIdiomasClosed = !ex("idiomas"); v.ecoIdiomasChevron = ex("idiomas") ? "chevron-up" : "chevron-down";
     v.ecoContinuaOpen = ex("continua"); v.ecoContinuaClosed = !ex("continua"); v.ecoContinuaChevron = ex("continua") ? "chevron-up" : "chevron-down";
     v.ecoPosgradoOpen = ex("posgrado"); v.ecoPosgradoClosed = !ex("posgrado"); v.ecoPosgradoChevron = ex("posgrado") ? "chevron-up" : "chevron-down";
-    const ecoCnt = ["inter","instituto","idiomas","continua","posgrado"].filter(ex).length;
+    const ECO_STEPS = [
+      { id:"inter", icon:"🌍", label:"Experiencias\nInternacionales" },
+      { id:"instituto", icon:"🛠️", label:"Instituto\nContinental" },
+      { id:"idiomas", icon:"🗣️", label:"Centro de\nIdiomas" },
+      { id:"continua", icon:"🎓", label:"Continua" },
+      { id:"posgrado", icon:"🎯", label:"Escuela de\nPosgrado" }
+    ];
+    const visited = id => s.ecoVisited.includes(id);
+    const ecoCnt = ECO_STEPS.filter(st => visited(st.id)).length;
     v.ecoCountLabel = ecoCnt + "/5";
     v.ecoPct = (ecoCnt / 5) * 100 + "%";
+    v.ecoAllVisited = ecoCnt >= ECO_STEPS.length;
+    /* La "ruta" de tarjetas: un nodo por sección, conectados por una línea que
+       se va llenando — para que sea evidente que es un recorrido, no una
+       lista suelta. Cada nodo es clicleable y abre esa sección directamente. */
+    const ECO_TOGGLE = { inter:v.ecoToggleInter, instituto:v.ecoToggleInstituto, idiomas:v.ecoToggleIdiomas, continua:v.ecoToggleContinua, posgrado:v.ecoTogglePosgrado };
+    v.ecoTrailFillPct = ECO_STEPS.length <= 1 ? "0%" : (Math.max(0, ecoCnt - 1) / (ECO_STEPS.length - 1)) * 100 + "%";
+    v.ecoTrailNodes = ECO_STEPS.map((st, i) => {
+      const done = visited(st.id);
+      const isNext = !done && ECO_STEPS.slice(0, i).every(prev => visited(prev.id));
+      return {
+        label: st.label, onClick: ECO_TOGGLE[st.id],
+        circleStyle:{ width:"34px", height:"34px", borderRadius:"9999px", display:"flex", alignItems:"center", justifyContent:"center",
+          fontSize:"15px", cursor:"pointer", flexShrink:0,
+          background: done ? "#7B68EE" : "#fff",
+          border: "2px solid " + (done ? "#7B68EE" : isNext ? "#c4b5fd" : "#e5e7eb"),
+          boxShadow: isNext ? "0 0 0 4px #f3e8ff" : "none" },
+        done, notDone: !done, emoji: st.icon,
+        labelStyle:{ fontSize:"10px", textAlign:"center", whiteSpace:"pre-line", lineHeight:1.3,
+          color: done ? "#4A3FA0" : isNext ? "#6b7280" : "#9ca3af", fontWeight: done || isNext ? 700 : 500 }
+      };
+    });
     const mkEco = it => {
       const added = s.added.includes(it.name);
       const free = it.cost === "GRATUITO" || it.cost === "Beca disponible";
@@ -3374,14 +3630,17 @@ class Component extends DCLogic {
     }));
     v.posgradoEmpty = v.posgradoCards.length === 0;
     v.posgradoCount = String(this.POSGRADO_PROGRAMS.reduce((sum, it) => sum + it.count, 0));
-    /* Explorar el Ecosistema CIE ya no es obligatorio de una sola vez: la ruta
-       se elige y confirma antes, en Mis Rutas — esto es solo para conocer el
-       ecosistema a tu propio ritmo, y se puede seguir revisando después. */
-    v.ecoCtaLabel = "Continuar malla →";
+    /* La universidad pidió reinstalar el paso obligatorio: hay que pasar por
+       las 5 secciones del CIE (abrirlas al menos una vez, s.ecoVisited) antes
+       de que "Continuar" se active — no hace falta hacerlo todo de una sola
+       sesión (queda guardado), pero sí antes de avanzar a la malla. */
+    v.ecoCtaLabel = v.ecoAllVisited ? "Continuar malla →" : "🔒 Explora las 5 secciones para continuar (" + v.ecoCountLabel + ")";
     v.ecoCtaStyle = { width:"100%", padding:"16px 0", borderRadius:"16px", fontSize:"14px", fontWeight:700, border:0,
       fontFamily:"inherit", transition:"all .15s", position:"sticky", bottom:"16px",
-      background:"#7B68EE", color:"#fff", cursor:"pointer", boxShadow:"0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff" };
-    v.ecoCtaClick = () => { this.complete("ecosistema", 75); this.setState({ section:"malla" }); };
+      background: v.ecoAllVisited ? "#7B68EE" : "#e5e7eb", color: v.ecoAllVisited ? "#fff" : "#9ca3af",
+      cursor: v.ecoAllVisited ? "pointer" : "not-allowed",
+      boxShadow: v.ecoAllVisited ? "0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff" : "none" };
+    v.ecoCtaClick = () => { if (!v.ecoAllVisited) return; this.complete("ecosistema", 75); this.setState({ section:"malla" }); };
 
     v.isMalla = on("malla");
     v.mallaCareer = s.selectedRoute || "Ingeniería Comercial";
@@ -3393,8 +3652,14 @@ class Component extends DCLogic {
        ningún curso se resalta aquí — sus cursos aparecen debajo del ciclo que
        les corresponde, vía `routeExtraByCycle`. */
     const selectedRouteObj = this.ROUTES.find(r => r.name === v.mallaCareer) || this.ROUTES.find(r => r.top);
-    const routeIsMalla = selectedRouteObj.kind === "malla";
-    const routeCourseNames = new Set(routeIsMalla ? selectedRouteObj.courses : []);
+    /* Tres tipos, nunca mezclados: "curricular" (solo malla), "extracurricular"
+       (solo CIE) y "combinada" (malla Y CIE a la vez). "curricular" y
+       "combinada" resaltan cursos reales de CURRICULUM en `courses` — y como
+       pueden incluir electivos a propósito, su resaltado sí puede tocar esos
+       slots (a diferencia de una coincidencia de nombre accidental). */
+    const routeHasMalla = selectedRouteObj.kind === "curricular" || selectedRouteObj.kind === "combinada";
+    const routeIsMalla = routeHasMalla;
+    const routeCourseNames = new Set(routeHasMalla ? selectedRouteObj.courses : []);
     /* Codificación oficial de la malla real: cada curso trae su categoría
        académica (`cat`), pintada como una etiqueta chica de punto + texto —
        igual que en el mapa curricular oficial. CAT_MAP: [color, etiqueta]. */
@@ -3414,8 +3679,15 @@ class Component extends DCLogic {
        no en la malla de Perú — la universidad pidió que no pasara inadvertido. */
     const CFU_ACCENT = ["#ecfeff", "#a5f3fc", "#0e7490", "#06b6d4"];
     const cfuByUcName = new Map(this.EQUIV_CFU.filter(e => e.cfu).map(e => [e.uc, e.cfu]));
+    /* "Cursos de tu ruta" es la entrada más importante de la leyenda — se
+       muestra aparte, como una insignia morada llena, para que se note mucho
+       más que el resto (que son puntos de color con texto plano). */
+    v.mallaLegendRuta = { label:"Cursos de tu ruta", desc:"Ruta activa: " + v.mallaCareer,
+      style:{ display:"flex", alignItems:"center", gap:"8px", background:"#7B68EE", borderRadius:"9999px",
+        padding:"7px 14px", boxShadow:"0 2px 6px rgba(123,104,238,.5)" },
+      labelStyle:{ fontSize:"12px", fontWeight:800, color:"#fff", whiteSpace:"nowrap" },
+      descStyle:{ fontSize:"11px", color:"#e9d5ff", whiteSpace:"nowrap" } };
     v.mallaLegend = [
-      { label:"Cursos de tu ruta", desc:"Ruta activa: " + v.mallaCareer, swatchStyle:{ width:"12px", height:"12px", borderRadius:"4px", background:"#7B68EE", flexShrink:0 } },
       { label:"Matrícula regular", desc:"Fuera de tu ruta — plan base", swatchStyle:{ width:"12px", height:"12px", borderRadius:"4px", background:"#fff", border:"1px solid #d1d5db", flexShrink:0 } },
       { label:"General", desc:"Comunicación, idiomas, liderazgo", swatchStyle:{ width:"12px", height:"12px", borderRadius:"9999px", background:"#22c55e", flexShrink:0 } },
       { label:"Facultad", desc:"Base común de negocios", swatchStyle:{ width:"12px", height:"12px", borderRadius:"9999px", background:"#3b82f6", flexShrink:0 } },
@@ -3424,14 +3696,21 @@ class Component extends DCLogic {
       { label:"Electivos que elegiste", desc:"Tu selección confirmada", swatchStyle:{ width:"12px", height:"12px", borderRadius:"4px", background:"#0ea5e9", flexShrink:0 } },
       { label:"Elegido por CFU", desc:"Lo tomas en Continental Florida University", swatchStyle:{ width:"12px", height:"12px", borderRadius:"4px", background:"#06b6d4", flexShrink:0 } }
     ];
-    /* Los cursos extracurriculares de una ruta "extracurricular" no viven en
-       CURRICULUM, pero sí tienen un ciclo sugerido (`courseCycles`, paralelo a
-       `courses`): se muestran debajo del ciclo que les corresponde, con el
-       mismo trato visual que un electivo que el estudiante ya eligió. */
+    /* Los extracurriculares no viven en CURRICULUM, pero sí tienen un ciclo
+       sugerido: se muestran debajo del ciclo que les corresponde, con el
+       mismo trato visual que un electivo que el estudiante ya eligió. Una ruta
+       "extracurricular" los trae en `courses`/`courseCycles`; una "combinada"
+       los trae aparte, en `extraCourses`/`extraCourseCycles`, porque `courses`
+       ya está ocupado con su parte de malla. */
     const routeExtraByCycle = {};
-    if (!routeIsMalla && selectedRouteObj.courseCycles) {
-      selectedRouteObj.courses.forEach((name, i) => {
-        const cyc = selectedRouteObj.courseCycles[i];
+    const extraSource = selectedRouteObj.kind === "extracurricular"
+      ? { list: selectedRouteObj.courses, cycles: selectedRouteObj.courseCycles }
+      : selectedRouteObj.kind === "combinada"
+      ? { list: selectedRouteObj.extraCourses, cycles: selectedRouteObj.extraCourseCycles }
+      : null;
+    if (extraSource && extraSource.cycles) {
+      extraSource.list.forEach((name, i) => {
+        const cyc = extraSource.cycles[i];
         (routeExtraByCycle[cyc] = routeExtraByCycle[cyc] || []).push(name);
       });
     }
@@ -3443,7 +3722,10 @@ class Component extends DCLogic {
          que vienen (trato normal). */
       const state = cyc.cycle < this.STUDENT.cycle ? "past" : cyc.cycle === this.STUDENT.cycle ? "current" : "future";
       const isCurrentCycle = state === "current";
-      const courseFlags = cyc.courses.map(c => c.track !== "electivo" && routeCourseNames.has(c.name));
+      /* El guard "track !== electivo" evita que un electivo genérico se marque
+         de tu ruta por una coincidencia de nombre accidental — pero en una
+         ruta "curricular" el electivo SÍ es parte a propósito de la ruta. */
+      const courseFlags = cyc.courses.map(c => (c.track !== "electivo" || routeHasMalla) && routeCourseNames.has(c.name));
       const hasRuta = courseFlags.some(Boolean);
       const titleColor = state === "past" ? "#9ca3af" : state === "current" ? "#7B68EE" : "#1A1040";
       return {
@@ -3458,37 +3740,47 @@ class Component extends DCLogic {
           opacity: state === "past" ? .6 : 1,
           border: "1px solid " + (isCurrentCycle ? "#7B68EE" : "#f3f4f6"),
           boxShadow: isCurrentCycle ? "0 4px 6px -1px #e9d5ff,0 2px 4px -2px #e9d5ff" : "0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)" },
-        /* El hilo: línea punteada continua a lo largo de la columna, visible sólo
-           en los ciclos que contienen cursos de la ruta elegida. */
+        /* Ya no hay hilo conector: el curso de tu ruta se distingue solo por
+           tener MUCHO más contraste que el resto (borde grueso, fondo lleno,
+           sombra e insignia propia), no por una línea vertical. */
         hasRuta,
-        threadStyle:{ position:"absolute", left:"18px", top:"52px", bottom:"14px", width:"2px", zIndex:0,
-          backgroundImage:"repeating-linear-gradient(to bottom,#7B68EE 0 5px,transparent 5px 10px)" },
         courses: cyc.courses.map((c, i) => {
           const isRuta = courseFlags[i];
           const isCfu = s.cfuChosen.includes(c.name);
-          const accent = isCfu ? CFU_ACCENT : (isRuta ? RUTA_ACCENT : NEUTRAL_ACCENT);
           const catInfo = CAT_MAP[c.cat] || CAT_MAP.facultad;
           const enCurso = isCurrentCycle && c.track !== "electivo";
+          /* El curso de la ruta usa un estilo aparte, mucho más marcado que el
+             resto (borde de 2px alrededor + sombra), en vez de solo un borde
+             izquierdo fino — para que "esto es tu ruta" no dependa del color. */
+          let style;
+          if (isCfu) {
+            style = { flex:1, border:"1px solid " + CFU_ACCENT[1], borderLeft:"4px solid " + CFU_ACCENT[3], background:CFU_ACCENT[0], color:CFU_ACCENT[2],
+              borderRadius:"10px", padding:"6px 8px", fontSize:"11px", minWidth:0 };
+          } else if (isRuta) {
+            style = { flex:1, border:"2px solid #7B68EE", background:"#ede9fe", color:"#3B2F80",
+              borderRadius:"10px", padding:"6px 8px", fontSize:"11px", minWidth:0, boxShadow:"0 2px 6px rgba(123,104,238,.45)" };
+          } else {
+            style = { flex:1, border:"1px solid " + NEUTRAL_ACCENT[1], background:NEUTRAL_ACCENT[0], color:NEUTRAL_ACCENT[2],
+              borderRadius:"10px", padding:"6px 8px", fontSize:"11px", minWidth:0 };
+          }
           return {
             /* Elegido por CFU: se muestra el nombre del curso en CFU, no el de
                la malla en Perú — con el nombre original abajo, para no perder
                la referencia de qué curso reemplaza. */
             name: isCfu ? cfuByUcName.get(c.name) : c.name,
             ucName: isCfu ? c.name : "",
-            isRuta, isCfu, enCurso,
+            isRuta, isCfu, enCurso, showRutaBadge: isRuta && !isCfu,
             catLabel: catInfo[1],
             catDotStyle:{ width:"7px", height:"7px", borderRadius:"9999px", background:catInfo[0], flexShrink:0 },
             catTextStyle:{ fontSize:"9px", fontWeight:700, color:catInfo[0], letterSpacing:".04em" },
             enCursoStyle:{ fontSize:"9px", fontWeight:700, color:"#7B68EE", background:"#f3e8ff", borderRadius:"9999px", padding:"1px 7px", whiteSpace:"nowrap" },
             cfuBadgeStyle:{ fontSize:"9px", fontWeight:700, color:"#fff", background:"#06b6d4", borderRadius:"9999px", padding:"1px 7px", whiteSpace:"nowrap" },
-            /* Solo el curso de la ruta se resalta (borde e hilo morado); el resto
-               queda en su color de categoría normal, sin atenuar — atenuarlos
-               confundía la lectura de las etiquetas GENERAL/FACULTAD/CARRERA. */
-            wrapStyle:{ display:"flex", alignItems:"flex-start", gap:"8px" },
-            dotStyle:{ width:"10px", height:"10px", borderRadius:"9999px", background:"#7B68EE", flexShrink:0,
-              boxShadow:"0 0 0 3px #fff, 0 0 0 5px #e9d5ff" },
-            style:{ flex:1, border:"1px solid " + accent[1], borderLeft:"4px solid " + accent[3], background:accent[0], color:accent[2],
-              borderRadius:"10px", padding:"6px 8px", fontSize:"12px", minWidth:0 }
+            rutaBadgeStyle:{ fontSize:"9px", fontWeight:800, color:"#fff", background:"#7B68EE", borderRadius:"9999px", padding:"1px 7px", whiteSpace:"nowrap" },
+            /* Tope de 2 líneas siempre, sin importar cuán largo sea el nombre
+               real del curso — y en negrita más fuerte si es de tu ruta. */
+            nameStyle:{ fontWeight: isRuta ? 800 : 600, margin:0, display:"-webkit-box", WebkitBoxOrient:"vertical", WebkitLineClamp:2, lineClamp:2, overflow:"hidden" },
+            wrapStyle:{ display:"flex", alignItems:"flex-start" },
+            style
           };
         }),
         canAdd: true,
@@ -3528,16 +3820,31 @@ class Component extends DCLogic {
       this.setState(st => ({ savedMallas: [{ name, date }].concat(st.savedMallas), mallaDone:true }));
     };
     v.mallaEdit = () => this.setState({ mallaDone:false });
-    v.mallaSummaryNext = () => { this.setState({ section:"perfil-cora" }); };
     v.mallaEditing = !s.mallaDone;
     v.mallaShowSummary = s.mallaDone;
+    /* Componente 1: invitación al perfil de identidad. Aparece siempre al
+       final de la malla mientras el cuestionario 18REST no esté completo —
+       no es automática, el estudiante elige hacerla ahora o después. Si ya
+       tiene su perfil, en su lugar se muestra el botón normal a Horizonte. */
+    const coraProfileReady = Object.keys(s.coraAnswers).length >= this.RIASEC_QUESTIONS.length;
+    v.mallaShowProfileCta = v.mallaShowSummary && !coraProfileReady;
+    v.perfilCtaItems = [
+      { icon:"🧭", label:"Tu código CoRA", caption:"3 letras que te definen", bg:"#eff6ff" },
+      { icon:"👤", label:"Tu arquetipo", caption:"Nombre e identidad propia", bg:"#faf5ff" },
+      { icon:"🌅", label:"Tu horizonte", caption:"Proyección laboral ampliada", bg:"#fffbeb" }
+    ];
+    v.discoverProfile = () => this.setState({ section:"perfil-cora" });
+    v.deferProfile = () => this.setState({ profilePending:true, section:"horizonte" });
+    v.mallaSummaryNext = () => { this.setState({ section:"horizonte" }); };
     /* La pantalla de cierre reutiliza el mismo desglose de compatibilidad
        (intereses / fortaleza / objetivo) que ya se muestra en Mis Rutas —
        es literalmente cómo esta ruta se correlaciona con las respuestas
        del formulario, no un dato nuevo inventado para esta pantalla. */
-    const summaryAccent = routeIsMalla ? "#7B68EE" : "#0ea5e9";
+    const summaryIsExtra = selectedRouteObj.kind === "extracurricular";
+    const summaryIsCombinada = selectedRouteObj.kind === "combinada";
+    const summaryAccent = summaryIsExtra ? "#0ea5e9" : summaryIsCombinada ? "#ec4899" : "#f59e0b";
     v.summaryRouteName = v.mallaCareer;
-    v.summaryKindLabel = routeIsMalla ? "📚 Ruta de asignaturas de la malla" : "🌐 Ruta extracurricular";
+    v.summaryKindLabel = summaryIsExtra ? "🌐 Ruta extracurricular" : summaryIsCombinada ? "🔀 Ruta combinada" : "📘 Ruta curricular";
     v.summaryMatchLabel = selectedRouteObj.match + "% de compatibilidad";
     v.summaryBestFor = selectedRouteObj.matchWhy.bestFor;
     v.summaryWhyRows = [
@@ -3583,52 +3890,90 @@ class Component extends DCLogic {
 
     v.isPerfilCora = on("perfil-cora");
     v.perfilCoraNext = () => { this.complete("perfil-cora", 60); this.setState({ section:"horizonte" }); };
-    const DIMS_RAW = [
-      { k:"A", label:"Aptitud Académica", score:8.5, desc:"Fortaleza en temas teóricos y comprensión de conceptos académicos.", tip:"Se calcula analizando cómo aprendes, tu afinidad a diferentes áreas y tus resultados académicos estimados.",
-        resource:{ tipo:"Libro", titulo:"Cómo Aprendemos: aprendizaje efectivo basado en evidencia", desc:"Técnicas de estudio para aprovechar tu fortaleza académica." } },
-      { k:"G", label:"Gestión", score:7.2, desc:"Capacidad para organizar proyectos, recursos y equipos eficientemente.", tip:"Evalúa tu orientación hacia la planificación y administración de tareas y recursos.",
-        resource:{ tipo:"Curso", titulo:"Gestión de Proyectos con Trello (Ecosistema CIE)", desc:"Organiza tareas y equipos con herramientas prácticas." } },
-      { k:"L", label:"Liderazgo", score:6.8, desc:"Habilidad para guiar, motivar e influir en grupos de trabajo.", tip:"Analiza tu disposición a tomar iniciativa y dirigir equipos en entornos desafiantes.",
-        resource:{ tipo:"Libro", titulo:"Los 7 Hábitos de la Gente Altamente Efectiva (Covey)", desc:"Hábitos concretos para dirigir con más confianza." } },
-      { k:"D", label:"Determinación", score:8.1, desc:"Persistencia y enfoque para alcanzar metas a largo plazo.", tip:"Mide tu capacidad para mantener el esfuerzo constante ante obstáculos.",
-        resource:{ tipo:"Podcast", titulo:"Mentalidad de Crecimiento", desc:"Historias sobre persistencia y disciplina a largo plazo." } },
-      { k:"E", label:"Empatía", score:8.1, desc:"Capacidad de comprender y conectar con perspectivas de otros.", tip:"Evalúa tu sensibilidad social y habilidad para trabajar en entornos colaborativos.",
-        resource:{ tipo:"Podcast", titulo:"Leadership Daily", desc:"Episodios cortos sobre liderazgo empático y trabajo en equipo." } },
-      { k:"F", label:"Flexibilidad", score:7.5, desc:"Adaptabilidad ante cambios, nuevos aprendizajes y contextos variados.", tip:"Analiza qué tan bien te adaptas a situaciones nuevas e inciertas.",
-        resource:{ tipo:"Curso", titulo:"Adaptabilidad y Cambio (Ecosistema CIE)", desc:"Herramientas para manejar la incertidumbre y el cambio constante." } }
-    ];
-    v.dims = DIMS_RAW.map(d => {
-      const expanded = s.expanded.includes("dim-" + d.k);
-      return { k:d.k, label:d.label, desc:d.desc, tip:d.tip, scoreLabel: d.score + "/10", score:d.score,
-        barStyle:{ height:"100%", borderRadius:"9999px", width:(d.score / 10) * 100 + "%",
-          background: d.score >= 8 ? "#22c55e" : d.score >= 7 ? "#7B68EE" : "#fbbf24" },
-        resourceOpen: expanded, toggleLabel: expanded ? "Ocultar recomendaciones" : "Ver recomendaciones",
-        toggleChevron: expanded ? "chevron-up" : "chevron-down",
-        onToggle: () => this.toggleIn("expanded", "dim-" + d.k),
-        resourceTipo:d.resource.tipo, resourceTitulo:d.resource.titulo, resourceDesc:d.resource.desc };
-    });
-    /* El bloque de recomendaciones agregadas también sale de DIMS_RAW, no de
-       texto escrito a mano — antes tenía puntajes y nombres fijos en el HTML
-       que no coincidían necesariamente con los datos reales. */
-    const dimsByStrength = [...DIMS_RAW].sort((a, b) => b.score - a.score);
-    const dimsByWeakness = [...DIMS_RAW].sort((a, b) => a.score - b.score);
-    v.dimStrengths = dimsByStrength.slice(0, 2).map(d => ({ label:d.label + " (" + d.score + "/10)", why:d.desc }));
-    const weakest = dimsByWeakness[0];
-    v.dimWeak = { label:weakest.label + " (" + weakest.score + "/10)", why:"Recomendamos: " + weakest.resource.titulo };
-    v.dimTopResources = dimsByWeakness.slice(0, 3).map(d => ({ label:d.resource.tipo + ": \"" + d.resource.titulo + "\"" }));
+    v.retakeCora = () => this.retakeCora();
 
-    const cx = 300, cy = 130, R = 100, N = this.RADAR.length;
-    const pt = (i, rad) => { const a = -Math.PI / 2 + (i * 2 * Math.PI) / N;
-      return [cx + rad * Math.cos(a), cy + rad * Math.sin(a)]; };
-    const poly = rad => this.RADAR.map((_, i) => pt(i, rad).map(n => n.toFixed(1)).join(",")).join(" ");
-    v.radarRings = [1,2,3,4,5].map(k => ({ points: poly(R * k / 5) }));
-    v.radarSpokes = this.RADAR.map((_, i) => { const p = pt(i, R); return { x1:cx, y1:cy, x2:p[0].toFixed(1), y2:p[1].toFixed(1) }; });
-    v.radarArea = this.RADAR.map((d, i) => pt(i, R * d.value / 10).map(n => n.toFixed(1)).join(",")).join(" ");
-    v.radarDots = this.RADAR.map((d, i) => { const p = pt(i, R * d.value / 10); return { x:p[0].toFixed(1), y:p[1].toFixed(1) }; });
-    v.radarLabels = this.RADAR.map((d, i) => { const p = pt(i, R + 22);
-      const anchor = Math.abs(p[0] - cx) < 6 ? "middle" : p[0] > cx ? "start" : "end";
-      return { x:p[0].toFixed(1), y:(p[1] + 3).toFixed(1), anchor, text:d.dimension }; });
-    v.radarTicks = [0,2,4,6,8,10].map(t => ({ x:cx + 5, y:(cy - R * t / 10 + 3).toFixed(1), text:String(t) }));
+    /* ===== Componente 2: cuestionario 18REST ===== */
+    const totalQ = this.RIASEC_QUESTIONS.length;
+    const answeredCount = Object.keys(s.coraAnswers).length;
+    const coraDone = answeredCount >= totalQ;
+    v.showCoraQuiz = v.isPerfilCora && !coraDone;
+    v.showCoraResults = v.isPerfilCora && coraDone;
+
+    if (v.showCoraQuiz) {
+      v.coraAnsweredLabel = answeredCount + " / " + totalQ;
+      v.coraRows = this.RIASEC_QUESTIONS.map(q => {
+        const chosen = s.coraAnswers[q.id];
+        return {
+          text:q.text,
+          options: this.CORA_SCALE.map(opt => {
+            const sel = chosen === opt.value;
+            return {
+              value:opt.value, title:opt.label,
+              onClick: () => this.answerCora(q.id, opt.value),
+              style:{ width:"36px", height:"36px", borderRadius:"10px", display:"flex", alignItems:"center", justifyContent:"center",
+                flexShrink:0, fontWeight:700, fontSize:"13px", cursor:"pointer", fontFamily:"inherit", transition:"all .15s",
+                border:"2px solid " + (sel ? "#7B68EE" : "#e5e7eb"), background: sel ? "#7B68EE" : "#fff", color: sel ? "#fff" : "#6b7280" }
+            };
+          })
+        };
+      });
+    }
+
+    /* ===== Componente 3: algoritmo de puntuación =====
+       3 preguntas por dimensión, escala 1-4 → puntaje bruto 3-12,
+       normalizado a 0-100. El código son las 3 dimensiones con mayor
+       puntaje; el arquetipo sale de ARCHETYPES según ese código. */
+    if (v.showCoraResults) {
+      const DIM_ORDER = ["A","E","S","C","O","P"];
+      const raw = { A:0, E:0, S:0, C:0, O:0, P:0 };
+      this.RIASEC_QUESTIONS.forEach(q => { raw[q.dimension] += (s.coraAnswers[q.id] || 0); });
+      const normalized = {};
+      DIM_ORDER.forEach(k => { normalized[k] = Math.round((raw[k] / 12) * 100); });
+      const ranked = DIM_ORDER.map(k => ({ k, score:normalized[k] })).sort((a, b) => b.score - a.score);
+      const top3 = new Set(ranked.slice(0, 3).map(r => r.k));
+      const codeKey = ranked.slice(0, 3).map(r => r.k).join("-");
+
+      v.coraCode = ranked.slice(0, 3).map(r => r.k).join(" · ");
+      v.coraArchetype = this.ARCHETYPES[codeKey] || this.ARCHETYPES.default;
+      v.coraNarrative = this.ARCHETYPE_TEXT[v.coraArchetype];
+      v.coraCodeChips = ranked.slice(0, 3).map(r => ({
+        label: r.k + " = " + this.DIM_META[r.k].label,
+        style:{ fontSize:"11px", fontWeight:700, padding:"4px 10px", borderRadius:"9999px",
+          background:this.DIM_META[r.k].colors.bg, color:this.DIM_META[r.k].colors.text, border:"1px solid " + this.DIM_META[r.k].colors.border }
+      }));
+
+      v.dims = ranked.map(r => {
+        const k = r.k, meta = this.DIM_META[k], isTop = top3.has(k);
+        const score10 = (normalized[k] / 10).toFixed(1);
+        const expanded = s.expanded.includes("dim-" + k);
+        return { k, label:meta.label, desc:meta.desc, tip:meta.tip, scoreLabel: score10 + "/10", score:normalized[k],
+          barStyle:{ height:"100%", borderRadius:"9999px", width:normalized[k] + "%", background: isTop ? meta.colors.solid : "#d1d5db" },
+          resourceOpen: expanded, toggleLabel: expanded ? "Ocultar recomendaciones" : "Ver recomendaciones",
+          toggleChevron: expanded ? "chevron-up" : "chevron-down",
+          onToggle: () => this.toggleIn("expanded", "dim-" + k),
+          resourceTipo:meta.resource.tipo, resourceTitulo:meta.resource.titulo, resourceDesc:meta.resource.desc };
+      });
+      /* El bloque de recomendaciones agregadas también sale de los puntajes
+         reales, no de texto escrito a mano. */
+      const byWeakness = [...v.dims].sort((a, b) => a.score - b.score);
+      v.dimStrengths = v.dims.slice(0, 3).map(d => ({ label:d.label + " (" + d.scoreLabel + ")", why:d.desc }));
+      const weakest = byWeakness[0];
+      v.dimWeak = { label:weakest.label + " (" + weakest.scoreLabel + ")", why:"Recomendamos: " + weakest.resourceTitulo };
+      v.dimTopResources = byWeakness.slice(0, 3).map(d => ({ label:d.resourceTipo + ": \"" + d.resourceTitulo + "\"" }));
+
+      const cx = 300, cy = 130, R = 100, N = DIM_ORDER.length;
+      const pt = (i, rad) => { const a = -Math.PI / 2 + (i * 2 * Math.PI) / N;
+        return [cx + rad * Math.cos(a), cy + rad * Math.sin(a)]; };
+      const poly = rad => DIM_ORDER.map((_, i) => pt(i, rad).map(n => n.toFixed(1)).join(",")).join(" ");
+      v.radarRings = [1,2,3,4,5].map(k => ({ points: poly(R * k / 5) }));
+      v.radarSpokes = DIM_ORDER.map((_, i) => { const p = pt(i, R); return { x1:cx, y1:cy, x2:p[0].toFixed(1), y2:p[1].toFixed(1) }; });
+      v.radarArea = DIM_ORDER.map((k, i) => pt(i, R * normalized[k] / 100).map(n => n.toFixed(1)).join(",")).join(" ");
+      v.radarDots = DIM_ORDER.map((k, i) => { const p = pt(i, R * normalized[k] / 100); return { x:p[0].toFixed(1), y:p[1].toFixed(1) }; });
+      v.radarLabels = DIM_ORDER.map((k, i) => { const p = pt(i, R + 22);
+        const anchor = Math.abs(p[0] - cx) < 6 ? "middle" : p[0] > cx ? "start" : "end";
+        return { x:p[0].toFixed(1), y:(p[1] + 3).toFixed(1), anchor, text:k + " — " + this.DIM_META[k].label }; });
+      v.radarTicks = [0,20,40,60,80,100].map(t => ({ x:cx + 5, y:(cy - R * t / 100 + 3).toFixed(1), text:String(t) }));
+    }
 
     v.isHorizonte = on("horizonte");
     v.horizonteNext = () => { this.complete("horizonte", 60); this.setState({ section:"acompanamiento" }); };
