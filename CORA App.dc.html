@@ -21,17 +21,27 @@
 </helmet>
 <div style="min-height:100vh;background:#F8F7FF;display:flex;font-family:Inter,sans-serif;color:#1A1040">
 
-  <aside style="display:flex;flex-direction:column;width:240px;background:#fff;border-right:1px solid rgba(243,232,255,.6);height:100vh;position:fixed;left:0;top:0;z-index:30;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
-    <div style="padding:20px;border-bottom:1px solid rgba(243,232,255,.6)">
-      <img src="./assets/cora-logo.png" alt="CORA — Continental Recomienda y Acompaña" style="width:150px;height:auto;display:block">
-      <p style="font-size:10px;color:#7B68EE;font-weight:500;letter-spacing:.025em;margin:6px 0 0">Orientación Académica 2.0</p>
+  <aside style="display:flex;flex-direction:column;width:300px;background:#fff;border-right:1px solid rgba(243,232,255,.6);height:100vh;position:fixed;left:0;top:0;z-index:30;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+    <div style="padding:16px 10px;border-bottom:1px solid rgba(243,232,255,.6)">
+      <img src="./assets/cora-logo.png" alt="CoRA — Continental Recomienda y Acompaña" style="width:100%;height:auto;display:block">
     </div>
     <nav style="flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:20px">
+      <div>
+        <sc-for list="{{ navHome }}" as="item" hint-placeholder-count="1">
+          <button onClick="{{ item.go }}" style="{{ item.style }}">
+            <span style="width:20px;flex-shrink:0;display:flex;align-items:center;justify-content:center"><dc-import name="Icon" i="{{ item.icon }}" s="17" c="{{ item.iconColor }}" hint-size="17px,17px"></dc-import></span>
+            <span style="flex:1;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ item.label }}</span>
+            <sc-if value="{{ item.done }}" hint-placeholder-val="{{ false }}">
+              <span style="{{ item.badgeStyle }}"><dc-import name="Icon" i="check" s="9" c="{{ item.checkColor }}" hint-size="9px,9px"></dc-import></span>
+            </sc-if>
+          </button>
+        </sc-for>
+      </div>
       <div>
         <p style="font-size:9px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.1em;padding:0 8px;margin:0 0 6px">🟣 RECOMENDADOR</p>
         <sc-for list="{{ navRec }}" as="item" hint-placeholder-count="7">
           <button onClick="{{ item.go }}" style="{{ item.style }}">
-            <span style="font-size:16px;line-height:1;width:20px">{{ item.em }}</span>
+            <span style="width:20px;flex-shrink:0;display:flex;align-items:center;justify-content:center"><dc-import name="Icon" i="{{ item.icon }}" s="17" c="{{ item.iconColor }}" hint-size="17px,17px"></dc-import></span>
             <span style="flex:1;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ item.label }}</span>
             <sc-if value="{{ item.done }}" hint-placeholder-val="{{ false }}">
               <span style="{{ item.badgeStyle }}"><dc-import name="Icon" i="check" s="9" c="{{ item.checkColor }}" hint-size="9px,9px"></dc-import></span>
@@ -43,7 +53,7 @@
         <p style="font-size:9px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.1em;padding:0 8px;margin:0 0 6px">📚 ACADÉMICO</p>
         <sc-for list="{{ navAca }}" as="item" hint-placeholder-count="3">
           <button onClick="{{ item.go }}" style="{{ item.style }}">
-            <span style="font-size:16px;line-height:1;width:20px">{{ item.em }}</span>
+            <span style="width:20px;flex-shrink:0;display:flex;align-items:center;justify-content:center"><dc-import name="Icon" i="{{ item.icon }}" s="17" c="{{ item.iconColor }}" hint-size="17px,17px"></dc-import></span>
             <span style="flex:1;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ item.label }}</span>
             <sc-if value="{{ item.done }}" hint-placeholder-val="{{ false }}">
               <span style="{{ item.badgeStyle }}"><dc-import name="Icon" i="check" s="9" c="{{ item.checkColor }}" hint-size="9px,9px"></dc-import></span>
@@ -55,7 +65,7 @@
         <p style="font-size:9px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.1em;padding:0 8px;margin:0 0 6px">⚙️ AJUSTES</p>
         <sc-for list="{{ navSet }}" as="item" hint-placeholder-count="3">
           <button onClick="{{ item.go }}" style="{{ item.style }}">
-            <span style="font-size:16px;line-height:1;width:20px">{{ item.em }}</span>
+            <span style="width:20px;flex-shrink:0;display:flex;align-items:center;justify-content:center"><dc-import name="Icon" i="{{ item.icon }}" s="17" c="{{ item.iconColor }}" hint-size="17px,17px"></dc-import></span>
             <span style="flex:1;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ item.label }}</span>
             <sc-if value="{{ item.done }}" hint-placeholder-val="{{ false }}">
               <span style="{{ item.badgeStyle }}"><dc-import name="Icon" i="check" s="9" c="{{ item.checkColor }}" hint-size="9px,9px"></dc-import></span>
@@ -65,11 +75,11 @@
       </div>
     </nav>
     <div style="padding:16px;border-top:1px solid #faf5ff">
-      <p style="font-size:10px;color:#9ca3af;text-align:center;margin:0">CORA 2.0 © 2026 UC Continental</p>
+      <p style="font-size:10px;color:#9ca3af;text-align:center;margin:0">CoRA 2.0 © 2026 UC Continental</p>
     </div>
   </aside>
 
-  <div style="flex:1;margin-left:240px;display:flex;flex-direction:column;min-height:100vh">
+  <div style="flex:1;margin-left:300px;display:flex;flex-direction:column;min-height:100vh">
     <header style="position:sticky;top:0;z-index:20;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);border-bottom:1px solid rgba(243,232,255,.6);padding:12px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
       <div style="flex:1"></div>
       <button onClick="{{ openOnboard }}" style="display:flex;align-items:center;gap:6px;background:none;border:1px solid #f3e8ff;border-radius:9999px;padding:6px 12px;cursor:pointer;font-family:inherit" style-hover="background:#faf5ff;border-color:#7B68EE">
@@ -101,7 +111,7 @@
     <sc-if value="{{ stepShow }}" hint-placeholder-val="{{ true }}">
       <div style="margin:16px 24px -8px;background:#fff;border:1px solid #e9d5ff;border-left:4px solid #7B68EE;border-radius:16px;padding:14px 16px;display:flex;align-items:flex-start;gap:12px;box-shadow:0 4px 6px -1px #f3e8ff,0 2px 4px -2px #f3e8ff;max-width:1024px">
         <div style="width:32px;height:32px;flex-shrink:0;background:#faf5ff;border-radius:12px;display:flex;align-items:center;justify-content:center">
-          <dc-import name="Icon" i="compass" s="16" c="#7B68EE" hint-size="16px,16px"></dc-import>
+          <img src="./assets/cora-mark.png" alt="" style="width:20px;height:20px;object-fit:contain;display:block">
         </div>
         <div style="flex:1;min-width:0">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap">
@@ -150,42 +160,24 @@
             </div>
             <div style="background:#faf5ff;border:1px solid #f3e8ff;border-radius:16px;padding:16px;text-align:left">
               <p style="font-size:12px;font-weight:600;color:#7B68EE;margin:0 0 4px">💡 ¿Sabías que?</p>
-              <p style="font-size:12px;color:#4b5563;margin:0">El 87% de estudiantes que usan CORA completo logran mejores decisiones académicas.</p>
+              <p style="font-size:12px;color:#4b5563;margin:0">El 87% de estudiantes que usan CoRA completo logran mejores decisiones académicas.</p>
             </div>
           </div>
         </div>
       </sc-if>
 
-      <sc-if value="{{ showFormIntro }}" hint-placeholder-val="{{ true }}">
+      <sc-if value="{{ showLanding }}" hint-placeholder-val="{{ true }}">
         <div>
-          <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
-            <span style="white-space:nowrap">⭕ Recomendador</span>
-            <span style="display:flex;align-items:center;gap:6px"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Formulario</span></span>
-          </nav>
           <div style="max-width:672px">
-            <div style="display:flex;align-items:flex-start;gap:16px;margin-bottom:24px">
-              <div style="width:48px;height:48px;background:#7B68EE;border-radius:16px;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff;flex-shrink:0">
-                <dc-import name="Icon" i="compass" s="22" c="#ffffff" hint-size="22px,22px"></dc-import>
-              </div>
-              <div>
-                <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:1.25;font-weight:700;color:#1A1040;margin:0">CORA va a encontrar tu ruta ideal</h1>
-                <p style="color:#6b7280;font-size:14px;margin:4px 0 0">Cuéntanos sobre ti para personalizar tu experiencia académica completa.</p>
-              </div>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#9ca3af;margin-bottom:28px">
-              <dc-import name="Icon" i="clock" s="12" hint-size="12px,12px"></dc-import>
-              <span>Se guarda automáticamente · Puedes pausar y continuar en cualquier momento</span>
-            </div>
-
-            <!-- ===== Qué es CORA =====
+            <!-- ===== Qué es CoRA =====
                  TEXTO PROPUESTO: redactado en el tono del producto a falta del copy
                  original de la versión anterior. Sustituir cuando esté disponible. -->
             <div style="background:linear-gradient(to bottom right,#faf5ff,#eef2ff);border:1px solid #f3e8ff;border-radius:16px;padding:24px;margin-bottom:24px">
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
-                <span style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7B68EE;background:#fff;padding:4px 10px;border-radius:9999px">Qué es CORA</span>
+                <span style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7B68EE;background:#fff;padding:4px 10px;border-radius:9999px">Qué es CoRA</span>
               </div>
               <h2 style="font-family:Poppins,sans-serif;font-size:18px;font-weight:700;color:#1A1040;margin:0 0 10px;line-height:1.35">Un acompañante académico, no un catálogo de carreras</h2>
-              <p style="font-size:14px;color:#4b5563;line-height:1.7;margin:0 0 16px">CORA cruza lo que te interesa, cómo aprendes y tu historial académico para proponerte rutas que encajen contigo. No decide por ti: te enseña qué implica cada camino — los cursos, el esfuerzo y los trabajos a los que lleva — para que decidas con información y no a ciegas.</p>
+              <p style="font-size:14px;color:#4b5563;line-height:1.7;margin:0 0 16px">CoRA cruza lo que te interesa, cómo aprendes y tu historial académico para proponerte rutas que encajen contigo. No decide por ti: te enseña qué implica cada camino — las asignaturas, el esfuerzo y los trabajos a los que lleva — para que decidas con información y no a ciegas.</p>
               <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
                 <div style="background:#fff;border-radius:12px;padding:12px">
                   <div style="font-size:20px;line-height:1;margin-bottom:6px">🧭</div>
@@ -195,7 +187,7 @@
                 <div style="background:#fff;border-radius:12px;padding:12px">
                   <div style="font-size:20px;line-height:1;margin-bottom:6px">📈</div>
                   <p style="font-size:12px;font-weight:700;color:#1A1040;margin:0 0 2px">Te anticipa</p>
-                  <p style="font-size:11px;color:#6b7280;margin:0;line-height:1.5">Avisa qué cursos se te pueden complicar, antes de que pasen.</p>
+                  <p style="font-size:11px;color:#6b7280;margin:0;line-height:1.5">Avisa qué asignaturas se te pueden complicar, antes de que pasen.</p>
                 </div>
                 <div style="background:#fff;border-radius:12px;padding:12px">
                   <div style="font-size:20px;line-height:1;margin-bottom:6px">🤝</div>
@@ -228,7 +220,7 @@
                 <div style="height:8px;background:#f3f4f6;border-radius:9999px;overflow:hidden;margin-bottom:16px">
                   <div style="height:100%;background:#7B68EE;border-radius:9999px;transition:all .7s;width:{{ ctxProgressPct }}"></div>
                 </div>
-                <p style="font-size:11px;font-weight:700;color:#9ca3af;margin:0 0 8px;text-transform:uppercase;letter-spacing:.05em">Últimos cursos llevados</p>
+                <p style="font-size:11px;font-weight:700;color:#9ca3af;margin:0 0 8px;text-transform:uppercase;letter-spacing:.05em">Últimas asignaturas llevadas</p>
                 <div style="display:flex;flex-wrap:wrap;gap:6px">
                   <sc-for list="{{ ctxTaken }}" as="c" hint-placeholder-count="6">
                     <span style="display:inline-flex;align-items:center;gap:6px;background:#f9fafb;border:1px solid #f3f4f6;border-radius:9999px;padding:4px 6px 4px 10px;font-size:11px;color:#4b5563">{{ c.name }}<span style="{{ c.pillStyle }}">{{ c.gradeLabel }}</span></span>
@@ -252,7 +244,7 @@
                 <div style="flex:1;min-width:240px;background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
                   <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px">
                     <p style="font-family:Poppins,sans-serif;font-size:28px;font-weight:800;color:#1A1040;margin:0;line-height:1">{{ ctxTakenCount }}</p>
-                    <p style="font-size:13px;color:#6b7280;margin:0">cursos llevados</p>
+                    <p style="font-size:13px;color:#6b7280;margin:0">asignaturas llevadas</p>
                   </div>
                   <p style="font-size:12px;color:#9ca3af;margin:0 0 14px">Promedio acumulado <strong style="color:#7B68EE">{{ ctxAvg }}</strong></p>
                   <div style="display:flex;flex-direction:column;gap:6px">
@@ -274,7 +266,7 @@
                   <div style="width:40px;height:40px;flex-shrink:0;background:#faf5ff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px">📍</div>
                   <div style="min-width:0">
                     <p style="font-family:Poppins,sans-serif;font-size:15px;font-weight:700;color:#1A1040;margin:0">{{ ctxCycle }} · {{ ctxCareer }}</p>
-                    <p style="font-size:12px;color:#6b7280;margin:3px 0 0">{{ ctxTakenCount }} cursos llevados · Promedio {{ ctxAvg }} · {{ ctxCredits }} créditos</p>
+                    <p style="font-size:12px;color:#6b7280;margin:3px 0 0">{{ ctxTakenCount }} asignaturas llevadas · Promedio {{ ctxAvg }} · {{ ctxCredits }} créditos</p>
                   </div>
                 </div>
                 <div style="flex:1;min-width:180px">
@@ -289,14 +281,40 @@
               </div>
             </sc-if>
 
-            <p style="font-size:13px;color:#4b5563;margin:0 0 12px;line-height:1.65">Elige cómo quieres que CORA te conozca. <strong style="color:#1A1040">El rápido no es un resumen del detallado</strong>: cruza menos variables de tu perfil, así que sus recomendaciones son más generales — úsalo para un primer vistazo, no para decidir tu ruta final.</p>
+            <button onClick="{{ continueToFormulario }}" style="width:100%;background:#7B68EE;color:#fff;border:0;border-radius:16px;padding:14px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff" style-hover="background:#6A58DC">Continuar con Formulario →</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showFormIntro }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
+            <span style="white-space:nowrap">⭕ Recomendador</span>
+            <span style="display:flex;align-items:center;gap:6px"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Formulario</span></span>
+          </nav>
+          <div style="max-width:672px">
+            <div style="display:flex;align-items:flex-start;gap:16px;margin-bottom:24px">
+              <div style="width:48px;height:48px;background:#7B68EE;border-radius:16px;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff;flex-shrink:0">
+                <dc-import name="Icon" i="compass" s="22" c="#ffffff" hint-size="22px,22px"></dc-import>
+              </div>
+              <div>
+                <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:1.25;font-weight:700;color:#1A1040;margin:0">CoRA va a encontrar tu ruta ideal</h1>
+                <p style="color:#6b7280;font-size:14px;margin:4px 0 0">Cuéntanos sobre ti para personalizar tu experiencia académica completa.</p>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#9ca3af;margin-bottom:28px">
+              <dc-import name="Icon" i="clock" s="12" hint-size="12px,12px"></dc-import>
+              <span>Se guarda automáticamente · Puedes pausar y continuar en cualquier momento</span>
+            </div>
+
+            <p style="font-size:13px;color:#4b5563;margin:0 0 12px;line-height:1.65">Elige cómo quieres que CoRA te conozca. <strong style="color:#1A1040">El rápido no es un resumen del detallado</strong>: cruza menos variables de tu perfil, así que sus recomendaciones son más generales — úsalo para un primer vistazo, no para decidir tu ruta final.</p>
             <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;margin-bottom:24px">
               <div style="position:relative" onMouseEnter="{{ hoverQuick }}" onMouseLeave="{{ hoverNone }}">
                 <span style="position:absolute;top:-10px;left:16px;z-index:5;width:22px;height:22px;background:#9ca3af;color:#fff;border-radius:9999px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;box-shadow:0 1px 3px 0 rgba(0,0,0,.2)">1</span>
                 <button onClick="{{ pickQuick }}" style="width:100%;text-align:left;border:2px solid #e5e7eb;border-radius:16px;padding:20px;background:#fff;cursor:pointer;font-family:inherit;transition:all .15s" style-hover="border-color:#7B68EE;box-shadow:0 10px 15px -3px #f3e8ff,0 4px 6px -4px #f3e8ff">
                   <div style="font-size:30px;line-height:36px;margin-bottom:12px">⚡</div>
                   <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:16px;margin:0 0 4px">Opción Rápida</h3>
-                  <p style="font-size:12px;color:#9ca3af;margin:0 0 12px">4 preguntas concisas</p>
+                  <p style="font-size:12px;color:#9ca3af;margin:0 0 12px">6 preguntas concisas</p>
                   <ul style="list-style:none;padding:0;margin:0 0 16px;display:flex;flex-direction:column;gap:6px">
                     <li style="display:flex;align-items:center;gap:8px;font-size:12px;color:#4b5563"><dc-import name="Icon" i="check" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Análisis rápido de tu perfil</li>
                     <li style="display:flex;align-items:center;gap:8px;font-size:12px;color:#4b5563"><dc-import name="Icon" i="check" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Recomendaciones básicas</li>
@@ -322,7 +340,7 @@
                   <div style="position:absolute;top:12px;right:12px;background:#7B68EE;color:#fff;font-size:10px;font-weight:700;padding:4px 8px;border-radius:9999px">⭐ RECOMENDADO</div>
                   <div style="font-size:30px;line-height:36px;margin-bottom:12px">🔥</div>
                   <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:16px;margin:0 0 4px">Opción Detallada</h3>
-                  <p style="font-size:12px;color:#9ca3af;margin:0 0 12px">16 preguntas, más detalle</p>
+                  <p style="font-size:12px;color:#9ca3af;margin:0 0 12px">5 pasos, más detalle</p>
                   <ul style="list-style:none;padding:0;margin:0 0 16px;display:flex;flex-direction:column;gap:6px">
                     <li style="display:flex;align-items:center;gap:8px;font-size:12px;color:#4b5563"><dc-import name="Icon" i="check" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Análisis profundo y personalizado</li>
                     <li style="display:flex;align-items:center;gap:8px;font-size:12px;color:#4b5563"><dc-import name="Icon" i="check" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Recomendaciones precisas</li>
@@ -336,7 +354,7 @@
                   <div style="position:absolute;top:0;right:100%;margin-right:12px;z-index:20;width:224px;background:#7B68EE;color:#fff;font-size:12px;border-radius:12px;padding:14px;box-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1)">
                     <p style="font-weight:700;margin:0 0 6px">💡 Opción Detallada ⭐</p>
                     <p style="color:rgba(255,255,255,.8);margin:0 0 8px;line-height:1.625">La mejor opción para decisiones académicas importantes.</p>
-                    <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:2px;color:rgba(255,255,255,.8)"><li>✓ Análisis profundo (+200 combos)</li><li>✓ Recomendaciones precisas</li><li>✓ Acceso a TODO el ecosistema</li><li>✓ Plan personalizado de apoyo</li></ul>
+                    <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:2px;color:rgba(255,255,255,.8)"><li>✓ Análisis profundo por pasos</li><li>✓ Recomendaciones precisas</li><li>✓ Acceso a TODO el ecosistema</li><li>✓ Plan personalizado de apoyo</li></ul>
                   </div>
                 </sc-if>
               </div>
@@ -346,51 +364,159 @@
               <div style="margin-top:2px;color:#3b82f6;display:flex"><dc-import name="Icon" i="info" s="16" c="#3b82f6" hint-size="16px,16px"></dc-import></div>
               <div>
                 <p style="font-weight:600;color:#1e3a8a;font-size:14px;margin:0 0 4px">🔍 ¿Qué significa "Análisis"?</p>
-                <p style="color:#1d4ed8;font-size:12px;line-height:1.625;margin:0 0 8px">El formulario detallado analiza 200+ combinaciones de carreras disponibles para encontrar las más compatibles contigo. Revisamos todas las opciones, cruzamos con tu perfil, y mostramos el top 5-7 con % de compatibilidad.</p>
-                <p style="color:#1d4ed8;font-size:12px;line-height:1.625;margin:0">El rápido no corre este cruce: con 4 preguntas te da una orientación general, sin comparar las 200+ combinaciones. Sirve para curiosear, no para tu decisión final.</p>
+                <p style="color:#1d4ed8;font-size:12px;line-height:1.625;margin:0 0 8px">El formulario detallado recorre 5 pasos y cruza más variables de tu perfil para encontrar las carreras más compatibles contigo, con recomendaciones más precisas.</p>
+                <p style="color:#1d4ed8;font-size:12px;line-height:1.625;margin:0">El rápido no corre este cruce: con 6 preguntas en una sola pantalla te da una orientación general. Sirve para curiosear, no para tu decisión final. Puedes cambiar de versión más adelante sin perder tus respuestas.</p>
               </div>
             </div>
           </div>
         </div>
       </sc-if>
 
-      <sc-if value="{{ showFormQuestions }}" hint-placeholder-val="{{ false }}">
+      <sc-if value="{{ showFormQuestionnaire }}" hint-placeholder-val="{{ false }}">
         <div>
-          <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
+          <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:20px;flex-wrap:wrap">
             <span style="white-space:nowrap">⭕ Recomendador</span>
-            <span style="display:flex;align-items:center;gap:6px"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import>Formulario</span>
-            <span style="display:flex;align-items:center;gap:6px"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">{{ qStepLabel }}</span></span>
+            <span style="display:flex;align-items:center;gap:6px"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Formulario</span></span>
           </nav>
-          <div style="max-width:576px">
-            <div style="margin-bottom:24px">
-              <div style="display:flex;justify-content:space-between;font-size:12px;color:#9ca3af;margin-bottom:6px"><span>Progreso</span><span>{{ qPctLabel }}</span></div>
-              <div style="height:8px;background:#f3f4f6;border-radius:9999px;overflow:hidden"><div style="height:100%;background:#7B68EE;border-radius:9999px;transition:all .7s;width:{{ qPct }}"></div></div>
+          <div style="max-width:640px">
+
+            <div style="display:flex;gap:6px;background:#f3f4f6;border-radius:12px;padding:4px;margin-bottom:24px">
+              <button onClick="{{ setFormCompleta }}" style="{{ formTabCompletaStyle }}">Versión completa (~5 min)</button>
+              <button onClick="{{ setFormRapida }}" style="{{ formTabRapidaStyle }}">Versión rápida (~2 min)</button>
             </div>
-            <div style="background:#fff;border:1px solid rgba(243,232,255,.6);border-radius:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1);padding:24px;margin-bottom:16px">
-              <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:20px">
-                <h2 style="font-family:Poppins,sans-serif;font-size:18px;line-height:28px;font-weight:700;color:#1A1040;flex:1;margin:0">{{ qText }}</h2>
-                <dc-import name="Tip" text="{{ qHint }}" hint-size="14px,14px"></dc-import>
+
+            <!-- ===== Versión completa: 5 pasos navegables ===== -->
+            <sc-if value="{{ formIsCompleta }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:8px;flex-wrap:wrap">
+                <h2 style="font-family:Poppins,sans-serif;font-size:16px;font-weight:700;color:#1A1040;margin:0">{{ stepTitleLabel }}</h2>
+                <span style="font-size:11px;color:#9ca3af;font-weight:600;white-space:nowrap">{{ stepIndexLabel }}</span>
               </div>
-              <div style="display:flex;flex-direction:column;gap:10px">
-                <sc-for list="{{ qOptions }}" as="opt" hint-placeholder-count="5">
-                  <button onClick="{{ opt.onClick }}" style="{{ opt.style }}">
-                    <span style="{{ opt.boxStyle }}">
-                      <sc-if value="{{ opt.sel }}" hint-placeholder-val="{{ false }}">
-                        <dc-import name="Icon" i="check" s="11" c="#ffffff" hint-size="11px,11px"></dc-import>
-                      </sc-if>
-                    </span>
-                    {{ opt.label }}
-                  </button>
+              <div style="display:flex;gap:4px;margin-bottom:28px">
+                <sc-for list="{{ stepSegments }}" as="seg" hint-placeholder-count="5">
+                  <div style="{{ seg.segStyle }}"></div>
                 </sc-for>
               </div>
-              <sc-if value="{{ qIsCheckbox }}" hint-placeholder-val="{{ false }}">
-                <p style="font-size:12px;color:#9ca3af;margin:12px 0 0">Selecciona 2-3 opciones</p>
-              </sc-if>
-            </div>
-            <div style="display:flex;gap:12px">
-              <button onClick="{{ qPrev }}" style="{{ qPrevStyle }}"><dc-import name="Icon" i="chevron-left" s="15" hint-size="15px,15px"></dc-import> Anterior</button>
-              <button onClick="{{ qNext }}" style="{{ qNextStyle }}">{{ qNextLabel }}<sc-if value="{{ qShowNextIcon }}" hint-placeholder-val="{{ true }}"><dc-import name="Icon" i="chevron-right" s="15" hint-size="15px,15px"></dc-import></sc-if></button>
-            </div>
+
+              <sc-for list="{{ stepQuestions }}" as="q" hint-placeholder-count="3">
+                <div style="margin-bottom:26px">
+                  <sc-if value="{{ q.isInfo }}" hint-placeholder-val="{{ false }}">
+                    <div style="background:#eff6ff;border:1px solid #dbeafe;border-radius:12px;padding:14px;display:flex;gap:10px;align-items:flex-start">
+                      <dc-import name="Icon" i="info" s="15" c="#3b82f6" hint-size="15px,15px"></dc-import>
+                      <p style="font-size:12px;color:#1d4ed8;line-height:1.6;margin:0">{{ q.text }}</p>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ !q.isInfo }}" hint-placeholder-val="{{ true }}">
+                    <h3 style="font-family:Poppins,sans-serif;font-size:14px;font-weight:700;color:#1A1040;margin:0 0 4px">{{ q.title }}</h3>
+                    <sc-if value="{{ q.hasSubtitle }}" hint-placeholder-val="{{ false }}">
+                      <p style="font-size:12px;color:#9ca3af;margin:0 0 12px">{{ q.subtitle }}</p>
+                    </sc-if>
+                    <sc-if value="{{ q.isChips }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
+                        <sc-for list="{{ q.chips }}" as="c" hint-placeholder-count="8">
+                          <button onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.label }}</button>
+                        </sc-for>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ q.isChipsBig }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:8px">
+                        <sc-for list="{{ q.chips }}" as="c" hint-placeholder-count="3">
+                          <button onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.label }}</button>
+                        </sc-for>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ q.isCards }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:grid;grid-template-columns:{{ q.gridCols }};gap:10px;margin-top:8px">
+                        <sc-for list="{{ q.cards }}" as="c" hint-placeholder-count="4">
+                          <button onClick="{{ c.onClick }}" style="{{ c.cardStyle }}">
+                            <span style="{{ c.radioStyle }}"></span>
+                            <span>
+                              <span style="display:block;font-size:13px;font-weight:600;color:#1A1040">{{ c.label }}</span>
+                              <sc-if value="{{ c.hasSub }}" hint-placeholder-val="{{ false }}">
+                                <span style="display:block;font-size:11px;color:#9ca3af;margin-top:2px">{{ c.sub }}</span>
+                              </sc-if>
+                            </span>
+                          </button>
+                        </sc-for>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ q.isText }}" hint-placeholder-val="{{ false }}">
+                      <input value="{{ q.value }}" onChange="{{ q.onChange }}" placeholder="{{ q.placeholder }}" style="{{ q.fieldStyle }}" />
+                    </sc-if>
+                    <sc-if value="{{ q.isTextarea }}" hint-placeholder-val="{{ false }}">
+                      <textarea value="{{ q.value }}" onChange="{{ q.onChange }}" placeholder="{{ q.placeholder }}" rows="{{ q.taRows }}" style="{{ q.fieldStyle }}"></textarea>
+                    </sc-if>
+                    <sc-if value="{{ q.isRows }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex;flex-direction:column;gap:6px;margin-top:8px">
+                        <sc-for list="{{ q.rows }}" as="r" hint-placeholder-count="6">
+                          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;background:#f9fafb;border-radius:10px;padding:8px 12px;flex-wrap:wrap">
+                            <span style="font-size:12px;color:#374151;flex:1;min-width:140px">{{ r.label }}</span>
+                            <div style="display:flex;gap:6px;flex-shrink:0">
+                              <button onClick="{{ r.onYa }}" style="{{ r.yaStyle }}">Ya lo hago</button>
+                              <button onClick="{{ r.onQuiero }}" style="{{ r.quieroStyle }}">Quiero explorarlo</button>
+                            </div>
+                          </div>
+                        </sc-for>
+                      </div>
+                    </sc-if>
+                  </sc-if>
+                </div>
+              </sc-for>
+
+              <div style="display:flex;gap:12px">
+                <button onClick="{{ stepPrev }}" style="{{ stepPrevStyle }}"><dc-import name="Icon" i="chevron-left" s="15" hint-size="15px,15px"></dc-import> Atrás</button>
+                <button onClick="{{ stepNext }}" style="{{ stepNextStyle }}">{{ stepNextLabel }}</button>
+              </div>
+            </sc-if>
+
+            <!-- ===== Versión rápida: 1 pantalla, 6 preguntas ===== -->
+            <sc-if value="{{ formIsRapida }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+                <span style="background:#eff6ff;color:#1d4ed8;font-size:11px;font-weight:700;padding:3px 10px;border-radius:9999px">Versión rápida</span>
+              </div>
+              <p style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin:0 0 24px">
+                <dc-import name="Icon" i="clock" s="12" hint-size="12px,12px"></dc-import>Tiempo estimado: 1 a 2 minutos · 6 preguntas
+              </p>
+
+              <sc-for list="{{ quickQuestions }}" as="q" hint-placeholder-count="6">
+                <div style="margin-bottom:26px">
+                  <h3 style="font-family:Poppins,sans-serif;font-size:14px;font-weight:700;color:#1A1040;margin:0 0 4px">{{ q.title }}</h3>
+                  <sc-if value="{{ q.hasSubtitle }}" hint-placeholder-val="{{ false }}">
+                    <p style="font-size:12px;color:#9ca3af;margin:0 0 12px">{{ q.subtitle }}</p>
+                  </sc-if>
+                  <sc-if value="{{ q.isChips }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
+                      <sc-for list="{{ q.chips }}" as="c" hint-placeholder-count="8">
+                        <button onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.label }}</button>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ q.isCards }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:grid;grid-template-columns:{{ q.gridCols }};gap:10px;margin-top:8px">
+                      <sc-for list="{{ q.cards }}" as="c" hint-placeholder-count="4">
+                        <button onClick="{{ c.onClick }}" style="{{ c.cardStyle }}">
+                          <span style="{{ c.radioStyle }}"></span>
+                          <span>
+                            <span style="display:block;font-size:13px;font-weight:600;color:#1A1040">{{ c.label }}</span>
+                            <sc-if value="{{ c.hasSub }}" hint-placeholder-val="{{ false }}">
+                              <span style="display:block;font-size:11px;color:#9ca3af;margin-top:2px">{{ c.sub }}</span>
+                            </sc-if>
+                          </span>
+                        </button>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ q.isText }}" hint-placeholder-val="{{ false }}">
+                    <input value="{{ q.value }}" onChange="{{ q.onChange }}" placeholder="{{ q.placeholder }}" style="{{ q.fieldStyle }}" />
+                  </sc-if>
+                </div>
+              </sc-for>
+
+              <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:14px;margin:8px 0 20px">
+                <p style="font-size:12px;color:#15803d;margin:0;line-height:1.5">Con estas 6 respuestas CoRA ya puede generar tu primera ruta. Podrás completar el perfil con más detalle después.</p>
+              </div>
+              <button onClick="{{ quickSubmit }}" style="width:100%;background:#7B68EE;color:#fff;border:0;border-radius:16px;padding:14px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff" style-hover="background:#6A58DC">Ver mi ruta →</button>
+            </sc-if>
+
           </div>
         </div>
       </sc-if>
@@ -467,14 +593,14 @@
                     <span style="font-size:10px;background:#faf5ff;color:#7B68EE;padding:2px 8px;border-radius:9999px">{{ t.label }}</span>
                   </sc-for>
                 </div>
-                <!-- Detalle de cursos: se puede consultar ANTES de elegir la ruta -->
+                <!-- Detalle de asignaturas: se puede consultar ANTES de elegir la ruta -->
                 <button onClick="{{ r.onToggleDetail }}" style="width:100%;border:1px solid #e5e7eb;background:#fff;border-radius:12px;padding:8px 12px;font-size:12px;font-weight:600;color:#4b5563;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:6px;font-family:inherit;margin-bottom:8px" style-hover="background:#f9fafb;border-color:#7B68EE">
                   <span style="display:flex;align-items:center;gap:6px"><dc-import name="Icon" i="eye" s="12" hint-size="12px,12px"></dc-import>{{ r.detailLabel }}</span>
                   <span style="display:flex;align-items:center;gap:6px;color:#9ca3af;font-weight:500">{{ r.courseCount }}<dc-import name="Icon" i="{{ r.detailChevron }}" s="12" hint-size="12px,12px"></dc-import></span>
                 </button>
                 <sc-if value="{{ r.detailOpen }}" hint-placeholder-val="{{ false }}">
                   <div style="background:#f9fafb;border:1px solid #f3f4f6;border-radius:12px;padding:10px;margin-bottom:8px">
-                    <p style="font-size:10px;font-weight:700;color:#9ca3af;margin:0 0 8px;text-transform:uppercase;letter-spacing:.05em">Cursos incluidos</p>
+                    <p style="font-size:10px;font-weight:700;color:#9ca3af;margin:0 0 8px;text-transform:uppercase;letter-spacing:.05em">Asignaturas incluidas</p>
                     <sc-for list="{{ r.courses }}" as="c" hint-placeholder-count="5">
                       <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:5px 0;border-bottom:1px solid #f3f4f6">
                         <span style="font-size:11px;color:#374151;min-width:0;overflow:hidden;text-overflow:ellipsis">{{ c.name }}</span>
@@ -497,7 +623,7 @@
             <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
               <div style="flex:1;min-width:180px;background:#faf5ff;border:1px solid #f3e8ff;border-radius:12px;padding:14px">
                 <p style="font-size:11px;font-weight:700;color:#7B68EE;margin:0 0 4px;text-transform:uppercase;letter-spacing:.05em">📚 Ruta</p>
-                <p style="font-size:12px;color:#4A3FA0;margin:0;line-height:1.5">Los <strong>cursos</strong> que vas a tomar en tu malla — lo que estudias.</p>
+                <p style="font-size:12px;color:#4A3FA0;margin:0;line-height:1.5">Las <strong>asignaturas</strong> que vas a tomar en tu malla — lo que estudias.</p>
               </div>
               <div style="flex-shrink:0;color:#c4b5fd;display:flex;align-items:center;justify-content:center;padding:0 4px">
                 <dc-import name="Icon" i="chevron-right" s="20" c="#c4b5fd" hint-size="20px,20px"></dc-import>
@@ -536,7 +662,7 @@
             <dc-import name="Icon" i="check-circle" s="20" c="#22c55e" hint-size="20px,20px"></dc-import>
             <div>
               <h1 style="font-family:Poppins,sans-serif;font-size:18px;font-weight:700;color:#15803d;margin:0 0 2px">Así queda tu malla con "{{ mallaCareer }}"</h1>
-              <p style="font-size:12px;color:#15803d;margin:0">Revisa qué cursos añade esta ruta antes de seguir al Ecosistema CIE.</p>
+              <p style="font-size:12px;color:#15803d;margin:0">Revisa qué asignaturas añade esta ruta antes de seguir al Ecosistema CIE.</p>
             </div>
           </div>
           <div style="display:flex;flex-wrap:wrap;align-items:center;gap:18px;background:#fff;border:1px solid #f3f4f6;border-radius:12px;padding:12px 16px;margin-bottom:20px">
@@ -654,7 +780,7 @@
             <img src="./assets/cie-logo.svg" alt="Continental International Education" style="height:22px;width:auto;display:block;margin-bottom:12px">
             <h1 style="font-family:Poppins,sans-serif;font-size:20px;line-height:28px;font-weight:700;margin:0 0 4px">🌍 Ecosistema CIE</h1>
             <p style="color:#e9d5ff;font-size:12px;margin:0 0 16px">Continental International Education · Formación que complementa tu carrera, más allá de la malla.</p>
-            <!-- Los tres frentes del CIE. Los cursos de la Universidad Continental
+            <!-- Los tres frentes del CIE. Las asignaturas de la Universidad Continental
                  no van aquí: viven dentro de la sección, como un bloque propio. -->
             <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;text-align:center">
               <div><p style="font-size:24px;line-height:32px;font-weight:900;margin:0">{{ langCount }}</p><p style="font-size:12px;color:#d8b4fe;margin:0">Idiomas</p></div>
@@ -663,7 +789,7 @@
             </div>
           </div>
 
-          <!-- ===== Fase 1: CORA recomienda ===== -->
+          <!-- ===== Fase 1: CoRA recomienda ===== -->
           <sc-if value="{{ isEcoReco }}" hint-placeholder-val="{{ true }}">
             <div>
               <button onClick="{{ backToMallaFromEco }}" style="display:flex;align-items:center;gap:6px;background:none;border:0;padding:0;margin-bottom:16px;cursor:pointer;color:#7B68EE;font-size:12px;font-family:inherit" style-hover="text-decoration:underline"><dc-import name="Icon" i="chevron-left" s="13" hint-size="13px,13px"></dc-import> Volver a tu malla</button>
@@ -672,7 +798,7 @@
                   <dc-import name="Icon" i="star" s="18" c="#ffffff" hint-size="18px,18px"></dc-import>
                 </div>
                 <div>
-                  <h2 style="font-family:Poppins,sans-serif;font-size:16px;font-weight:700;color:#1A1040;margin:0 0 2px">Lo que CORA te recomienda</h2>
+                  <h2 style="font-family:Poppins,sans-serif;font-size:16px;font-weight:700;color:#1A1040;margin:0 0 2px">Lo que CoRA te recomienda</h2>
                   <p style="font-size:13px;color:#6b7280;margin:0;line-height:1.6">{{ ecoRecoCount }} propuestas elegidas a partir de tu ruta, tus notas y el horizonte que has visto.</p>
                 </div>
               </div>
@@ -770,7 +896,7 @@
                     <img src="./assets/cfu-logo.png" alt="CFU" style="height:11px;width:auto">
                     <span style="font-size:10px;font-weight:700;color:#0e7490">CFU</span>
                   </span>
-                  <dc-import name="Tip" text="Cursos de tu malla en Perú con equivalencia confirmada en Continental Florida University, la universidad aliada en EE. UU." hint-size="14px,14px"></dc-import>
+                  <dc-import name="Tip" text="Asignaturas de tu malla en Perú con equivalencia confirmada en Continental Florida University, la universidad aliada en EE. UU." hint-size="14px,14px"></dc-import>
                 </div>
                 <div style="display:flex;align-items:center;gap:8px">
                   <sc-if value="{{ ecoInterClosed }}" hint-placeholder-val="{{ true }}"><span style="font-size:12px;color:#9ca3af">Expandir</span></sc-if>
@@ -779,7 +905,7 @@
               </button>
               <sc-if value="{{ ecoInterOpen }}" hint-placeholder-val="{{ false }}">
                 <div style="padding:0 16px 16px">
-                  <p style="font-size:12px;color:#4b5563;margin:0 0 12px;line-height:1.6">La internacionalización es poder cursar un ciclo en una universidad aliada en el extranjero sin perder avance en tu carrera. <strong style="color:#7B68EE">{{ equivCount }}</strong> cursos de tu malla ya tienen equivalencia confirmada en <strong>Continental Florida University (CFU)</strong> — si haces el intercambio, no repites esos cursos al volver. Filtra por ciclo para revisarlos.</p>
+                  <p style="font-size:12px;color:#4b5563;margin:0 0 12px;line-height:1.6">La internacionalización es poder cursar un ciclo en una universidad aliada en el extranjero sin perder avance en tu carrera. <strong style="color:#7B68EE">{{ equivCount }}</strong> asignaturas de tu malla ya tienen equivalencia confirmada en <strong>Continental Florida University (CFU)</strong> — si haces el intercambio, no repites esas asignaturas al volver. Filtra por ciclo para revisarlas.</p>
                   <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px">
                     <sc-for list="{{ equivCycles }}" as="c" hint-placeholder-count="6">
                       <button onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.label }}</button>
@@ -787,7 +913,7 @@
                   </div>
                   <sc-if value="{{ hasCfuChosen }}" hint-placeholder-val="{{ false }}">
                     <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 10px;background:#ecfeff;border:1px solid #a5f3fc;border-radius:10px;padding:8px 8px 8px 12px">
-                      <p style="font-size:11px;color:#0e7490;margin:0">🇺🇸 Tienes <strong>{{ cfuChosenCount }}</strong> curso(s) elegidos por CFU — se ven resaltados en tu malla.</p>
+                      <p style="font-size:11px;color:#0e7490;margin:0">🇺🇸 Tienes <strong>{{ cfuChosenCount }}</strong> asignatura(s) elegidas por CFU — se ven resaltadas en tu malla.</p>
                       <button onClick="{{ ecoCtaClick }}" style="font-size:11px;font-weight:700;color:#fff;background:#0e7490;border:0;border-radius:9999px;padding:6px 14px;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#0c5f75">Ver mi malla final →</button>
                     </div>
                   </sc-if>
@@ -968,9 +1094,9 @@
               <p style="color:#6b7280;font-size:14px;margin:0 0 6px">Carrera: <strong>{{ mallaCareer }}</strong> · 10 ciclos · {{ mallaTotalCredits }} créditos totales</p>
               <span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:#4A3FA0;background:#faf5ff;border-radius:9999px;padding:3px 10px">📘 {{ planLabel }}</span>
             </div>
-            <dc-import name="Tip" text="Los cursos de la ruta que elegiste se ven con borde morado grueso, fondo lleno y la insignia '🧭 Tu ruta' — mucho más resaltados que el resto. Puedes agregar todos los extracurriculares que quieras al final de cada ciclo: elige uno de la lista y confirma — nunca se agregan solos. No cuentan para tus créditos de carrera." hint-size="14px,14px"></dc-import>
+            <dc-import name="Tip" text="Las asignaturas de la ruta que elegiste se ven con borde morado grueso, fondo lleno y la insignia '🧭 Tu ruta' — mucho más resaltadas que el resto. Puedes agregar todos los extracurriculares que quieras al final de cada ciclo: elige uno de la lista y confirma — nunca se agregan solos. No cuentan para tus créditos de carrera." hint-size="14px,14px"></dc-import>
           </div>
-          <!-- Leyenda de las tres categorías de curso + los electivos ya elegidos -->
+          <!-- Leyenda de las tres categorías de asignatura + los electivos ya elegidos -->
           <div style="display:flex;flex-wrap:wrap;align-items:center;gap:18px;background:#fff;border:1px solid #f3f4f6;border-radius:12px;padding:12px 16px;margin-bottom:20px">
             <div style="{{ mallaLegendRuta.style }}">
               <span style="{{ mallaLegendRuta.labelStyle }}">{{ mallaLegendRuta.label }}</span>
@@ -1094,7 +1220,7 @@
               <div style="background:rgba(255,255,255,.2);border-radius:9999px;padding:14px;display:flex"><dc-import name="Icon" i="check-circle" s="32" c="#fff" hint-size="32px,32px"></dc-import></div>
             </div>
             <h1 style="font-family:Poppins,sans-serif;font-size:22px;font-weight:700;color:#fff;margin:0 0 8px">🎉 ¡Tu malla está lista!</h1>
-            <p style="font-size:14px;color:#e9d5ff;margin:0;max-width:480px;margin:0 auto">Terminaste de personalizar tu camino en {{ summaryRouteName }}. Cada curso y cada elección que hiciste hoy son un paso más cerca de la persona profesional que quieres ser.</p>
+            <p style="font-size:14px;color:#e9d5ff;margin:0;max-width:480px;margin:0 auto">Terminaste de personalizar tu camino en {{ summaryRouteName }}. Cada asignatura y cada elección que hiciste hoy son un paso más cerca de la persona profesional que quieres ser.</p>
           </div>
 
           <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
@@ -1267,8 +1393,8 @@
           <div style="background:#fffbeb;border:1px solid #fef3c7;border-radius:16px;padding:16px;margin-bottom:24px;display:flex;align-items:flex-start;gap:12px">
             <span style="font-size:20px;line-height:28px">🔗</span>
             <div>
-              <p style="font-weight:600;color:#78350f;font-size:14px;margin:0 0 2px">PERFIL CORA vs HORIZONTE: La diferencia</p>
-              <p style="font-size:12px;color:#b45309;margin:0"><strong>PERFIL CORA</strong> = Quién eres HOY, en 6 dimensiones · <strong>HORIZONTE</strong> = A dónde te puede llevar eso · 💡 Uno explica el otro</p>
+              <p style="font-weight:600;color:#78350f;font-size:14px;margin:0 0 2px">PERFIL CoRA vs HORIZONTE: La diferencia</p>
+              <p style="font-size:12px;color:#b45309;margin:0"><strong>PERFIL CoRA</strong> = Quién eres HOY, en 6 dimensiones · <strong>HORIZONTE</strong> = A dónde te puede llevar eso · 💡 Uno explica el otro</p>
             </div>
           </div>
           <div style="background:#fff;border:1px solid rgba(243,232,255,.6);border-radius:16px;padding:20px;margin-bottom:24px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
@@ -1620,7 +1746,7 @@
           </sc-if>
 
           <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:24px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
-            <h2 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:14px;margin:0 0 4px">💬 Pregúntale al Asistente CORA</h2>
+            <h2 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:14px;margin:0 0 4px">💬 Pregúntale al Asistente CoRA</h2>
             <p style="font-size:12px;color:#9ca3af;margin:0 0 12px">Toca una pregunta y sigue la conversación con IA — o escribe la tuya.</p>
             <div style="display:flex;flex-direction:column;gap:8px">
               <sc-for list="{{ hzChips }}" as="ch" hint-placeholder-count="3">
@@ -1644,14 +1770,14 @@
           </div>
           <!-- ===== Predictibilidad académica =====
                Cruza el histórico de notas del estudiante con el desempeño
-               histórico de cada curso para anticipar dificultades. -->
+               histórico de cada asignatura para anticipar dificultades. -->
           <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:20px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
             <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:16px">
               <div style="width:40px;height:40px;flex-shrink:0;background:#faf5ff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px">🔮</div>
               <div style="flex:1;min-width:0">
                 <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
                   <h2 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:16px;margin:0">Predictibilidad académica</h2>
-                  <dc-import name="Tip" text="CORA compara tus notas con el desempeño histórico de cada curso en estudiantes con tu mismo perfil y ruta. No es una nota puesta de antemano: es una señal para prepararte a tiempo." hint-size="14px,14px"></dc-import>
+                  <dc-import name="Tip" text="CoRA compara tus notas con el desempeño histórico de cada asignatura en estudiantes con tu mismo perfil y ruta. No es una nota puesta de antemano: es una señal para prepararte a tiempo." hint-size="14px,14px"></dc-import>
                 </div>
                 <p style="font-size:13px;color:#6b7280;margin:4px 0 0;line-height:1.6">{{ predictLede }}</p>
               </div>
@@ -1692,7 +1818,7 @@
               </div>
             </sc-for>
             <div style="border-top:1px solid #f3f4f6;margin-top:4px;padding-top:14px">
-              <p style="font-size:12px;color:#6b7280;margin:0 0 10px">El plan no es solo lo que CORA detecta: puedes reforzar cualquier otro curso de {{ acompCycleLabel }} que sientas flojo.</p>
+              <p style="font-size:12px;color:#6b7280;margin:0 0 10px">El plan no es solo lo que CoRA detecta: puedes reforzar cualquier otra asignatura de {{ acompCycleLabel }} que sientas floja.</p>
               <sc-if value="{{ hasReinforce }}" hint-placeholder-val="{{ false }}">
                 <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px">
                   <sc-for list="{{ reinforceList }}" as="rc" hint-placeholder-count="2">
@@ -1704,7 +1830,7 @@
                   </sc-for>
                 </div>
               </sc-if>
-              <button onClick="{{ reinforceOpen }}" style="font-size:12px;font-weight:600;color:#7B68EE;background:#faf5ff;border:0;border-radius:9999px;padding:6px 14px;cursor:pointer;display:flex;align-items:center;gap:4px;font-family:inherit" style-hover="background:#f3e8ff"><dc-import name="Icon" i="plus" s="11" hint-size="11px,11px"></dc-import> Reforzar otro curso de este ciclo</button>
+              <button onClick="{{ reinforceOpen }}" style="font-size:12px;font-weight:600;color:#7B68EE;background:#faf5ff;border:0;border-radius:9999px;padding:6px 14px;cursor:pointer;display:flex;align-items:center;gap:4px;font-family:inherit" style-hover="background:#f3e8ff"><dc-import name="Icon" i="plus" s="11" hint-size="11px,11px"></dc-import> Reforzar otra asignatura de este ciclo</button>
             </div>
           </div>
 
@@ -1712,10 +1838,10 @@
             <div style="position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.5);padding:16px">
               <div style="background:#fff;border-radius:16px;box-shadow:0 25px 50px -12px rgba(0,0,0,.25);padding:24px;max-width:384px;width:100%">
                 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-                  <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:14px;margin:0">➕ Reforzar otro curso</h3>
+                  <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:14px;margin:0">➕ Reforzar otra asignatura</h3>
                   <button onClick="{{ reinforceClose }}" style="padding:6px;background:none;border:0;border-radius:8px;cursor:pointer;display:flex;color:#1A1040" style-hover="background:#f3f4f6"><dc-import name="Icon" i="x" s="15" hint-size="15px,15px"></dc-import></button>
                 </div>
-                <p style="font-size:12px;color:#9ca3af;margin:0 0 16px">Cursos de {{ acompCycleLabel }} — elige los que quieras, sin límite.</p>
+                <p style="font-size:12px;color:#9ca3af;margin:0 0 16px">Asignaturas de {{ acompCycleLabel }} — elige las que quieras, sin límite.</p>
                 <div style="display:flex;flex-direction:column;gap:8px">
                   <sc-for list="{{ reinforceOptions }}" as="o" hint-placeholder-count="5">
                     <button onClick="{{ o.onClick }}" style="{{ o.style }}">
@@ -1818,7 +1944,7 @@
           <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
             <h2 style="font-weight:700;color:#1A1040;margin:0 0 12px;display:flex;align-items:center;gap:8px;font-size:14px">
               <span style="width:24px;height:24px;background:#7B68EE;color:#fff;border-radius:9999px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">1</span>
-              Selecciona el Curso <dc-import name="Tip" text="Elige un curso de tu malla actual" hint-size="14px,14px"></dc-import>
+              Selecciona la Asignatura <dc-import name="Tip" text="Elige una asignatura de tu malla actual" hint-size="14px,14px"></dc-import>
             </h2>
             <div style="display:flex;flex-direction:column;gap:8px">
               <sc-for list="{{ pCourses }}" as="c" hint-placeholder-count="5">
@@ -1975,7 +2101,7 @@
           </div>
           <div style="display:flex;gap:12px">
             <button onClick="{{ pRestart }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;border:2px solid #7B68EE;background:#fff;color:#7B68EE;border-radius:16px;padding:12px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit" style-hover="background:#faf5ff"><dc-import name="Icon" i="rotate-ccw" s="15" hint-size="15px,15px"></dc-import>🔄 Repetir otro simulacro</button>
-            <button onClick="{{ goTutor }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:#2563eb;color:#fff;border:0;border-radius:16px;padding:12px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit" style-hover="background:#1d4ed8"><dc-import name="Icon" i="message-circle" s="15" hint-size="15px,15px"></dc-import>Ir al Asistente CORA</button>
+            <button onClick="{{ goTutor }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:#2563eb;color:#fff;border:0;border-radius:16px;padding:12px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit" style-hover="background:#1d4ed8"><dc-import name="Icon" i="message-circle" s="15" hint-size="15px,15px"></dc-import>Ir al Asistente CoRA</button>
           </div>
         </div>
       </sc-if>
@@ -1992,7 +2118,7 @@
           <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
             <h2 style="font-weight:700;color:#1A1040;margin:0 0 12px;display:flex;align-items:center;gap:8px;font-size:14px">
               <span style="width:24px;height:24px;background:#7B68EE;color:#fff;border-radius:9999px;display:flex;align-items:center;justify-content:center;font-size:12px">1</span>
-              Selecciona el Curso <dc-import name="Tip" text="Elige un curso de tu malla" hint-size="14px,14px"></dc-import>
+              Selecciona la Asignatura <dc-import name="Tip" text="Elige una asignatura de tu malla" hint-size="14px,14px"></dc-import>
             </h2>
             <div style="display:flex;flex-direction:column;gap:8px">
               <sc-for list="{{ fCourses }}" as="c" hint-placeholder-count="3">
@@ -2013,7 +2139,7 @@
                 <button style="width:100%;background:#7B68EE;color:#fff;border:0;border-radius:12px;padding:8px 0;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit" style-hover="background:#6A58DC">Usar este set</button>
               </div>
               <button style="width:100%;border:1px dashed #d1d5db;background:#fff;border-radius:12px;padding:10px 0;font-size:12px;color:#6b7280;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;margin-bottom:8px;font-family:inherit" style-hover="border-color:#7B68EE;color:#7B68EE"><dc-import name="Icon" i="plus" s="13" hint-size="13px,13px"></dc-import>Crear mi propio set</button>
-              <button style="width:100%;border:1px dashed #d1d5db;background:#fff;border-radius:12px;padding:10px 0;font-size:12px;color:#6b7280;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:inherit" style-hover="border-color:#7B68EE;color:#7B68EE"><dc-import name="Icon" i="upload" s="13" hint-size="13px,13px"></dc-import>Cargar PDF/Word — CORA extrae términos</button>
+              <button style="width:100%;border:1px dashed #d1d5db;background:#fff;border-radius:12px;padding:10px 0;font-size:12px;color:#6b7280;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:inherit" style-hover="border-color:#7B68EE;color:#7B68EE"><dc-import name="Icon" i="upload" s="13" hint-size="13px,13px"></dc-import>Cargar PDF/Word — CoRA extrae términos</button>
             </div>
           </div>
 
@@ -2104,15 +2230,15 @@
         <div style="display:flex;flex-direction:column;gap:16px">
           <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:8px;flex-wrap:wrap">
             <span style="white-space:nowrap">👨‍🏫 Académico</span>
-            <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Asistente CORA</span></span>
+            <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Asistente CoRA</span></span>
           </nav>
           <div style="display:flex;align-items:center;gap:12px;background:#faf5ff;border-radius:16px;padding:14px 18px">
-            <img src="./assets/cora-logo.png" alt="CORA" style="height:34px;width:auto;display:block">
+            <img src="./assets/cora-logo.png" alt="CoRA" style="height:34px;width:auto;display:block">
             <span style="font-size:12px;font-weight:600;color:#4A3FA0;background:#f3e8ff;border-radius:9999px;padding:4px 10px;white-space:nowrap">24/7</span>
           </div>
           <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px">
             <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
-              <h2 style="font-weight:700;color:#1A1040;font-size:14px;margin:0 0 8px">💬 Asistente CORA — 24/7</h2>
+              <h2 style="font-weight:700;color:#1A1040;font-size:14px;margin:0 0 8px">💬 Asistente CoRA — 24/7</h2>
               <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px;font-size:12px;color:#6b7280">
                 <li style="display:flex;align-items:center;gap:8px"><dc-import name="Icon" i="check-circle" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Responder dudas académicas</li>
                 <li style="display:flex;align-items:center;gap:8px"><dc-import name="Icon" i="check-circle" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Explicar conceptos difíciles</li>
@@ -2121,8 +2247,8 @@
               </ul>
             </div>
             <div style="background:linear-gradient(to right,#eff6ff,#faf5ff);border:1px solid #f3e8ff;border-radius:16px;padding:16px">
-              <h3 style="font-weight:700;color:#1A1040;font-size:12px;margin:0 0 6px">💬 Asistente CORA vs 👨‍💼 Asesor</h3>
-              <p style="font-size:12px;color:#4b5563;margin:0"><strong>Asistente CORA (aquí):</strong> Dudas académicas, ejercicios</p>
+              <h3 style="font-weight:700;color:#1A1040;font-size:12px;margin:0 0 6px">💬 Asistente CoRA vs 👨‍💼 Asesor</h3>
+              <p style="font-size:12px;color:#4b5563;margin:0"><strong>Asistente CoRA (aquí):</strong> Dudas académicas, ejercicios</p>
               <p style="font-size:12px;color:#4b5563;margin:2px 0 0"><strong>Asesor Académico:</strong> Consejería de carrera, seguimiento</p>
             </div>
           </div>
@@ -2159,7 +2285,7 @@
             <span style="white-space:nowrap">📊 Ajustes</span>
             <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Mi Progreso</span></span>
           </nav>
-          <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:32px;font-weight:700;color:#1A1040;margin:0 0 24px">📊 Tu Progreso en CORA</h1>
+          <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:32px;font-weight:700;color:#1A1040;margin:0 0 24px">📊 Tu Progreso en CoRA</h1>
           <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
               <h2 style="font-weight:700;color:#1A1040;font-size:14px;margin:0;display:flex;align-items:center;gap:6px">Progreso General <dc-import name="Tip" text="{{ overallFormula }}" hint-size="14px,14px"></dc-import></h2>
@@ -2360,7 +2486,7 @@
                 <button onClick="{{ sr.onClick }}" style="{{ sr.trackStyle }}"><span style="{{ sr.knobStyle }}"></span></button>
               </div>
             </sc-for>
-            <p style="font-size:11px;font-weight:700;color:#9ca3af;margin:16px 0 8px;text-transform:uppercase;letter-spacing:.05em">Sugerencias de CORA para ti</p>
+            <p style="font-size:11px;font-weight:700;color:#9ca3af;margin:16px 0 8px;text-transform:uppercase;letter-spacing:.05em">Sugerencias de CoRA para ti</p>
             <sc-for list="{{ suggestions }}" as="sg" hint-placeholder-count="3">
               <div style="display:flex;align-items:flex-start;gap:8px;background:#faf5ff;border-radius:12px;padding:10px 12px;margin-bottom:6px">
                 <span style="flex-shrink:0">{{ sg.em }}</span>
@@ -2442,7 +2568,7 @@
                 </button>
               </sc-for>
               <p style="font-size:10px;color:#9ca3af;margin:8px 0 0;text-align:center">📱 CoRA está pensado para escritorio y laptop por ahora. La versión para celular es un desarrollo futuro.</p>
-              <p style="font-size:10px;color:#9ca3af;margin:0;text-align:center">CORA 2.0 — Versión 2.1.0 — © 2026 Universidad Continental</p>
+              <p style="font-size:10px;color:#9ca3af;margin:0;text-align:center">CoRA 2.0 — Versión 2.1.0 — © 2026 Universidad Continental</p>
             </div>
           </div>
         </div>
@@ -2451,11 +2577,11 @@
     </main>
   </div>
 
-  <!-- ===== Asistente CORA: widget flotante, presente en toda la plataforma ===== -->
+  <!-- ===== Asistente CoRA: widget flotante, presente en toda la plataforma ===== -->
   <sc-if value="{{ chatClosed }}" hint-placeholder-val="{{ true }}">
-    <button onClick="{{ toggleChat }}" aria-label="Abrir el Asistente CORA" style="position:fixed;right:24px;bottom:24px;z-index:40;display:flex;align-items:center;gap:10px;background:#7B68EE;color:#fff;border:0;border-radius:9999px;padding:14px 20px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;box-shadow:0 10px 15px -3px rgba(123,104,238,.5),0 4px 6px -4px rgba(123,104,238,.5);transition:all .15s" style-hover="background:#6A58DC">
+    <button onClick="{{ toggleChat }}" aria-label="Abrir el Asistente CoRA" style="position:fixed;right:24px;bottom:24px;z-index:40;display:flex;align-items:center;gap:10px;background:#7B68EE;color:#fff;border:0;border-radius:9999px;padding:14px 20px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;box-shadow:0 10px 15px -3px rgba(123,104,238,.5),0 4px 6px -4px rgba(123,104,238,.5);transition:all .15s" style-hover="background:#6A58DC">
       <dc-import name="Icon" i="message-circle" s="18" c="#ffffff" hint-size="18px,18px"></dc-import>
-      Asistente CORA
+      Asistente CoRA
     </button>
   </sc-if>
 
@@ -2466,7 +2592,7 @@
           <dc-import name="Icon" i="message-circle" s="15" c="#ffffff" hint-size="15px,15px"></dc-import>
         </div>
         <div style="flex:1;min-width:0">
-          <p style="font-family:Poppins,sans-serif;font-size:14px;font-weight:700;margin:0">Asistente CORA</p>
+          <p style="font-family:Poppins,sans-serif;font-size:14px;font-weight:700;margin:0">Asistente CoRA</p>
           <p style="font-size:11px;color:rgba(255,255,255,.85);margin:1px 0 0">Disponible 24/7</p>
         </div>
         <button onClick="{{ openChatFull }}" aria-label="Abrir en pantalla completa" style="background:rgba(255,255,255,.15);border:0;border-radius:8px;padding:6px;cursor:pointer;color:#fff;display:flex" style-hover="background:rgba(255,255,255,.3)">
@@ -2543,21 +2669,21 @@
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;startSection&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;formulario&quot;,&quot;options&quot;:[&quot;formulario&quot;,&quot;mis-rutas&quot;,&quot;ecosistema&quot;,&quot;malla&quot;,&quot;perfil-cora&quot;,&quot;horizonte&quot;,&quot;acompanamiento&quot;,&quot;practico&quot;,&quot;flashcards&quot;,&quot;tutor&quot;,&quot;progreso&quot;,&quot;perfil&quot;,&quot;configuracion&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Demo&quot;},&quot;unlockAll&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Demo&quot;},&quot;studentName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Alejandro García&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Demo&quot;},&quot;contextVariant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;dashboard&quot;,&quot;options&quot;:[&quot;dashboard&quot;,&quot;tarjeta&quot;,&quot;banner&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Demo&quot;},&quot;showOnboarding&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Demo&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;startSection&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;inicio&quot;,&quot;options&quot;:[&quot;inicio&quot;,&quot;formulario&quot;,&quot;mis-rutas&quot;,&quot;ecosistema&quot;,&quot;malla&quot;,&quot;perfil-cora&quot;,&quot;horizonte&quot;,&quot;acompanamiento&quot;,&quot;practico&quot;,&quot;flashcards&quot;,&quot;tutor&quot;,&quot;progreso&quot;,&quot;perfil&quot;,&quot;configuracion&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Demo&quot;},&quot;unlockAll&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Demo&quot;},&quot;studentName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Alejandro García&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Demo&quot;},&quot;contextVariant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;dashboard&quot;,&quot;options&quot;:[&quot;dashboard&quot;,&quot;tarjeta&quot;,&quot;banner&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Demo&quot;},&quot;showOnboarding&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Demo&quot;}}">
 class Component extends DCLogic {
   /* `kind` distingue las dos naturalezas de ruta que pidió la universidad, y
      cada ruta es SIEMPRE de un solo tipo, nunca una mezcla de los dos:
-     "malla" = se cursa íntegra con asignaturas de la malla (obligatorios,
+     "malla" = se cursa íntegra con asignaturas de la malla (obligatorias,
      generalmente de ciclos avanzados, y electivos de la propia carrera);
      "extracurricular" = se arma solo con oferta del ecosistema CIE (idiomas,
-     institutos, diplomados), sin cursos de la malla.
+     institutos, diplomados), sin asignaturas de la malla.
      `courses` alimenta el detalle que ahora se puede ver ANTES de elegir. */
   ROUTES = [
     /* Tres tipos de ruta, nunca una mezcla de más de uno (`kind`):
        - "curricular": 100% malla — obligatorios y/o electivos de la propia carrera.
-       - "extracurricular": 100% Ecosistema CIE — sin cursos de la malla.
+       - "extracurricular": 100% Ecosistema CIE — sin asignaturas de la malla.
        - "combinada": malla (obligatorios/electivos) + extracurriculares del CIE, las dos cosas.
-       En los tres casos, ningún curso pertenece a un ciclo que el estudiante
+       En los tres casos, ninguna asignatura pertenece a un ciclo que el estudiante
        ya cursó — solo desde STUDENT.cycle en adelante. */
     { id:1, name:"Ingeniería Comercial", match:94, top:true, kind:"curricular", tags:["Gestión","Análisis","Negocios"], desc:"Carrera enfocada en gestión, análisis y administración de empresas. Alta demanda laboral.", icon:"🏆",
       courses:["Investigación de Mercados","Gestión Internacional e Intercultural","Gestión del Talento Humano","Gerencia de Operaciones","Estrategia Competitiva","Plan de Negocios Internacionales"],
@@ -2577,7 +2703,7 @@ class Component extends DCLogic {
     { id:6, name:"Ingeniería Industrial", match:74, top:false, kind:"curricular", tags:["Ingeniería","Procesos","Logística"], desc:"Optimización de procesos productivos, gestión de operaciones y sistemas industriales.", icon:"⚙️",
       courses:["Distribución Física Internacional","Estadística Inferencial","Gerencia de Operaciones","Análisis de Recursos y Capacidades Organizacionales","Estándares Internacionales de Calidad"],
       matchWhy:{ interes:70, fortaleza:82, objetivo:70, bestFor:"Optimizar procesos y operaciones" } },
-    { id:7, name:"Negocios Internacionales", match:70, top:false, kind:"extracurricular", tags:["Internacional","Comercio","Idiomas"], desc:"Formación complementaria del CIE en comercio exterior e idiomas, sin cursos de la malla.", icon:"🌍",
+    { id:7, name:"Negocios Internacionales", match:70, top:false, kind:"extracurricular", tags:["Internacional","Comercio","Idiomas"], desc:"Formación complementaria del CIE en comercio exterior e idiomas, sin asignaturas de la malla.", icon:"🌍",
       /* `courseCycles` es paralelo a `courses`: el ciclo sugerido en el que se
          vería cada extracurricular dentro de la malla (no tiene malla propia,
          así que se muestra debajo del ciclo que le corresponde). Siempre desde
@@ -2593,14 +2719,14 @@ class Component extends DCLogic {
       matchWhy:{ interes:62, fortaleza:68, objetivo:65, bestFor:"Operaciones aduaneras y logística internacional" } },
     /* Ruta "curricular": combina obligatorios de la malla con electivos de la
        propia malla — sigue siendo 100% malla, sin tocar el Ecosistema CIE. */
-    { id:10, name:"Gestión de Talento y Proyectos", match:60, top:false, kind:"curricular", tags:["Gestión","Talento","Proyectos"], desc:"Combina cursos obligatorios de gestión con electivos de tu propia malla, para personalizar tu especialización sin salir de la carrera.", icon:"🧩",
+    { id:10, name:"Gestión de Talento y Proyectos", match:60, top:false, kind:"curricular", tags:["Gestión","Talento","Proyectos"], desc:"Combina asignaturas obligatorias de gestión con electivos de tu propia malla, para personalizar tu especialización sin salir de la carrera.", icon:"🧩",
       courses:["Gestión del Talento Humano","Formulación y Evaluación de Proyectos","Electivo General 5","Electivo de Especialidad o Transversal 1"],
       matchWhy:{ interes:64, fortaleza:66, objetivo:60, bestFor:"Armar tu propia especialización combinando gestión y electivos" } },
     /* Ruta "combinada": malla (obligatorios + electivos, en `courses`) MÁS
        extracurriculares del CIE (en `extraCourses`/`extraCourseCycles`, igual
        de campos paralelos que en una ruta extracurricular) — las dos cosas a
        la vez, ninguna reemplaza a la otra. */
-    { id:11, name:"Negocios Digitales con Perfil Internacional", match:58, top:false, kind:"combinada", tags:["Digital","Internacional","Innovación"], desc:"Combina cursos y electivos de tu malla con formación internacional del Ecosistema CIE — lo curricular y lo extracurricular, juntos.", icon:"🌐",
+    { id:11, name:"Negocios Digitales con Perfil Internacional", match:58, top:false, kind:"combinada", tags:["Digital","Internacional","Innovación"], desc:"Combina asignaturas y electivos de tu malla con formación internacional del Ecosistema CIE — lo curricular y lo extracurricular, juntos.", icon:"🌐",
       courses:["Transformación Digital","Negocios Digitales Globales","Electivo de Especialidad o Transversal 2"],
       extraCourses:["Inglés B2 — Business English (Centro de Idiomas)","Taller de Innovación Digital (extracurricular CIE)"],
       extraCourseCycles:[4, 7],
@@ -2608,15 +2734,15 @@ class Component extends DCLogic {
   ];
 
   /* `track` marca lo único que es fijo pase lo que pase: "electivo" (espacio
-     libre que el estudiante llena en el Ecosistema CIE). El resto de cursos no
+     libre que el estudiante llena en el Ecosistema CIE). El resto de asignaturas no
      lleva `track` — si pertenece a la ruta elegida en Mis Rutas se resuelve
      como "ruta" (hilo morado), si no, como "regular". Es dinámico: cambia según
-     `ROUTES[].courses`, no está grabado en el dato del curso.
+     `ROUTES[].courses`, no está grabado en el dato de la asignatura.
 
-     `cat` es la categoría académica oficial del curso — "general" | "facultad"
+     `cat` es la categoría académica oficial de la asignatura — "general" | "facultad"
      | "carrera" | "electivo" — la misma que trae la malla real y que se pinta
-     como etiqueta en cada tarjeta. Es independiente de si el curso pertenece
-     a la ruta elegida: un curso puede ser "carrera" Y estar en el hilo morado
+     como etiqueta en cada tarjeta. Es independiente de si la asignatura pertenece
+     a la ruta elegida: una asignatura puede ser "carrera" Y estar en el hilo morado
      al mismo tiempo — son dos capas de información distintas.
 
      Contenido: malla real, oficial y completa (10 ciclos) de la EAP
@@ -2699,48 +2825,48 @@ class Component extends DCLogic {
   ];
 
   /* Predictibilidad: cruce del histórico de notas del estudiante con el
-     desempeño histórico del curso. `risk` es la probabilidad de dificultad. */
+     desempeño histórico de la asignatura. `risk` es la probabilidad de dificultad. */
   PREDICT = [
     { course:"Gerencia de Operaciones", cycle:7, risk:78, level:"alto",
-      basis:"Tu promedio en Estadística y Probabilidades (12,4) está por debajo de la media de quienes aprueban este curso a la primera (15,1).",
-      cohort:"El 41 % de los estudiantes de tu ruta desaprueba este curso en el primer intento.",
+      basis:"Tu promedio en Estadística y Probabilidades (12,4) está por debajo de la media de quienes aprueban esta asignatura a la primera (15,1).",
+      cohort:"El 41 % de los estudiantes de tu ruta desaprueba esta asignatura en el primer intento.",
       plan:["Refuerzo de Estadística aplicada — 4 sesiones","Simulacro diagnóstico antes de matrícula","Seguimiento quincenal con tu Asesor Académico"] },
     { course:"Formulación y Evaluación de Proyectos", cycle:8, risk:54, level:"medio",
-      basis:"Tu desempeño en cursos con carga de trabajo grupal es irregular (13,8 de promedio).",
-      cohort:"El 24 % de los estudiantes con tu perfil arrastra este curso a un segundo ciclo.",
+      basis:"Tu desempeño en asignaturas con carga de trabajo grupal es irregular (13,8 de promedio).",
+      cohort:"El 24 % de los estudiantes con tu perfil arrastra esta asignatura a un segundo ciclo.",
       plan:["Taller de gestión de proyectos del CIE","Flashcards de metodología — 2 sets"] },
     { course:"Investigación de Mercados", cycle:5, risk:31, level:"bajo",
       basis:"Tu nota en Economía 1 (16,2) está por encima de la media de la cohorte.",
       cohort:"Solo el 9 % de estudiantes con tu perfil tiene dificultades aquí.",
-      plan:["Sin plan de acompañamiento necesario. CORA seguirá vigilando."] }
+      plan:["Sin plan de acompañamiento necesario. CoRA seguirá vigilando."] }
   ];
 
   /* Los dos tipos de apoyo de Acompañamiento: uno es software (IA, siempre
      disponible, dudas puntuales), el otro es una persona real (agenda,
      seguimiento en el tiempo). Nunca se mezclan bajo el mismo nombre. */
   SUPPORT_TYPES = [
-    { key:"asistente", icon:"💬", name:"Asistente CORA", role:"Dudas académicas puntuales",
-      desc:"Chat con IA disponible 24/7 para fórmulas, ejercicios y conceptos específicos de tus cursos.",
+    { key:"asistente", icon:"💬", name:"Asistente CoRA", role:"Dudas académicas puntuales",
+      desc:"Chat con IA disponible 24/7 para fórmulas, ejercicios y conceptos específicos de tus asignaturas.",
       duracion:"Al momento, sin agendar — cuando lo necesites",
       progreso:"Resuelves tu duda en la misma conversación",
-      porque:"Es la vía más rápida para una duda puntual de un curso." },
+      porque:"Es la vía más rápida para una duda puntual de una asignatura." },
     { key:"asesor", icon:"👨‍💼", name:"Asesor Académico", role:"Seguimiento personal",
       desc:"Persona real que da seguimiento a tu plan de acompañamiento y te da consejería de carrera.",
       duracion:"Sesiones agendadas de ~30 min",
       progreso:"Revisa tu avance cada 2 a 4 semanas",
-      porque:"CORA lo recomienda cuando detecta riesgo alto o medio en un curso próximo." }
+      porque:"CoRA lo recomienda cuando detecta riesgo alto o medio en una asignatura próxima." }
   ];
 
   /* Recomendaciones del ecosistema CIE, previas a la exploración libre. */
   ECO_RECO = [
-    { cat:"Educación continua", em:"🎓", name:"Analítica de Negocios con Power BI", why:"Refuerza el curso de riesgo detectado en el ciclo 7.", meta:"6 semanas · Virtual", cost:"GRATUITO" },
+    { cat:"Educación continua", em:"🎓", name:"Analítica de Negocios con Power BI", why:"Refuerza la asignatura de riesgo detectado en el ciclo 7.", meta:"6 semanas · Virtual", cost:"GRATUITO" },
     { cat:"Centro de Idiomas", em:"🗣️", name:"Inglés B2 — Business English", why:"Tu ruta incluye comercio exterior; B2 es el nivel que piden las empresas del horizonte.", meta:"2 ciclos · Híbrido", cost:"INCLUIDO" },
     { cat:"Instituto", em:"🛠️", name:"Especialización en Gestión Logística", why:"Complementa Logística y Cadena de Suministro del ciclo 7.", meta:"4 meses · Presencial", cost:"S/. 480" },
     { cat:"Posgrado", em:"🎯", name:"Maestría en Dirección Comercial", why:"Continuación natural de tu horizonte a partir del año 3.", meta:"2 años · Semipresencial", cost:"Beca disponible" }
   ];
 
   /* Programas del Centro de Idiomas Continental. */
-  /* `cost` — la universidad pidió que TODO curso diga si es gratis o pagado,
+  /* `cost` — la universidad pidió que TODA asignatura diga si es gratis o pagada,
      de forma consistente (antes solo lo decían ECO_RECO y ecoExtra). */
   IDIOMAS_PROGRAMS = [
     { em:"🇬🇧", name:"Inglés Regular", meta:"36 ciclos · Niveles A1 → C1", accent:"#3b82f6", cost:"INCLUIDO" },
@@ -2782,7 +2908,7 @@ class Component extends DCLogic {
      Continental Florida University (CFU), la universidad aliada en EE. UU.
      Fuente: hoja "Propuesta Plan 2024 Omar S" del mapa curricular ADM,
      sección "Asignaturas a convalidar". cfu / cfuCycle quedan sin definir
-     cuando el curso todavía no tiene equivalencia confirmada. */
+     cuando la asignatura todavía no tiene equivalencia confirmada. */
   EQUIV_CFU = [
     { cycle:1, uc:"Laboratorio de Liderazgo e Innovación", cfu:"Leadership and Teamwork", cfuCycle:1 },
     { cycle:1, uc:"Economía 1", cfu:"Microeconomics", cfuCycle:7 },
@@ -2821,31 +2947,91 @@ class Component extends DCLogic {
 
   /* Guía general de la plataforma (onboarding de bienvenida). */
   ONBOARDING = [
-    { em:"🧭", title:"CORA te acompaña, no te examina", body:"No hay respuestas correctas ni incorrectas. Todo lo que respondas sirve para ajustar lo que CORA te propone." },
+    { em:"🧭", title:"CoRA te acompaña, no te examina", body:"No hay respuestas correctas ni incorrectas. Todo lo que respondas sirve para ajustar lo que CoRA te propone." },
     { em:"🟣", title:"Primero el recorrido", body:"Formulario, rutas, ecosistema y malla. Se desbloquean en orden porque cada paso alimenta al siguiente." },
-    { em:"📚", title:"Después, las herramientas", body:"Simulacros, flashcards y el Asistente CORA quedan disponibles para el día a día del ciclo." },
+    { em:"📚", title:"Después, las herramientas", body:"Simulacros, flashcards y el Asistente CoRA quedan disponibles para el día a día del ciclo." },
     { em:"💬", title:"El Asistente está siempre", body:"El botón morado de abajo a la derecha abre el chat desde cualquier pantalla, sin perder lo que estabas haciendo." }
   ];
 
   /* Ventanita tipo stepper de cada sección del recorrido. */
   STEPPER = {
-    "formulario":     { step:1, of:7, title:"Cuéntale a CORA quién eres", body:"Tus respuestas alimentan el motor de recomendación. Puedes pausar y seguir después." },
-    "mis-rutas":      { step:2, of:7, title:"Compara antes de decidir", body:"Abre el detalle de cada ruta para ver qué cursos incluye. Solo entonces elige." },
-    "ecosistema":     { step:3, of:7, title:"Lo que suma a tu carrera", body:"CORA te propone cursos del CIE que refuerzan tu ruta. Explora antes de continuar." },
-    "malla":          { step:4, of:7, title:"Tu malla, ciclo a ciclo", body:"Los cursos de tu ruta se ven mucho más resaltados, con borde morado grueso e insignia propia. Los demás son matrícula regular o electivos." },
+    "formulario":     { step:1, of:7, title:"Cuéntale a CoRA quién eres", body:"Tus respuestas alimentan el motor de recomendación. Puedes pausar y seguir después." },
+    "mis-rutas":      { step:2, of:7, title:"Compara antes de decidir", body:"Abre el detalle de cada ruta para ver qué asignaturas incluye. Solo entonces elige." },
+    "ecosistema":     { step:3, of:7, title:"Lo que suma a tu carrera", body:"CoRA te propone asignaturas del CIE que refuerzan tu ruta. Explora antes de continuar." },
+    "malla":          { step:4, of:7, title:"Tu malla, ciclo a ciclo", body:"Las asignaturas de tu ruta se ven mucho más resaltadas, con borde morado grueso e insignia propia. Las demás son matrícula regular o electivos." },
     "perfil-cora":    { step:5, of:7, title:"Tus seis dimensiones", body:"El radar resume cómo aprendes. Cada dimensión tiene recomendaciones concretas." },
     "horizonte":      { step:6, of:7, title:"Hacia dónde te lleva", body:"Roles, sueldos y empresas reales asociados a la ruta que elegiste." },
-    "acompanamiento": { step:7, of:7, title:"Antes de que sea tarde", body:"CORA anticipa los cursos que se te pueden complicar y propone un plan." }
+    "acompanamiento": { step:7, of:7, title:"Antes de que sea tarde", body:"CoRA anticipa las asignaturas que se te pueden complicar y propone un plan." }
   };
-  QUESTIONS = [
-    { id:"q1", text:"¿Cuáles son tus intereses principales?", hint:"Selecciona 2-3 áreas que más te llamen la atención", type:"checkbox",
-      options:["Tecnología e Innovación","Administración y Negocios","Ingeniería","Humanidades","Ciencias Sociales","Salud","Finanzas","Marketing"] },
-    { id:"q2", text:"¿Cuál es tu fortaleza académica?", hint:"Elige el área en la que usualmente obtienes mejores notas", type:"radio",
-      options:["Cálculo y Análisis Matemático","Lenguaje y Comunicación","Ciencias Experimentales","Lógica y Razonamiento","Multidisciplinaria"] },
-    { id:"q3", text:"Después de la carrera, ¿qué buscas?", hint:"Considera tu visión profesional a largo plazo", type:"radio",
-      options:["Trabajar en empresa grande","Emprender mi propio negocio","Trabajar freelance / independiente","Investigación y docencia","Aún no sé"] },
-    { id:"q4", text:"¿Cuál es tu ritmo de aprendizaje?", hint:"Cómo aprendes mejor", type:"radio",
-      options:["Aprendo rápido, prefiero desafíos","Aprendo de forma consistente","Prefiero ir paso a paso","Mezcla de ritmos según el tema"] }
+  /* Formulario del recomendador, versión completa: 5 pasos. Cada pregunta
+     declara su "kind" (chips / cards / text / textarea / rows / info) — el
+     tipo decide qué widget se dibuja, `renderVals` solo añade los flags y
+     manejadores de selección sobre estos mismos datos. */
+  FORM_STEPS = [
+    { title:"Intereses profesionales", questions:[
+      { id:"areas", kind:"chips", multi:true, title:"¿En qué áreas de conocimiento te interesa desarrollarte?",
+        chips:["Tecnología","Negocios","Salud","Arte y Diseño","Ingeniería","Educación","Comunicación","Derecho","Finanzas","Medio Ambiente","Ciencias Sociales","Gastronomía","Deportes","Arquitectura"] },
+      { id:"experiencia", kind:"text", title:"¿Tienes experiencia previa relacionada?", subtitle:"Opcional",
+        placeholder:"Ej. tomé un taller de programación, trabajé en una tienda…" },
+      { id:"enfoque", kind:"cards", cols:2, title:"¿Cuál es tu enfoque de crecimiento?",
+        cards:[
+          { label:"Diversificar conocimientos", sub:"Construir un perfil amplio e interdisciplinario" },
+          { label:"Especializarse en un área", sub:"Profundizar en una línea específica" }
+        ] }
+    ] },
+    { title:"Gustos y motivaciones", questions:[
+      { id:"actividades", kind:"rows", title:"¿Cuáles de estas actividades te interesan?", subtitle:"Marca si ya la practicas o si quieres explorarla",
+        items:["Creación de contenido (videos, posts, diseño)","Enseñanza o tutoría","Tecnología y programación","Arte, música o expresión creativa","Voluntariado e impacto social","Emprendimiento y negocios","Investigación y análisis","Deportes y actividad física","Cocina y gastronomía"] },
+      { id:"sin_pagar", kind:"chips", multi:false, title:"¿Qué harías aunque no te pagaran?", subtitle:"Elige la actividad que harías de forma desinteresada",
+        chips:["Ayudar a personas","Crear cosas nuevas","Investigar y aprender","Liderar proyectos","Organizar y planificar","Enseñar","Emprender","Construir o reparar"] }
+    ] },
+    { title:"Habilidades", questions:[
+      { kind:"info", text:"Evaluar tus fortalezas y dificultades permite a CoRA recomendarte rutas, asignaturas y ritmos de estudio que realmente se adapten a ti." },
+      { id:"fortalezas", kind:"chips", multi:true, title:"¿En qué actividades académicas destacas?", subtitle:"Selecciona todas las que apliquen",
+        chips:["Redacción y escritura","Matemáticas y lógica","Exposiciones y presentaciones","Trabajo en equipo","Investigación","Diseño y creatividad","Programación","Organización y planificación","Resolución de problemas","Lectura comprensiva","Cálculo numérico","Idiomas"] },
+      { id:"dificultades", kind:"chips", multi:true, title:"¿Qué te cuesta más, incluso con esfuerzo?", subtitle:"Es normal tenerlas — nos ayuda a diseñar tu ruta",
+        chips:["Hablar en público","Memorización extensa","Cumplir plazos","Leer textos largos","Concentración prolongada","Matemáticas","Trabajo bajo presión","Trabajo en equipo","Expresión escrita"] }
+    ] },
+    { title:"Aspiraciones", questions:[
+      { id:"horizonte_tiempo", kind:"chips", multi:false, big:true, title:"¿Cuál es tu horizonte para tu próxima meta?",
+        chips:["6 meses","1 año","2 años o más"] },
+      { id:"meta_prof", kind:"textarea", taRows:2, title:"¿A dónde quieres llegar profesionalmente?", placeholder:"Describe brevemente tu objetivo profesional…" },
+      { id:"sector", kind:"cards", cols:2, title:"¿En qué sector te ves trabajando?",
+        cards:[
+          { label:"Corporativo", sub:"Empresas y organizaciones privadas" },
+          { label:"Emprendimiento", sub:"Tu propio negocio o startup" },
+          { label:"Gobierno / Sector público", sub:"Entidades del Estado" },
+          { label:"Academia / Investigación", sub:"Universidades y centros de investigación" },
+          { label:"ONGs / Impacto social", sub:"Organizaciones sin fines de lucro" },
+          { label:"Tecnología / Startups", sub:"Ecosistema tech e innovación" }
+        ] },
+      { id:"modalidad", kind:"cards", cols:4, centered:true, title:"¿Cómo prefieres trabajar?",
+        cards:[ { label:"Presencial" }, { label:"Remoto" }, { label:"Híbrido" }, { label:"Freelance" } ] },
+      { id:"exito", kind:"textarea", taRows:2, title:"¿Qué significa el éxito para ti?", placeholder:"1 o 2 frases sobre lo que sería una vida exitosa para ti…" }
+    ] },
+    { title:"Un poco más sobre ti", questions:[
+      { id:"problema_mundo", kind:"textarea", taRows:2, title:"¿Qué problema del mundo te gustaría ayudar a resolver?", placeholder:"Puede ser algo grande o algo local — lo que genuinamente te preocupa." },
+      { id:"pierde_tiempo", kind:"textarea", taRows:2, title:"¿Qué actividad hace que pierdas la noción del tiempo?", placeholder:"Cuando haces esto, el tiempo vuela y no te das cuenta." },
+      { id:"orgullo", kind:"textarea", taRows:2, title:"¿De qué estás orgulloso/a en ti mismo/a?", placeholder:"Un logro, una virtud, una forma de ser que valoras de ti." },
+      { id:"obstaculos", kind:"chips", multi:true, title:"¿Qué obstáculos sientes que pueden dificultar tus metas?",
+        chips:["Tiempo limitado","Recursos económicos","Falta de orientación","Inseguridad personal","Carga familiar","Trabajo y estudio simultáneos","Distancia","Acceso a tecnología"] },
+      { id:"vida_ideal", kind:"textarea", taRows:3, title:"¿Cómo imaginas tu vida ideal en 10 años?", placeholder:"Cuéntanos tu visión — dónde estás, qué haces, cómo te sientes." }
+    ] }
+  ];
+  /* Versión rápida: las mismas preguntas no son un resumen de las 5 pasos —
+     son una versión corta e independiente, en una sola pantalla. */
+  FORM_QUICK = [
+    { id:"r_areas", kind:"chips", multi:true, title:"¿Qué áreas te llaman la atención? (elige hasta 3)",
+      chips:["Tecnología","Negocios","Salud","Arte y Diseño","Ingeniería","Educación","Comunicación","Finanzas","Ciencias Sociales","Medio Ambiente"] },
+    { id:"r_destaca", kind:"chips", multi:true, title:"¿En qué destacas más?",
+      chips:["Analizar y resolver problemas","Crear e innovar","Trabajar con personas","Organizar y planificar","Liderar equipos","Comunicar ideas"] },
+    { id:"r_crecer", kind:"cards", cols:2, title:"¿Cómo prefieres crecer?",
+      cards:[ { label:"Ampliar mis horizontes", sub:"Perfil variado e interdisciplinario" }, { label:"Especializarme en algo", sub:"Profundidad en un área concreta" } ] },
+    { id:"r_sector", kind:"cards", cols:2, title:"¿En qué sector te ves?",
+      cards:[ { label:"Empresa privada" }, { label:"Emprendimiento propio" }, { label:"Sector público" }, { label:"Impacto social / ONGs" }, { label:"Academia / Investigación" }, { label:"Tecnología / Startups" } ] },
+    { id:"r_sinpagar", kind:"chips", multi:false, title:"¿Qué actividad harías aunque no te pagaran?",
+      chips:["Ayudar a personas","Crear cosas nuevas","Investigar y aprender","Liderar proyectos","Organizar y planificar","Enseñar o explicar","Emprender","Construir o diseñar"] },
+    { id:"r_meta", kind:"text", title:"¿A dónde quieres llegar? (en una frase)", placeholder:"Ej. quiero trabajar en una multinacional de logística o lanzar mi propio negocio" }
   ];
   /* Cuestionario 18REST (Ambiel et al., 2018) adaptado — 6 dimensiones RIASEC,
      3 preguntas por dimensión, mezcladas para reducir el sesgo de respuesta. */
@@ -2983,7 +3169,7 @@ class Component extends DCLogic {
         "Adaptabilidad — el mundo laboral cambia, y aprender a aprender es tu mejor herramienta."
       ],
       closing:"Estás en buen camino. Vuelve cuando quieras: esto se mueve contigo.",
-      chips:["¿Cómo es el día a día de un analista de comercio internacional?","¿Qué certificaciones o cursos me convienen para este camino?","¿Cómo empiezo a practicar mi inglés para comercio exterior?"]
+      chips:["¿Cómo es el día a día de un analista de comercio internacional?","¿Qué certificaciones o asignaturas me convienen para este camino?","¿Cómo empiezo a practicar mi inglés para comercio exterior?"]
     },
     informDecide: {
       demand:"Alta y sostenida", salary:"Por confirmar*", projection:"En crecimiento",
@@ -3023,7 +3209,7 @@ class Component extends DCLogic {
       chips:["¿Power BI o gestión aduanera: cuál me conviene certificar primero?","¿Cómo preparo mi CV para estos roles?","¿Qué es la microcredencial de analítica para logística?"]
     }
   };
-  /* Cursos ya llevados, para el bloque de contexto previo al formulario. */
+  /* Asignaturas ya llevadas, para el bloque de contexto previo al formulario. */
   TAKEN = [
     { name:"Fundamentos de Matemática", grade:15, cycle:1 }, { name:"Economía 1", grade:16.2, cycle:1 },
     { name:"Introducción a la Administración y Negocios Internacionales", grade:14, cycle:1 },
@@ -3034,7 +3220,7 @@ class Component extends DCLogic {
   ];
   /* Certificados y canjes de la gamificación. */
   REWARDS = [
-    { em:"🥇", name:"Certificado — Recorrido CORA completo", cost:500, got:false },
+    { em:"🥇", name:"Certificado — Recorrido CoRA completo", cost:500, got:false },
     { em:"📗", name:"Curso de educación continua a elegir", cost:1200, got:false },
     { em:"🎟️", name:"Entrada a Semana de la Empleabilidad", cost:300, got:true },
     { em:"☕", name:"Canje en cafetería del campus", cost:150, got:true }
@@ -3060,7 +3246,10 @@ class Component extends DCLogic {
 
   state = {
     section:null, completed:[], xp:350, xpCycleStart:200, streak:12, selectedRoute:null,
-    formType:null, formStep:0, formAnswers:{}, isAnalyzing:false, analysisStep:0,
+    /* formStarted: si ya se hizo clic en "Empezar formulario" desde la
+       intro. formMode: qué versión del cuestionario se ve dentro de esa
+       pantalla — completa (5 pasos) o rápida (1 pantalla). */
+    formStarted:false, formMode:"completa", formStep:0, formAnswers:{}, isAnalyzing:false, analysisStep:0,
     blocked:null, hovered:null, confirmRoute:null, mallaPreview:false, extraStep:false,
     expanded:[], ecoVisited:[], added:[], openCycles:[1], extras:{}, extModal:null, mallaDone:false,
     /* Historial de mallas guardadas: cada vez que el estudiante confirma su malla
@@ -3078,20 +3267,20 @@ class Component extends DCLogic {
     pPhase:"setup", pCourse:"", pTopics:["Ecuaciones cuadráticas","Funciones polinomiales","Trigonometría","Números complejos"],
     pCustom:"", pDiff:"medium", pIndex:0, pAnswers:{}, pDetail:null,
     fPhase:"setup", fCourse:"", fMode:"classic", fIdx:0, fFlipped:false, fRatings:{},
-    /* Historial de chat por curso: cada curso tiene su propia conversación,
+    /* Historial de chat por asignatura: cada asignatura tiene su propia conversación,
        no una sola bandeja compartida entre todos. */
     msgsByCourse:{
-      "General":[{from:"bot",text:"¡Hola! Soy CORA, tu asistente académico disponible 24/7. ¿Cuál es tu pregunta de hoy?"},
-        {from:"bot",text:"Soy una IA — puedo ayudarte con dudas de matemática, química, economía y cualquier curso de tu malla. Si tu situación necesita seguimiento personal, te conecto con tu Asesor Académico."}]
+      "General":[{from:"bot",text:"¡Hola! Soy CoRA, tu asistente académico disponible 24/7. ¿Cuál es tu pregunta de hoy?"},
+        {from:"bot",text:"Soy una IA — puedo ayudarte con dudas de matemática, química, economía y cualquier asignatura de tu malla. Si tu situación necesita seguimiento personal, te conecto con tu Asesor Académico."}]
     },
     input:"", tutorCourse:"General", editing:false, dark:false, fontSize:"medium", themeAccent:"morado",
     notifs:{ email:true, platform:true, reminders:false }, accDone:[],
     /* Plan de acompañamiento: semanas editables (antes era un arreglo fijo
-       calculado en renderVals) + cursos de refuerzo que el estudiante agrega
-       por su cuenta, además de los que CORA detecta en PREDICT. */
+       calculado en renderVals) + asignaturas de refuerzo que el estudiante agrega
+       por su cuenta, además de los que CoRA detecta en PREDICT. */
     accWeeks:[
       { id:"w1", week:"Semana 1", topic:"", label:"📞 Reunión con tu Asesor Académico", cta:"Agendar" },
-      { id:"w4", week:"Semana 4", topic:"", label:"📝 Simulacro del curso de riesgo", cta:"Ir a simulacro" },
+      { id:"w4", week:"Semana 4", topic:"", label:"📝 Simulacro de la asignatura de riesgo", cta:"Ir a simulacro" },
       { id:"w8", week:"Semana 8", topic:"", label:"📊 Revisión de progreso con tu Asesor Académico", cta:"Ver progreso" },
       { id:"w12", week:"Semana 12", topic:"", label:"📚 Preparación examen final", cta:"Ver recursos" }
     ],
@@ -3123,6 +3312,15 @@ class Component extends DCLogic {
       const next = multi ? (cur.includes(val) ? cur.filter(v => v !== val) : cur.concat([val])) : [val];
       return { formAnswers: Object.assign({}, s.formAnswers, { [qid]: next }) };
     });
+  }
+  /* Preguntas de texto libre (input/textarea): se guarda el string tal cual,
+     a diferencia de answer() que guarda arreglos de opciones elegidas. */
+  answerText(qid, value) {
+    this.setState(s => ({ formAnswers: Object.assign({}, s.formAnswers, { [qid]: value }) }));
+  }
+  goFormStep(delta) {
+    this.setState(s => ({ formStep: Math.max(0, Math.min(this.FORM_STEPS.length - 1, s.formStep + delta)) }));
+    if (typeof window !== "undefined") window.scrollTo({ top:0, behavior:"smooth" });
   }
   finish() {
     this.setState({ isAnalyzing:true, analysisStep:0 });
@@ -3158,7 +3356,7 @@ class Component extends DCLogic {
   }
   /* Punto de entrada "conversacional" desde Horizonte: la pregunta sugerida
      entra como si el estudiante la hubiera escrito, en el hilo General del
-     Asistente CORA, y te lleva directo a esa pantalla. */
+     Asistente CoRA, y te lleva directo a esa pantalla. */
   askAssistant(question) {
     this.setState(st => {
       const course = "General";
@@ -3171,11 +3369,12 @@ class Component extends DCLogic {
     });
   }
 
-  navItem(id, em, label) {
+  navItem(id, icon, label) {
     const s = this.state;
-    const active = (s.section || this.props.startSection || "formulario") === id && !s.isAnalyzing;
+    const active = (s.section || this.props.startSection || "inicio") === id && !s.isAnalyzing;
     return {
-      em, label, done: s.completed.includes(id), go: () => this.nav(id),
+      icon, label, done: s.completed.includes(id), go: () => this.nav(id),
+      iconColor: active ? "#ffffff" : "#6b7280",
       style: Object.assign({ width:"100%", display:"flex", alignItems:"center", gap:"10px", padding:"10px 12px", borderRadius:"12px",
         fontSize:"14px", fontWeight:500, border:0, cursor:"pointer", marginBottom:"2px", textAlign:"left", fontFamily:"inherit", transition:"all .15s" },
         active ? { background:"#7B68EE", color:"#fff", boxShadow:"0 4px 6px -1px #e9d5ff,0 2px 4px -2px #e9d5ff" } : { background:"transparent", color:"#4b5563" }),
@@ -3190,14 +3389,17 @@ class Component extends DCLogic {
     const v = {};
     v.streak = s.streak;
     v.xpLabel = s.xp.toLocaleString();
-    v.navRec = [["formulario","⭕","Formulario"],["mis-rutas","📖","Mis Rutas"],["ecosistema","🌍","Ecosistema CIE"],
-      ["malla","📋","Elijo mi Ruta"],["perfil-cora","✨","Mi Perfil CoRA"],["horizonte","🌅","Veo mi Horizonte"],
-      ["acompanamiento","⚠️","Acompañamiento"]].map(a => this.navItem(a[0], a[1], a[2]));
-    v.navAca = [["practico","📝","Práctico para examen"],["flashcards","🎴","Mis flashcards"],["tutor","💬","Asistente CORA"]].map(a => this.navItem(a[0], a[1], a[2]));
-    v.navSet = [["progreso","📊","Mi progreso"],["perfil","👤","Perfil"],["configuracion","⚙️","Configuración"]].map(a => this.navItem(a[0], a[1], a[2]));
+    /* Iconos de línea (Lucide, vía Icon.dc.html) en vez de emoji — más
+       consistentes con el resto de la interfaz. */
+    v.navHome = [["inicio","home","Inicio"]].map(a => this.navItem(a[0], a[1], a[2]));
+    v.navRec = [["formulario","clipboard-list","Formulario"],["mis-rutas","route","Mis Rutas"],["ecosistema","globe","Ecosistema CIE"],
+      ["malla","graduation-cap","Elijo mi Ruta"],["perfil-cora","sparkles","Mi Perfil CoRA"],["horizonte","briefcase","Veo mi Horizonte"],
+      ["acompanamiento","life-buoy","Acompañamiento"]].map(a => this.navItem(a[0], a[1], a[2]));
+    v.navAca = [["practico","edit","Práctico para examen"],["flashcards","layers","Mis flashcards"],["tutor","phone-idea","Asistente CoRA"]].map(a => this.navItem(a[0], a[1], a[2]));
+    v.navSet = [["progreso","bar-chart","Mi progreso"],["perfil","user","Perfil"],["configuracion","sliders","Configuración"]].map(a => this.navItem(a[0], a[1], a[2]));
 
     v.isAnalyzing = s.isAnalyzing;
-    const section = s.section || this.props.startSection || "formulario";
+    const section = s.section || this.props.startSection || "inicio";
     const on = id => !s.isAnalyzing && section === id;
 
     /* ---------- perfil resumido en la barra superior ---------- */
@@ -3240,6 +3442,8 @@ class Component extends DCLogic {
 
     /* ---------- ventanita stepper de la sección actual ---------- */
     const st0 = this.STEPPER[section];
+    /* "inicio" no tiene entrada en STEPPER — por eso la ventanita "Paso X de
+       7" no aparece ahí, solo desde "formulario" en adelante. */
     v.stepShow = !!st0 && !s.stepperOff.includes(section) && !s.isAnalyzing;
     if (st0) {
       v.stepLabel = "Paso " + st0.step + " de " + st0.of;
@@ -3267,7 +3471,7 @@ class Component extends DCLogic {
     v.ctxProgressLabel = Math.round((creditsDone / creditsAll) * 100) + "% de la carrera";
     v.ctxStats = [
       { k:"Ciclo actual", val:String(prof.cycle), em:"📍" },
-      { k:"Cursos llevados", val:String(taken.length), em:"📚" },
+      { k:"Asignaturas llevadas", val:String(taken.length), em:"📚" },
       { k:"Promedio", val:avg.toFixed(1).replace(".", ","), em:"⭐" },
       { k:"Créditos", val:String(creditsDone), em:"🎓" }
     ];
@@ -3277,14 +3481,29 @@ class Component extends DCLogic {
         background: c.grade >= 15 ? "#dcfce7" : c.grade >= 13 ? "#fff7ed" : "#fef2f2",
         color: c.grade >= 15 ? "#15803d" : c.grade >= 13 ? "#b45309" : "#dc2626" } }));
 
-    /* ---------- Asistente CORA flotante ---------- */
+    /* ---------- Asistente CoRA flotante ---------- */
     v.chatOpen = s.chatOpen;
     v.chatClosed = !s.chatOpen;
     v.toggleChat = () => this.setState({ chatOpen: !s.chatOpen });
     v.closeChat = () => this.setState({ chatOpen:false });
     v.openChatFull = () => this.setState({ chatOpen:false, section:"tutor" });
-    v.showFormIntro = on("formulario") && !s.formType;
-    v.showFormQuestions = on("formulario") && !!s.formType;
+    /* "inicio" (Qué es CoRA + Dónde estás ahora) es una sección propia,
+       fuera del Recomendador — por eso no tiene entrada en STEPPER ni en
+       FLOW/REQ. "formulario" ahora arranca directo en el comparador
+       Rápida/Detallada. */
+    v.showLanding = on("inicio");
+    v.continueToFormulario = () => { this.setState({ section:"formulario", formStarted:false });
+      if (typeof window !== "undefined") window.scrollTo({ top:0, behavior:"smooth" }); };
+    v.showFormIntro = on("formulario") && !s.formStarted;
+    v.showFormQuestionnaire = on("formulario") && s.formStarted;
+    v.hoverQuick = () => this.setState({ hovered:"quick" });
+    v.hoverDetailed = () => this.setState({ hovered:"detailed" });
+    v.isQuickHover = s.hovered === "quick";
+    v.isDetailedHover = s.hovered === "detailed";
+    v.pickQuick = () => { this.setState({ formStarted:true, formMode:"rapida", formStep:0 });
+      if (typeof window !== "undefined") window.scrollTo({ top:0, behavior:"smooth" }); };
+    v.pickDetailed = () => { this.setState({ formStarted:true, formMode:"completa", formStep:0 });
+      if (typeof window !== "undefined") window.scrollTo({ top:0, behavior:"smooth" }); };
 
     v.analysisPct = Math.round((s.analysisStep / 5) * 100) + "%";
     v.analysisLabel = Math.round((s.analysisStep / 5) * 100) + "%";
@@ -3294,46 +3513,102 @@ class Component extends DCLogic {
         style:{ display:"flex", alignItems:"center", gap:"12px", fontSize:"14px", transition:"all .5s", color: s.analysisStep > i ? "#7B68EE" : "#d1d5db" }
       }));
 
-    v.hoverQuick = () => this.setState({ hovered:"quick" });
-    v.hoverDetailed = () => this.setState({ hovered:"detailed" });
-    v.hoverNone = () => this.setState({ hovered:null });
-    v.isQuickHover = s.hovered === "quick";
-    v.isDetailedHover = s.hovered === "detailed";
-    v.pickQuick = () => this.setState({ formType:"quick", formStep:0 });
-    v.pickDetailed = () => this.setState({ formType:"detailed", formStep:0 });
+    /* ---------- Formulario: toggle "versión completa" / "versión rápida" ----------
+       Mismo patrón de segmentado ya documentado en DESIGN.md (activo: fondo
+       morado y sombra morada · inactivo: transparente). */
+    v.formIsCompleta = s.formMode === "completa";
+    v.formIsRapida = s.formMode === "rapida";
+    const tabBase = { flex:1, textAlign:"center", padding:"10px 0", borderRadius:"10px", fontSize:"13px", fontWeight:600,
+      cursor:"pointer", border:0, fontFamily:"inherit", transition:"all .15s" };
+    const tabOn = { background:"#7B68EE", color:"#fff", boxShadow:"0 4px 6px -1px #e9d5ff,0 2px 4px -2px #e9d5ff" };
+    const tabOff = { background:"transparent", color:"#4b5563" };
+    v.formTabCompletaStyle = Object.assign({}, tabBase, v.formIsCompleta ? tabOn : tabOff);
+    v.formTabRapidaStyle = Object.assign({}, tabBase, v.formIsRapida ? tabOn : tabOff);
+    v.setFormCompleta = () => this.setState({ formMode:"completa" });
+    v.setFormRapida = () => this.setState({ formMode:"rapida" });
 
-    const total = s.formType === "quick" ? 4 : 16;
-    const q = this.QUESTIONS[Math.min(s.formStep, this.QUESTIONS.length - 1)];
-    const answers = s.formAnswers[q.id] || [];
-    const multi = q.type === "checkbox";
-    const isLast = s.formStep >= total - 1;
-    v.qStepLabel = "Pregunta " + (s.formStep + 1) + "/" + total;
-    v.qPct = ((s.formStep + 1) / total) * 100 + "%";
-    v.qPctLabel = Math.round(((s.formStep + 1) / total) * 100) + "%";
-    v.qText = q.text; v.qHint = q.hint; v.qIsCheckbox = multi;
-    v.qOptions = q.options.map(opt => {
-      const sel = answers.includes(opt);
-      return {
-        label:opt, sel, onClick: () => this.answer(q.id, opt, multi),
-        style:{ width:"100%", display:"flex", alignItems:"center", gap:"12px", padding:"14px", borderRadius:"12px", fontSize:"14px",
-          textAlign:"left", cursor:"pointer", fontFamily:"inherit", transition:"all .15s",
-          border:"2px solid " + (sel ? "#7B68EE" : "#f3f4f6"), background: sel ? "#faf5ff" : "transparent",
-          color: sel ? "#4A3FA0" : "#374151", fontWeight: sel ? 500 : 400 },
-        boxStyle:{ width:"20px", height:"20px", borderRadius: multi ? "4px" : "9999px", display:"flex", alignItems:"center",
-          justifyContent:"center", flexShrink:0, transition:"all .15s",
-          border:"2px solid " + (sel ? "#7B68EE" : "#d1d5db"), background: sel ? "#7B68EE" : "transparent" }
-      };
+    /* ---------- Widgets de pregunta, reutilizados por las 2 versiones ----------
+       Cada pregunta declara su "kind" en FORM_STEPS/FORM_QUICK; acá solo se
+       calculan los estilos según selección y los manejadores de click —
+       el contenido (textos, chips, cards) sale siempre de esos datos. */
+    const chipStyle = sel => ({ display:"inline-flex", alignItems:"center", padding:"7px 13px", borderRadius:"9999px", fontSize:"12px",
+      cursor:"pointer", fontFamily:"inherit", border:"1.5px solid " + (sel ? "#7B68EE" : "#e5e7eb"),
+      background: sel ? "#faf5ff" : "#fff", color: sel ? "#4A3FA0" : "#374151", fontWeight: sel ? 600 : 400, transition:"all .15s" });
+    const chipBigStyle = sel => Object.assign(chipStyle(sel), { padding:"10px 20px", fontSize:"13px", fontWeight:700 });
+    const cardBoxStyle = (sel, centered) => ({ display:"flex", alignItems: centered ? "center" : "flex-start",
+      justifyContent: centered ? "center" : "flex-start", gap:"10px", padding:"11px 13px", borderRadius:"10px", cursor:"pointer",
+      fontFamily:"inherit", textAlign:"left", width:"100%", boxSizing:"border-box",
+      border:"2px solid " + (sel ? "#7B68EE" : "#f3f4f6"), background: sel ? "#faf5ff" : "#fff", transition:"all .15s" });
+    const radioDotStyle = sel => ({ width:"16px", height:"16px", borderRadius:"9999px", flexShrink:0, marginTop: sel !== undefined ? "1px" : 0,
+      border:"2px solid " + (sel ? "#7B68EE" : "#d1d5db"), background: sel ? "#7B68EE" : "transparent" });
+    const fieldStyle = { width:"100%", border:"1px solid #e5e7eb", borderRadius:"10px", padding:"10px 12px", fontSize:"13px",
+      fontFamily:"inherit", color:"#374151", background:"#f9fafb", boxSizing:"border-box" };
+    const rowChipStyle = (active, tone) => {
+      const on_ = tone === "ya" ? { bg:"#f0fdf4", border:"#bbf7d0", text:"#15803d" } : { bg:"#fff7ed", border:"#ffedd5", text:"#b45309" };
+      return { display:"inline-flex", alignItems:"center", padding:"6px 12px", borderRadius:"9999px", fontSize:"11px", fontWeight:600,
+        cursor:"pointer", fontFamily:"inherit", whiteSpace:"nowrap",
+        border:"1.5px solid " + (active ? on_.border : "#e5e7eb"), background: active ? on_.bg : "#fff",
+        color: active ? on_.text : "#9ca3af", transition:"all .15s" };
+    };
+    const mapFormQuestions = questions => questions.map(q => {
+      if (q.kind === "info") return { isInfo:true, text:q.text };
+      const base = { isInfo:false, isChips: q.kind === "chips" && !q.big, isChipsBig: q.kind === "chips" && !!q.big,
+        isCards: q.kind === "cards", isText: q.kind === "text", isTextarea: q.kind === "textarea", isRows: q.kind === "rows",
+        title:q.title, subtitle: q.subtitle || null, hasSubtitle: !!q.subtitle };
+      if (q.kind === "chips") {
+        const sel = s.formAnswers[q.id] || [];
+        base.chips = q.chips.map(label => {
+          const isSel = sel.includes(label);
+          return { label, style: q.big ? chipBigStyle(isSel) : chipStyle(isSel), onClick: () => this.answer(q.id, label, !!q.multi) };
+        });
+      } else if (q.kind === "cards") {
+        const sel = s.formAnswers[q.id] || [];
+        base.gridCols = "repeat(" + q.cols + ",minmax(0,1fr))";
+        base.cards = q.cards.map(c => {
+          const isSel = sel.includes(c.label);
+          return { label:c.label, sub: c.sub || null, hasSub: !!c.sub,
+            cardStyle: cardBoxStyle(isSel, !!q.centered), radioStyle: radioDotStyle(isSel),
+            onClick: () => this.answer(q.id, c.label, false) };
+        });
+      } else if (q.kind === "text") {
+        base.value = s.formAnswers[q.id] || ""; base.placeholder = q.placeholder || "";
+        base.onChange = e => this.answerText(q.id, e.target.value); base.fieldStyle = fieldStyle;
+      } else if (q.kind === "textarea") {
+        base.value = s.formAnswers[q.id] || ""; base.placeholder = q.placeholder || ""; base.taRows = String(q.taRows || 2);
+        base.onChange = e => this.answerText(q.id, e.target.value); base.fieldStyle = Object.assign({}, fieldStyle, { resize:"none" });
+      } else if (q.kind === "rows") {
+        base.rows = q.items.map((item, i) => {
+          const rid = q.id + "_" + i;
+          const chosen = (s.formAnswers[rid] || [])[0];
+          return { label:item, yaStyle: rowChipStyle(chosen === "ya", "ya"), quieroStyle: rowChipStyle(chosen === "quiero", "quiero"),
+            onYa: () => this.answer(rid, "ya", false), onQuiero: () => this.answer(rid, "quiero", false) };
+        });
+      }
+      return base;
     });
-    v.qPrev = () => { if (s.formStep > 0) this.setState({ formStep: s.formStep - 1 }); };
-    v.qNext = () => { if (answers.length === 0) return; if (isLast) this.finish(); else this.setState({ formStep: s.formStep + 1 }); };
-    v.qNextLabel = isLast ? "Finalizar formulario ✓" : "Siguiente";
-    v.qShowNextIcon = !isLast;
-    v.qPrevStyle = { display:"flex", alignItems:"center", gap:"8px", padding:"10px 20px", border:"1px solid #e5e7eb", background:"#fff",
+
+    /* ---------- Versión completa: 5 pasos navegables ---------- */
+    const stepDef = this.FORM_STEPS[s.formStep];
+    v.stepIndexLabel = "Paso " + (s.formStep + 1) + " de " + this.FORM_STEPS.length;
+    v.stepTitleLabel = stepDef.title;
+    v.stepSegments = this.FORM_STEPS.map((_, i) => ({
+      segStyle:{ flex:1, height:"6px", borderRadius:"9999px", transition:"all .3s", background: i <= s.formStep ? "#7B68EE" : "#f3f4f6" }
+    }));
+    v.stepQuestions = mapFormQuestions(stepDef.questions);
+    v.stepIsFirst = s.formStep === 0;
+    v.stepIsLast = s.formStep === this.FORM_STEPS.length - 1;
+    v.stepPrev = () => { if (!v.stepIsFirst) this.goFormStep(-1); };
+    v.stepNext = () => { if (v.stepIsLast) this.finish(); else this.goFormStep(1); };
+    v.stepNextLabel = v.stepIsLast ? "Ver mi ruta →" : "Continuar →";
+    v.stepPrevStyle = { display:"flex", alignItems:"center", gap:"8px", padding:"10px 20px", border:"1px solid #e5e7eb", background:"#fff",
       borderRadius:"12px", fontSize:"14px", fontWeight:500, color:"#4b5563", fontFamily:"inherit",
-      cursor: s.formStep === 0 ? "not-allowed" : "pointer", opacity: s.formStep === 0 ? 0.4 : 1 };
-    v.qNextStyle = { flex:1, display:"flex", alignItems:"center", justifyContent:"center", gap:"8px", padding:"10px 0", borderRadius:"12px",
-      fontSize:"14px", fontWeight:600, background:"#7B68EE", color:"#fff", border:0, fontFamily:"inherit",
-      cursor: answers.length === 0 ? "not-allowed" : "pointer", opacity: answers.length === 0 ? 0.4 : 1 };
+      cursor: v.stepIsFirst ? "not-allowed" : "pointer", opacity: v.stepIsFirst ? 0.4 : 1 };
+    v.stepNextStyle = { flex:1, textAlign:"center", padding:"10px 0", borderRadius:"12px", fontSize:"14px", fontWeight:600,
+      background:"#7B68EE", color:"#fff", border:0, fontFamily:"inherit", cursor:"pointer" };
+
+    /* ---------- Versión rápida: 1 pantalla, 6 preguntas ---------- */
+    v.quickQuestions = mapFormQuestions(this.FORM_QUICK);
+    v.quickSubmit = () => this.finish();
 
     v.blockedShow = !!s.blocked;
     v.blockedName = s.blocked ? this.NAMES[s.blocked] : "";
@@ -3350,10 +3625,10 @@ class Component extends DCLogic {
     v.isRutas = on("mis-rutas");
     v.hasSelected = !!s.selectedRoute;
     v.selectedRouteName = s.selectedRoute || "";
-    v.onGoBackForm = () => this.setState({ formType:null, formStep:0, section:"formulario" });
+    v.onGoBackForm = () => this.setState({ formStarted:false, formStep:0, section:"formulario" });
     /* La cantidad de rutas la define el algoritmo, no un número fijo. */
     v.routeCount = String(this.ROUTES.length);
-    v.routesLede = "Basadas en tu análisis, CORA encontró " + this.ROUTES.length +
+    v.routesLede = "Basadas en tu análisis, CoRA encontró " + this.ROUTES.length +
       (this.ROUTES.length === 1 ? " opción compatible con tu perfil." : " opciones ordenadas por compatibilidad.");
     /* Solo hay tres tipos de ruta — ninguna es una mezcla de más de uno. */
     const nExtra = this.ROUTES.filter(r => r.kind === "extracurricular").length;
@@ -3362,7 +3637,7 @@ class Component extends DCLogic {
     v.routeLegend = [
       { em:"📘", label:"Curricular", desc:"Obligatorios y/o electivos de tu propia malla — sin Ecosistema CIE.", count: String(nCurricular),
         dotStyle:{ width:"10px", height:"10px", borderRadius:"3px", background:"#f59e0b", flexShrink:0 } },
-      { em:"🌐", label:"Extracurricular", desc:"Formación del ecosistema CIE, sin cursos de la malla.", count: String(nExtra),
+      { em:"🌐", label:"Extracurricular", desc:"Formación del ecosistema CIE, sin asignaturas de la malla.", count: String(nExtra),
         dotStyle:{ width:"10px", height:"10px", borderRadius:"3px", background:"#0ea5e9", flexShrink:0 } },
       { em:"🔀", label:"Combinada", desc:"Malla (obligatorios y/o electivos) más extracurriculares del CIE, las dos cosas.", count: String(nCombinada),
         dotStyle:{ width:"10px", height:"10px", borderRadius:"3px", background:"#ec4899", flexShrink:0 } }
@@ -3398,12 +3673,12 @@ class Component extends DCLogic {
         kindStyle:{ fontSize:"11px", fontWeight:700, padding:"3px 9px", borderRadius:"9999px", whiteSpace:"nowrap",
           background: extra ? "#f0f9ff" : combinada ? "#fce7f3" : "#fffbeb", color: accent,
           border:"1px solid " + (extra ? "#bae6fd" : combinada ? "#fbcfe8" : "#fde68a") },
-        /* Detalle de cursos, visible ANTES de elegir la ruta. */
+        /* Detalle de asignaturas, visible ANTES de elegir la ruta. */
         detailOpen: open,
-        detailLabel: open ? "Ocultar cursos" : "Ver cursos incluidos",
+        detailLabel: open ? "Ocultar asignaturas" : "Ver asignaturas incluidas",
         detailChevron: open ? "chevron-up" : "chevron-down",
         onToggleDetail: () => this.setState({ routeDetail: open ? null : r.name }),
-        courseCount: r.courses.length + " cursos",
+        courseCount: r.courses.length + " asignaturas",
         courses: r.courses.map(c => {
           const extra = /electivo|extracurricular|Idiomas/i.test(c);
           return { name: c.replace(/\s*\((electivo|extracurricular CIE|Centro de Idiomas)\)/i, ""),
@@ -3452,7 +3727,7 @@ class Component extends DCLogic {
     };
 
     v.isEco = on("ecosistema");
-    /* El ecosistema tiene ahora dos momentos: primero CORA recomienda, después
+    /* El ecosistema tiene ahora dos momentos: primero CoRA recomienda, después
        el estudiante explora la oferta completa del CIE. */
     v.isEcoReco = v.isEco && s.ecoPhase === "reco";
     v.isEcoExplore = v.isEco && s.ecoPhase === "explore";
@@ -3577,8 +3852,8 @@ class Component extends DCLogic {
             fontSize:"10px", fontWeight:700, borderRadius:"6px", padding:"2px 6px", flexShrink:0 },
           matchStyle:{ display:"inline-block", background:"#faf5ff", border:"1px solid #e9d5ff", color:"#4A3FA0",
             fontSize:"12px", borderRadius:"8px", padding:"4px 8px" },
-          /* Al elegir un curso por CFU, en la malla ese mismo curso cambia de
-             color y de nombre — pasa a mostrarse como el curso de CFU, no el
+          /* Al elegir una asignatura por CFU, en la malla esa misma asignatura cambia de
+             color y de nombre — pasa a mostrarse como la asignatura de CFU, no la
              de la malla en Perú. La universidad pidió que fuera evidente. */
           chooseLabel: chosen ? "✓ Elegido" : "+ Elegir por CFU",
           chooseStyle:{ fontSize:"11px", fontWeight:600, padding:"6px 12px", borderRadius:"9999px", border:0, cursor:"pointer",
@@ -3593,7 +3868,7 @@ class Component extends DCLogic {
        universidad pidió poder filtrar el ecosistema por tema, no solo navegar
        sección por sección. */
     const searchTerm = s.ecoSearch.trim().toLowerCase();
-    /* `extra` suma palabras de categoría que no aparecen en el nombre del curso
+    /* `extra` suma palabras de categoría que no aparecen en el nombre de la asignatura
        (p. ej. ningún idioma se llama literalmente "Idiomas"), para que el chip
        de interés encuentre resultados y no un falso "sin resultados". */
     const matchesSearch = (name, extra) => !searchTerm
@@ -3646,21 +3921,21 @@ class Component extends DCLogic {
     v.mallaCareer = s.selectedRoute || "Ingeniería Comercial";
     v.mallaTotalCredits = String(this.CURRICULUM.reduce((sum, cyc) => sum + cyc.credits, 0));
     v.planLabel = "Plan de Estudios " + this.PLAN_YEAR + " — el único vigente para tu cohorte";
-    /* La ruta activa decide, en vivo, qué cursos de la malla son "de tu ruta":
+    /* La ruta activa decide, en vivo, qué asignaturas de la malla son "de tu ruta":
        se resuelve por nombre contra ROUTES[].courses, no está grabado en el
-       curso. Si la ruta elegida es "extracurricular" (sin cursos de malla),
-       ningún curso se resalta aquí — sus cursos aparecen debajo del ciclo que
+       asignatura. Si la ruta elegida es "extracurricular" (sin asignaturas de malla),
+       ninguna asignatura se resalta aquí — sus asignaturas aparecen debajo del ciclo que
        les corresponde, vía `routeExtraByCycle`. */
     const selectedRouteObj = this.ROUTES.find(r => r.name === v.mallaCareer) || this.ROUTES.find(r => r.top);
     /* Tres tipos, nunca mezclados: "curricular" (solo malla), "extracurricular"
        (solo CIE) y "combinada" (malla Y CIE a la vez). "curricular" y
-       "combinada" resaltan cursos reales de CURRICULUM en `courses` — y como
+       "combinada" resaltan asignaturas reales de CURRICULUM en `courses` — y como
        pueden incluir electivos a propósito, su resaltado sí puede tocar esos
        slots (a diferencia de una coincidencia de nombre accidental). */
     const routeHasMalla = selectedRouteObj.kind === "curricular" || selectedRouteObj.kind === "combinada";
     const routeIsMalla = routeHasMalla;
     const routeCourseNames = new Set(routeHasMalla ? selectedRouteObj.courses : []);
-    /* Codificación oficial de la malla real: cada curso trae su categoría
+    /* Codificación oficial de la malla real: cada asignatura trae su categoría
        académica (`cat`), pintada como una etiqueta chica de punto + texto —
        igual que en el mapa curricular oficial. CAT_MAP: [color, etiqueta]. */
     const CAT_MAP = {
@@ -3670,19 +3945,19 @@ class Component extends DCLogic {
       electivo: ["#6b7280", "ELECTIVO"]
     };
     /* El acento de "ruta" (fondo lavanda + borde morado) es una capa aparte,
-       independiente de la categoría: un curso puede ser CARRERA y a la vez
+       independiente de la categoría: una asignatura puede ser CARRERA y a la vez
        estar en el hilo morado de tu ruta elegida. */
     const RUTA_ACCENT = ["#faf5ff", "#e9d5ff", "#4A3FA0", "#7B68EE"];
     const NEUTRAL_ACCENT = ["#fff", "#f3f4f6", "#1A1040", "#e5e7eb"];
-    /* Curso elegido por CFU: cambia de color Y de nombre en la malla, para que
-       sea evidente que ese curso se toma en Continental Florida University y
+    /* Asignatura elegida por CFU: cambia de color Y de nombre en la malla, para que
+       sea evidente que esa asignatura se toma en Continental Florida University y
        no en la malla de Perú — la universidad pidió que no pasara inadvertido. */
     const CFU_ACCENT = ["#ecfeff", "#a5f3fc", "#0e7490", "#06b6d4"];
     const cfuByUcName = new Map(this.EQUIV_CFU.filter(e => e.cfu).map(e => [e.uc, e.cfu]));
-    /* "Cursos de tu ruta" es la entrada más importante de la leyenda — se
+    /* "Asignaturas de tu ruta" es la entrada más importante de la leyenda — se
        muestra aparte, como una insignia morada llena, para que se note mucho
        más que el resto (que son puntos de color con texto plano). */
-    v.mallaLegendRuta = { label:"Cursos de tu ruta", desc:"Ruta activa: " + v.mallaCareer,
+    v.mallaLegendRuta = { label:"Asignaturas de tu ruta", desc:"Ruta activa: " + v.mallaCareer,
       style:{ display:"flex", alignItems:"center", gap:"8px", background:"#7B68EE", borderRadius:"9999px",
         padding:"7px 14px", boxShadow:"0 2px 6px rgba(123,104,238,.5)" },
       labelStyle:{ fontSize:"12px", fontWeight:800, color:"#fff", whiteSpace:"nowrap" },
@@ -3740,7 +4015,7 @@ class Component extends DCLogic {
           opacity: state === "past" ? .6 : 1,
           border: "1px solid " + (isCurrentCycle ? "#7B68EE" : "#f3f4f6"),
           boxShadow: isCurrentCycle ? "0 4px 6px -1px #e9d5ff,0 2px 4px -2px #e9d5ff" : "0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)" },
-        /* Ya no hay hilo conector: el curso de tu ruta se distingue solo por
+        /* Ya no hay hilo conector: la asignatura de tu ruta se distingue solo por
            tener MUCHO más contraste que el resto (borde grueso, fondo lleno,
            sombra e insignia propia), no por una línea vertical. */
         hasRuta,
@@ -3749,7 +4024,7 @@ class Component extends DCLogic {
           const isCfu = s.cfuChosen.includes(c.name);
           const catInfo = CAT_MAP[c.cat] || CAT_MAP.facultad;
           const enCurso = isCurrentCycle && c.track !== "electivo";
-          /* El curso de la ruta usa un estilo aparte, mucho más marcado que el
+          /* La asignatura de la ruta usa un estilo aparte, mucho más marcado que el
              resto (borde de 2px alrededor + sombra), en vez de solo un borde
              izquierdo fino — para que "esto es tu ruta" no dependa del color. */
           let style;
@@ -3764,9 +4039,9 @@ class Component extends DCLogic {
               borderRadius:"10px", padding:"6px 8px", fontSize:"11px", minWidth:0 };
           }
           return {
-            /* Elegido por CFU: se muestra el nombre del curso en CFU, no el de
+            /* Elegido por CFU: se muestra el nombre de la asignatura en CFU, no el de
                la malla en Perú — con el nombre original abajo, para no perder
-               la referencia de qué curso reemplaza. */
+               la referencia de qué asignatura reemplaza. */
             name: isCfu ? cfuByUcName.get(c.name) : c.name,
             ucName: isCfu ? c.name : "",
             isRuta, isCfu, enCurso, showRutaBadge: isRuta && !isCfu,
@@ -3777,7 +4052,7 @@ class Component extends DCLogic {
             cfuBadgeStyle:{ fontSize:"9px", fontWeight:700, color:"#fff", background:"#06b6d4", borderRadius:"9999px", padding:"1px 7px", whiteSpace:"nowrap" },
             rutaBadgeStyle:{ fontSize:"9px", fontWeight:800, color:"#fff", background:"#7B68EE", borderRadius:"9999px", padding:"1px 7px", whiteSpace:"nowrap" },
             /* Tope de 2 líneas siempre, sin importar cuán largo sea el nombre
-               real del curso — y en negrita más fuerte si es de tu ruta. */
+               real de la asignatura — y en negrita más fuerte si es de tu ruta. */
             nameStyle:{ fontWeight: isRuta ? 800 : 600, margin:0, display:"-webkit-box", WebkitBoxOrient:"vertical", WebkitLineClamp:2, lineClamp:2, overflow:"hidden" },
             wrapStyle:{ display:"flex", alignItems:"flex-start" },
             style
@@ -3855,13 +4130,13 @@ class Component extends DCLogic {
       trackStyle:{ height:"6px", background:"#f3f4f6", borderRadius:"9999px", overflow:"hidden" },
       fillStyle:{ height:"100%", background:summaryAccent, borderRadius:"9999px", width:w.val + "%" } }));
     v.summaryStats = [
-      { label:"Cursos de tu ruta", val:String(selectedRouteObj.courses.length) },
+      { label:"Asignaturas de tu ruta", val:String(selectedRouteObj.courses.length) },
       { label:"Electivos que elegiste", val:String(v.chosenElectives.length) },
-      { label:"Cursos por CFU", val:String(s.cfuChosen.length) },
+      { label:"Asignaturas por CFU", val:String(s.cfuChosen.length) },
       { label:"Créditos totales", val:v.mallaTotalCredits }
     ];
     const benefits = ["Un camino claro hacia: " + v.summaryBestFor];
-    if (s.cfuChosen.length > 0) benefits.push("Experiencia internacional con " + s.cfuChosen.length + " curso(s) reconocidos por Continental Florida University");
+    if (s.cfuChosen.length > 0) benefits.push("Experiencia internacional con " + s.cfuChosen.length + " asignatura(s) reconocidas por Continental Florida University");
     if (v.chosenElectives.length > 0) benefits.push("Formación complementaria con " + v.chosenElectives.length + " extracurricular(es) del Ecosistema CIE");
     benefits.push("Puedes volver a personalizarla cuando quieras — lo que elegiste queda guardado");
     v.summaryBenefits = benefits.map(b => ({ label:b }));
@@ -3881,7 +4156,7 @@ class Component extends DCLogic {
           fontSize:"14px", textAlign:"left", fontFamily:"inherit", transition:"all .15s", background: isAdded ? "#faf5ff" : "#fff",
           border:"1px solid " + (isAdded ? "#7B68EE" : "#f3f4f6"), color: isAdded ? "#7B68EE" : "#374151", cursor:"pointer" },
         /* Agregar siempre es una acción explícita del estudiante — elegir en esta
-           lista y confirmar — nunca se suma solo, y no hay tope de cursos ni de
+           lista y confirmar — nunca se suma solo, y no hay tope de extracurriculares ni de
            créditos: son extracurriculares, no cuentan para el total de la carrera. */
         onClick: () => this.setState(st => { const cur = st.extras[s.extModal] || [];
           return { extras: Object.assign({}, st.extras, { [s.extModal]: isAdded ? cur.filter(e => e !== opt) : cur.concat([opt]) }) }; })
@@ -4056,20 +4331,20 @@ class Component extends DCLogic {
         metaLineStyle:{ fontSize:"11px", color:"#4b5563", margin:"0 0 4px", lineHeight:1.5 },
         btnStyle:{ width:"100%", background: isBot ? c[3] : (scheduled ? "#dcfce7" : c[3]), color: isBot ? "#fff" : (scheduled ? "#15803d" : "#fff"),
           border:0, borderRadius:"12px", padding:"8px 0", fontSize:"12px", fontWeight:500, cursor:"pointer", fontFamily:"inherit" },
-        btnLabel: isBot ? "Ir al Asistente CORA" : (scheduled ? "✓ Cita agendada" : "Agendar con asesor"),
+        btnLabel: isBot ? "Ir al Asistente CoRA" : (scheduled ? "✓ Cita agendada" : "Agendar con asesor"),
         onClick: isBot ? (() => this.nav("tutor")) : (() => this.setState({ advisorScheduled: !scheduled }))
       };
     });
 
     /* ---------- predictibilidad académica ----------
        Cruza el histórico de notas del estudiante con el desempeño histórico del
-       curso. Cuando detecta riesgo, propone un plan de acompañamiento. */
+       asignatura. Cuando detecta riesgo, propone un plan de acompañamiento. */
     const riskTop = this.PREDICT.filter(p => p.risk >= 50);
     v.predictHasRisk = riskTop.length > 0;
     v.predictCount = String(riskTop.length);
     v.predictLede = riskTop.length === 1
-      ? "CORA ha detectado 1 curso de tu próximo ciclo que suele complicarse con tu perfil."
-      : "CORA ha detectado " + riskTop.length + " cursos de los próximos ciclos que suelen complicarse con tu perfil.";
+      ? "CoRA ha detectado 1 asignatura de tu próximo ciclo que suele complicarse con tu perfil."
+      : "CoRA ha detectado " + riskTop.length + " asignaturas de los próximos ciclos que suelen complicarse con tu perfil.";
     const RISKC = { alto:["#fef2f2","#fee2e2","#dc2626"], medio:["#fff7ed","#ffedd5","#b45309"], bajo:["#f0fdf4","#bbf7d0","#15803d"] };
     v.predictions = this.PREDICT.map(p => {
       const c = RISKC[p.level];
@@ -4099,9 +4374,9 @@ class Component extends DCLogic {
     });
     /* El plan semanal vive en s.accWeeks (editable), no en un arreglo fijo:
        el estudiante puede agregar o quitar semanas/actividades. Las dos
-       actividades ligadas al curso de riesgo muestran su tema real —
-       el curso que CORA detectó — en vez de un texto suelto. */
-    const topRiskCourse = riskTop[0] ? riskTop[0].course : "tu curso de riesgo";
+       actividades ligadas a la asignatura de riesgo muestran su tema real —
+       la asignatura que CoRA detectó — en vez de un texto suelto. */
+    const topRiskCourse = riskTop[0] ? riskTop[0].course : "tu asignatura de riesgo";
     const weekGroups = [];
     const weekIndex = {};
     s.accWeeks.forEach(a => {
@@ -4140,8 +4415,8 @@ class Component extends DCLogic {
         accWeekModal:false, accWeekWeek:"", accWeekLabel:"" }));
     };
 
-    /* El plan flexible no se limita al curso que CORA detectó: el estudiante
-       puede sumar cualquier otro curso de su ciclo actual, sin límite. */
+    /* El plan flexible no se limita a la asignatura que CoRA detectó: el estudiante
+       puede sumar cualquier otra asignatura de su ciclo actual, sin límite. */
     v.acompCycleLabel = "Ciclo " + this.STUDENT.cycle;
     const flaggedNames = this.PREDICT.map(p => p.course);
     const currentCycleCourses = (this.CURRICULUM.find(cyc => cyc.cycle === this.STUDENT.cycle) || { courses:[] }).courses
@@ -4320,13 +4595,13 @@ class Component extends DCLogic {
     v.fNewSet = () => this.setState({ fPhase:"setup", fIdx:0, fFlipped:false, fRatings:{} });
 
     v.isTutor = on("tutor");
-    /* Cada curso tiene su propio hilo de conversación (s.msgsByCourse) — no
-       una sola bandeja compartida entre todos los cursos. */
+    /* Cada asignatura tiene su propio hilo de conversación (s.msgsByCourse) — no
+       una sola bandeja compartida entre todas las asignaturas. */
     const TUTOR_COURSE_DESC = {
       "Matemática I":"Fórmulas, ejercicios y conceptos de cálculo y álgebra.",
       "Química General":"Dudas sobre estequiometría, enlaces y reacciones.",
       "Economía I":"Oferta, demanda, indicadores macro y microeconomía.",
-      "General":"Cualquier otra duda académica que no sea de un curso específico."
+      "General":"Cualquier otra duda académica que no sea de una asignatura específica."
     };
     v.tutorCourses = Object.keys(TUTOR_COURSE_DESC).map(c => ({
       label:c, onClick: () => this.setState({ tutorCourse:c }),
@@ -4334,7 +4609,7 @@ class Component extends DCLogic {
         transition:"all .15s", background: s.tutorCourse === c ? "#7B68EE" : "#f3f4f6", color: s.tutorCourse === c ? "#fff" : "#4b5563" } }));
     v.tutorCourseDesc = TUTOR_COURSE_DESC[s.tutorCourse] || "";
     const defaultMsgsFor = course => [
-      { from:"bot", text:"¡Hola! Soy CORA, tu Asistente académico — una IA disponible 24/7, no una persona." },
+      { from:"bot", text:"¡Hola! Soy CoRA, tu Asistente académico — una IA disponible 24/7, no una persona." },
       { from:"bot", text:"Puedo ayudarte con " + (TUTOR_COURSE_DESC[course] || "tu pregunta") + " Si tu situación necesita seguimiento personal (no una duda puntual), te conecto con tu Asesor Académico." }
     ];
     const courseMsgs = s.msgsByCourse[s.tutorCourse] || defaultMsgsFor(s.tutorCourse);
@@ -4363,7 +4638,7 @@ class Component extends DCLogic {
     v.isProgreso = on("progreso");
     const overall = Math.round((s.completed.length / 13) * 100);
     v.overallLabel = overall + "%"; v.overallPct = overall + "%";
-    v.overallFormula = "Tu progreso se calcula como (Cursos completados / Totales) × 100 = (" + s.completed.length + " / 13) × 100 = " + overall + "%.";
+    v.overallFormula = "Tu progreso se calcula como (Asignaturas completadas / Totales) × 100 = (" + s.completed.length + " / 13) × 100 = " + overall + "%.";
     const recIds = ["formulario","mis-rutas","ecosistema","malla","perfil-cora","horizonte","acompanamiento"];
     const acaIds = ["practico","flashcards","tutor"];
     v.progressGroups = [
@@ -4384,7 +4659,7 @@ class Component extends DCLogic {
     const topRisk = this.PREDICT.filter(p => p.risk >= 50).sort((a, b) => b.risk - a.risk)[0];
     const goals = [];
     if (nextFlow) goals.push({ label:"Completa: " + this.NAMES[nextFlow], when:"Esta semana", why:"Es el siguiente paso pendiente de tu Recomendador." });
-    if (topRisk) goals.push({ label:"Refuerza " + topRisk.course, when:"Ciclo " + topRisk.cycle, why:"CORA detectó " + topRisk.risk + "% de riesgo — hay un plan en Acompañamiento." });
+    if (topRisk) goals.push({ label:"Refuerza " + topRisk.course, when:"Ciclo " + topRisk.cycle, why:"CoRA detectó " + topRisk.risk + "% de riesgo — hay un plan en Acompañamiento." });
     if (s.streak < 30) goals.push({ label:"Llega a 30 días de racha", when:"Llevas " + s.streak, why:"Cada 30 días de racha suman +100 XP." });
     v.nextGoals = goals;
     v.xpNext = (2000 - s.xp).toLocaleString();
@@ -4432,7 +4707,7 @@ class Component extends DCLogic {
        dos nombres distintos. Tu Asesor Académico es la persona de seguimiento
        personal (ver leyenda en Acompañamiento); ve tu avance, riesgo y plan. */
     v.shareRows = [
-      Object.assign({ label:"Compartir mi progreso con mi Asesor Académico", desc:"Ve tu avance, cursos de riesgo, plan de acompañamiento y tu horizonte profesional." },
+      Object.assign({ label:"Compartir mi progreso con mi Asesor Académico", desc:"Ve tu avance, asignaturas de riesgo, plan de acompañamiento y tu horizonte profesional." },
         mkToggle(s.shareAdvisor, () => this.setState({ shareAdvisor: !s.shareAdvisor })))
     ];
     v.suggestions = [
@@ -4515,7 +4790,7 @@ class Component extends DCLogic {
       { em:"❓", label:"Centro de ayuda", desc:"Guías y preguntas frecuentes" },
       { em:"🐞", label:"Reportar un problema", desc:"Cuéntanos qué ha fallado" },
       { em:"✉️", label:"Contactar soporte", desc:"soporte.cora@continental.edu.pe" },
-      { em:"📄", label:"Términos de servicio", desc:"Condiciones de uso de CORA" },
+      { em:"📄", label:"Términos de servicio", desc:"Condiciones de uso de CoRA" },
       { em:"🔒", label:"Política de privacidad", desc:"Qué datos guardamos y por qué" }
     ];
     v.sessionActions = [
