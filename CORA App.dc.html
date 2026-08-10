@@ -91,8 +91,9 @@
         <span style="font-size:12px;font-weight:600;color:#c2410c;white-space:nowrap">{{ streak }} días</span>
       </div>
       <div style="display:flex;align-items:center;gap:6px;background:#faf5ff;border:1px solid #f3e8ff;border-radius:9999px;padding:6px 12px">
-        <dc-import name="Icon" i="star" s="13" c="#7B68EE" hint-size="13px,13px"></dc-import>
-        <span style="font-size:12px;font-weight:600;color:#7B68EE;white-space:nowrap">{{ xpLabel }} XP</span>
+        <dc-import name="Icon" i="heart" s="13" c="#7B68EE" hint-size="13px,13px"></dc-import>
+        <span style="font-size:12px;font-weight:600;color:#7B68EE;white-space:nowrap">{{ xpLabel }} CoRAzones</span>
+        <dc-import name="Tip" text="CoRAzones = puntos que muestran tu avance en CoRA. Los ganas al completar pasos del Recomendador, estudiar y mantener tu racha." hint-size="14px,14px"></dc-import>
       </div>
       <button style="padding:8px;border-radius:12px;background:none;border:0;cursor:pointer;color:#9ca3af;display:flex" style-hover="background:#faf5ff;color:#7B68EE">
         <dc-import name="Icon" i="bell" s="18" hint-size="18px,18px"></dc-import>
@@ -281,7 +282,7 @@
               </div>
             </sc-if>
 
-            <button onClick="{{ continueToFormulario }}" style="width:100%;background:#7B68EE;color:#fff;border:0;border-radius:16px;padding:14px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff" style-hover="background:#6A58DC">Continuar con Formulario →</button>
+            <button onClick="{{ continueToFormulario }}" style="width:100%;background:#7B68EE;color:#fff;border:0;border-radius:16px;padding:14px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff" style-hover="background:#6A58DC">Continuar con CoRA me conoce →</button>
           </div>
         </div>
       </sc-if>
@@ -290,7 +291,7 @@
         <div>
           <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
             <span style="white-space:nowrap">⭕ Recomendador</span>
-            <span style="display:flex;align-items:center;gap:6px"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Formulario</span></span>
+            <span style="display:flex;align-items:center;gap:6px"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">CoRA me conoce</span></span>
           </nav>
           <div style="max-width:672px">
             <div style="display:flex;align-items:flex-start;gap:16px;margin-bottom:24px">
@@ -376,7 +377,7 @@
         <div>
           <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:20px;flex-wrap:wrap">
             <span style="white-space:nowrap">⭕ Recomendador</span>
-            <span style="display:flex;align-items:center;gap:6px"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Formulario</span></span>
+            <span style="display:flex;align-items:center;gap:6px"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">CoRA me conoce</span></span>
           </nav>
           <div style="max-width:640px">
 
@@ -688,7 +689,10 @@
                 <div style="padding:12px;display:flex;flex-direction:column;gap:8px">
                   <sc-for list="{{ cyc.courses }}" as="c" hint-placeholder-count="3">
                     <div style="{{ c.wrapStyle }}">
-                      <div style="{{ c.style }}">
+                      <div onClick="{{ c.onClick }}" style="{{ c.style }}">
+                        <sc-if value="{{ c.hasPrereq }}" hint-placeholder-val="{{ false }}">
+                          <span style="{{ c.prereqBadgeStyle }}"><dc-import name="Icon" i="link" s="9" c="#6b7280" hint-size="9px,9px"></dc-import></span>
+                        </sc-if>
                         <div style="display:flex;align-items:center;justify-content:space-between;gap:4px;margin-bottom:3px;flex-wrap:wrap">
                           <span style="display:flex;align-items:center;gap:4px"><span style="{{ c.catDotStyle }}"></span><span style="{{ c.catTextStyle }}">{{ c.catLabel }}</span></span>
                           <span style="display:flex;align-items:center;gap:4px">
@@ -697,6 +701,9 @@
                             </sc-if>
                             <sc-if value="{{ c.showRutaBadge }}" hint-placeholder-val="{{ false }}">
                               <span style="{{ c.rutaBadgeStyle }}">🧭 Tu ruta</span>
+                            </sc-if>
+                            <sc-if value="{{ c.showElectiveBadge }}" hint-placeholder-val="{{ false }}">
+                              <span style="{{ c.electiveBadgeStyle }}">✓ Elegido</span>
                             </sc-if>
                             <sc-if value="{{ c.enCurso }}" hint-placeholder-val="{{ false }}">
                               <span style="{{ c.enCursoStyle }}">EN CURSO</span>
@@ -1120,7 +1127,10 @@
                 <div style="padding:12px;display:flex;flex-direction:column;gap:8px">
                   <sc-for list="{{ cyc.courses }}" as="c" hint-placeholder-count="3">
                     <div style="{{ c.wrapStyle }}">
-                      <div style="{{ c.style }}">
+                      <div onClick="{{ c.onClick }}" style="{{ c.style }}">
+                        <sc-if value="{{ c.hasPrereq }}" hint-placeholder-val="{{ false }}">
+                          <span style="{{ c.prereqBadgeStyle }}"><dc-import name="Icon" i="link" s="9" c="#6b7280" hint-size="9px,9px"></dc-import></span>
+                        </sc-if>
                         <div style="display:flex;align-items:center;justify-content:space-between;gap:4px;margin-bottom:3px;flex-wrap:wrap">
                           <span style="display:flex;align-items:center;gap:4px"><span style="{{ c.catDotStyle }}"></span><span style="{{ c.catTextStyle }}">{{ c.catLabel }}</span></span>
                           <span style="display:flex;align-items:center;gap:4px">
@@ -1129,6 +1139,9 @@
                             </sc-if>
                             <sc-if value="{{ c.showRutaBadge }}" hint-placeholder-val="{{ false }}">
                               <span style="{{ c.rutaBadgeStyle }}">🧭 Tu ruta</span>
+                            </sc-if>
+                            <sc-if value="{{ c.showElectiveBadge }}" hint-placeholder-val="{{ false }}">
+                              <span style="{{ c.electiveBadgeStyle }}">✓ Elegido</span>
                             </sc-if>
                             <sc-if value="{{ c.enCurso }}" hint-placeholder-val="{{ false }}">
                               <span style="{{ c.enCursoStyle }}">EN CURSO</span>
@@ -1237,7 +1250,7 @@
           </div>
 
           <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
-            <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:15px;margin:0 0 4px">🎯 Cómo se correlaciona con tu perfil</h3>
+            <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:15px;margin:0 0 4px;display:flex;align-items:center;gap:6px">🎯 Cómo se correlaciona con tu perfil <dc-import name="Tip" text="X% de compatibilidad = qué tan probable es que esta carrera sea ideal para ti, según tus respuestas del formulario. Mayor % = mejor match. No es una garantía, es una orientación." hint-size="14px,14px"></dc-import></h3>
             <p style="font-size:13px;color:#6b7280;margin:0 0 14px">Según tus respuestas del formulario, esta ruta tiene <strong style="color:#1A1040">{{ summaryMatchLabel }}</strong>.</p>
             <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:12px">
               <sc-for list="{{ summaryWhyRows }}" as="w" hint-placeholder-count="3">
@@ -1399,24 +1412,26 @@
           </div>
           <div style="background:#fff;border:1px solid rgba(243,232,255,.6);border-radius:16px;padding:20px;margin-bottom:24px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
             <h2 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:14px;margin:0 0 16px">Gráfico Radar — 6 Dimensiones</h2>
-            <svg viewBox="0 0 600 260" width="100%" height="260" style="display:block;overflow:visible">
-              <sc-for list="{{ radarRings }}" as="g" hint-placeholder-count="5">
-                <polygon points="{{ g.points }}" fill="none" stroke="#e5e7eb"></polygon>
-              </sc-for>
-              <sc-for list="{{ radarSpokes }}" as="k" hint-placeholder-count="6">
-                <line x1="{{ k.x1 }}" y1="{{ k.y1 }}" x2="{{ k.x2 }}" y2="{{ k.y2 }}" stroke="#e5e7eb"></line>
-              </sc-for>
-              <polygon points="{{ radarArea }}" fill="#7B68EE" fill-opacity="0.2" stroke="#7B68EE" stroke-width="2"></polygon>
-              <sc-for list="{{ radarDots }}" as="d" hint-placeholder-count="6">
-                <circle cx="{{ d.x }}" cy="{{ d.y }}" r="4" fill="#7B68EE"></circle>
-              </sc-for>
+            <div style="position:relative">
+              <svg viewBox="0 0 600 260" width="100%" height="260" style="display:block;overflow:visible;width:100%;height:auto;aspect-ratio:600/260">
+                <sc-for list="{{ radarRings }}" as="g" hint-placeholder-count="5">
+                  <polygon points="{{ g.points }}" fill="none" stroke="#e5e7eb"></polygon>
+                </sc-for>
+                <sc-for list="{{ radarSpokes }}" as="k" hint-placeholder-count="6">
+                  <line x1="{{ k.x1 }}" y1="{{ k.y1 }}" x2="{{ k.x2 }}" y2="{{ k.y2 }}" stroke="#e5e7eb"></line>
+                </sc-for>
+                <polygon points="{{ radarArea }}" fill="#7B68EE" fill-opacity="0.2" stroke="#7B68EE" stroke-width="2"></polygon>
+                <sc-for list="{{ radarDots }}" as="d" hint-placeholder-count="6">
+                  <circle cx="{{ d.x }}" cy="{{ d.y }}" r="4" fill="#7B68EE"></circle>
+                </sc-for>
+              </svg>
               <sc-for list="{{ radarLabels }}" as="l" hint-placeholder-count="6">
-                <text x="{{ l.x }}" y="{{ l.y }}" text-anchor="{{ l.anchor }}" font-size="10" fill="#6B6080" font-family="Inter, sans-serif">{{ l.text }}</text>
+                <span style="{{ l.style }}">{{ l.text }}</span>
               </sc-for>
               <sc-for list="{{ radarTicks }}" as="t" hint-placeholder-count="6">
-                <text x="{{ t.x }}" y="{{ t.y }}" font-size="9" fill="#9CA3AF" font-family="Inter, sans-serif">{{ t.text }}</text>
+                <span style="{{ t.style }}">{{ t.text }}</span>
               </sc-for>
-            </svg>
+            </div>
           </div>
           <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:24px">
             <sc-for list="{{ dims }}" as="d" hint-placeholder-count="6">
@@ -1487,12 +1502,29 @@
             <span style="font-size:20px;line-height:28px">🔗</span>
             <div>
               <p style="font-weight:600;color:#78350f;font-size:14px;margin:0 0 2px">RUTA vs HORIZONTE: La diferencia</p>
-              <p style="font-size:12px;color:#b45309;margin:0"><strong>RUTA</strong> = Los CURSOS que cursarás · <strong>HORIZONTE</strong> = Los TRABAJOS que obtendrás · 💡 Ambos están conectados</p>
+              <p style="font-size:12px;color:#b45309;margin:0"><strong>RUTA</strong> = Las ASIGNATURAS que cursarás · <strong>HORIZONTE</strong> = Los TRABAJOS que obtendrás · 💡 Ambos están conectados</p>
             </div>
             <dc-import name="Tip" text="Tu ruta académica está diseñada para llevarte exactamente a estas oportunidades laborales." hint-size="14px,14px"></dc-import>
           </div>
+          <sc-if value="{{ perfilCoraDone }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#faf5ff;border:1px solid #f3e8ff;border-radius:16px;padding:16px;margin-bottom:20px;display:flex;align-items:flex-start;gap:12px">
+              <span style="font-size:20px;line-height:28px">✨</span>
+              <p style="font-size:12px;color:#4A3FA0;margin:0">{{ hzProfileConnect }}</p>
+            </div>
+          </sc-if>
+          <sc-if value="{{ perfilCoraPending }}" hint-placeholder-val="{{ true }}">
+            <div style="background:#faf5ff;border:1px solid #f3e8ff;border-radius:16px;padding:16px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+              <p style="font-size:12px;color:#4A3FA0;margin:0">✨ Completa tu Perfil CoRA para ver por qué estos roles te calzan.</p>
+              <button onClick="{{ hzGoPerfilCora }}" style="background:#7B68EE;color:#fff;border:0;border-radius:9999px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#6A58DC">Ir a Mi Perfil CoRA →</button>
+            </div>
+          </sc-if>
           <div style="background:linear-gradient(to right,#7B68EE,#4f46e5);border-radius:16px;padding:20px;color:#fff;margin-bottom:20px;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff">
-            <span style="font-size:11px;font-weight:700;letter-spacing:.05em;background:rgba(255,255,255,.2);border-radius:9999px;padding:3px 12px">TU HORIZONTE · {{ horizonteCycleLabel }} · {{ horizonteModeLabel }}</span>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-size:11px;font-weight:700;letter-spacing:.05em;background:rgba(255,255,255,.2);border-radius:9999px;padding:3px 12px">TU HORIZONTE · {{ horizonteCycleLabel }} · {{ horizonteModeLabel }}</span>
+              <span style="background:rgba(255,255,255,.25);border-radius:9999px;display:inline-flex;padding:2px">
+                <dc-import name="Tip" text="El modo cambia solo según tu ciclo: hasta el ciclo 5 es 'Modo Inspirar' (te muestra posibilidades). Desde el ciclo 6 pasa a 'Modo Informar para Decidir' (te muestra datos más concretos de mercado, como sueldos y demanda)." hint-size="14px,14px"></dc-import>
+              </span>
+            </div>
             <h2 style="font-family:Poppins,sans-serif;font-size:18px;font-weight:700;margin:10px 0 0">{{ horizonteGreeting }}</h2>
           </div>
 
@@ -1506,9 +1538,10 @@
                 </div>
                 <div style="display:flex;flex-wrap:wrap;gap:6px">
                   <sc-for list="{{ hzRoleChips }}" as="c" hint-placeholder-count="3">
-                    <span style="{{ c.style }}">{{ c.label }}</span>
+                    <span onClick="{{ c.onToggle }}" style="{{ c.style }}">{{ c.label }}<dc-import name="Icon" i="star" s="12" c="{{ c.starColor }}" hint-size="12px,12px"></dc-import></span>
                   </sc-for>
                 </div>
+                <p style="font-size:10px;color:#9ca3af;margin:8px 0 0">⭐ Toca un rol para guardarlo como tu meta.</p>
               </div>
               <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:18px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
                 <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
@@ -1517,9 +1550,10 @@
                 </div>
                 <div style="display:flex;flex-wrap:wrap;gap:6px">
                   <sc-for list="{{ hzCompanyChips }}" as="c" hint-placeholder-count="5">
-                    <span style="{{ c.style }}">{{ c.label }}</span>
+                    <span onClick="{{ c.onToggle }}" style="{{ c.style }}">{{ c.label }}<dc-import name="Icon" i="star" s="12" c="{{ c.starColor }}" hint-size="12px,12px"></dc-import></span>
                   </sc-for>
                 </div>
+                <p style="font-size:10px;color:#9ca3af;margin:8px 0 0">⭐ Toca una empresa para guardarla como tu meta.</p>
               </div>
               <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:18px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
                 <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
@@ -1528,18 +1562,21 @@
                 </div>
                 <div style="display:flex;flex-wrap:wrap;gap:6px">
                   <sc-for list="{{ hzVentureChips }}" as="c" hint-placeholder-count="3">
-                    <span style="{{ c.style }}">{{ c.label }}</span>
+                    <span onClick="{{ c.onToggle }}" style="{{ c.style }}">{{ c.label }}<dc-import name="Icon" i="star" s="12" c="{{ c.starColor }}" hint-size="12px,12px"></dc-import></span>
                   </sc-for>
                 </div>
+                <p style="font-size:10px;color:#9ca3af;margin:8px 0 0">⭐ Toca una idea para guardarla como tu meta.</p>
               </div>
-              <div style="background:linear-gradient(to bottom right,#faf5ff,#eef2ff);border:1px solid #f3e8ff;border-radius:16px;padding:18px">
-                <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-                  <div style="{{ hzIconVentures }}">🎙️</div>
-                  <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:13px;margin:0">Una historia para inspirarte</h3>
+              <sc-if value="{{ hzHasStory }}" hint-placeholder-val="{{ false }}">
+                <div style="background:linear-gradient(to bottom right,#faf5ff,#eef2ff);border:1px solid #f3e8ff;border-radius:16px;padding:18px">
+                  <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+                    <div style="{{ hzIconVentures }}">🎙️</div>
+                    <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:13px;margin:0">Una historia para inspirarte</h3>
+                  </div>
+                  <p style="font-size:13px;color:#4A3FA0;margin:0;font-style:italic;line-height:1.5">{{ hzStoryShort }}</p>
+                  <p style="font-size:11px;color:#9333ea;font-weight:600;margin:8px 0 0">— {{ hzStoryAttribution }}</p>
                 </div>
-                <p style="font-size:13px;color:#4A3FA0;margin:0;font-style:italic;line-height:1.5">{{ hzStoryShort }}</p>
-                <p style="font-size:11px;color:#9333ea;font-weight:600;margin:8px 0 0">— {{ hzStoryAttribution }}</p>
-              </div>
+              </sc-if>
             </div>
             <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:18px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
               <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
@@ -1578,7 +1615,7 @@
           </sc-if>
           <sc-if value="{{ isInformMode }}" hint-placeholder-val="{{ false }}">
             <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
-              <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:13px;margin:0 0 12px">📊 Cómo se ve ese mundo hoy</h3>
+              <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:13px;margin:0 0 12px;display:flex;align-items:center;gap:6px">📊 Cómo se ve ese mundo hoy <dc-import name="Tip" text="Son datos aproximados según estudios de egresados con un enfoque parecido al tuyo — no una promesa de sueldo ni de empleo. Te sirven para tener una referencia real, no exacta." hint-size="14px,14px"></dc-import></h3>
               <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px">
                 <div style="background:#faf5ff;border-radius:12px;padding:14px 10px;text-align:center">
                   <p style="font-size:10px;color:#9333ea;margin:0 0 4px;font-weight:700;text-transform:uppercase;letter-spacing:.04em">Demanda</p>
@@ -1593,6 +1630,18 @@
                   <p style="font-size:15px;font-weight:700;color:#1A1040;margin:0">{{ hzProjection }}</p>
                 </div>
               </div>
+            </div>
+            <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:18px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+                <div style="{{ hzIconRoles }}">💼</div>
+                <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:13px;margin:0">Roles a los que conecta</h3>
+              </div>
+              <div style="display:flex;flex-wrap:wrap;gap:6px">
+                <sc-for list="{{ hzRoleChips }}" as="c" hint-placeholder-count="3">
+                  <span onClick="{{ c.onToggle }}" style="{{ c.style }}">{{ c.label }}<dc-import name="Icon" i="star" s="12" c="{{ c.starColor }}" hint-size="12px,12px"></dc-import></span>
+                </sc-for>
+              </div>
+              <p style="font-size:10px;color:#9ca3af;margin:8px 0 0">⭐ Toca un rol para guardarlo como tu meta.</p>
             </div>
             <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:16px">
               <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:16px;padding:18px">
@@ -1627,6 +1676,48 @@
             </div>
           </sc-if>
 
+          <sc-if value="{{ hzHasRoadmap }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:18px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+              <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:13px;margin:0 0 12px;display:flex;align-items:center;gap:6px"><dc-import name="Icon" i="clipboard-list" s="14" c="#7B68EE" hint-size="14px,14px"></dc-import>Cuándo volver a mirar tu Horizonte</h3>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ hzRoadmap }}" as="rm" hint-placeholder-count="3">
+                  <div style="display:flex;gap:10px;align-items:flex-start;background:#faf5ff;border-radius:12px;padding:10px 12px">
+                    <span style="font-size:11px;font-weight:700;color:#7B68EE;background:#f3e8ff;border-radius:9999px;padding:3px 10px;white-space:nowrap;flex-shrink:0">{{ rm.cycleLabel }}</span>
+                    <p style="font-size:12px;color:#4A3FA0;margin:0;line-height:1.5">{{ rm.note }}</p>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ hzHasFavorite }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#faf5ff;border:1px solid #f3e8ff;border-radius:16px;padding:16px;margin-bottom:16px">
+              <p style="font-size:11px;font-weight:700;color:#9333ea;margin:0 0 10px;text-transform:uppercase;letter-spacing:.05em">⭐ Tus metas guardadas</p>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ hzFavorites }}" as="fv" hint-placeholder-count="2">
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+                    <p style="font-size:13px;color:#4A3FA0;margin:0;font-weight:600">{{ fv.emoji }} {{ fv.label }}</p>
+                    <button onClick="{{ fv.onClear }}" style="background:none;color:#9333ea;border:1px solid #f3e8ff;border-radius:9999px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#f3e8ff">Quitar</button>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:18px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+              <div style="{{ hzIconCompanies }}">🤝</div>
+              <div>
+                <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:13px;margin:0">Conecta con egresados</h3>
+                <p style="font-size:12px;color:#9ca3af;margin:2px 0 0">Personas que estudiaron en Continental — no que trabajan ahí — para pedir consejos o hacer networking.</p>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <a href="{{ hzAlumniLinkedInUrl }}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;background:#7B68EE;color:#fff;border-radius:9999px;padding:8px 16px;font-size:12px;font-weight:700;text-decoration:none;white-space:nowrap;font-family:inherit" style-hover="background:#6A58DC">Alumni en LinkedIn<dc-import name="Icon" i="external-link" s="13" c="#fff" hint-size="13px,13px"></dc-import></a>
+              <a href="{{ hzAlumniPortalUrl }}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;background:#faf5ff;color:#7B68EE;border:1px solid #f3e8ff;border-radius:9999px;padding:8px 16px;font-size:12px;font-weight:700;text-decoration:none;white-space:nowrap;font-family:inherit" style-hover="background:#f3e8ff">Portal Alumni UC<dc-import name="Icon" i="external-link" s="13" c="#7B68EE" hint-size="13px,13px"></dc-import></a>
+            </div>
+          </div>
+
           <button onClick="{{ toggleHorizonteDetail }}" style="width:100%;display:flex;align-items:center;justify-content:center;gap:6px;background:#faf5ff;color:#7B68EE;border:0;border-radius:12px;padding:10px 0;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;margin-bottom:16px" style-hover="background:#f3e8ff">{{ horizonteDetailLabel }} <dc-import name="Icon" i="{{ horizonteDetailChevron }}" s="13" hint-size="13px,13px"></dc-import></button>
 
           <!-- ===== DETALLE DESPLEGADO ===== -->
@@ -1657,10 +1748,12 @@
                     </sc-for>
                   </div>
                 </div>
-                <div style="background:#faf5ff;border:1px solid #f3e8ff;border-radius:16px;padding:20px">
-                  <p style="font-size:14px;color:#4A3FA0;line-height:1.7;margin:0 0 8px;font-style:italic">{{ hzStoryFull }}</p>
-                  <p style="font-size:12px;color:#9333ea;font-weight:600;margin:0">— {{ hzStoryAttribution }}</p>
-                </div>
+                <sc-if value="{{ hzHasStory }}" hint-placeholder-val="{{ false }}">
+                  <div style="background:#faf5ff;border:1px solid #f3e8ff;border-radius:16px;padding:20px">
+                    <p style="font-size:14px;color:#4A3FA0;line-height:1.7;margin:0 0 8px;font-style:italic">{{ hzStoryFull }}</p>
+                    <p style="font-size:12px;color:#9333ea;font-weight:600;margin:0">— {{ hzStoryAttribution }}</p>
+                  </div>
+                </sc-if>
                 <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
                   <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:14px;margin:0 0 8px">Cómo se ve ese mundo</h3>
                   <p style="font-size:13px;color:#4b5563;line-height:1.65;margin:0">{{ hzWorldFull }}</p>
@@ -1746,7 +1839,7 @@
           </sc-if>
 
           <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:24px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
-            <h2 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:14px;margin:0 0 4px">💬 Pregúntale al Asistente CoRA</h2>
+            <h2 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:14px;margin:0 0 4px">💬 Pregúntale al Tutor CoRA</h2>
             <p style="font-size:12px;color:#9ca3af;margin:0 0 12px">Toca una pregunta y sigue la conversación con IA — o escribe la tuya.</p>
             <div style="display:flex;flex-direction:column;gap:8px">
               <sc-for list="{{ hzChips }}" as="ch" hint-placeholder-count="3">
@@ -2085,8 +2178,9 @@
               <p style="font-size:20px;line-height:28px;font-weight:700;color:#b91c1c;margin:0">{{ pWrongLabel }}</p><p style="font-size:12px;color:#dc2626;margin:0">Incorrectas</p>
             </div>
             <div style="background:#faf5ff;border:1px solid #f3e8ff;border-radius:16px;padding:16px;text-align:center">
-              <div style="display:flex;justify-content:center;margin-bottom:4px"><dc-import name="Icon" i="star" s="18" c="#7B68EE" hint-size="18px,18px"></dc-import></div>
-              <p style="font-size:20px;line-height:28px;font-weight:700;color:#7B68EE;margin:0">{{ pXpLabel }}</p><p style="font-size:12px;color:#7B68EE;margin:0">XP ganados</p>
+              <div style="display:flex;justify-content:center;margin-bottom:4px"><dc-import name="Icon" i="heart" s="18" c="#7B68EE" hint-size="18px,18px"></dc-import></div>
+              <p style="font-size:20px;line-height:28px;font-weight:700;color:#7B68EE;margin:0">{{ pXpLabel }}</p>
+              <p style="font-size:12px;color:#7B68EE;margin:0;display:flex;align-items:center;justify-content:center;gap:4px">CoRAzones ganados <dc-import name="Tip" text="CoRAzones = puntos que muestran tu avance en CoRA. Los ganas al completar pasos del Recomendador, estudiar y mantener tu racha." hint-size="14px,14px"></dc-import></p>
             </div>
           </div>
           <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
@@ -2101,7 +2195,7 @@
           </div>
           <div style="display:flex;gap:12px">
             <button onClick="{{ pRestart }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;border:2px solid #7B68EE;background:#fff;color:#7B68EE;border-radius:16px;padding:12px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit" style-hover="background:#faf5ff"><dc-import name="Icon" i="rotate-ccw" s="15" hint-size="15px,15px"></dc-import>🔄 Repetir otro simulacro</button>
-            <button onClick="{{ goTutor }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:#2563eb;color:#fff;border:0;border-radius:16px;padding:12px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit" style-hover="background:#1d4ed8"><dc-import name="Icon" i="message-circle" s="15" hint-size="15px,15px"></dc-import>Ir al Asistente CoRA</button>
+            <button onClick="{{ goTutor }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:#2563eb;color:#fff;border:0;border-radius:16px;padding:12px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit" style-hover="background:#1d4ed8"><dc-import name="Icon" i="message-circle" s="15" hint-size="15px,15px"></dc-import>Ir al Tutor CoRA</button>
           </div>
         </div>
       </sc-if>
@@ -2216,7 +2310,7 @@
             <div style="background:#fef2f2;border:1px solid #fee2e2;border-radius:16px;padding:16px;text-align:center"><p style="font-size:24px;line-height:32px;font-weight:700;color:#b91c1c;margin:0">{{ fNo }}</p><p style="font-size:12px;color:#dc2626;margin:0">😞 Para repasar</p></div>
           </div>
           <div style="background:#faf5ff;border:1px solid #f3e8ff;border-radius:16px;padding:16px;margin-bottom:24px">
-            <p style="font-weight:700;color:#7B68EE;margin:0 0 2px">{{ fXpLabel }}</p>
+            <p style="font-weight:700;color:#7B68EE;margin:0 0 2px;display:flex;align-items:center;gap:6px">{{ fXpLabel }} <dc-import name="Tip" text="CoRAzones = puntos que muestran tu avance en CoRA. Los ganas al completar pasos del Recomendador, estudiar y mantener tu racha." hint-size="14px,14px"></dc-import></p>
             <p style="font-size:12px;color:#6b7280;margin:0">{{ fXpDetail }}</p>
           </div>
           <div style="display:flex;gap:12px">
@@ -2230,7 +2324,7 @@
         <div style="display:flex;flex-direction:column;gap:16px">
           <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:8px;flex-wrap:wrap">
             <span style="white-space:nowrap">👨‍🏫 Académico</span>
-            <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Asistente CoRA</span></span>
+            <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Tutor CoRA</span></span>
           </nav>
           <div style="display:flex;align-items:center;gap:12px;background:#faf5ff;border-radius:16px;padding:14px 18px">
             <img src="./assets/cora-logo.png" alt="CoRA" style="height:34px;width:auto;display:block">
@@ -2238,7 +2332,7 @@
           </div>
           <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px">
             <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
-              <h2 style="font-weight:700;color:#1A1040;font-size:14px;margin:0 0 8px">💬 Asistente CoRA — 24/7</h2>
+              <h2 style="font-weight:700;color:#1A1040;font-size:14px;margin:0 0 8px">💬 Tutor CoRA — 24/7</h2>
               <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px;font-size:12px;color:#6b7280">
                 <li style="display:flex;align-items:center;gap:8px"><dc-import name="Icon" i="check-circle" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Responder dudas académicas</li>
                 <li style="display:flex;align-items:center;gap:8px"><dc-import name="Icon" i="check-circle" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Explicar conceptos difíciles</li>
@@ -2247,8 +2341,8 @@
               </ul>
             </div>
             <div style="background:linear-gradient(to right,#eff6ff,#faf5ff);border:1px solid #f3e8ff;border-radius:16px;padding:16px">
-              <h3 style="font-weight:700;color:#1A1040;font-size:12px;margin:0 0 6px">💬 Asistente CoRA vs 👨‍💼 Asesor</h3>
-              <p style="font-size:12px;color:#4b5563;margin:0"><strong>Asistente CoRA (aquí):</strong> Dudas académicas, ejercicios</p>
+              <h3 style="font-weight:700;color:#1A1040;font-size:12px;margin:0 0 6px">💬 Tutor CoRA vs 👨‍💼 Asesor</h3>
+              <p style="font-size:12px;color:#4b5563;margin:0"><strong>Tutor CoRA (aquí):</strong> Dudas académicas, ejercicios</p>
               <p style="font-size:12px;color:#4b5563;margin:2px 0 0"><strong>Asesor Académico:</strong> Consejería de carrera, seguimiento</p>
             </div>
           </div>
@@ -2330,18 +2424,21 @@
             </div>
           </div>
           <div style="background:linear-gradient(to bottom right,#faf5ff,#eef2ff);border:1px solid #f3e8ff;border-radius:16px;padding:20px;margin-bottom:16px">
-            <h2 style="font-weight:700;color:#1A1040;font-size:14px;margin:0 0 4px;display:flex;align-items:center;gap:6px">✨ Tu Progreso en XP <dc-import name="Tip" text="XP = puntos de progreso que muestran tu avance. Los ganas al completar pasos del Recomendador, estudiar y mantener tu racha." hint-size="14px,14px"></dc-import></h2>
-            <p style="font-size:12px;color:#15803d;background:#dcfce7;display:inline-block;border-radius:9999px;padding:3px 10px;margin:0 0 16px;font-weight:600">📈 Has ganado {{ xpThisCycle }} XP este ciclo</p>
+            <h2 style="font-weight:700;color:#1A1040;font-size:14px;margin:0 0 4px;display:flex;align-items:center;gap:6px">💜 Tu Progreso en CoRAzones <dc-import name="Tip" text="CoRAzones = puntos que muestran tu avance en CoRA. Los ganas al completar pasos del Recomendador, estudiar y mantener tu racha." hint-size="14px,14px"></dc-import></h2>
+            <p style="font-size:12px;color:#15803d;background:#dcfce7;display:inline-block;border-radius:9999px;padding:3px 10px;margin:0 0 16px;font-weight:600">📈 Has ganado {{ xpThisCycle }} CoRAzones este ciclo</p>
             <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:8px">
-              <div><p style="font-size:30px;line-height:36px;font-weight:900;color:#7B68EE;margin:0">{{ xpLabel }}</p><p style="font-size:12px;color:#6b7280;margin:0">XP acumulados</p></div>
-              <div style="text-align:right"><p style="font-size:14px;font-weight:700;color:#4A3FA0;margin:0">Nivel: Explorador</p><p style="font-size:12px;color:#6b7280;margin:0">Próximo: {{ xpNext }} XP</p></div>
+              <div><p style="font-size:30px;line-height:36px;font-weight:900;color:#7B68EE;margin:0">{{ xpLabel }}</p><p style="font-size:12px;color:#6b7280;margin:0">CoRAzones acumulados</p></div>
+              <div style="text-align:right">
+                <p style="font-size:14px;font-weight:700;color:#4A3FA0;margin:0;display:flex;align-items:center;justify-content:flex-end;gap:4px">Nivel: Explorador <dc-import name="Tip" text="Tu nivel sube según tus CoRAzones acumulados — es el mismo número, solo con un nombre más motivador. 'Explorador' es el primer nivel." hint-size="14px,14px"></dc-import></p>
+                <p style="font-size:12px;color:#6b7280;margin:0">Próximo: {{ xpNext }} CoRAzones</p>
+              </div>
             </div>
             <div style="height:8px;background:#f3f4f6;border-radius:9999px;overflow:hidden;margin-bottom:12px"><div style="height:100%;background:#7B68EE;border-radius:9999px;transition:all .7s;width:{{ xpPct }}"></div></div>
             <div style="display:flex;align-items:center;gap:8px;background:#ffedd5;border-radius:12px;padding:8px 12px;width:fit-content;margin-bottom:16px">
               <dc-import name="Icon" i="flame" s="13" c="#f97316" hint-size="13px,13px"></dc-import>
               <span style="font-size:12px;font-weight:700;color:#c2410c">🔥 {{ streak }} días consecutivos</span>
             </div>
-            <p style="font-size:11px;font-weight:700;color:#9ca3af;margin:0 0 8px;text-transform:uppercase;letter-spacing:.05em">🏅 Insignias — se ganan con tu XP</p>
+            <p style="font-size:11px;font-weight:700;color:#9ca3af;margin:0 0 8px;text-transform:uppercase;letter-spacing:.05em">🏅 Insignias — se ganan con tus CoRAzones</p>
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:8px">
               <sc-for list="{{ badges }}" as="b" hint-placeholder-count="4">
                 <div style="{{ b.cardStyle }}">
@@ -2353,7 +2450,7 @@
             </div>
           </div>
           <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
-            <h2 style="font-weight:700;color:#1A1040;font-size:14px;margin:0 0 12px">🎯 ¿Cómo gano XP?</h2>
+            <h2 style="font-weight:700;color:#1A1040;font-size:14px;margin:0 0 12px">🎯 ¿Cómo gano CoRAzones?</h2>
             <div>
               <sc-for list="{{ xpTable }}" as="x" hint-placeholder-count="8">
                 <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f9fafb;font-size:12px">
@@ -2366,7 +2463,7 @@
           <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
             <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap">
               <h2 style="font-weight:700;color:#1A1040;font-size:14px;margin:0">🎁 Certificados y canjes</h2>
-              <span style="font-size:11px;color:#9ca3af">Tu saldo: <strong style="color:#7B68EE">{{ xpLabel }} XP</strong></span>
+              <span style="font-size:11px;color:#9ca3af">Tu saldo: <strong style="color:#7B68EE">{{ xpLabel }} CoRAzones</strong></span>
             </div>
             <sc-for list="{{ rewards }}" as="rw" hint-placeholder-count="4">
               <div style="{{ rw.cardStyle }}">
@@ -2577,11 +2674,11 @@
     </main>
   </div>
 
-  <!-- ===== Asistente CoRA: widget flotante, presente en toda la plataforma ===== -->
+  <!-- ===== Tutor CoRA: widget flotante, presente en toda la plataforma ===== -->
   <sc-if value="{{ chatClosed }}" hint-placeholder-val="{{ true }}">
-    <button onClick="{{ toggleChat }}" aria-label="Abrir el Asistente CoRA" style="position:fixed;right:24px;bottom:24px;z-index:40;display:flex;align-items:center;gap:10px;background:#7B68EE;color:#fff;border:0;border-radius:9999px;padding:14px 20px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;box-shadow:0 10px 15px -3px rgba(123,104,238,.5),0 4px 6px -4px rgba(123,104,238,.5);transition:all .15s" style-hover="background:#6A58DC">
+    <button onClick="{{ toggleChat }}" aria-label="Abrir el Tutor CoRA" style="position:fixed;right:24px;bottom:24px;z-index:40;display:flex;align-items:center;gap:10px;background:#7B68EE;color:#fff;border:0;border-radius:9999px;padding:14px 20px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;box-shadow:0 10px 15px -3px rgba(123,104,238,.5),0 4px 6px -4px rgba(123,104,238,.5);transition:all .15s" style-hover="background:#6A58DC">
       <dc-import name="Icon" i="message-circle" s="18" c="#ffffff" hint-size="18px,18px"></dc-import>
-      Asistente CoRA
+      Tutor CoRA
     </button>
   </sc-if>
 
@@ -2592,13 +2689,13 @@
           <dc-import name="Icon" i="message-circle" s="15" c="#ffffff" hint-size="15px,15px"></dc-import>
         </div>
         <div style="flex:1;min-width:0">
-          <p style="font-family:Poppins,sans-serif;font-size:14px;font-weight:700;margin:0">Asistente CoRA</p>
+          <p style="font-family:Poppins,sans-serif;font-size:14px;font-weight:700;margin:0">Tutor CoRA</p>
           <p style="font-size:11px;color:rgba(255,255,255,.85);margin:1px 0 0">Disponible 24/7</p>
         </div>
         <button onClick="{{ openChatFull }}" aria-label="Abrir en pantalla completa" style="background:rgba(255,255,255,.15);border:0;border-radius:8px;padding:6px;cursor:pointer;color:#fff;display:flex" style-hover="background:rgba(255,255,255,.3)">
           <dc-import name="Icon" i="upload" s="13" c="#ffffff" hint-size="13px,13px"></dc-import>
         </button>
-        <button onClick="{{ closeChat }}" aria-label="Cerrar el Asistente" style="background:rgba(255,255,255,.15);border:0;border-radius:8px;padding:6px;cursor:pointer;color:#fff;display:flex" style-hover="background:rgba(255,255,255,.3)">
+        <button onClick="{{ closeChat }}" aria-label="Cerrar el Tutor CoRA" style="background:rgba(255,255,255,.15);border:0;border-radius:8px;padding:6px;cursor:pointer;color:#fff;display:flex" style-hover="background:rgba(255,255,255,.3)">
           <dc-import name="Icon" i="x" s="13" c="#ffffff" hint-size="13px,13px"></dc-import>
         </button>
       </div>
@@ -2614,6 +2711,78 @@
         <button onClick="{{ tutorSend }}" aria-label="Enviar" style="background:#7B68EE;color:#fff;border:0;border-radius:12px;padding:0 14px;cursor:pointer;display:flex;align-items:center;font-family:inherit" style-hover="background:#6A58DC">
           <dc-import name="Icon" i="send" s="15" c="#ffffff" hint-size="15px,15px"></dc-import>
         </button>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ===== Panel de detalle de asignatura, se abre al hacer clic en
+       cualquier asignatura de la malla (o de su vista previa en Mis Rutas) ===== -->
+  <sc-if value="{{ showCourseDetail }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:55;background:rgba(26,16,64,.45);display:flex;justify-content:flex-end">
+      <div style="width:400px;max-width:100vw;height:100vh;background:#fff;box-shadow:-8px 0 30px rgba(0,0,0,.15);overflow-y:auto;padding:20px;box-sizing:border-box">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+          <span style="font-size:11px;color:#9ca3af;font-weight:600">Viendo detalles:</span>
+          <button onClick="{{ courseDetail.close }}" aria-label="Cerrar" style="background:none;border:0;cursor:pointer;color:#1A1040;padding:4px;display:flex" style-hover="color:#7B68EE"><dc-import name="Icon" i="x" s="16" hint-size="16px,16px"></dc-import></button>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+          <span style="font-size:11px;font-weight:700;color:#7B68EE;background:#faf5ff;border:1px solid #f3e8ff;border-radius:9999px;padding:4px 12px;white-space:nowrap">{{ courseDetail.cycleLabel }}</span>
+          <span style="font-size:11px;font-weight:700;color:#6b7280;background:#f9fafb;border:1px solid #f3f4f6;border-radius:9999px;padding:4px 12px;white-space:nowrap">{{ courseDetail.catLabel }}</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:6px">
+          <h2 style="font-family:Poppins,sans-serif;font-size:19px;font-weight:700;color:#1A1040;margin:0;line-height:1.3">{{ courseDetail.name }}</h2>
+          <button onClick="{{ courseDetail.newConsult }}" style="flex-shrink:0;font-size:11px;font-weight:600;color:#7B68EE;background:#faf5ff;border:0;border-radius:9999px;padding:6px 12px;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#f3e8ff">Nueva consulta</button>
+        </div>
+        <p style="font-size:12px;color:#9ca3af;margin:0 0 16px">{{ courseDetail.typeLabel }}</p>
+        <div style="background:#f9fafb;border-radius:12px;padding:10px 14px;margin-bottom:20px;display:inline-block">
+          <span style="font-size:13px;font-weight:600;color:#1A1040">{{ courseDetail.creditsLabel }}</span>
+        </div>
+        <sc-if value="{{ courseDetail.hasPrereq }}" hint-placeholder-val="{{ false }}">
+          <div style="background:#fff7ed;border:1px solid #ffedd5;border-radius:12px;padding:12px 14px;margin-bottom:16px;display:flex;align-items:flex-start;gap:8px">
+            <dc-import name="Icon" i="link" s="13" c="#b45309" hint-size="13px,13px"></dc-import>
+            <div>
+              <p style="font-size:10px;font-weight:700;color:#b45309;text-transform:uppercase;letter-spacing:.05em;margin:0 0 2px">Prerrequisito</p>
+              <p style="font-size:12px;color:#78350f;margin:0">{{ courseDetail.prereq }}</p>
+            </div>
+          </div>
+        </sc-if>
+        <p style="font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;margin:0 0 6px">Descripción del curso</p>
+        <p style="font-size:13px;color:#374151;line-height:1.6;margin:0 0 20px">{{ courseDetail.desc }}</p>
+        <sc-if value="{{ courseDetail.hasComp }}" hint-placeholder-val="{{ false }}">
+          <p style="font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;margin:0 0 8px">Competencias</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px">
+            <sc-for list="{{ courseDetail.comp }}" as="cp" hint-placeholder-count="3">
+              <span style="font-size:12px;font-weight:600;color:#4A3FA0;background:#f3e8ff;border-radius:9999px;padding:6px 14px">{{ cp.label }}</span>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ courseDetail.needsRecommendation }}" hint-placeholder-val="{{ false }}">
+          <div style="background:linear-gradient(to bottom right,#faf5ff,#eef2ff);border:1px solid #f3e8ff;border-radius:12px;padding:14px;margin-bottom:20px">
+            <p style="font-size:12px;font-weight:700;color:#4A3FA0;margin:0 0 10px">💡 CoRA recomienda</p>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{ courseDetail.recommended }}" as="rc" hint-placeholder-count="3">
+                <button onClick="{{ rc.onPick }}" style="text-align:left;background:#fff;border:1px solid #f3e8ff;border-radius:10px;padding:10px 12px;cursor:pointer;font-family:inherit" style-hover="border-color:#7B68EE">
+                  <p style="font-size:12px;font-weight:700;color:#1A1040;margin:0 0 2px">{{ rc.name }}</p>
+                  <p style="font-size:11px;color:#6b7280;margin:0">{{ rc.desc }}</p>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ courseDetail.isChosenElective }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ courseDetail.onUnchoose }}" style="font-size:12px;color:#0369a1;background:#f0f9ff;border:1px solid #bae6fd;border-radius:9999px;padding:8px 14px;cursor:pointer;font-family:inherit;margin-bottom:20px;width:100%" style-hover="background:#e0f2fe">↺ Elegir otro electivo</button>
+        </sc-if>
+        <sc-if value="{{ courseDetail.moveOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="background:#f9fafb;border-radius:12px;padding:12px;margin-bottom:12px">
+            <p style="font-size:11px;font-weight:700;color:#6b7280;margin:0 0 8px">Elige el ciclo destino</p>
+            <div style="display:flex;flex-wrap:wrap;gap:6px">
+              <sc-for list="{{ courseDetail.moveOptions }}" as="mo" hint-placeholder-count="6">
+                <button onClick="{{ mo.onClick }}" style="font-size:11px;font-weight:600;color:#374151;background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:6px 10px;cursor:pointer;font-family:inherit" style-hover="border-color:#7B68EE;color:#7B68EE">{{ mo.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+        <button onClick="{{ courseDetail.onToggleMove }}" style="width:100%;background:#faf5ff;color:#7B68EE;border:0;border-radius:12px;padding:10px 0;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;margin-bottom:8px">↕️ Mover a otro ciclo</button>
+        <button onClick="{{ courseDetail.onConsult }}" style="width:100%;background:#1A1040;color:#fff;border:0;border-radius:12px;padding:12px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit" style-hover="background:#2d1b69">Consultar CoRA sobre este curso</button>
       </div>
     </div>
   </sc-if>
@@ -2749,79 +2918,179 @@ class Component extends DCLogic {
      Administración y Negocios Internacionales, plan 2024. */
   CURRICULUM = [
     { cycle:1, credits:20, courses:[
-      { name:"Comprensión y Producción de Textos 1", credits:3, cat:"general", type:"Teórico-Práctico", professor:"Dra. Ana Torres", schedule:"Lun-Mié 08-10h", modality:"Presencial" },
-      { name:"Laboratorio de Liderazgo e Innovación", credits:3, cat:"general", type:"Teórico-Práctico", professor:"Mg. Sandra Lima", schedule:"Mar-Jue 10-12h", modality:"Presencial" },
-      { name:"Estrategias y Herramientas Digitales para el Aprendizaje", credits:4, cat:"general", type:"Práctico", professor:"Dr. Jorge Vargas", schedule:"Vie 08-11h", modality:"Virtual" },
-      { name:"Fundamentos de Matemática", credits:4, cat:"facultad", type:"Teórico", professor:"Dr. Carlos Mendoza", schedule:"Lun-Mié 12-14h", modality:"Presencial" },
-      { name:"Economía 1", credits:3, cat:"facultad", type:"Teórico", professor:"Dr. Luis Paredes", schedule:"Mar-Jue 14-16h", modality:"Presencial" },
-      { name:"Introducción a la Administración y Negocios Internacionales", credits:3, cat:"carrera", type:"Teórico", professor:"Dr. Renzo Salinas", schedule:"Vie 14-17h", modality:"Presencial" }]},
+      { name:"Comprensión y Producción de Textos 1", credits:3, cat:"general", type:"Teórico-Práctico", professor:"Dra. Ana Torres", schedule:"Lun-Mié 08-10h", modality:"Presencial",
+        desc:"Fundamentos de redacción y comprensión lectora para el trabajo académico.", comp:["Comunicación","Redacción"] },
+      { name:"Laboratorio de Liderazgo e Innovación", credits:3, cat:"general", type:"Teórico-Práctico", professor:"Mg. Sandra Lima", schedule:"Mar-Jue 10-12h", modality:"Presencial",
+        desc:"Primer contacto con herramientas de liderazgo personal y trabajo en equipo.", comp:["Liderazgo","Trabajo en equipo"] },
+      { name:"Estrategias y Herramientas Digitales para el Aprendizaje", credits:4, cat:"general", type:"Práctico", professor:"Dr. Jorge Vargas", schedule:"Vie 08-11h", modality:"Virtual",
+        desc:"Herramientas digitales para organizar tu vida académica desde el primer ciclo.", comp:["Tecnología","Organización"] },
+      { name:"Fundamentos de Matemática", credits:4, cat:"facultad", type:"Teórico", professor:"Dr. Carlos Mendoza", schedule:"Lun-Mié 12-14h", modality:"Presencial",
+        desc:"Bases de álgebra y razonamiento matemático para los cursos cuantitativos que vienen.", comp:["Análisis","Resolución de problemas"] },
+      { name:"Economía 1", credits:3, cat:"facultad", type:"Teórico", professor:"Dr. Luis Paredes", schedule:"Mar-Jue 14-16h", modality:"Presencial",
+        desc:"Principios de oferta, demanda y funcionamiento de los mercados.", comp:["Análisis","Pensamiento crítico"] },
+      { name:"Introducción a la Administración y Negocios Internacionales", credits:3, cat:"carrera", type:"Teórico", professor:"Dr. Renzo Salinas", schedule:"Vie 14-17h", modality:"Presencial",
+        desc:"Panorama general de la carrera y del comercio internacional.", comp:["Visión estratégica","Comunicación"] }]},
     { cycle:2, credits:21, courses:[
-      { name:"Comprensión y Producción de Textos 2", credits:4, cat:"general", type:"Teórico-Práctico", professor:"Dra. Ana Torres", schedule:"Lun-Mié 08-10h", modality:"Presencial" },
-      { name:"Administración Global", credits:3, cat:"facultad", type:"Teórico", professor:"Mg. Sandra Lima", schedule:"Mar-Jue 10-12h", modality:"Presencial" },
-      { name:"Matemática 2.1", credits:4, cat:"facultad", type:"Teórico", professor:"Dr. Carlos Mendoza", schedule:"Vie 08-11h", modality:"Presencial" },
-      { name:"Economía 2", credits:3, cat:"facultad", type:"Teórico", professor:"Dr. Luis Paredes", schedule:"Lun-Mié 12-14h", modality:"Presencial" },
-      { name:"Fundamentos de Contabilidad", credits:4, cat:"facultad", type:"Teórico-Práctico", professor:"Mg. Rosa Quispe", schedule:"Mar-Jue 14-16h", modality:"Presencial" },
-      { name:"Electivo General 1", credits:3, cat:"electivo", type:"Electivo", professor:"Por confirmar", schedule:"A elegir", modality:"Flexible", track:"electivo" }]},
+      { name:"Comprensión y Producción de Textos 2", credits:4, cat:"general", type:"Teórico-Práctico", professor:"Dra. Ana Torres", schedule:"Lun-Mié 08-10h", modality:"Presencial",
+        desc:"Redacción de textos académicos más complejos, con enfoque argumentativo.", comp:["Comunicación","Pensamiento crítico"], prereq:"Comprensión y Producción de Textos 1" },
+      { name:"Administración Global", credits:3, cat:"facultad", type:"Teórico", professor:"Mg. Sandra Lima", schedule:"Mar-Jue 10-12h", modality:"Presencial",
+        desc:"Fundamentos de administración aplicados a organizaciones con operación internacional.", comp:["Gestión","Visión estratégica"] },
+      { name:"Matemática 2.1", credits:4, cat:"facultad", type:"Teórico", professor:"Dr. Carlos Mendoza", schedule:"Vie 08-11h", modality:"Presencial",
+        desc:"Profundiza en funciones y modelos matemáticos aplicados a negocios.", comp:["Análisis","Resolución de problemas"], prereq:"Fundamentos de Matemática" },
+      { name:"Economía 2", credits:3, cat:"facultad", type:"Teórico", professor:"Dr. Luis Paredes", schedule:"Lun-Mié 12-14h", modality:"Presencial",
+        desc:"Macroeconomía aplicada al comercio y las decisiones empresariales.", comp:["Análisis","Visión estratégica"], prereq:"Economía 1" },
+      { name:"Fundamentos de Contabilidad", credits:4, cat:"facultad", type:"Teórico-Práctico", professor:"Mg. Rosa Quispe", schedule:"Mar-Jue 14-16h", modality:"Presencial",
+        desc:"Registro e interpretación básica de la información financiera de una empresa.", comp:["Análisis","Organización"] },
+      { name:"Electivo General 1", credits:3, cat:"electivo", type:"Electivo", professor:"Por confirmar", schedule:"A elegir", modality:"Flexible", track:"electivo",
+        desc:"Cupo de electivo general — CoRA te recomienda opciones según tu ruta y tus intereses.", comp:[] }]},
     { cycle:3, credits:21, courses:[
-      { name:"Estadística y Probabilidades", credits:4, cat:"general", type:"Teórico-Práctico", professor:"Dr. Jorge Vargas", schedule:"Lun-Mié 08-10h", modality:"Presencial" },
-      { name:"Laboratorio de Liderazgo e Innovación Intermedio", credits:2, cat:"general", type:"Teórico-Práctico", professor:"Mg. Sandra Lima", schedule:"Vie 08-10h", modality:"Presencial" },
-      { name:"Comportamiento Organizacional", credits:3, cat:"facultad", type:"Teórico", professor:"Mg. Rosa Quispe", schedule:"Mar-Jue 10-12h", modality:"Presencial" },
-      { name:"Derecho Empresarial", credits:5, cat:"facultad", type:"Teórico", professor:"Dr. Iván Cáceres", schedule:"Lun-Mié 14-17h", modality:"Virtual" },
-      { name:"Matemáticas Financieras", credits:4, cat:"facultad", type:"Teórico", professor:"Dr. Carlos Mendoza", schedule:"Mar-Jue 12-14h", modality:"Presencial" },
-      { name:"Electivo General 2", credits:3, cat:"electivo", type:"Electivo", professor:"Por confirmar", schedule:"A elegir", modality:"Flexible", track:"electivo" }]},
+      { name:"Estadística y Probabilidades", credits:4, cat:"general", type:"Teórico-Práctico", professor:"Dr. Jorge Vargas", schedule:"Lun-Mié 08-10h", modality:"Presencial",
+        desc:"Herramientas estadísticas para el análisis de datos e investigación.", comp:["Análisis","Resolución de problemas"] },
+      { name:"Laboratorio de Liderazgo e Innovación Intermedio", credits:2, cat:"general", type:"Teórico-Práctico", professor:"Mg. Sandra Lima", schedule:"Vie 08-10h", modality:"Presencial",
+        desc:"Profundiza en liderazgo de equipos y gestión del cambio.", comp:["Liderazgo","Adaptabilidad"], prereq:"Laboratorio de Liderazgo e Innovación" },
+      { name:"Comportamiento Organizacional", credits:3, cat:"facultad", type:"Teórico", professor:"Mg. Rosa Quispe", schedule:"Mar-Jue 10-12h", modality:"Presencial",
+        desc:"Cómo las personas y los grupos se comportan dentro de una organización.", comp:["Trabajo en equipo","Comunicación"] },
+      { name:"Derecho Empresarial", credits:5, cat:"facultad", type:"Teórico", professor:"Dr. Iván Cáceres", schedule:"Lun-Mié 14-17h", modality:"Virtual",
+        desc:"Marco legal que rige la actividad empresarial en el Perú.", comp:["Pensamiento crítico","Ética"] },
+      { name:"Matemáticas Financieras", credits:4, cat:"facultad", type:"Teórico", professor:"Dr. Carlos Mendoza", schedule:"Mar-Jue 12-14h", modality:"Presencial",
+        desc:"Cálculo de interés, valor del dinero en el tiempo y evaluación financiera básica.", comp:["Análisis","Toma de decisiones"] },
+      { name:"Electivo General 2", credits:3, cat:"electivo", type:"Electivo", professor:"Por confirmar", schedule:"A elegir", modality:"Flexible", track:"electivo",
+        desc:"Cupo de electivo general — CoRA te recomienda opciones según tu ruta y tus intereses.", comp:[] }]},
     { cycle:4, credits:20, courses:[
-      { name:"English Course 1", credits:3, cat:"general", type:"Práctico", professor:"Mg. Patricia Vera", schedule:"Lun-Mié 08-10h", modality:"Virtual" },
-      { name:"Estadística Inferencial", credits:4, cat:"facultad", type:"Teórico-Práctico", professor:"Dr. Jorge Vargas", schedule:"Mar-Jue 10-12h", modality:"Presencial" },
-      { name:"Costos y Presupuestos", credits:4, cat:"facultad", type:"Teórico-Práctico", professor:"Mg. Rosa Quispe", schedule:"Vie 10-13h", modality:"Presencial" },
-      { name:"Marketing", credits:3, cat:"facultad", type:"Teórico-Práctico", professor:"Mg. Patricia Vera", schedule:"Lun-Mié 14-16h", modality:"Presencial" },
-      { name:"Electivo General 3", credits:3, cat:"electivo", type:"Electivo", professor:"Por confirmar", schedule:"A elegir", modality:"Flexible", track:"electivo" },
-      { name:"Electivo General 4", credits:3, cat:"electivo", type:"Electivo", professor:"Por confirmar", schedule:"A elegir", modality:"Flexible", track:"electivo" }]},
+      { name:"English Course 1", credits:3, cat:"general", type:"Práctico", professor:"Mg. Patricia Vera", schedule:"Lun-Mié 08-10h", modality:"Virtual",
+        desc:"Nivel inicial de inglés orientado a comunicación académica.", comp:["Comunicación","Idiomas"] },
+      { name:"Estadística Inferencial", credits:4, cat:"facultad", type:"Teórico-Práctico", professor:"Dr. Jorge Vargas", schedule:"Mar-Jue 10-12h", modality:"Presencial",
+        desc:"Inferencia estadística aplicada a la toma de decisiones de negocio.", comp:["Análisis","Toma de decisiones"], prereq:"Estadística y Probabilidades" },
+      { name:"Costos y Presupuestos", credits:4, cat:"facultad", type:"Teórico-Práctico", professor:"Mg. Rosa Quispe", schedule:"Vie 10-13h", modality:"Presencial",
+        desc:"Elaboración y control de presupuestos y estructura de costos.", comp:["Planificación","Análisis"] },
+      { name:"Marketing", credits:3, cat:"facultad", type:"Teórico-Práctico", professor:"Mg. Patricia Vera", schedule:"Lun-Mié 14-16h", modality:"Presencial",
+        desc:"Fundamentos de marketing y comportamiento del consumidor.", comp:["Creatividad","Análisis"] },
+      { name:"Electivo General 3", credits:3, cat:"electivo", type:"Electivo", professor:"Por confirmar", schedule:"A elegir", modality:"Flexible", track:"electivo",
+        desc:"Cupo de electivo general — CoRA te recomienda opciones según tu ruta y tus intereses.", comp:[] },
+      { name:"Electivo General 4", credits:3, cat:"electivo", type:"Electivo", professor:"Por confirmar", schedule:"A elegir", modality:"Flexible", track:"electivo",
+        desc:"Cupo de electivo general — CoRA te recomienda opciones según tu ruta y tus intereses.", comp:[] }]},
     { cycle:5, credits:23, courses:[
-      { name:"English Course 2", credits:3, cat:"general", type:"Práctico", professor:"Mg. Patricia Vera", schedule:"Lun-Mié 08-10h", modality:"Virtual" },
-      { name:"Laboratorio de Liderazgo e Innovación Avanzado", credits:3, cat:"general", type:"Teórico-Práctico", professor:"Mg. Sandra Lima", schedule:"Vie 08-10h", modality:"Presencial" },
-      { name:"Finanzas 1", credits:4, cat:"facultad", type:"Teórico-Práctico", professor:"Dr. Manuel Ríos", schedule:"Mar-Jue 10-12h", modality:"Presencial" },
-      { name:"Gestión del Talento Humano", credits:4, cat:"facultad", type:"Teórico", professor:"Mg. Rosa Quispe", schedule:"Lun-Mié 12-14h", modality:"Presencial" },
-      { name:"Investigación de Mercados", credits:4, cat:"facultad", type:"Teórico-Práctico", professor:"Mg. Patricia Vera", schedule:"Mar-Jue 14-16h", modality:"Presencial" },
-      { name:"Gestión Internacional e Intercultural", credits:5, cat:"facultad", type:"Teórico", professor:"Mg. Valeria Chumpitaz", schedule:"Vie 14-17h", modality:"Virtual" }]},
+      { name:"English Course 2", credits:3, cat:"general", type:"Práctico", professor:"Mg. Patricia Vera", schedule:"Lun-Mié 08-10h", modality:"Virtual",
+        desc:"Nivel intermedio de inglés con énfasis en vocabulario de negocios.", comp:["Comunicación","Idiomas"], prereq:"English Course 1" },
+      { name:"Laboratorio de Liderazgo e Innovación Avanzado", credits:3, cat:"general", type:"Teórico-Práctico", professor:"Mg. Sandra Lima", schedule:"Vie 08-10h", modality:"Presencial",
+        desc:"Liderazgo aplicado a proyectos reales e innovación organizacional.", comp:["Liderazgo","Innovación"], prereq:"Laboratorio de Liderazgo e Innovación Intermedio" },
+      { name:"Finanzas 1", credits:4, cat:"facultad", type:"Teórico-Práctico", professor:"Dr. Manuel Ríos", schedule:"Mar-Jue 10-12h", modality:"Presencial",
+        desc:"Fundamentos de análisis financiero y decisiones de inversión.", comp:["Análisis","Toma de decisiones"] },
+      { name:"Gestión del Talento Humano", credits:4, cat:"facultad", type:"Teórico", professor:"Mg. Rosa Quispe", schedule:"Lun-Mié 12-14h", modality:"Presencial",
+        desc:"Procesos de selección, desarrollo y retención de personas en la organización.", comp:["Liderazgo","Comunicación"] },
+      { name:"Investigación de Mercados", credits:4, cat:"facultad", type:"Teórico-Práctico", professor:"Mg. Patricia Vera", schedule:"Mar-Jue 14-16h", modality:"Presencial",
+        desc:"Diseño y análisis de estudios de mercado para decisiones comerciales.", comp:["Investigación","Análisis"] },
+      { name:"Gestión Internacional e Intercultural", credits:5, cat:"facultad", type:"Teórico", professor:"Mg. Valeria Chumpitaz", schedule:"Vie 14-17h", modality:"Virtual",
+        desc:"Gestión de equipos y negocios en contextos multiculturales.", comp:["Adaptabilidad","Comunicación"] }]},
     { cycle:6, credits:21, courses:[
-      { name:"Investigación Académica", credits:3, cat:"general", type:"Teórico-Práctico", professor:"Dra. Ana Torres", schedule:"Lun-Mié 08-10h", modality:"Virtual" },
-      { name:"English Course 3", credits:3, cat:"general", type:"Práctico", professor:"Mg. Patricia Vera", schedule:"Vie 08-10h", modality:"Virtual" },
-      { name:"Herramientas Tecnológicas Aplicadas a los Negocios 1", credits:4, cat:"facultad", type:"Práctico", professor:"Dr. Jorge Vargas", schedule:"Mar-Jue 10-12h", modality:"Híbrido" },
-      { name:"Finanzas 2", credits:4, cat:"facultad", type:"Teórico-Práctico", professor:"Dr. Manuel Ríos", schedule:"Lun-Mié 12-14h", modality:"Presencial" },
-      { name:"Gestión de Comercio Internacional", credits:4, cat:"carrera", type:"Teórico-Práctico", professor:"Dr. Renzo Salinas", schedule:"Vie 09-13h", modality:"Presencial" },
-      { name:"Distribución Física Internacional", credits:3, cat:"carrera", type:"Teórico-Práctico", professor:"Mg. Valeria Chumpitaz", schedule:"Sáb 09-12h", modality:"Virtual" }]},
+      { name:"Investigación Académica", credits:3, cat:"general", type:"Teórico-Práctico", professor:"Dra. Ana Torres", schedule:"Lun-Mié 08-10h", modality:"Virtual",
+        desc:"Metodología para la investigación aplicada en administración y negocios.", comp:["Investigación","Pensamiento crítico"] },
+      { name:"English Course 3", credits:3, cat:"general", type:"Práctico", professor:"Mg. Patricia Vera", schedule:"Vie 08-10h", modality:"Virtual",
+        desc:"Nivel intermedio-avanzado de inglés de negocios.", comp:["Comunicación","Idiomas"], prereq:"English Course 2" },
+      { name:"Herramientas Tecnológicas Aplicadas a los Negocios 1", credits:4, cat:"facultad", type:"Práctico", professor:"Dr. Jorge Vargas", schedule:"Mar-Jue 10-12h", modality:"Híbrido",
+        desc:"Uso de herramientas digitales y de datos para la gestión empresarial.", comp:["Tecnología","Análisis"] },
+      { name:"Finanzas 2", credits:4, cat:"facultad", type:"Teórico-Práctico", professor:"Dr. Manuel Ríos", schedule:"Lun-Mié 12-14h", modality:"Presencial",
+        desc:"Decisiones financieras avanzadas y estructura de capital.", comp:["Análisis","Toma de decisiones"], prereq:"Finanzas 1" },
+      { name:"Gestión de Comercio Internacional", credits:4, cat:"carrera", type:"Teórico-Práctico", professor:"Dr. Renzo Salinas", schedule:"Vie 09-13h", modality:"Presencial",
+        desc:"Procesos y estrategias para la operación de comercio exterior.", comp:["Negociación","Visión estratégica"] },
+      { name:"Distribución Física Internacional", credits:3, cat:"carrera", type:"Teórico-Práctico", professor:"Mg. Valeria Chumpitaz", schedule:"Sáb 09-12h", modality:"Virtual",
+        desc:"Logística internacional: transporte, almacenamiento y distribución.", comp:["Planificación","Gestión"] }]},
     { cycle:7, credits:21, courses:[
-      { name:"English Course 4", credits:3, cat:"general", type:"Práctico", professor:"Mg. Patricia Vera", schedule:"Lun-Mié 08-10h", modality:"Virtual" },
-      { name:"Herramientas Tecnológicas Aplicadas a los Negocios 2", credits:3, cat:"carrera", type:"Práctico", professor:"Dr. Jorge Vargas", schedule:"Mar-Jue 10-12h", modality:"Híbrido" },
-      { name:"Agilidad para la Gestión de Proyectos", credits:3, cat:"carrera", type:"Teórico-Práctico", professor:"Mg. Claudia Santos", schedule:"Vie 10-12h", modality:"Presencial" },
-      { name:"Gerencia de Operaciones", credits:3, cat:"carrera", type:"Práctico", professor:"Dr. Manuel Ríos", schedule:"Lun-Mié 14-16h", modality:"Presencial" },
-      { name:"Gestión Aduanera y Cambiaria", credits:3, cat:"carrera", type:"Teórico", professor:"Mg. Valeria Chumpitaz", schedule:"Mar-Jue 16-18h", modality:"Virtual" },
-      { name:"Estándares Internacionales de Calidad", credits:3, cat:"carrera", type:"Teórico", professor:"Dr. Renzo Salinas", schedule:"Vie 14-16h", modality:"Virtual" },
-      { name:"Electivo General 5", credits:3, cat:"electivo", type:"Electivo", professor:"Por confirmar", schedule:"A elegir", modality:"Flexible", track:"electivo" }]},
+      { name:"English Course 4", credits:3, cat:"general", type:"Práctico", professor:"Mg. Patricia Vera", schedule:"Lun-Mié 08-10h", modality:"Virtual",
+        desc:"Nivel avanzado de inglés, con enfoque en negociación y presentaciones.", comp:["Comunicación","Idiomas"], prereq:"English Course 3" },
+      { name:"Herramientas Tecnológicas Aplicadas a los Negocios 2", credits:3, cat:"carrera", type:"Práctico", professor:"Dr. Jorge Vargas", schedule:"Mar-Jue 10-12h", modality:"Híbrido",
+        desc:"Aplicación avanzada de tecnología y datos a procesos de negocio.", comp:["Tecnología","Análisis"], prereq:"Herramientas Tecnológicas Aplicadas a los Negocios 1" },
+      { name:"Agilidad para la Gestión de Proyectos", credits:3, cat:"carrera", type:"Teórico-Práctico", professor:"Mg. Claudia Santos", schedule:"Vie 10-12h", modality:"Presencial",
+        desc:"Metodologías ágiles para planificar y ejecutar proyectos.", comp:["Planificación","Adaptabilidad"] },
+      { name:"Gerencia de Operaciones", credits:3, cat:"carrera", type:"Práctico", professor:"Dr. Manuel Ríos", schedule:"Lun-Mié 14-16h", modality:"Presencial",
+        desc:"Gestión de procesos productivos y de operaciones para la eficiencia empresarial.", comp:["Gestión","Resolución de problemas"] },
+      { name:"Gestión Aduanera y Cambiaria", credits:3, cat:"carrera", type:"Teórico", professor:"Mg. Valeria Chumpitaz", schedule:"Mar-Jue 16-18h", modality:"Virtual",
+        desc:"Normativa aduanera y de tipo de cambio aplicada al comercio exterior.", comp:["Análisis","Pensamiento crítico"] },
+      { name:"Estándares Internacionales de Calidad", credits:3, cat:"carrera", type:"Teórico", professor:"Dr. Renzo Salinas", schedule:"Vie 14-16h", modality:"Virtual",
+        desc:"Normas y sistemas de gestión de calidad reconocidos internacionalmente.", comp:["Organización","Pensamiento crítico"] },
+      { name:"Electivo General 5", credits:3, cat:"electivo", type:"Electivo", professor:"Por confirmar", schedule:"A elegir", modality:"Flexible", track:"electivo",
+        desc:"Cupo de electivo general — CoRA te recomienda opciones según tu ruta y tus intereses.", comp:[] }]},
     { cycle:8, credits:20, courses:[
-      { name:"Formulación y Evaluación de Proyectos", credits:4, cat:"carrera", type:"Teórico-Práctico", professor:"Mg. Claudia Santos", schedule:"Lun-Mié 08-10h", modality:"Presencial" },
-      { name:"Entorno Global para los Negocios", credits:3, cat:"carrera", type:"Teórico", professor:"Dr. Renzo Salinas", schedule:"Mar-Jue 10-12h", modality:"Virtual" },
-      { name:"Análisis de Recursos y Capacidades Organizacionales", credits:3, cat:"carrera", type:"Teórico-Práctico", professor:"Mg. Rosa Quispe", schedule:"Vie 10-12h", modality:"Presencial" },
-      { name:"Desarrollo de Productos y Servicios Internacionales", credits:4, cat:"carrera", type:"Teórico-Práctico", professor:"Mg. Patricia Vera", schedule:"Lun-Mié 14-17h", modality:"Presencial" },
-      { name:"Política Económica Internacional", credits:3, cat:"carrera", type:"Teórico", professor:"Dr. Luis Paredes", schedule:"Mar-Jue 14-16h", modality:"Virtual" },
-      { name:"Legislación del Comercio Internacional", credits:3, cat:"carrera", type:"Teórico", professor:"Dr. Iván Cáceres", schedule:"Vie 14-16h", modality:"Virtual" }]},
+      { name:"Formulación y Evaluación de Proyectos", credits:4, cat:"carrera", type:"Teórico-Práctico", professor:"Mg. Claudia Santos", schedule:"Lun-Mié 08-10h", modality:"Presencial",
+        desc:"Diseño y evaluación financiera de proyectos de inversión.", comp:["Análisis","Toma de decisiones"] },
+      { name:"Entorno Global para los Negocios", credits:3, cat:"carrera", type:"Teórico", professor:"Dr. Renzo Salinas", schedule:"Mar-Jue 10-12h", modality:"Virtual",
+        desc:"Factores políticos, económicos y sociales que afectan al comercio global.", comp:["Visión estratégica","Pensamiento crítico"] },
+      { name:"Análisis de Recursos y Capacidades Organizacionales", credits:3, cat:"carrera", type:"Teórico-Práctico", professor:"Mg. Rosa Quispe", schedule:"Vie 10-12h", modality:"Presencial",
+        desc:"Diagnóstico interno de la empresa para construir ventaja competitiva.", comp:["Análisis","Visión estratégica"] },
+      { name:"Desarrollo de Productos y Servicios Internacionales", credits:4, cat:"carrera", type:"Teórico-Práctico", professor:"Mg. Patricia Vera", schedule:"Lun-Mié 14-17h", modality:"Presencial",
+        desc:"Diseño de productos y servicios orientados a mercados internacionales.", comp:["Innovación","Creatividad"] },
+      { name:"Política Económica Internacional", credits:3, cat:"carrera", type:"Teórico", professor:"Dr. Luis Paredes", schedule:"Mar-Jue 14-16h", modality:"Virtual",
+        desc:"Políticas económicas y su impacto en el comercio entre países.", comp:["Análisis","Pensamiento crítico"] },
+      { name:"Legislación del Comercio Internacional", credits:3, cat:"carrera", type:"Teórico", professor:"Dr. Iván Cáceres", schedule:"Vie 14-16h", modality:"Virtual",
+        desc:"Marco legal y normativo que regula las operaciones de comercio exterior.", comp:["Pensamiento crítico","Ética"] }]},
     { cycle:9, credits:24, courses:[
-      { name:"Estrategia Competitiva", credits:4, cat:"carrera", type:"Teórico-Práctico", professor:"Mg. Sandra Lima", schedule:"Lun-Mié 08-10h", modality:"Presencial" },
-      { name:"Decisiones Basadas en Datos", credits:4, cat:"carrera", type:"Práctico", professor:"Dr. Jorge Vargas", schedule:"Mar-Jue 10-12h", modality:"Híbrido" },
-      { name:"Investigación 1 en Administración", credits:3, cat:"carrera", type:"Teórico-Práctico", professor:"Dra. Ana Torres", schedule:"Vie 10-12h", modality:"Virtual" },
-      { name:"Costos, Precios y Cotizaciones Internacionales", credits:3, cat:"carrera", type:"Teórico", professor:"Mg. Valeria Chumpitaz", schedule:"Lun-Mié 14-16h", modality:"Virtual" },
-      { name:"Plan de Negocios Internacionales", credits:3, cat:"carrera", type:"Teórico-Práctico", professor:"Dr. Renzo Salinas", schedule:"Mar-Jue 14-16h", modality:"Presencial" },
-      { name:"Inteligencia de Mercados Internacionales", credits:4, cat:"carrera", type:"Teórico-Práctico", professor:"Mg. Patricia Vera", schedule:"Vie 14-17h", modality:"Presencial" },
-      { name:"Electivo de Especialidad o Transversal 1", credits:3, cat:"electivo", type:"Electivo", professor:"Por confirmar", schedule:"A elegir", modality:"Flexible", track:"electivo" }]},
+      { name:"Estrategia Competitiva", credits:4, cat:"carrera", type:"Teórico-Práctico", professor:"Mg. Sandra Lima", schedule:"Lun-Mié 08-10h", modality:"Presencial",
+        desc:"Formulación de estrategias para posicionar a la empresa frente a la competencia.", comp:["Visión estratégica","Toma de decisiones"] },
+      { name:"Decisiones Basadas en Datos", credits:4, cat:"carrera", type:"Práctico", professor:"Dr. Jorge Vargas", schedule:"Mar-Jue 10-12h", modality:"Híbrido",
+        desc:"Uso de datos y analítica para sustentar decisiones de negocio.", comp:["Análisis","Tecnología"] },
+      { name:"Investigación 1 en Administración", credits:3, cat:"carrera", type:"Teórico-Práctico", professor:"Dra. Ana Torres", schedule:"Vie 10-12h", modality:"Virtual",
+        desc:"Primer proyecto de investigación aplicada a un problema real de gestión.", comp:["Investigación","Pensamiento crítico"], prereq:"Investigación Académica" },
+      { name:"Costos, Precios y Cotizaciones Internacionales", credits:3, cat:"carrera", type:"Teórico", professor:"Mg. Valeria Chumpitaz", schedule:"Lun-Mié 14-16h", modality:"Virtual",
+        desc:"Determinación de costos y precios para operaciones de comercio exterior.", comp:["Análisis","Negociación"], prereq:"Costos y Presupuestos" },
+      { name:"Plan de Negocios Internacionales", credits:3, cat:"carrera", type:"Teórico-Práctico", professor:"Dr. Renzo Salinas", schedule:"Mar-Jue 14-16h", modality:"Presencial",
+        desc:"Elaboración de un plan de negocio orientado a mercados internacionales.", comp:["Visión estratégica","Planificación"] },
+      { name:"Inteligencia de Mercados Internacionales", credits:4, cat:"carrera", type:"Teórico-Práctico", professor:"Mg. Patricia Vera", schedule:"Vie 14-17h", modality:"Presencial",
+        desc:"Análisis de información de mercados externos para la toma de decisiones.", comp:["Investigación","Análisis"] },
+      { name:"Electivo de Especialidad o Transversal 1", credits:3, cat:"electivo", type:"Electivo", professor:"Por confirmar", schedule:"A elegir", modality:"Flexible", track:"electivo",
+        desc:"Cupo de electivo de especialidad — CoRA te recomienda opciones según tu ruta y tus intereses.", comp:[] }]},
     { cycle:10, credits:25, courses:[
-      { name:"Inteligencia Artificial Aplicada a los Negocios", credits:4, cat:"carrera", type:"Teórico-Práctico", professor:"Dr. Jorge Vargas", schedule:"Lun-Mié 08-10h", modality:"Híbrido" },
-      { name:"Simulación de Negocios Digitales", credits:3, cat:"carrera", type:"Práctico", professor:"Mg. Claudia Santos", schedule:"Mar-Jue 10-12h", modality:"Virtual" },
-      { name:"Transformación Digital", credits:3, cat:"carrera", type:"Teórico-Práctico", professor:"Dr. Renzo Salinas", schedule:"Vie 10-12h", modality:"Virtual" },
-      { name:"Investigación 2 en Administración", credits:3, cat:"carrera", type:"Teórico-Práctico", professor:"Dra. Ana Torres", schedule:"Lun-Mié 14-16h", modality:"Virtual" },
-      { name:"Gerencia Comercial Internacional", credits:3, cat:"carrera", type:"Teórico", professor:"Mg. Valeria Chumpitaz", schedule:"Mar-Jue 14-16h", modality:"Virtual" },
-      { name:"Negocios Digitales Globales", credits:3, cat:"carrera", type:"Teórico-Práctico", professor:"Mg. Patricia Vera", schedule:"Vie 14-16h", modality:"Presencial" },
-      { name:"Negociaciones y Transacciones Internacionales", credits:3, cat:"carrera", type:"Teórico-Práctico", professor:"Dr. Manuel Ríos", schedule:"Lun-Mié 16-18h", modality:"Presencial" },
-      { name:"Electivo de Especialidad o Transversal 2", credits:3, cat:"electivo", type:"Electivo", professor:"Por confirmar", schedule:"A elegir", modality:"Flexible", track:"electivo" }]}
+      { name:"Inteligencia Artificial Aplicada a los Negocios", credits:4, cat:"carrera", type:"Teórico-Práctico", professor:"Dr. Jorge Vargas", schedule:"Lun-Mié 08-10h", modality:"Híbrido",
+        desc:"Aplicaciones de inteligencia artificial en procesos y decisiones empresariales.", comp:["Tecnología","Innovación"] },
+      { name:"Simulación de Negocios Digitales", credits:3, cat:"carrera", type:"Práctico", professor:"Mg. Claudia Santos", schedule:"Mar-Jue 10-12h", modality:"Virtual",
+        desc:"Simulación de escenarios de negocio en entornos digitales.", comp:["Toma de decisiones","Tecnología"] },
+      { name:"Transformación Digital", credits:3, cat:"carrera", type:"Teórico-Práctico", professor:"Dr. Renzo Salinas", schedule:"Vie 10-12h", modality:"Virtual",
+        desc:"Estrategias para la digitalización de procesos y modelos de negocio.", comp:["Innovación","Tecnología"] },
+      { name:"Investigación 2 en Administración", credits:3, cat:"carrera", type:"Teórico-Práctico", professor:"Dra. Ana Torres", schedule:"Lun-Mié 14-16h", modality:"Virtual",
+        desc:"Cierre del proyecto de investigación aplicada, con resultados y recomendaciones.", comp:["Investigación","Comunicación"], prereq:"Investigación 1 en Administración" },
+      { name:"Gerencia Comercial Internacional", credits:3, cat:"carrera", type:"Teórico", professor:"Mg. Valeria Chumpitaz", schedule:"Mar-Jue 14-16h", modality:"Virtual",
+        desc:"Dirección de equipos y estrategias comerciales en mercados internacionales.", comp:["Liderazgo","Negociación"] },
+      { name:"Negocios Digitales Globales", credits:3, cat:"carrera", type:"Teórico-Práctico", professor:"Mg. Patricia Vera", schedule:"Vie 14-16h", modality:"Presencial",
+        desc:"Modelos de negocio digital orientados a la operación internacional.", comp:["Innovación","Visión estratégica"] },
+      { name:"Negociaciones y Transacciones Internacionales", credits:3, cat:"carrera", type:"Teórico-Práctico", professor:"Dr. Manuel Ríos", schedule:"Lun-Mié 16-18h", modality:"Presencial",
+        desc:"Técnicas de negociación aplicadas a operaciones internacionales complejas.", comp:["Negociación","Comunicación"] },
+      { name:"Electivo de Especialidad o Transversal 2", credits:3, cat:"electivo", type:"Electivo", professor:"Por confirmar", schedule:"A elegir", modality:"Flexible", track:"electivo",
+        desc:"Cupo de electivo de especialidad — CoRA te recomienda opciones según tu ruta y tus intereses.", comp:[] }]}
+  ];
+  /* Catálogo de electivos reales de los que CoRA recomienda — separado de
+     CURRICULUM porque son opciones, no asignaciones fijas. `tier` distingue
+     "general" (Electivo General N) de "especialidad" (Electivo de
+     Especialidad o Transversal N), para no mezclar los cupos. `tags` cruza
+     con los tags de la ruta elegida, igual que en ROUTES. */
+  ELECTIVE_CATALOG = [
+    { name:"Persuasión, Argumentación y Debate", tier:"general", tags:["Comunicación","Liderazgo"],
+      desc:"Tercer curso electivo general. La IA recomienda opciones que complementen tu formación y se alineen con tus metas profesionales en negocios internacionales.",
+      comp:["Comunicación","Especialización","Investigación","Innovación"] },
+    { name:"Liderazgo Digital", tier:"general", tags:["Liderazgo","Tecnología","Digital"],
+      desc:"Herramientas de liderazgo aplicadas a equipos remotos y entornos digitales.", comp:["Liderazgo","Tecnología"] },
+    { name:"Emprendimiento Social", tier:"general", tags:["Emprendimiento","Impacto","Sostenibilidad"],
+      desc:"Diseño de proyectos con impacto social sostenible.", comp:["Innovación","Sostenibilidad"] },
+    { name:"Introducción a la Inteligencia Artificial", tier:"general", tags:["Tecnología","Innovación","Digital"],
+      desc:"Fundamentos de IA aplicados a la vida académica y profesional.", comp:["Tecnología","Pensamiento crítico"] },
+    { name:"Oratoria y Comunicación Efectiva", tier:"general", tags:["Comunicación"],
+      desc:"Técnicas para hablar en público con seguridad y claridad.", comp:["Comunicación","Confianza"] },
+    { name:"Finanzas Personales", tier:"general", tags:["Finanzas"],
+      desc:"Gestión del dinero, ahorro e inversión a nivel personal.", comp:["Planificación","Toma de decisiones"] },
+    { name:"Historia y Cultura del Perú", tier:"general", tags:["Cultura","Investigación"],
+      desc:"Panorama histórico y cultural del país, con enfoque en identidad.", comp:["Pensamiento crítico","Cultura"] },
+    { name:"Diseño de Experiencia de Usuario (UX)", tier:"general", tags:["Digital","Innovación","Diseño"],
+      desc:"Principios de diseño centrado en el usuario para productos digitales.", comp:["Innovación","Creatividad"] },
+    { name:"Analítica de Datos para Negocios", tier:"especialidad", tags:["Análisis","Digital","Gestión"],
+      desc:"Uso de datos para la toma de decisiones estratégicas.", comp:["Análisis","Toma de decisiones"] },
+    { name:"Gestión de la Innovación", tier:"especialidad", tags:["Innovación","Gestión"],
+      desc:"Metodologías para llevar ideas innovadoras a la práctica.", comp:["Innovación","Gestión"] },
+    { name:"Comercio Electrónico Internacional", tier:"especialidad", tags:["Internacional","Comercio Exterior","Digital"],
+      desc:"Estrategias de venta digital en mercados internacionales.", comp:["Comercio Exterior","Digital"] },
+    { name:"Sostenibilidad Empresarial", tier:"especialidad", tags:["Sostenibilidad","Estrategia"],
+      desc:"Integración de criterios ambientales y sociales en la estrategia de negocio.", comp:["Sostenibilidad","Estrategia"] },
+    { name:"Negociación Avanzada", tier:"especialidad", tags:["Negociación","Comercio Exterior"],
+      desc:"Técnicas de negociación para escenarios comerciales complejos.", comp:["Negociación","Estrategia"] },
+    { name:"Marketing Digital Internacional", tier:"especialidad", tags:["Marketing","Internacional","Digital"],
+      desc:"Estrategias de marketing digital orientadas a mercados globales.", comp:["Marketing","Digital"] }
   ];
 
   /* Predictibilidad: cruce del histórico de notas del estudiante con el
@@ -2845,7 +3114,7 @@ class Component extends DCLogic {
      disponible, dudas puntuales), el otro es una persona real (agenda,
      seguimiento en el tiempo). Nunca se mezclan bajo el mismo nombre. */
   SUPPORT_TYPES = [
-    { key:"asistente", icon:"💬", name:"Asistente CoRA", role:"Dudas académicas puntuales",
+    { key:"asistente", icon:"💬", name:"Tutor CoRA", role:"Dudas académicas puntuales",
       desc:"Chat con IA disponible 24/7 para fórmulas, ejercicios y conceptos específicos de tus asignaturas.",
       duracion:"Al momento, sin agendar — cuando lo necesites",
       progreso:"Resuelves tu duda en la misma conversación",
@@ -2948,9 +3217,9 @@ class Component extends DCLogic {
   /* Guía general de la plataforma (onboarding de bienvenida). */
   ONBOARDING = [
     { em:"🧭", title:"CoRA te acompaña, no te examina", body:"No hay respuestas correctas ni incorrectas. Todo lo que respondas sirve para ajustar lo que CoRA te propone." },
-    { em:"🟣", title:"Primero el recorrido", body:"Formulario, rutas, ecosistema y malla. Se desbloquean en orden porque cada paso alimenta al siguiente." },
-    { em:"📚", title:"Después, las herramientas", body:"Simulacros, flashcards y el Asistente CoRA quedan disponibles para el día a día del ciclo." },
-    { em:"💬", title:"El Asistente está siempre", body:"El botón morado de abajo a la derecha abre el chat desde cualquier pantalla, sin perder lo que estabas haciendo." }
+    { em:"🟣", title:"Primero el recorrido", body:"CoRA me conoce, rutas, ecosistema y malla. Se desbloquean en orden porque cada paso alimenta al siguiente." },
+    { em:"📚", title:"Después, las herramientas", body:"Simulacros, flashcards y el Tutor CoRA quedan disponibles para el día a día del ciclo." },
+    { em:"💬", title:"El Tutor CoRA está siempre", body:"El botón morado de abajo a la derecha abre el chat desde cualquier pantalla, sin perder lo que estabas haciendo." }
   ];
 
   /* Ventanita tipo stepper de cada sección del recorrido. */
@@ -3119,7 +3388,7 @@ class Component extends DCLogic {
   REQ = { "mis-rutas":"formulario", "ecosistema":"mis-rutas", "malla":"ecosistema", "perfil-cora":"malla", "horizonte":"perfil-cora",
     "acompanamiento":"horizonte", "practico":"acompanamiento", "flashcards":"acompanamiento", "tutor":"acompanamiento",
     "progreso":"formulario", "perfil":"formulario", "configuracion":"formulario" };
-  NAMES = { "formulario":"Formulario", "mis-rutas":"Mis Rutas", "ecosistema":"Ecosistema CIE", "malla":"Elijo mi Ruta",
+  NAMES = { "formulario":"CoRA me conoce", "mis-rutas":"Mis Rutas", "ecosistema":"Ecosistema CIE", "malla":"Elijo mi Ruta",
     "perfil-cora":"Mi Perfil CoRA", "horizonte":"Veo mi Horizonte", "acompanamiento":"Acompañamiento" };
   FLOW = ["formulario","mis-rutas","ecosistema","malla","perfil-cora","horizonte","acompanamiento"];
 
@@ -3150,9 +3419,11 @@ class Component extends DCLogic {
         { name:"Un emprendimiento de exportación", desc:"que lleve productos peruanos —artesanía, alimentos, moda— a mercados internacionales." },
         { name:"Una consultora de comercio exterior", desc:"para empresas que recién empiezan a exportar y no saben por dónde arrancar." }
       ],
-      storyShort:"“Empecé como practicante de comex en una agroexportadora. Hoy coordino los envíos a EE.UU. y Europa.”",
-      storyFull:"“Entré sin saber bien en qué quería trabajar. Empecé como practicante de comex en una agroexportadora, y hoy coordino los envíos a Estados Unidos y Europa. Nunca imaginé que mi trabajo me haría sentir parte del mundo.”",
-      storyAttribution:"Egresada de AyNI",
+      /* Vacío a propósito: la cita anterior era ficticia y no se reemplaza
+         por una real sacada del historial de alguien en LinkedIn sin su
+         consentimiento (ver DESIGN.md). La tarjeta no se muestra mientras
+         esto esté vacío (v.hzHasStory). */
+      storyShort:"", storyFull:"", storyAttribution:"",
       worldTeaser:"Un campo dinámico y global, con demanda estable y proyección de crecimiento por el empuje exportador del país. Más adelante te mostraremos cuánto se gana y qué tan solicitados están estos perfiles.",
       worldFull:"El comercio internacional es un campo con demanda estable y proyección de crecimiento, impulsado por el empuje exportador del país. Es un mundo dinámico y global, donde se conocen personas y culturas distintas, y donde cada día trae un reto nuevo. Más adelante, conforme te acerques a egresar, te mostraremos el detalle de cómo se mueve este mercado: cuánto se gana, qué tan solicitados están estos perfiles y hacia dónde van.",
       skillsIntro:"Vas en ciclo 2: tienes todo el tiempo del mundo para construirlo con calma. Tu ruta ya te está dando una base sólida. Estas son las habilidades que vale la pena ir sumando, sin prisa pero con dirección.",
@@ -3193,6 +3464,7 @@ class Component extends DCLogic {
         "Networking profesional — empezar a construir tu red ahora vale oro al egresar."
       ],
       microcredential:"Una microcredencial de Continua en analítica para logística puede cerrar esta brecha antes de que egreses.",
+      roles:["Analista de comercio internacional","Coordinador/a de logística","Especialista en operaciones aduaneras"],
       rolesIntro:"Tu ruta conecta con perfiles como analista de comercio internacional, coordinador/a de logística y especialista en operaciones aduaneras. Estos son los tipos de empresa donde te están buscando:",
       companies:[
         { name:"Agroexportadoras en expansión", desc:"que necesitan coordinar envíos a nuevos mercados. (Camposol, Danper, Virú…)" },
@@ -3231,7 +3503,7 @@ class Component extends DCLogic {
     ["#c084fc","#4f46e5"], ["#60a5fa","#2563eb"], ["#34d399","#059669"],
     ["#fb923c","#dc2626"], ["#f472b6","#9333ea"]
   ];
-  /* Insignias: cada una se desbloquea al llegar a un umbral de XP acumulado. */
+  /* Insignias: cada una se desbloquea al llegar a un umbral de CoRAzones acumulados. */
   BADGES = [
     { xp:100, emoji:"🌱", name:"Primeros pasos" },
     { xp:300, emoji:"🔥", name:"Racha constante" },
@@ -3252,6 +3524,13 @@ class Component extends DCLogic {
     formStarted:false, formMode:"completa", formStep:0, formAnswers:{}, isAnalyzing:false, analysisStep:0,
     blocked:null, hovered:null, confirmRoute:null, mallaPreview:false, extraStep:false,
     expanded:[], ecoVisited:[], added:[], openCycles:[1], extras:{}, extModal:null, mallaDone:false,
+    /* Panel de detalle de asignatura: qué asignatura se está viendo (por
+       nombre, siempre el nombre "de origen" en CURRICULUM aunque ya tenga un
+       electivo elegido encima), si el selector de "mover a otro ciclo" está
+       abierto, a qué ciclo se movió cada asignatura movida (nombre → ciclo) y
+       qué electivo real eligió el estudiante para cada cupo (nombre del cupo
+       → nombre del electivo del catálogo). */
+    courseDetail:null, detailMoveOpen:false, movedCourses:{}, electiveChoices:{},
     /* Historial de mallas guardadas: cada vez que el estudiante confirma su malla
        final, se agrega un registro con nombre y fecha. Estos dos ya existían de
        sesiones previas, para que el historial no arranque vacío. */
@@ -3286,7 +3565,7 @@ class Component extends DCLogic {
     ],
     accWeekModal:false, accWeekWeek:"", accWeekLabel:"",
     reinforceCourses:[], reinforceModal:false,
-    avatarBg:0, horizonteDetail:false,
+    avatarBg:0, horizonteDetail:false, favoriteRole:null, favoriteCompany:null, favoriteVenture:null,
     /* Cuestionario 18REST: respuestas por id de pregunta (1-4). Las 18
        preguntas se muestran todas juntas — no hay "pregunta actual". */
     coraAnswers:{},
@@ -3356,7 +3635,7 @@ class Component extends DCLogic {
   }
   /* Punto de entrada "conversacional" desde Horizonte: la pregunta sugerida
      entra como si el estudiante la hubiera escrito, en el hilo General del
-     Asistente CoRA, y te lleva directo a esa pantalla. */
+     Tutor CoRA, y te lleva directo a esa pantalla. */
   askAssistant(question) {
     this.setState(st => {
       const course = "General";
@@ -3392,10 +3671,10 @@ class Component extends DCLogic {
     /* Iconos de línea (Lucide, vía Icon.dc.html) en vez de emoji — más
        consistentes con el resto de la interfaz. */
     v.navHome = [["inicio","home","Inicio"]].map(a => this.navItem(a[0], a[1], a[2]));
-    v.navRec = [["formulario","clipboard-list","Formulario"],["mis-rutas","route","Mis Rutas"],["ecosistema","globe","Ecosistema CIE"],
+    v.navRec = [["formulario","clipboard-list","CoRA me conoce"],["mis-rutas","route","Mis Rutas"],["ecosistema","globe","Ecosistema CIE"],
       ["malla","graduation-cap","Elijo mi Ruta"],["perfil-cora","sparkles","Mi Perfil CoRA"],["horizonte","briefcase","Veo mi Horizonte"],
       ["acompanamiento","life-buoy","Acompañamiento"]].map(a => this.navItem(a[0], a[1], a[2]));
-    v.navAca = [["practico","edit","Práctico para examen"],["flashcards","layers","Mis flashcards"],["tutor","phone-idea","Asistente CoRA"]].map(a => this.navItem(a[0], a[1], a[2]));
+    v.navAca = [["tutor","phone-idea","Tutor CoRA"],["practico","edit","Práctico para examen"],["flashcards","layers","Mis flashcards"]].map(a => this.navItem(a[0], a[1], a[2]));
     v.navSet = [["progreso","bar-chart","Mi progreso"],["perfil","user","Perfil"],["configuracion","sliders","Configuración"]].map(a => this.navItem(a[0], a[1], a[2]));
 
     v.isAnalyzing = s.isAnalyzing;
@@ -3481,7 +3760,7 @@ class Component extends DCLogic {
         background: c.grade >= 15 ? "#dcfce7" : c.grade >= 13 ? "#fff7ed" : "#fef2f2",
         color: c.grade >= 15 ? "#15803d" : c.grade >= 13 ? "#b45309" : "#dc2626" } }));
 
-    /* ---------- Asistente CoRA flotante ---------- */
+    /* ---------- Tutor CoRA flotante ---------- */
     v.chatOpen = s.chatOpen;
     v.chatClosed = !s.chatOpen;
     v.toggleChat = () => this.setState({ chatOpen: !s.chatOpen });
@@ -3989,9 +4268,17 @@ class Component extends DCLogic {
         (routeExtraByCycle[cyc] = routeExtraByCycle[cyc] || []).push(name);
       });
     }
+    /* "Mover a otro ciclo" es una capa de estado más, igual que CFU o los
+       electivos elegidos: no se reescribe CURRICULUM, se calcula en vivo en
+       qué ciclo aparece cada asignatura. */
+    const ELECTIVE_CHOSEN_ACCENT = ["#f0f9ff", "#bae6fd", "#0369a1", "#0ea5e9"];
+    const allCourses = [];
+    this.CURRICULUM.forEach(cyc0 => cyc0.courses.forEach(c => allCourses.push(Object.assign({ originalCycle:cyc0.cycle }, c))));
+    const effectiveCycle = c => s.movedCourses[c.name] || c.originalCycle;
     v.cycles = this.CURRICULUM.map(cyc => {
       const list = s.extras[cyc.cycle] || [];
       const routeExtraList = routeExtraByCycle[cyc.cycle] || [];
+      const cycCourses = allCourses.filter(c => effectiveCycle(c) === cyc.cycle);
       /* Tres momentos de la malla respecto al ciclo en el que está el
          estudiante: ya cursado (más clarito), el actual (resaltado) y los
          que vienen (trato normal). */
@@ -4000,7 +4287,7 @@ class Component extends DCLogic {
       /* El guard "track !== electivo" evita que un electivo genérico se marque
          de tu ruta por una coincidencia de nombre accidental — pero en una
          ruta "curricular" el electivo SÍ es parte a propósito de la ruta. */
-      const courseFlags = cyc.courses.map(c => (c.track !== "electivo" || routeHasMalla) && routeCourseNames.has(c.name));
+      const courseFlags = cycCourses.map(c => (c.track !== "electivo" || routeHasMalla) && routeCourseNames.has(c.name));
       const hasRuta = courseFlags.some(Boolean);
       const titleColor = state === "past" ? "#9ca3af" : state === "current" ? "#7B68EE" : "#1A1040";
       return {
@@ -4019,9 +4306,15 @@ class Component extends DCLogic {
            tener MUCHO más contraste que el resto (borde grueso, fondo lleno,
            sombra e insignia propia), no por una línea vertical. */
         hasRuta,
-        courses: cyc.courses.map((c, i) => {
+        courses: cycCourses.map((c, i) => {
           const isRuta = courseFlags[i];
           const isCfu = s.cfuChosen.includes(c.name);
+          /* Si el estudiante ya eligió un electivo real del catálogo para este
+             cupo, se muestra ese nombre — con su propio acento celeste, para
+             distinguirlo de "de tu ruta" (que viene de la ruta elegida, no de
+             una elección libre del estudiante). */
+          const chosenElectiveName = c.cat === "electivo" ? s.electiveChoices[c.name] : null;
+          const chosenElective = chosenElectiveName ? this.ELECTIVE_CATALOG.find(e => e.name === chosenElectiveName) : null;
           const catInfo = CAT_MAP[c.cat] || CAT_MAP.facultad;
           const enCurso = isCurrentCycle && c.track !== "electivo";
           /* La asignatura de la ruta usa un estilo aparte, mucho más marcado que el
@@ -4030,31 +4323,43 @@ class Component extends DCLogic {
           let style;
           if (isCfu) {
             style = { flex:1, border:"1px solid " + CFU_ACCENT[1], borderLeft:"4px solid " + CFU_ACCENT[3], background:CFU_ACCENT[0], color:CFU_ACCENT[2],
-              borderRadius:"10px", padding:"6px 8px", fontSize:"11px", minWidth:0 };
+              borderRadius:"10px", padding:"6px 8px", fontSize:"11px", minWidth:0, position:"relative", cursor:"pointer" };
           } else if (isRuta) {
             style = { flex:1, border:"2px solid #7B68EE", background:"#ede9fe", color:"#3B2F80",
-              borderRadius:"10px", padding:"6px 8px", fontSize:"11px", minWidth:0, boxShadow:"0 2px 6px rgba(123,104,238,.45)" };
+              borderRadius:"10px", padding:"6px 8px", fontSize:"11px", minWidth:0, boxShadow:"0 2px 6px rgba(123,104,238,.45)", position:"relative", cursor:"pointer" };
+          } else if (chosenElective) {
+            style = { flex:1, border:"1px solid " + ELECTIVE_CHOSEN_ACCENT[1], borderLeft:"4px solid " + ELECTIVE_CHOSEN_ACCENT[3], background:ELECTIVE_CHOSEN_ACCENT[0], color:ELECTIVE_CHOSEN_ACCENT[2],
+              borderRadius:"10px", padding:"6px 8px", fontSize:"11px", minWidth:0, position:"relative", cursor:"pointer" };
           } else {
             style = { flex:1, border:"1px solid " + NEUTRAL_ACCENT[1], background:NEUTRAL_ACCENT[0], color:NEUTRAL_ACCENT[2],
-              borderRadius:"10px", padding:"6px 8px", fontSize:"11px", minWidth:0 };
+              borderRadius:"10px", padding:"6px 8px", fontSize:"11px", minWidth:0, position:"relative", cursor:"pointer" };
           }
           return {
             /* Elegido por CFU: se muestra el nombre de la asignatura en CFU, no el de
                la malla en Perú — con el nombre original abajo, para no perder
-               la referencia de qué asignatura reemplaza. */
-            name: isCfu ? cfuByUcName.get(c.name) : c.name,
+               la referencia de qué asignatura reemplaza. Elegido como electivo:
+               se muestra el nombre real del electivo, no el cupo genérico. */
+            name: isCfu ? cfuByUcName.get(c.name) : chosenElective ? chosenElective.name : c.name,
             ucName: isCfu ? c.name : "",
             isRuta, isCfu, enCurso, showRutaBadge: isRuta && !isCfu,
+            showElectiveBadge: !!chosenElective && !isRuta,
             catLabel: catInfo[1],
             catDotStyle:{ width:"7px", height:"7px", borderRadius:"9999px", background:catInfo[0], flexShrink:0 },
             catTextStyle:{ fontSize:"9px", fontWeight:700, color:catInfo[0], letterSpacing:".04em" },
             enCursoStyle:{ fontSize:"9px", fontWeight:700, color:"#7B68EE", background:"#f3e8ff", borderRadius:"9999px", padding:"1px 7px", whiteSpace:"nowrap" },
             cfuBadgeStyle:{ fontSize:"9px", fontWeight:700, color:"#fff", background:"#06b6d4", borderRadius:"9999px", padding:"1px 7px", whiteSpace:"nowrap" },
             rutaBadgeStyle:{ fontSize:"9px", fontWeight:800, color:"#fff", background:"#7B68EE", borderRadius:"9999px", padding:"1px 7px", whiteSpace:"nowrap" },
+            electiveBadgeStyle:{ fontSize:"9px", fontWeight:700, color:"#fff", background:"#0ea5e9", borderRadius:"9999px", padding:"1px 7px", whiteSpace:"nowrap" },
             /* Tope de 2 líneas siempre, sin importar cuán largo sea el nombre
                real de la asignatura — y en negrita más fuerte si es de tu ruta. */
             nameStyle:{ fontWeight: isRuta ? 800 : 600, margin:0, display:"-webkit-box", WebkitBoxOrient:"vertical", WebkitLineClamp:2, lineClamp:2, overflow:"hidden" },
             wrapStyle:{ display:"flex", alignItems:"flex-start" },
+            /* Marca de prerrequisito: solo un ícono en la esquina — el detalle
+               (cuál es el prerrequisito) aparece al hacer clic en la asignatura. */
+            hasPrereq: !!c.prereq,
+            prereqBadgeStyle:{ position:"absolute", top:"3px", right:"3px", width:"15px", height:"15px", borderRadius:"9999px",
+              background:"rgba(255,255,255,.85)", display:"flex", alignItems:"center", justifyContent:"center", boxShadow:"0 1px 2px rgba(0,0,0,.15)" },
+            onClick: () => this.setState({ courseDetail:c.name, detailMoveOpen:false }),
             style
           };
         }),
@@ -4069,6 +4374,75 @@ class Component extends DCLogic {
             color:"#0369a1", borderRadius:"10px", padding:"6px 8px", marginBottom:"4px" } }))
       };
     });
+    /* ---------- Panel de detalle de asignatura ----------
+       Se abre al hacer clic en cualquier asignatura de la malla. Vive fuera
+       de v.cycles porque su contenido no depende de en qué tarjeta se hizo
+       clic, sino del nombre "de origen" guardado en s.courseDetail. */
+    v.showCourseDetail = !!s.courseDetail;
+    if (s.courseDetail) {
+      const slot = allCourses.find(c => c.name === s.courseDetail);
+      if (slot) {
+        const isCfu = s.cfuChosen.includes(slot.name);
+        const isElectiveSlot = slot.cat === "electivo";
+        const chosenName = isElectiveSlot ? s.electiveChoices[slot.name] : null;
+        const chosen = chosenName ? this.ELECTIVE_CATALOG.find(e => e.name === chosenName) : null;
+        const displayName = isCfu ? cfuByUcName.get(slot.name) : chosen ? chosen.name : slot.name;
+        const displayDesc = chosen ? chosen.desc : slot.desc;
+        const displayComp = chosen ? chosen.comp : (slot.comp || []);
+        const catInfo = CAT_MAP[slot.cat] || CAT_MAP.facultad;
+        const coveredByRoute = routeCourseNames.has(slot.name);
+        /* Solo se recomienda cuando el cupo de electivo no viene ya sugerido
+           por la ruta elegida ni fue elegido antes — así CoRA no repite una
+           recomendación sobre algo que ya está resuelto. */
+        const needsRecommendation = isElectiveSlot && !coveredByRoute && !chosen;
+        let recommended = [];
+        if (needsRecommendation) {
+          const tier = /Especialidad|Transversal/.test(slot.name) ? "especialidad" : "general";
+          const routeTags = selectedRouteObj.tags || [];
+          recommended = this.ELECTIVE_CATALOG.filter(e => e.tier === tier)
+            .slice().sort((a, b) => b.tags.filter(t => routeTags.includes(t)).length - a.tags.filter(t => routeTags.includes(t)).length)
+            .slice(0, 3);
+        }
+        const cycNow = effectiveCycle(slot);
+        const closeDetail = () => this.setState({ courseDetail:null, detailMoveOpen:false });
+        const goConsult = fresh => () => {
+          this.setState(st => ({
+            tutorCourse: displayName, section:"tutor", courseDetail:null,
+            msgsByCourse: fresh ? Object.assign({}, st.msgsByCourse, { [displayName]: null }) : st.msgsByCourse
+          }));
+        };
+        const moveOptions = [];
+        for (let cy = this.STUDENT.cycle; cy <= 10; cy++) {
+          if (cy === cycNow) continue;
+          moveOptions.push({ label:"Ciclo " + cy,
+            onClick: () => this.setState(st => ({ movedCourses: Object.assign({}, st.movedCourses, { [slot.name]: cy }), detailMoveOpen:false })) });
+        }
+        v.courseDetail = {
+          cycleLabel: "CICLO " + String(cycNow).padStart(2, "0"),
+          catLabel: catInfo[1],
+          name: displayName,
+          typeLabel: "Tipo: " + catInfo[1] + " · " + (chosen ? "Electivo" : slot.type),
+          creditsLabel: slot.credits + " Créditos",
+          desc: displayDesc,
+          comp: displayComp.map(t => ({ label:t })),
+          hasComp: displayComp.length > 0,
+          hasPrereq: !chosen && !!slot.prereq,
+          prereq: slot.prereq || "",
+          needsRecommendation,
+          recommended: recommended.map(e => ({ name:e.name, desc:e.desc,
+            onPick: () => this.setState(st => ({ electiveChoices: Object.assign({}, st.electiveChoices, { [slot.name]: e.name }) })) })),
+          isChosenElective: !!chosen,
+          onUnchoose: () => this.setState(st => { const next = Object.assign({}, st.electiveChoices); delete next[slot.name]; return { electiveChoices:next }; }),
+          close: closeDetail,
+          newConsult: goConsult(true),
+          onConsult: goConsult(false),
+          moveOpen: s.detailMoveOpen,
+          onToggleMove: () => this.setState(st => ({ detailMoveOpen: !st.detailMoveOpen })),
+          moveOptions,
+          moved: cycNow !== slot.originalCycle
+        };
+      }
+    }
     /* Los electivos que el estudiante eligió del Ecosistema CIE, juntos en una
        sola franja horizontal debajo de la malla — antes vivían repartidos
        dentro de cada tarjeta de ciclo (ver arriba). */
@@ -4173,6 +4547,10 @@ class Component extends DCLogic {
     const coraDone = answeredCount >= totalQ;
     v.showCoraQuiz = v.isPerfilCora && !coraDone;
     v.showCoraResults = v.isPerfilCora && coraDone;
+    /* Disponible fuera de esta pantalla también (lo usa Veo mi Horizonte
+       para citar tus 3 dimensiones más altas sin volver a calcularlas). */
+    v.perfilCoraDone = coraDone;
+    v.perfilCoraPending = !coraDone;
 
     if (v.showCoraQuiz) {
       v.coraAnsweredLabel = answeredCount + " / " + totalQ;
@@ -4198,7 +4576,7 @@ class Component extends DCLogic {
        3 preguntas por dimensión, escala 1-4 → puntaje bruto 3-12,
        normalizado a 0-100. El código son las 3 dimensiones con mayor
        puntaje; el arquetipo sale de ARCHETYPES según ese código. */
-    if (v.showCoraResults) {
+    if (coraDone) {
       const DIM_ORDER = ["A","E","S","C","O","P"];
       const raw = { A:0, E:0, S:0, C:0, O:0, P:0 };
       this.RIASEC_QUESTIONS.forEach(q => { raw[q.dimension] += (s.coraAnswers[q.id] || 0); });
@@ -4207,6 +4585,9 @@ class Component extends DCLogic {
       const ranked = DIM_ORDER.map(k => ({ k, score:normalized[k] })).sort((a, b) => b.score - a.score);
       const top3 = new Set(ranked.slice(0, 3).map(r => r.k));
       const codeKey = ranked.slice(0, 3).map(r => r.k).join("-");
+      /* Las 3 dimensiones más altas, en texto — las usa Veo mi Horizonte
+         para explicar por qué esos roles calzan con tu perfil. */
+      v.perfilTop3Labels = ranked.slice(0, 3).map(r => this.DIM_META[r.k].label);
 
       v.coraCode = ranked.slice(0, 3).map(r => r.k).join(" · ");
       v.coraArchetype = this.ARCHETYPES[codeKey] || this.ARCHETYPES.default;
@@ -4245,9 +4626,16 @@ class Component extends DCLogic {
       v.radarArea = DIM_ORDER.map((k, i) => pt(i, R * normalized[k] / 100).map(n => n.toFixed(1)).join(",")).join(" ");
       v.radarDots = DIM_ORDER.map((k, i) => { const p = pt(i, R * normalized[k] / 100); return { x:p[0].toFixed(1), y:p[1].toFixed(1) }; });
       v.radarLabels = DIM_ORDER.map((k, i) => { const p = pt(i, R + 22);
-        const anchor = Math.abs(p[0] - cx) < 6 ? "middle" : p[0] > cx ? "start" : "end";
-        return { x:p[0].toFixed(1), y:(p[1] + 3).toFixed(1), anchor, text:k + " — " + this.DIM_META[k].label }; });
-      v.radarTicks = [0,20,40,60,80,100].map(t => ({ x:cx + 5, y:(cy - R * t / 100 + 3).toFixed(1), text:String(t) }));
+        const xAlign = Math.abs(p[0] - cx) < 6 ? "translate(-50%,-50%)" : p[0] > cx ? "translate(0,-50%)" : "translate(-100%,-50%)";
+        const style = { position:"absolute", left:(p[0] / 600 * 100).toFixed(2) + "%", top:(p[1] / 260 * 100).toFixed(2) + "%",
+          transform:xAlign, fontSize:"10px", fontWeight:600, color:"#6B6080", fontFamily:"Inter, sans-serif", whiteSpace:"nowrap", pointerEvents:"none" };
+        return { style, text:k + " — " + this.DIM_META[k].label }; });
+      v.radarTicks = [0,20,40,60,80,100].map(t => {
+        const x = cx + 5, y = cy - R * t / 100;
+        const style = { position:"absolute", left:(x / 600 * 100).toFixed(2) + "%", top:(y / 260 * 100).toFixed(2) + "%",
+          transform:"translateY(-50%)", fontSize:"9px", color:"#9CA3AF", fontFamily:"Inter, sans-serif", whiteSpace:"nowrap", pointerEvents:"none" };
+        return { style, text:String(t) };
+      });
     }
 
     v.isHorizonte = on("horizonte");
@@ -4284,15 +4672,76 @@ class Component extends DCLogic {
     v.hzIconRoles = iconBox("#eff6ff"); v.hzIconCompanies = iconBox("#eff6ff"); v.hzIconVentures = iconBox("#faf5ff");
     v.hzIconSkills = iconBox("#f0fdf4"); v.hzIconWorld = iconBox("#fffbeb"); v.hzIconGap = iconBox("#fffbeb");
     v.hzIconCoverage = iconBox("#f0fdf4");
+
+    /* Chips seleccionables: una sola meta guardada a la vez por categoría
+       (s.favoriteRole/Company/Venture), disponible en los dos modos —
+       igual que cfuChosen/movedCourses en la malla, es una capa sobre el
+       dato fijo (H.roles/companies/ventures), nunca lo modifica. */
+    const favoriteChips = (names, stateKey, accent) => names.map(name => {
+      const fav = s[stateKey] === name;
+      return {
+        label:name, starColor: fav ? "#f59e0b" : accent[3],
+        style:{ display:"inline-flex", alignItems:"center", gap:"6px", fontSize:"12px", fontWeight:600,
+          color:accent[1], background:accent[0], border:"1px solid " + (fav ? "#f59e0b" : accent[2]),
+          borderRadius:"9999px", padding:"5px 10px 5px 12px", cursor:"pointer" },
+        onToggle: () => this.setState({ [stateKey]: fav ? null : name })
+      };
+    });
+    v.hzRoleChips = favoriteChips(H.roles, "favoriteRole", [...CHIP_BLUE, "#93c5fd"]);
+
+    const favEntries = [];
+    if (s.favoriteRole) favEntries.push({ emoji:"💼", label:s.favoriteRole, onClear: () => this.setState({ favoriteRole:null }) });
+    if (s.favoriteCompany) favEntries.push({ emoji:"🏢", label:s.favoriteCompany, onClear: () => this.setState({ favoriteCompany:null }) });
+    if (s.favoriteVenture) favEntries.push({ emoji:"🚀", label:s.favoriteVenture, onClear: () => this.setState({ favoriteVenture:null }) });
+    v.hzFavorites = favEntries;
+    v.hzHasFavorite = favEntries.length > 0;
+
+    /* Conexión con Perfil CoRA: cita las 3 dimensiones más altas ya
+       calculadas arriba — mismo dato, no un texto nuevo inventado. */
+    if (v.perfilCoraDone && v.perfilTop3Labels) {
+      const l = v.perfilTop3Labels;
+      v.hzProfileConnect = "Estos roles calzan con tu Perfil CoRA: eres fuerte en " +
+        l.slice(0, -1).join(", ") + " y " + l[l.length - 1] + ".";
+    }
+    v.hzGoPerfilCora = () => this.nav("perfil-cora");
+
+    /* Mini-roadmap: hasta 3 ciclos siguientes, con una razón real (de tu
+       malla) para volver a mirar Horizonte en cada uno — no una lista
+       fija de fechas sueltas. */
+    const roadmapCycles = [];
+    for (let cy = this.STUDENT.cycle + 1; cy <= Math.min(10, this.STUDENT.cycle + 3); cy++) roadmapCycles.push(cy);
+    v.hzHasRoadmap = roadmapCycles.length > 0;
+    v.hzRoadmap = roadmapCycles.map(cy => {
+      const cyc = this.CURRICULUM.find(c => c.cycle === cy);
+      const highlight = cyc ? cyc.courses.find(c => routeCourseNames.has(c.name)) : null;
+      return {
+        cycleLabel:"Ciclo " + cy,
+        note: cy === 6 ? "Horizonte cambia a 'Modo Informar para Decidir': verás sueldos y demanda reales."
+          : highlight ? "Cursarás " + highlight.name + " — vuelve a ver cómo conecta con tus roles."
+          : "Sigue avanzando en tu malla — vuelve a revisar tu Horizonte."
+      };
+    });
+
+    /* Alumni — dos enlaces reales, verificados, nunca un perfil puntual
+       elegido por el equipo de CoRA (ver conversación sobre ética de datos
+       de terceros). El de LinkedIn es la página oficial de "Alumni and
+       Graduates" de la universidad (linkedin.com/school/…/people) — a
+       propósito, NO una búsqueda de personas por palabra clave: esa
+       encuentra también a quienes TRABAJAN en la universidad, y aquí
+       importa que hayan ESTUDIADO ahí. El del portal Alumni UC es la
+       página oficial de la propia universidad para egresados. */
+    v.hzAlumniLinkedInUrl = "https://www.linkedin.com/school/universidad-continental/people";
+    v.hzAlumniPortalUrl = "https://ucontinental.edu.pe/alumni/";
+
     if (v.isInspireMode) {
       v.horizonteGreeting = firstName + ", esto es hacia dónde te puede llevar tu ruta";
-      v.hzRoleChips = chipRow(H.roles, CHIP_BLUE);
-      v.hzCompanyChips = chipRow(H.companies.map(c => c.name), CHIP_BLUE);
-      v.hzVentureChips = chipRow(H.ventures.map(x => x.name), CHIP_PURPLE);
+      v.hzCompanyChips = favoriteChips(H.companies.map(c => c.name), "favoriteCompany", [...CHIP_BLUE, "#93c5fd"]);
+      v.hzVentureChips = favoriteChips(H.ventures.map(x => x.name), "favoriteVenture", [...CHIP_PURPLE, "#c4b5fd"]);
       v.hzWorldTeaser = H.worldTeaser;
       v.hzSkillsWorkChips = chipRow(H.skillsWorkSummary, CHIP_GREEN);
       v.hzSkillsSoftChips = chipRow(H.skillsSoftSummary, CHIP_GREEN);
       v.hzStoryShort = H.storyShort; v.hzStoryAttribution = H.storyAttribution;
+      v.hzHasStory = !!H.storyShort;
       v.hzClosing = H.closing;
       v.hzStoryFull = H.storyFull;
       v.hzWorldFull = H.worldFull;
@@ -4331,7 +4780,7 @@ class Component extends DCLogic {
         metaLineStyle:{ fontSize:"11px", color:"#4b5563", margin:"0 0 4px", lineHeight:1.5 },
         btnStyle:{ width:"100%", background: isBot ? c[3] : (scheduled ? "#dcfce7" : c[3]), color: isBot ? "#fff" : (scheduled ? "#15803d" : "#fff"),
           border:0, borderRadius:"12px", padding:"8px 0", fontSize:"12px", fontWeight:500, cursor:"pointer", fontFamily:"inherit" },
-        btnLabel: isBot ? "Ir al Asistente CoRA" : (scheduled ? "✓ Cita agendada" : "Agendar con asesor"),
+        btnLabel: isBot ? "Ir al Tutor CoRA" : (scheduled ? "✓ Cita agendada" : "Agendar con asesor"),
         onClick: isBot ? (() => this.nav("tutor")) : (() => this.setState({ advisorScheduled: !scheduled }))
       };
     });
@@ -4589,8 +5038,8 @@ class Component extends DCLogic {
     const rvals = Object.keys(s.fRatings).map(k => s.fRatings[k]);
     const dominated = rvals.filter(r => r === "know").length;
     v.fKnow = dominated; v.fMaybe = rvals.filter(r => r === "maybe").length; v.fNo = rvals.filter(r => r === "no").length;
-    v.fXpLabel = "✨ +" + (50 + dominated * 2) + " XP ganados";
-    v.fXpDetail = "Completar set: +50 XP · Dominadas: " + dominated + " × 2 = +" + (dominated * 2) + " XP";
+    v.fXpLabel = "💜 +" + (50 + dominated * 2) + " CoRAzones ganados";
+    v.fXpDetail = "Completar set: +50 CoRAzones · Dominadas: " + dominated + " × 2 = +" + (dominated * 2) + " CoRAzones";
     v.fRepeat = () => this.setState({ fPhase:"cards", fIdx:0, fFlipped:false, fRatings:{} });
     v.fNewSet = () => this.setState({ fPhase:"setup", fIdx:0, fFlipped:false, fRatings:{} });
 
@@ -4603,14 +5052,25 @@ class Component extends DCLogic {
       "Economía I":"Oferta, demanda, indicadores macro y microeconomía.",
       "General":"Cualquier otra duda académica que no sea de una asignatura específica."
     };
-    v.tutorCourses = Object.keys(TUTOR_COURSE_DESC).map(c => ({
+    /* Si llegas al Asistente desde "Consultar CoRA sobre este curso" en la
+       malla, s.tutorCourse puede ser cualquier asignatura real (no solo las
+       4 de siempre) — se agrega como un chip más, y su descripción sale de
+       CURRICULUM o del catálogo de electivos, no queda en blanco. */
+    const tutorChipNames = Object.keys(TUTOR_COURSE_DESC);
+    if (s.tutorCourse && !tutorChipNames.includes(s.tutorCourse)) tutorChipNames.push(s.tutorCourse);
+    v.tutorCourses = tutorChipNames.map(c => ({
       label:c, onClick: () => this.setState({ tutorCourse:c }),
       style:{ padding:"6px 12px", borderRadius:"12px", fontSize:"12px", fontWeight:500, border:0, cursor:"pointer", fontFamily:"inherit",
         transition:"all .15s", background: s.tutorCourse === c ? "#7B68EE" : "#f3f4f6", color: s.tutorCourse === c ? "#fff" : "#4b5563" } }));
-    v.tutorCourseDesc = TUTOR_COURSE_DESC[s.tutorCourse] || "";
+    const findRealCourseDesc = name => {
+      for (const cyc of this.CURRICULUM) { const found = cyc.courses.find(c => c.name === name); if (found) return found.desc; }
+      const elective = this.ELECTIVE_CATALOG.find(e => e.name === name);
+      return elective ? elective.desc : "";
+    };
+    v.tutorCourseDesc = TUTOR_COURSE_DESC[s.tutorCourse] || findRealCourseDesc(s.tutorCourse) || "";
     const defaultMsgsFor = course => [
       { from:"bot", text:"¡Hola! Soy CoRA, tu Asistente académico — una IA disponible 24/7, no una persona." },
-      { from:"bot", text:"Puedo ayudarte con " + (TUTOR_COURSE_DESC[course] || "tu pregunta") + " Si tu situación necesita seguimiento personal (no una duda puntual), te conecto con tu Asesor Académico." }
+      { from:"bot", text:"Puedo ayudarte con " + (TUTOR_COURSE_DESC[course] || findRealCourseDesc(course) || "tu pregunta") + " Si tu situación necesita seguimiento personal (no una duda puntual), te conecto con tu Asesor Académico." }
     ];
     const courseMsgs = s.msgsByCourse[s.tutorCourse] || defaultMsgsFor(s.tutorCourse);
     v.msgs = courseMsgs.map(m => ({
@@ -4660,19 +5120,22 @@ class Component extends DCLogic {
     const goals = [];
     if (nextFlow) goals.push({ label:"Completa: " + this.NAMES[nextFlow], when:"Esta semana", why:"Es el siguiente paso pendiente de tu Recomendador." });
     if (topRisk) goals.push({ label:"Refuerza " + topRisk.course, when:"Ciclo " + topRisk.cycle, why:"CoRA detectó " + topRisk.risk + "% de riesgo — hay un plan en Acompañamiento." });
-    if (s.streak < 30) goals.push({ label:"Llega a 30 días de racha", when:"Llevas " + s.streak, why:"Cada 30 días de racha suman +100 XP." });
+    if (s.streak < 30) goals.push({ label:"Llega a 30 días de racha", when:"Llevas " + s.streak, why:"Cada 30 días de racha suman +100 CoRAzones." });
+    if (s.favoriteRole) goals.push({ label:"Prepárate para: " + s.favoriteRole, when:"Tu meta guardada", why:"Marcaste este rol como favorito en Veo mi Horizonte." });
+    if (s.favoriteCompany) goals.push({ label:"Investiga: " + s.favoriteCompany, when:"Tu meta guardada", why:"Marcaste esta empresa como favorita en Veo mi Horizonte." });
+    if (s.favoriteVenture) goals.push({ label:"Explora emprender: " + s.favoriteVenture, when:"Tu meta guardada", why:"Marcaste esta idea como favorita en Veo mi Horizonte." });
     v.nextGoals = goals;
     v.xpNext = (2000 - s.xp).toLocaleString();
     v.xpPct = Math.min(100, (s.xp / 2000) * 100) + "%";
     v.xpThisCycle = String(s.xp - s.xpCycleStart);
     v.xpTable = [["Completar formulario","50"],["Continuar con una ruta","100"],["Completar Ecosistema CIE","75"],["Completar malla","150"],
       ["Completar simulacro","50"],["Crear flashcard","30"],["Streak 7 días","25"],["Streak 30 días","100"]]
-      .map(x => ({ act:x[0], xp:"+" + x[1] + " XP" }));
-    /* Las insignias conectan el número de XP con un logro concreto — no es
+      .map(x => ({ act:x[0], xp:"+" + x[1] + " CoRAzones" }));
+    /* Las insignias conectan el número de CoRAzones con un logro concreto — no es
        solo un contador, cada umbral desbloquea algo con nombre propio. */
     v.badges = this.BADGES.map(b => {
       const earned = s.xp >= b.xp;
-      return { emoji: earned ? b.emoji : "🔒", name:b.name, hint: earned ? "Desbloqueada" : "Con " + b.xp + " XP",
+      return { emoji: earned ? b.emoji : "🔒", name:b.name, hint: earned ? "Desbloqueada" : "Con " + b.xp + " CoRAzones",
         cardStyle:{ textAlign:"center", background: earned ? "#faf5ff" : "#f9fafb", border:"1px solid " + (earned ? "#f3e8ff" : "#f3f4f6"),
           borderRadius:"12px", padding:"10px 6px", opacity: earned ? 1 : 0.6 },
         nameStyle:{ fontSize:"11px", fontWeight:600, margin:"4px 0 0", color: earned ? "#4A3FA0" : "#9ca3af" } };
@@ -4682,10 +5145,10 @@ class Component extends DCLogic {
     v.rewards = this.REWARDS.map(r => {
       const afford = s.xp >= r.cost;
       return {
-        em:r.em, name:r.name, costLabel: r.cost.toLocaleString() + " XP", got:r.got,
+        em:r.em, name:r.name, costLabel: r.cost.toLocaleString() + " CoRAzones", got:r.got,
         cardStyle:{ display:"flex", alignItems:"center", gap:"12px", padding:"12px", borderRadius:"12px", marginBottom:"8px",
           border:"1px solid " + (r.got ? "#bbf7d0" : "#f3f4f6"), background: r.got ? "#f0fdf4" : "#fff" },
-        btnLabel: r.got ? "✓ Canjeado" : afford ? "Canjear" : "Te faltan " + (r.cost - s.xp).toLocaleString() + " XP",
+        btnLabel: r.got ? "✓ Canjeado" : afford ? "Canjear" : "Te faltan " + (r.cost - s.xp).toLocaleString() + " CoRAzones",
         btnStyle:{ fontSize:"11px", fontWeight:600, padding:"6px 12px", borderRadius:"8px", border:0, flexShrink:0,
           fontFamily:"inherit", whiteSpace:"nowrap",
           background: r.got ? "#dcfce7" : afford ? "#7B68EE" : "#f3f4f6",
@@ -4713,7 +5176,7 @@ class Component extends DCLogic {
     v.suggestions = [
       { em:"📈", text:"Tu promedio en Estadística I está por debajo de la media de tu ruta. Refuérzalo antes del ciclo 7." },
       { em:"🗣️", text:"Tu ruta incluye comercio exterior: subir a inglés B2 te abre las empresas del horizonte." },
-      { em:"🔥", text:"Llevas 12 días de racha. Con 30 días ganas +100 XP." }
+      { em:"🔥", text:"Llevas 12 días de racha. Con 30 días ganas +100 CoRAzones." }
     ];
 
     /* ---------- leaderboard (preparado, todavía no activo) ---------- */
@@ -4722,7 +5185,7 @@ class Component extends DCLogic {
     v.toggleAnon = () => this.setState({ anonBoard: !s.anonBoard });
     v.boardToggle = mkToggle(s.anonBoard, () => this.setState({ anonBoard: !s.anonBoard }));
     v.leaders = this.LEADERS.map(l => ({
-      pos:"#" + l.pos, xpLabel: l.xp.toLocaleString() + " XP",
+      pos:"#" + l.pos, xpLabel: l.xp.toLocaleString() + " CoRAzones",
       name: l.me ? (s.anonBoard ? "Tú (anónimo)" : prof.name.split(" ")[0] + " " + prof.name.split(" ")[1].charAt(0) + ".") : l.name,
       rowStyle:{ display:"flex", alignItems:"center", gap:"12px", padding:"10px 12px", borderRadius:"12px", marginBottom:"6px",
         background: l.me ? "#faf5ff" : "#f9fafb", border:"1px solid " + (l.me ? "#e9d5ff" : "#f3f4f6") },

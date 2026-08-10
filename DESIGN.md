@@ -118,7 +118,7 @@ Dos familias, cargadas desde Google Fonts en el `<helmet>`:
 
 | Tamaño | Dónde |
 |---|---|
-| `36` / `30` | Cifras heroicas (XP, porcentajes grandes) |
+| `36` / `30` | Cifras heroicas (CoRAzones, porcentajes grandes) |
 | `24` | Título de pantalla (`h1`) |
 | `20` / `18` | Títulos de sección y de tarjeta |
 | `16` | Subtítulo destacado |
@@ -185,8 +185,8 @@ Las 13 pantallas comparten el mismo esqueleto. **No lo cambies para una sola pan
 
 ```
 ┌────────────┬──────────────────────────────────────────────┐
-│  <aside>   │  <header>  racha · XP · campana · avatar     │  sticky, top:0
-│  240px     ├──────────────────────────────────────────────┤
+│  <aside>   │  <header>  racha · CoRAzones · campana · avatar │  sticky, top:0
+│  300px     ├──────────────────────────────────────────────┤
 │  fija      │  <main>                                      │
 │  100vh     │    migas de pan                              │
 │            │    h1 + subtítulo                            │
@@ -211,8 +211,8 @@ Tres grupos fijos, en este orden:
 
 | Grupo | Encabezado | Pantallas |
 |---|---|---|
-| Recomendador | `🟣 RECOMENDADOR` | Formulario · Mis Rutas · Ecosistema CIE · Elijo mi Ruta · Mi Perfil CoRA · Veo mi Horizonte · Acompañamiento |
-| Académico | `📚 ACADÉMICO` | Práctico para examen · Mis flashcards · Asistente CoRA |
+| Recomendador | `🟣 RECOMENDADOR` | CoRA me conoce · Mis Rutas · Ecosistema CIE · Elijo mi Ruta · Mi Perfil CoRA · Veo mi Horizonte · Acompañamiento |
+| Académico | `📚 ACADÉMICO` | Práctico para examen · Mis flashcards · Tutor CoRA |
 | Ajustes | `⚙️ AJUSTES` | Mi progreso · Perfil · Configuración |
 
 ### Elementos presentes en todas las pantallas
@@ -224,7 +224,7 @@ Si añades una pantalla, no tienes que hacer nada: aparecen solas.
 |---|---|---|
 | **Perfil resumido** | Derecha de la barra superior | Nombre, ciclo y carrera. Lleva a *Perfil* al pulsarlo. |
 | **Ventanita stepper** | Bajo la barra, sobre `<main>` | Guía la sección actual del recorrido. Se cierra con la ✕ y no vuelve. |
-| **Asistente CoRA** | Botón flotante abajo a la derecha | Chat en cualquier pantalla. Se expande a 360 px sin perder el contexto. |
+| **Tutor CoRA** | Botón flotante abajo a la derecha | Chat en cualquier pantalla. Se expande a 360 px sin perder el contexto. |
 | **Guía de onboarding** | Modal a pantalla completa | Presentación de la plataforma en 4 pasos. Se abre con el botón «Guía». |
 
 El stepper se define en el mapa `STEPPER` de la lógica; la guía, en `ONBOARDING`.
@@ -483,6 +483,66 @@ aparece un aviso con el conteo y el botón "Ver mi malla final →"
 (`v.ecoCtaClick`, el mismo que "Continuar malla →") — no hace falta terminar
 de explorar las otras secciones para ver el efecto en la malla.
 
+### Prerrequisitos, electivos recomendados y detalle de asignatura (Malla)
+
+Cada tarjeta de la malla es clicable (`onClick`, mismo patrón que el flip de
+las flashcards) y abre un panel lateral fijo de detalle ("Viendo detalles:"),
+compartido entre la malla principal y la vista previa de *Mis Rutas* — mismo
+dato, mismo panel, sin duplicar lógica.
+
+**Prerrequisitos.** `CURRICULUM` incorpora un campo opcional `prereq` (nombre
+exacto de la asignatura previa) en las ~15 asignaturas claramente secuenciales
+del plan (Comprensión de Textos 1→2, English Course 1→2→3→4, Finanzas 1→2,
+Laboratorio de Liderazgo e Innovación → Intermedio → Avanzado, etc.). Si una
+asignatura tiene `prereq`, su tarjeta muestra una insignia circular pequeña
+(ícono de eslabón, esquina superior derecha); el panel de detalle revela cuál
+es el prerrequisito en una caja ámbar. Las asignaturas sin `prereq` no
+muestran insignia ni caja — no es un estado "vacío" visible, es la ausencia
+del dato.
+
+**Recomendación de electivos.** Un nuevo campo `ELECTIVE_CATALOG` (14
+asignaturas reales, generales y de especialidad, cada una con `tags` de tema)
+alimenta la recomendación. Al abrir el detalle de un cupo "Electivo" que **no**
+esté ya cubierto por la ruta elegida del estudiante y que el estudiante **no**
+haya elegido todavía, el panel muestra "💡 CoRA recomienda" con 3 opciones del
+catálogo, ordenadas por coincidencia de `tags` con la ruta activa — no es una
+lista fija, cambia según la ruta. Elegir una:
+
+- Reemplaza el nombre y la descripción/competencias mostradas en la tarjeta y
+  en el panel (`s.electiveChoices`, por nombre de cupo → nombre de asignatura
+  elegida) — el cupo original (`CURRICULUM`) nunca se modifica, la elección es
+  una capa aparte, igual que `s.cfuChosen` o `s.movedCourses`.
+- Pinta la tarjeta con el mismo acento celeste de "Electivos que eligió el
+  estudiante" (tabla de arriba) y agrega la insignia "✓ Elegido".
+- Habilita en el panel el botón "↺ Elegir otro electivo" para deshacer la
+  elección y volver a ver recomendaciones.
+
+Si el cupo ya está cubierto por la ruta (por ejemplo, ya aparece resaltado
+como "Tu ruta") o ya tiene una elección hecha, no se ofrecen recomendaciones
+— evita sugerir algo que el estudiante ya tiene resuelto.
+
+**Panel de detalle.** Además de prerrequisito y recomendación, el panel
+siempre muestra: ciclo y categoría, nombre, tipo y créditos, descripción
+(`desc`) y hasta 2 competencias (`comp`) por asignatura — datos reales de
+`CURRICULUM`/`ELECTIVE_CATALOG`, no texto de relleno. Dos acciones de cierre:
+
+- **"↕️ Mover a otro ciclo"** — despliega los ciclos restantes (excluye el
+  ciclo actual), guarda la elección en `s.movedCourses` (nombre → ciclo
+  destino). Es la misma idea de capa-de-estado que los electivos elegidos:
+  `CURRICULUM` conserva el ciclo original, la malla se reconstruye en cada
+  render cruzando `CURRICULUM` con `s.movedCourses`.
+- **"Consultar CoRA sobre este curso" / "Nueva consulta"** — navega a
+  Tutor CoRA con esa asignatura como chip seleccionable (se agrega a la
+  lista aunque no sea una de las 4 fijas) y su descripción real como contexto.
+  "Nueva consulta" además limpia el historial de esa asignatura en
+  `s.msgsByCourse` para empezar de cero.
+
+**Pendiente, a propósito.** El pedido original incluía "ver el sílabo" desde
+el panel — no se implementó porque no existen documentos de sílabo reales que
+enlazar; se dejó fuera en vez de simular un enlace roto. Si se quiere una
+versión maqueta (botón que abra un modal de aviso "Próximamente"), es un
+cambio pequeño y aislado.
+
 ### Pantalla de cierre al confirmar la malla
 
 "✓ Confirmar malla final" ya no navega directo a *Mi Perfil CoRA*: dentro de
@@ -545,13 +605,81 @@ field, dos casos: `inspire` y `informDecide`):
    verde (igual que el plan de acompañamiento sugerido); la cita del
    egresado se ve completa; microcredencial sugerida, etc.
 
-**"Pregúntale al Asistente CoRA"** — chips de preguntas sugeridas, distintas
+**"Pregúntale al Tutor CoRA"** — chips de preguntas sugeridas, distintas
 por modo (`H.chips`). Tocar una no abre un chat nuevo: usa
 `this.askAssistant(pregunta)`, que la agrega como si el estudiante la
-hubiera escrito en el hilo "General" del Asistente CoRA (`s.msgsByCourse`,
-ver Asistente CoRA más abajo) y navega ahí — es la capa "interactiva y
+hubiera escrito en el hilo "General" del Tutor CoRA (`s.msgsByCourse`,
+ver Tutor CoRA más abajo) y navega ahí — es la capa "interactiva y
 conversacional con IA" que pedía el documento, reutilizando el chat que ya
 existe en vez de construir uno nuevo.
+
+**Metas favoritas: roles, empresas e ideas de emprendimiento.** Las tres
+tarjetas de chips del modo Inspirar ("Roles a los que conecta", "Dónde
+podrías trabajar", "Y si quieres crear lo tuyo") son clicables — cada una
+tiene su propia meta guardada (`s.favoriteRole`, `s.favoriteCompany`,
+`s.favoriteVenture`; una por categoría, tocar el mismo chip la quita). Un
+único helper (`favoriteChips(names, stateKey, accent)`) genera los tres
+listados de chips con el mismo ícono `star` (ámbar si está guardado, tenue
+si no) — evita repetir la lógica de estilo/toggle tres veces. Ambos modos de
+`HORIZONTE` tienen `roles` (antes solo `inspire` lo tenía); companies/
+ventures con selección solo existen en el resumen del modo Inspirar, que es
+donde aparecen como chips (el modo Informar-decidir los muestra como
+mini-tarjetas con descripción, no como chips). Es una capa de estado sobre
+el dato fijo, igual que `s.cfuChosen` o `s.movedCourses` en la malla:
+`HORIZONTE.roles/companies/ventures` nunca se modifica. Si hay al menos una
+meta guardada aparece "⭐ Tus metas guardadas" con un botón "Quitar" por
+cada una, y cada meta se refleja también en "Próximas actividades
+recomendadas" de Mi Progreso (`v.nextGoals`) con un verbo distinto según la
+categoría: "Prepárate para" (rol), "Investiga" (empresa), "Explora
+emprender" (idea).
+
+**Conexión con Perfil CoRA.** El cálculo de las 3 dimensiones más altas
+(antes solo corría dentro de la pantalla Mi Perfil CoRA, bajo `showCoraResults`)
+ahora corre siempre que el cuestionario esté completo (`v.perfilCoraDone`,
+antes `coraDone && v.isPerfilCora`), sin importar la pantalla activa. Horizonte
+lo usa para una frase con datos reales ("Estos roles calzan con tu Perfil
+CoRA: eres fuerte en…", `v.hzProfileConnect`) justo debajo de "RUTA vs
+HORIZONTE"; si el cuestionario no está hecho, muestra en su lugar una
+invitación a completarlo. No es texto nuevo inventado: son las mismas 3
+dimensiones (`v.perfilTop3Labels`) que ya calcula y muestra Mi Perfil CoRA.
+
+**Mini-roadmap ("Cuándo volver a mirar tu Horizonte").** Lista los próximos
+2-3 ciclos desde `STUDENT.cycle + 1` (tope ciclo 10). Por cada ciclo busca en
+`CURRICULUM` una asignatura de esa ruta (`routeCourseNames`) para dar una
+razón real de volver ("Cursarás X — vuelve a ver cómo conecta con tus
+roles"); si el ciclo es el 6, avisa del cambio de modo Inspirar → Informar
+para Decidir en su lugar. No es una lista de fechas sueltas: si no quedan
+ciclos por delante, la tarjeta no se muestra (`v.hzHasRoadmap`).
+
+**Conecta con egresados — dos enlaces reales, nunca perfiles puntuales.**
+"Alumni en LinkedIn" enlaza a `linkedin.com/school/universidad-continental/people`
+— la página oficial de "Alumni and Graduates" de LinkedIn para la
+universidad, verificada por búsqueda antes de usarla. **A propósito no** es
+una búsqueda de personas por palabra clave (`.../search/results/people/?keywords=…`):
+esa también encuentra a quienes *trabajan* en la universidad (docentes,
+personal administrativo), y lo que pide esta tarjeta son personas que
+*estudiaron* ahí — la página de alumni de LinkedIn ya filtra por eso, la
+búsqueda genérica no. "Portal Alumni UC" enlaza a `ucontinental.edu.pe/alumni/`,
+la página oficial de la universidad para egresados — igual, verificada, no
+inventada. Ninguno de los dos enlaces apunta jamás a un perfil real elegido
+o guardado por el equipo de CoRA: usar el perfil de una persona real sin su
+consentimiento (aunque sea público) no es aceptable para este mockup ni
+para el producto real — ver también la regla 10 de `CLAUDE.md`. Si más
+adelante se quiere una lista real de egresados dispuestos a ser
+contactados, eso lo debe armar el área de Egresados/Empleabilidad como un
+programa de opt-in, no el equipo de diseño escogiendo perfiles.
+
+**La historia del egresado (modo Inspirar) quedó vacía a propósito.**
+`storyShort`/`storyFull`/`storyAttribution` en `HORIZONTE.inspire` se
+dejaron en `""` — la cita anterior era ficticia, y no se reemplaza por una
+real basada en el historial de una persona encontrada en LinkedIn: eso
+sería fabricarle una cita a alguien real sin su consentimiento, un problema
+más serio que enlazar a su perfil. La tarjeta "🎙️ Una historia para
+inspirarte" solo se muestra si `hzStoryShort` no está vacío
+(`v.hzHasStory`), así que por ahora no aparece. Si se quiere completarla:
+una historia ficticia (como el resto de datos de ejemplo del repositorio) o
+una cita real obtenida con consentimiento explícito de un egresado a través
+de Egresados/Empleabilidad — nunca una inferida de un perfil público.
 
 ### Niveles de riesgo (Acompañamiento)
 
@@ -563,14 +691,14 @@ existe en vez de construir uno nuevo.
 
 El umbral de «riesgo» que dispara la propuesta de plan es **50 %**.
 
-### Roles: Asistente CoRA vs. Asesor Académico (Acompañamiento)
+### Roles: Tutor CoRA vs. Asesor Académico (Acompañamiento)
 
 Dos tipos de apoyo, cada uno con su propia tarjeta (`SUPPORT_TYPES`, con
 `desc`/`duracion`/`progreso`/`porque`) — nunca se mezclan bajo el mismo nombre:
 
 | Rol | Qué es | Cuándo |
 |---|---|---|
-| 💬 Asistente CoRA | IA, chat, disponible 24/7 | Dudas académicas puntuales — fórmulas, ejercicios, conceptos |
+| 💬 Tutor CoRA | IA, chat, disponible 24/7 | Dudas académicas puntuales — fórmulas, ejercicios, conceptos |
 | 👨‍💼 Asesor Académico | Persona real, sesiones agendadas (~30 min) | Seguimiento personal — CoRA lo recomienda si detecta riesgo alto/medio |
 
 No existe un tercer rol "tutor académico": toda mención a agendar o dar
@@ -587,7 +715,7 @@ ciclo actual (`s.reinforceCourses`, sin límite) con un botón "➕ Reforzar
 otra asignatura de este ciclo" — cada uno etiquetado "Tú lo agregaste" para
 distinguirlo de lo que CoRA detectó automáticamente.
 
-### Asistente CoRA: historial por asignatura (`tutor` + widget flotante)
+### Tutor CoRA: historial por asignatura (`tutor` + widget flotante)
 
 `s.msgsByCourse` guarda una conversación independiente por asignatura — cambiar
 de asignatura no borra ni mezcla el historial de otra. Cada asignatura tiene una
@@ -598,14 +726,23 @@ necesita seguimiento personal, te conecto con tu Asesor Académico." El
 widget flotante (fuera de todo `sc-if` de sección, visible en toda la
 plataforma) comparte exactamente los mismos `v.msgs`/`v.tutorCourse`.
 
-### Progreso: XP explicado, insignias y fórmulas (`progreso`)
+### Progreso: CoRAzones explicados, insignias y fórmulas (`progreso`)
 
-- Un `Tip` junto al título aclara: "XP = puntos de progreso que muestran tu
-  avance." Y un chip visible muestra "Has ganado {{ xpThisCycle }} XP este
+El sistema de puntos se llama **"CoRAzones"** (💜, ícono `heart` en
+`Icon.dc.html`), no "XP" — es el mismo dato (`s.xp`, `s.xpCycleStart`, etc.;
+los nombres internos no cambiaron, solo el texto que ve el estudiante) con un
+nombre propio que alude a la marca en vez de una sigla técnica.
+
+- Un `Tip` junto al título aclara: "CoRAzones = puntos que muestran tu
+  avance en CoRA. Los ganas al completar pasos del Recomendador, estudiar y
+  mantener tu racha." Este mismo texto se repite en **Mi Progreso**,
+  **Práctico** y **Flashcards** — los 3 lugares donde se ganan CoRAzones —
+  no solo en Mi Progreso, para que la explicación esté donde se necesita.
+- Un chip visible muestra "Has ganado {{ xpThisCycle }} CoRAzones este
   ciclo" (`s.xpCycleStart`, baseline separado del total acumulado).
-- `BADGES` (class field, umbrales de XP) conecta el XP con logros con
-  nombre propio — desbloqueada o 🔒 con el umbral que falta.
-- Cualquier porcentaje calculado (progreso general, XP) lleva un `Tip` con
+- `BADGES` (class field, umbrales de XP en el dato) conecta los CoRAzones
+  con logros con nombre propio — desbloqueada o 🔒 con el umbral que falta.
+- Cualquier porcentaje calculado (progreso general) lleva un `Tip` con
   la fórmula exacta, ej.: "Tu progreso se calcula como (Asignaturas completadas /
   Totales) × 100 = (X / 13) × 100 = Y%."
 - "🎯 Próximas actividades recomendadas" (`v.nextGoals`) no es una lista
@@ -613,7 +750,7 @@ plataforma) comparte exactamente los mismos `v.msgs`/`v.tutorCourse`.
   asignatura de mayor riesgo en `PREDICT` y de la racha actual — si ya no aplica
   una meta (por ejemplo, ya se completó todo el Recomendador), desaparece sola.
 
-### Inicio (`inicio`) y Formulario (`formulario`)
+### Inicio (`inicio`) y CoRA me conoce (`formulario`)
 
 **"Inicio" es una pantalla propia, fuera del Recomendador** — su propio grupo
 en la barra lateral (🏠, encima de 🟣 RECOMENDADOR), sin `REQ`, sin entrada en
@@ -621,7 +758,7 @@ en la barra lateral (🏠, encima de 🟣 RECOMENDADOR), sin `REQ`, sin entrada 
 Contenido: "Qué es CoRA" (3 tarjetas: Te orienta / Te anticipa / Te acompaña)
 + "📍 Dónde estás ahora" (ciclo, asignaturas llevadas, promedio, créditos,
 avance de la carrera y últimas asignaturas). Termina en un botón "Continuar
-con Formulario →" (`continueToFormulario()`) que navega a `section:"formulario"`.
+con CoRA me conoce →" (`continueToCoRA me conoce()`) que navega a `section:"formulario"`.
 `startSection` por defecto es `"inicio"` (prop y `data-props` del componente) —
 es la primera pantalla que ve cualquiera que abra el archivo sin parámetros.
 
@@ -764,7 +901,7 @@ archivo oficial; no se inventa un logo.
 
 | Archivo | De quién | Dónde se usa |
 |---|---|---|
-| `assets/cora-logo.png` | CoRA (provisto por la diseñadora) | Encabezado de la barra lateral (todas las pantallas) y encabezado de Asistente CoRA |
+| `assets/cora-logo.png` | CoRA (provisto por la diseñadora) | Encabezado de la barra lateral (todas las pantallas) y encabezado de Tutor CoRA |
 | `assets/cie-logo.svg` | Continental International Education | Encabezado de Ecosistema CIE |
 | `assets/uc-logo.svg` | Universidad Continental | Lado "Perú" de la tabla de Experiencias Internacionales |
 | `assets/cfu-logo.png` | Continental Florida University | Lado "EE. UU." de la tabla de Experiencias Internacionales |
@@ -790,7 +927,7 @@ el nombre del ícono, no el emoji, y `v.iconColor` lo pinta blanco cuando el
 
 | Sección | Ícono | Por qué |
 |---|---|---|
-| Formulario | `clipboard-list` | Es el cuestionario del recomendador |
+| CoRA me conoce | `clipboard-list` | Es el cuestionario del recomendador |
 | Mis Rutas | `route` | Cinta/camino que se bifurca — la ruta académica |
 | Ecosistema CIE | `globe` | Alcance internacional del ecosistema |
 | Elijo mi Ruta | `graduation-cap` | La malla que lleva a la carrera |
@@ -799,7 +936,7 @@ el nombre del ícono, no el emoji, y `v.iconColor` lo pinta blanco cuando el
 | Acompañamiento | `life-buoy` | Apoyo, no advertencia — por eso no es `alert-triangle` |
 | Práctico para examen | `edit` | Ya existía en el set, se reusó tal cual |
 | Mis flashcards | `layers` | Tarjetas apiladas |
-| Asistente CoRA | `phone-idea` | Ayuda/ideas desde el celular |
+| Tutor CoRA | `phone-idea` | Ayuda/ideas desde el celular |
 | Mi progreso | `bar-chart` | Barras de avance |
 | Perfil | `user` | Persona |
 | Configuración | `sliders` | Controles/ajustes |
@@ -881,7 +1018,7 @@ Globo morado, 256 px de ancho, aparece al pasar el ratón o al hacer clic.
 - **Encabezados de grupo:** MAYÚSCULAS con `letter-spacing`, precedidos de emoji.
 - **Cifras:** separador de miles con punto (`11.529 asignaturas`).
 - **Datos de ejemplo:** el estudiante ficticio es **Alejandro García**, carrera
-  **Ingeniería Comercial**, 350 XP, racha de 12 días. Mantén la coherencia si
+  **Ingeniería Comercial**, 350 CoRAzones, racha de 12 días. Mantén la coherencia si
   añades pantallas.
 - Evita la jerga técnica en la interfaz. El usuario es un estudiante de secundaria
   o de primeros ciclos.
@@ -941,6 +1078,18 @@ ver el diseño en distintos estados sin tocar el código:
 
 **No hay `sc-else`.** Para un o-esto-o-lo-otro, pon dos `sc-if` hermanos con
 condiciones inversas.
+
+**`{{ texto }}` dentro de un `<text>` de SVG no se ve — nunca.** El runtime
+envuelve cualquier interpolación en un `<span>` HTML; dentro de un `<svg>` eso
+es una etiqueta inválida y el navegador la descarta en silencio (sin error de
+consola). El dato llega bien, el texto sale con ancho y alto cero. Para
+etiquetas de gráficos (radar, barras con valor encima, etc.): saca el texto
+del SVG y ponlo en un `<span>` aparte, posicionado con `position:absolute` +
+`left`/`top` en % sobre un contenedor `position:relative` que envuelva el SVG
+(ver "Gráfico Radar" en `perfil-cora`, función `pt()` en el JS). Ojo también:
+un `style="{{ valor }}"` dinámico tiene que devolver un **objeto** de estilos
+(como `nameStyle`/`wrapStyle` en la malla), no una cadena CSS — una cadena
+tampoco se aplica.
 
 ### Reglas de oro
 

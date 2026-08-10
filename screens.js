@@ -21,7 +21,7 @@ var CORA_SCREENS = [
     requiere: null
   },
   {
-    id: 'formulario', emoji: '⭕', label: 'Formulario', group: '🟣 Recomendador',
+    id: 'formulario', emoji: '⭕', label: 'CoRA me conoce', group: '🟣 Recomendador',
     desc: 'El comparador entre la versión completa y la rápida, y el cuestionario elegido, para alimentar el motor de recomendación.',
     requiere: null
   },
@@ -57,6 +57,11 @@ var CORA_SCREENS = [
   },
 
   {
+    id: 'tutor', emoji: '💬', label: 'Tutor CoRA', group: '📚 Académico',
+    desc: 'Chat académico 24/7. Vive también como widget flotante accesible desde cualquier pantalla de la plataforma.',
+    requiere: 'acompanamiento'
+  },
+  {
     id: 'practico', emoji: '📝', label: 'Práctico para examen', group: '📚 Académico',
     desc: 'Generador de simulacros: se elige asignatura, temas y dificultad, y al terminar se revisa pregunta por pregunta.',
     requiere: 'acompanamiento'
@@ -64,11 +69,6 @@ var CORA_SCREENS = [
   {
     id: 'flashcards', emoji: '🎴', label: 'Mis flashcards', group: '📚 Académico',
     desc: 'Tarjetas de estudio para memorizar conceptos clave, con modo clásico y valoración por tarjeta.',
-    requiere: 'acompanamiento'
-  },
-  {
-    id: 'tutor', emoji: '💬', label: 'Asistente CoRA', group: '📚 Académico',
-    desc: 'Chat académico 24/7. Vive también como widget flotante accesible desde cualquier pantalla de la plataforma.',
     requiere: 'acompanamiento'
   },
 
