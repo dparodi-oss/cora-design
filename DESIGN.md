@@ -224,7 +224,7 @@ Si añades una pantalla, no tienes que hacer nada: aparecen solas.
 |---|---|---|
 | **Perfil resumido** | Derecha de la barra superior | Nombre, ciclo y carrera. Lleva a *Perfil* al pulsarlo. |
 | **Ventanita stepper** | Bajo la barra, sobre `<main>` | Guía la sección actual del recorrido. Se cierra con la ✕ y no vuelve. |
-| **Tutor CoRA** | Botón flotante abajo a la derecha | Chat en cualquier pantalla. Se expande a 360 px sin perder el contexto. |
+| **Asistente CoRA** | Botón flotante abajo a la derecha | Chat de ayuda general en cualquier pantalla, 360 px, sin perder el contexto. No confundir con el Tutor CoRA (dentro de Académico, para dudas de una asignatura). |
 | **Guía de onboarding** | Modal a pantalla completa | Presentación de la plataforma en 4 pasos. Se abre con el botón «Guía». |
 
 El stepper se define en el mapa `STEPPER` de la lógica; la guía, en `ONBOARDING`.
@@ -605,13 +605,13 @@ field, dos casos: `inspire` y `informDecide`):
    verde (igual que el plan de acompañamiento sugerido); la cita del
    egresado se ve completa; microcredencial sugerida, etc.
 
-**"Pregúntale al Tutor CoRA"** — chips de preguntas sugeridas, distintas
-por modo (`H.chips`). Tocar una no abre un chat nuevo: usa
-`this.askAssistant(pregunta)`, que la agrega como si el estudiante la
-hubiera escrito en el hilo "General" del Tutor CoRA (`s.msgsByCourse`,
-ver Tutor CoRA más abajo) y navega ahí — es la capa "interactiva y
-conversacional con IA" que pedía el documento, reutilizando el chat que ya
-existe en vez de construir uno nuevo.
+**"Pregúntale al Asistente CoRA"** — chips de preguntas sugeridas, distintas
+por modo (`H.chips`). Tocar una no navega a ninguna pantalla: usa
+`this.askAssistant(pregunta)`, que abre el widget flotante del Asistente
+CoRA donde sea que esté el estudiante y agrega la pregunta como si la
+hubiera escrito ahí (`s.assistantMsgs` — ver "Dos chats distintos" más
+abajo) — es la capa "interactiva y conversacional con IA" que pedía el
+documento, reutilizando el chat que ya existe en vez de construir uno nuevo.
 
 **Metas favoritas: roles, empresas e ideas de emprendimiento.** Las tres
 tarjetas de chips del modo Inspirar ("Roles a los que conecta", "Dónde
@@ -744,16 +744,36 @@ ciclo actual (`s.reinforceCourses`, sin límite) con un botón "➕ Reforzar
 otra asignatura de este ciclo" — cada uno etiquetado "Tú lo agregaste" para
 distinguirlo de lo que CoRA detectó automáticamente.
 
-### Tutor CoRA: historial por asignatura (`tutor` + widget flotante)
+### Dos chats distintos: Tutor CoRA vs. Asistente CoRA — no confundirlos
+
+**Son dos componentes separados, con datos separados, y no comparten hilo.**
+Se fusionaron por error en una ronda anterior (renombre demasiado amplio de
+"Asistente CoRA" → "Tutor CoRA") y se separaron el 10 ago 2026. La regla para
+no volver a mezclarlos:
+
+| | Tutor CoRA (`tutor`, dentro de 📚 Académico) | Asistente CoRA (widget flotante) |
+|---|---|---|
+| Para qué | Dudas académicas de una asignatura puntual — fórmulas, ejercicios, el sílabo de esa asignatura | Ayuda general de la plataforma — armar tu ruta, fechas del calendario académico, de qué trata una asignatura o electivo, navegación |
+| Dónde vive | Solo dentro de la pantalla Tutor CoRA (Académico) | En cualquier pantalla, botón morado abajo a la derecha |
+| Estado | `s.msgsByCourse` — una conversación por asignatura (`s.tutorCourse`) | `s.assistantMsgs` — una sola conversación general, sin asignatura |
+| Sabe de sílabo/semana/fuentes | Sí (`SYLLABUS`, `TUTOR_SOURCES`) | No — no tiene noción de asignatura ni de sílabo |
+| Cómo se abre | Nav lateral → Tutor CoRA, o "Ir al Tutor CoRA" desde Práctico/Acompañamiento | Botón flotante, o una pregunta sugerida de Horizonte (`askAssistant`) |
+
+**Si una función es "sobre una asignatura específica que estás cursando" va al
+Tutor CoRA. Si es "sobre cómo usar CoRA o decidir algo general" va al
+Asistente CoRA.** Antes de tocar cualquiera de los dos, confirmar a cuál de
+las dos filas de la tabla pertenece el cambio.
+
+#### Tutor CoRA: historial por asignatura (`tutor`)
 
 `s.msgsByCourse` guarda una conversación independiente por asignatura — cambiar
 de asignatura no borra ni mezcla el historial de otra. Cada asignatura tiene una
 descripción de una línea (`TUTOR_COURSE_DESC`), visible bajo el selector de
 asignatura. El primer mensaje de cada asignatura aclara explícitamente que es una IA,
 no una persona, y en qué momento deriva a un humano: "Si tu situación
-necesita seguimiento personal, te conecto con tu Asesor de Acompañamiento Académico." El
-widget flotante (fuera de todo `sc-if` de sección, visible en toda la
-plataforma) comparte exactamente los mismos `v.msgs`/`v.tutorCourse`.
+necesita seguimiento personal, te conecto con tu Asesor de Acompañamiento Académico."
+Vive **solo** dentro de esta pantalla — ya no comparte estado con el widget
+flotante (ver "Asistente CoRA" más abajo).
 
 Los 4 chips de asignatura de siempre ya no son una lista suelta
 ("Matemática I", "Química General", "Economía I") — son `cycleCourseNames`,
@@ -800,6 +820,24 @@ no un sistema que busque nada. El desarrollo real de esto (perfil de
 dominio por concepto, RAG de verdad, prompt pedagógico, backend) está fuera
 de esta maqueta a propósito — ver `TUTOR-IA-ROADMAP.md` en la raíz del
 repositorio, guardado el 10 ago 2026 para no perder esa conversación.
+
+#### Asistente CoRA: widget flotante de ayuda general
+
+Vive fuera de todo `sc-if` de sección (junto al panel de detalle de la
+malla), así que aparece en cualquier pantalla — botón morado abajo a la
+derecha. Tiene su **propia** conversación (`s.assistantMsgs`, un solo hilo,
+sin noción de asignatura) y su propio input (`s.assistantInput`) — no toca
+`s.msgsByCourse` ni `s.tutorCourse` para nada. Su primer mensaje explica su
+propio alcance: ayuda con la ruta, el calendario académico, qué es una
+asignatura o un electivo — a propósito, temas del Recomendador/la
+plataforma en general, no de una asignatura puntual (eso es el Tutor CoRA).
+
+Las preguntas sugeridas de Veo mi Horizonte ("💬 Pregúntale al Asistente
+CoRA") entran por `this.askAssistant(pregunta)`: abre el widget flotante
+donde sea que esté el estudiante (`chatOpen:true`) sin cambiar de pantalla
+— a diferencia de antes, ya no navega a la pantalla del Tutor CoRA. El
+widget no tiene botón de "pantalla completa": no existe una pantalla propia
+para el Asistente, es solo este widget.
 
 ### Progreso: CoRAzones explicados, insignias y fórmulas (`progreso`)
 

@@ -1839,7 +1839,7 @@
           </sc-if>
 
           <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:24px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
-            <h2 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:14px;margin:0 0 4px">💬 Pregúntale al Tutor CoRA</h2>
+            <h2 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:14px;margin:0 0 4px">💬 Pregúntale al Asistente CoRA</h2>
             <p style="font-size:12px;color:#9ca3af;margin:0 0 12px">Toca una pregunta y sigue la conversación con IA — o escribe la tuya.</p>
             <div style="display:flex;flex-direction:column;gap:8px">
               <sc-for list="{{ hzChips }}" as="ch" hint-placeholder-count="3">
@@ -2725,11 +2725,16 @@
     </main>
   </div>
 
-  <!-- ===== Tutor CoRA: widget flotante, presente en toda la plataforma ===== -->
+  <!-- ===== Asistente CoRA: widget flotante de ayuda general, presente en
+       toda la plataforma. NO es el Tutor CoRA (ese vive dentro de Académico
+       y solo conoce la asignatura que estás viendo) — este es para dudas
+       generales de la plataforma: armar tu ruta, fechas del calendario,
+       de qué trata una asignatura o electivo, etc. Conversación propia
+       (s.assistantMsgs), nunca comparte hilo con el Tutor. ===== -->
   <sc-if value="{{ chatClosed }}" hint-placeholder-val="{{ true }}">
-    <button onClick="{{ toggleChat }}" aria-label="Abrir el Tutor CoRA" style="position:fixed;right:24px;bottom:24px;z-index:40;display:flex;align-items:center;gap:10px;background:#7B68EE;color:#fff;border:0;border-radius:9999px;padding:14px 20px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;box-shadow:0 10px 15px -3px rgba(123,104,238,.5),0 4px 6px -4px rgba(123,104,238,.5);transition:all .15s" style-hover="background:#6A58DC">
+    <button onClick="{{ toggleChat }}" aria-label="Abrir el Asistente CoRA" style="position:fixed;right:24px;bottom:24px;z-index:40;display:flex;align-items:center;gap:10px;background:#7B68EE;color:#fff;border:0;border-radius:9999px;padding:14px 20px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;box-shadow:0 10px 15px -3px rgba(123,104,238,.5),0 4px 6px -4px rgba(123,104,238,.5);transition:all .15s" style-hover="background:#6A58DC">
       <dc-import name="Icon" i="message-circle" s="18" c="#ffffff" hint-size="18px,18px"></dc-import>
-      Tutor CoRA
+      Asistente CoRA
     </button>
   </sc-if>
 
@@ -2740,26 +2745,23 @@
           <dc-import name="Icon" i="message-circle" s="15" c="#ffffff" hint-size="15px,15px"></dc-import>
         </div>
         <div style="flex:1;min-width:0">
-          <p style="font-family:Poppins,sans-serif;font-size:14px;font-weight:700;margin:0">Tutor CoRA</p>
-          <p style="font-size:11px;color:rgba(255,255,255,.85);margin:1px 0 0">Disponible 24/7</p>
+          <p style="font-family:Poppins,sans-serif;font-size:14px;font-weight:700;margin:0">Asistente CoRA</p>
+          <p style="font-size:11px;color:rgba(255,255,255,.85);margin:1px 0 0">Ayuda general · Disponible 24/7</p>
         </div>
-        <button onClick="{{ openChatFull }}" aria-label="Abrir en pantalla completa" style="background:rgba(255,255,255,.15);border:0;border-radius:8px;padding:6px;cursor:pointer;color:#fff;display:flex" style-hover="background:rgba(255,255,255,.3)">
-          <dc-import name="Icon" i="upload" s="13" c="#ffffff" hint-size="13px,13px"></dc-import>
-        </button>
-        <button onClick="{{ closeChat }}" aria-label="Cerrar el Tutor CoRA" style="background:rgba(255,255,255,.15);border:0;border-radius:8px;padding:6px;cursor:pointer;color:#fff;display:flex" style-hover="background:rgba(255,255,255,.3)">
+        <button onClick="{{ closeChat }}" aria-label="Cerrar el Asistente CoRA" style="background:rgba(255,255,255,.15);border:0;border-radius:8px;padding:6px;cursor:pointer;color:#fff;display:flex" style-hover="background:rgba(255,255,255,.3)">
           <dc-import name="Icon" i="x" s="13" c="#ffffff" hint-size="13px,13px"></dc-import>
         </button>
       </div>
       <div style="padding:14px;display:flex;flex-direction:column;gap:10px;max-height:320px;overflow-y:auto;background:#F8F7FF">
-        <sc-for list="{{ msgs }}" as="m" hint-placeholder-count="2">
+        <sc-for list="{{ assistantMsgs }}" as="m" hint-placeholder-count="2">
           <div style="{{ m.rowStyle }}">
             <div style="{{ m.bubbleStyle }}">{{ m.text }}</div>
           </div>
         </sc-for>
       </div>
       <div style="display:flex;gap:8px;padding:12px;border-top:1px solid #f3f4f6">
-        <input value="{{ tutorInput }}" onChange="{{ tutorChange }}" onKeyDown="{{ tutorKey }}" placeholder="{{ tutorPlaceholder }}" style="flex:1;min-width:0;padding:10px 14px;border-radius:12px;border:0;background:#f3f4f6;font-size:13px;font-family:inherit;outline:none;color:#1A1040">
-        <button onClick="{{ tutorSend }}" aria-label="Enviar" style="background:#7B68EE;color:#fff;border:0;border-radius:12px;padding:0 14px;cursor:pointer;display:flex;align-items:center;font-family:inherit" style-hover="background:#6A58DC">
+        <input value="{{ assistantInput }}" onChange="{{ assistantChange }}" onKeyDown="{{ assistantKey }}" placeholder="{{ assistantPlaceholder }}" style="flex:1;min-width:0;padding:10px 14px;border-radius:12px;border:0;background:#f3f4f6;font-size:13px;font-family:inherit;outline:none;color:#1A1040">
+        <button onClick="{{ assistantSend }}" aria-label="Enviar" style="background:#7B68EE;color:#fff;border:0;border-radius:12px;padding:0 14px;cursor:pointer;display:flex;align-items:center;font-family:inherit" style-hover="background:#6A58DC">
           <dc-import name="Icon" i="send" s="15" c="#ffffff" hint-size="15px,15px"></dc-import>
         </button>
       </div>
@@ -3247,7 +3249,7 @@ class Component extends DCLogic {
      disponible, dudas puntuales), el otro es una persona real (agenda,
      seguimiento en el tiempo). Nunca se mezclan bajo el mismo nombre. */
   SUPPORT_TYPES = [
-    { key:"asistente", icon:"💬", name:"Tutor CoRA", role:"Dudas académicas puntuales",
+    { key:"tutor", icon:"💬", name:"Tutor CoRA", role:"Dudas académicas puntuales",
       desc:"Chat con IA disponible 24/7 para fórmulas, ejercicios y conceptos específicos de tus asignaturas.",
       duracion:"Al momento, sin agendar — cuando lo necesites",
       progreso:"Resuelves tu duda en la misma conversación",
@@ -3376,7 +3378,7 @@ class Component extends DCLogic {
     { em:"🧭", title:"CoRA te acompaña, no te examina", body:"No hay respuestas correctas ni incorrectas. Todo lo que respondas sirve para ajustar lo que CoRA te propone." },
     { em:"🟣", title:"Primero el recorrido", body:"CoRA me conoce, rutas, ecosistema y malla. Se desbloquean en orden porque cada paso alimenta al siguiente." },
     { em:"📚", title:"Después, las herramientas", body:"Simulacros, flashcards y el Tutor CoRA quedan disponibles para el día a día del ciclo." },
-    { em:"💬", title:"El Tutor CoRA está siempre", body:"El botón morado de abajo a la derecha abre el chat desde cualquier pantalla, sin perder lo que estabas haciendo." }
+    { em:"💬", title:"El Asistente CoRA está siempre", body:"El botón morado de abajo a la derecha abre un chat de ayuda general desde cualquier pantalla, sin perder lo que estabas haciendo." }
   ];
 
   /* Ventanita tipo stepper de cada sección del recorrido. */
@@ -3702,6 +3704,11 @@ class Component extends DCLogic {
     routeDetail:null, ecoPhase:"reco", ecoAdded:[], equivCycle:"todos", ecoSearch:"", cfuChosen:[],
     onboardOpen:false, onboardStep:0, onboardSeen:false, stepperOff:[],
     chatOpen:false, predictOpen:null, scheduled:[], advisorScheduled:false,
+    /* Asistente CoRA (widget flotante, ayuda general de la plataforma) tiene
+       su propia conversación, separada de s.msgsByCourse — ese es del Tutor
+       CoRA, que es solo para dudas académicas de una asignatura puntual. */
+    assistantMsgs:[{ from:"bot", text:"¡Hola! Soy el Asistente CoRA. Puedo ayudarte con dudas generales de la plataforma: cómo armar tu ruta, fechas del calendario académico, de qué trata una asignatura o un electivo, y más." }],
+    assistantInput:"",
     shareAdvisor:true, anonBoard:true,
     profile:{ name:"Alejandro García Pérez", cycle:4, career:"Ingeniería Comercial" },
     pPhase:"setup", pCourse:"", pTopics:["Ecuaciones cuadráticas","Funciones polinomiales","Trigonometría","Números complejos"],
@@ -3795,18 +3802,15 @@ class Component extends DCLogic {
     return d.getDate() + " " + MESES[d.getMonth()] + " " + d.getFullYear();
   }
   /* Punto de entrada "conversacional" desde Horizonte: la pregunta sugerida
-     entra como si el estudiante la hubiera escrito, en el hilo General del
-     Tutor CoRA, y te lleva directo a esa pantalla. */
+     entra como si el estudiante la hubiera escrito, en el Asistente CoRA
+     (widget flotante, ayuda general) — no en el Tutor CoRA académico, que es
+     un chat distinto para dudas de una asignatura puntual. Abre el widget
+     donde sea que esté el estudiante, sin cambiar de pantalla. */
   askAssistant(question) {
-    this.setState(st => {
-      const course = "General";
-      const cur = st.msgsByCourse[course] || [];
-      return { tutorCourse:course, section:"tutor",
-        msgsByCourse: Object.assign({}, st.msgsByCourse, { [course]: cur.concat([
-          { from:"user", text:question },
-          { from:"bot", text:"Buena pregunta. Para darte una respuesta más útil: ¿ya probaste algo al respecto, o partimos de cero?" }
-        ]) }) };
-    });
+    this.setState(st => ({ chatOpen:true, assistantMsgs: st.assistantMsgs.concat([
+      { from:"user", text:question },
+      { from:"bot", text:"Buena pregunta. Para darte una respuesta más útil: ¿ya probaste algo al respecto, o partimos de cero?" }
+    ]) }));
   }
   /* Igual que askAssistant, pero para una acción rápida dentro de la
      asignatura que ya estás viendo en el Tutor CoRA (no cambia de
@@ -3934,12 +3938,35 @@ class Component extends DCLogic {
         background: c.grade >= 15 ? "#dcfce7" : c.grade >= 13 ? "#fff7ed" : "#fef2f2",
         color: c.grade >= 15 ? "#15803d" : c.grade >= 13 ? "#b45309" : "#dc2626" } }));
 
-    /* ---------- Tutor CoRA flotante ---------- */
+    /* ---------- Asistente CoRA flotante (ayuda general, no académica) ----------
+       Distinto del Tutor CoRA: el Tutor vive dentro de Académico y solo
+       conoce la asignatura que estás viendo (sílabo, semana, fuentes). El
+       Asistente vive en cualquier pantalla y tiene su propia conversación
+       (s.assistantMsgs) — nunca comparte hilo con s.msgsByCourse. No tiene
+       pantalla completa propia: es solo este widget. */
     v.chatOpen = s.chatOpen;
     v.chatClosed = !s.chatOpen;
     v.toggleChat = () => this.setState({ chatOpen: !s.chatOpen });
     v.closeChat = () => this.setState({ chatOpen:false });
-    v.openChatFull = () => this.setState({ chatOpen:false, section:"tutor" });
+    v.assistantMsgs = s.assistantMsgs.map(m => ({
+      text:m.text, isBot: m.from === "bot",
+      rowStyle:{ display:"flex", justifyContent: m.from === "user" ? "flex-end" : "flex-start" },
+      bubbleStyle:{ maxWidth:"260px", borderRadius:"16px", padding:"10px 16px", fontSize:"13px", lineHeight:1.55, whiteSpace:"pre-line",
+        background: m.from === "user" ? "#7B68EE" : "#f3f4f6", color: m.from === "user" ? "#fff" : "#1f2937",
+        borderTopRightRadius: m.from === "user" ? "2px" : "16px", borderTopLeftRadius: m.from === "user" ? "16px" : "2px" } }));
+    v.assistantInput = s.assistantInput;
+    v.assistantPlaceholder = "Escribe tu pregunta...";
+    v.assistantChange = e => this.setState({ assistantInput:e.target.value });
+    const sendAssistant = () => {
+      const text = this.state.assistantInput;
+      if (!text.trim()) return;
+      this.setState(st => ({ assistantInput:"", assistantMsgs: st.assistantMsgs.concat([
+        { from:"user", text },
+        { from:"bot", text:"Gracias por tu pregunta. Estoy revisando la información de la plataforma para ayudarte — cuéntame un poco más de contexto si quieres que sea más preciso." }
+      ]) }));
+    };
+    v.assistantSend = sendAssistant;
+    v.assistantKey = e => { if (e.key === "Enter") sendAssistant(); };
     /* "inicio" (Qué es CoRA + Dónde estás ahora) es una sección propia,
        fuera del Recomendador — por eso no tiene entrada en STEPPER ni en
        FLOW/REQ. "formulario" ahora arranca directo en el comparador
@@ -4941,7 +4968,7 @@ class Component extends DCLogic {
     v.acompFinish = () => this.complete("acompanamiento", 80);
 
     v.supportTypes = this.SUPPORT_TYPES.map(sp => {
-      const isBot = sp.key === "asistente";
+      const isBot = sp.key === "tutor";
       const c = isBot ? ["#eff6ff","#dbeafe","#1e40af","#2563eb","#1d4ed8"] : ["#faf5ff","#f3e8ff","#4A3FA0","#7B68EE","#6A58DC"];
       const scheduled = s.advisorScheduled;
       return {

@@ -58,7 +58,7 @@ var CORA_SCREENS = [
 
   {
     id: 'tutor', emoji: '💬', label: 'Tutor CoRA', group: '📚 Académico',
-    desc: 'Chat académico 24/7. Vive también como widget flotante accesible desde cualquier pantalla de la plataforma.',
+    desc: 'Chat académico 24/7, con conciencia del sílabo y la semana del ciclo. Distinto del Asistente CoRA (widget flotante de ayuda general, ver pantalla Inicio).',
     requiere: 'acompanamiento'
   },
   {
