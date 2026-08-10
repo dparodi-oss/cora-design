@@ -1968,6 +1968,25 @@
             </sc-for>
           </div>
           <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:20px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <h2 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:14px;margin:0 0 4px">🧭 Recursos de Acompañamiento</h2>
+            <p style="font-size:12px;color:#9ca3af;margin:0 0 16px">Programas reales de la universidad — tú decides si los usas.</p>
+            <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px">
+              <sc-for list="{{ acompResources }}" as="r" hint-placeholder-count="2">
+                <div style="{{ r.cardStyle }}">
+                  <h3 style="{{ r.titleStyle }}">{{ r.icon }} {{ r.name }}</h3>
+                  <p style="{{ r.roleStyle }}">{{ r.role }}</p>
+                  <p style="{{ r.descStyle }}">{{ r.desc }}</p>
+                  <div style="{{ r.metaBoxStyle }}">
+                    <p style="{{ r.metaLineStyle }}">⏱️ {{ r.duracion }}</p>
+                    <p style="{{ r.metaLineStyle }}">📈 {{ r.progreso }}</p>
+                    <p style="{{ r.metaLineStyle }}">💡 {{ r.porque }}</p>
+                  </div>
+                  <button style="{{ r.btnStyle }}">{{ r.btnLabel }}</button>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:20px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
             <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:16px;flex-wrap:wrap">
               <h2 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:14px;margin:0;display:flex;align-items:center;gap:8px">
                 📌 {{ acompCycleLabel }} — Acciones Recomendadas
@@ -2165,7 +2184,10 @@
           </nav>
           <div style="text-align:center;margin-bottom:28px">
             <div style="{{ pScoreCircleStyle }}">{{ pScoreEmoji }}</div>
-            <h1 style="font-family:Poppins,sans-serif;font-size:30px;line-height:36px;font-weight:900;color:#1A1040;margin:0 0 4px">{{ pScoreLabel }}</h1>
+            <div style="display:flex;align-items:center;justify-content:center;gap:6px">
+              <h1 style="font-family:Poppins,sans-serif;font-size:30px;line-height:36px;font-weight:900;color:#1A1040;margin:0 0 4px">{{ pScoreLabel }}</h1>
+              <dc-import name="Tip" text="{{ pScoreFormula }}" hint-size="14px,14px"></dc-import>
+            </div>
             <p style="color:#9ca3af;font-size:14px;margin:0">Simulacro completado — {{ pCourseName }}</p>
           </div>
           <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:20px">
@@ -2181,6 +2203,7 @@
               <div style="display:flex;justify-content:center;margin-bottom:4px"><dc-import name="Icon" i="heart" s="18" c="#7B68EE" hint-size="18px,18px"></dc-import></div>
               <p style="font-size:20px;line-height:28px;font-weight:700;color:#7B68EE;margin:0">{{ pXpLabel }}</p>
               <p style="font-size:12px;color:#7B68EE;margin:0;display:flex;align-items:center;justify-content:center;gap:4px">CoRAzones ganados <dc-import name="Tip" text="CoRAzones = puntos que muestran tu avance en CoRA. Los ganas al completar pasos del Recomendador, estudiar y mantener tu racha." hint-size="14px,14px"></dc-import></p>
+              <p style="font-size:10px;color:#9ca3af;margin:2px 0 0">{{ pXpDetail }}</p>
             </div>
           </div>
           <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
@@ -2326,9 +2349,13 @@
             <span style="white-space:nowrap">👨‍🏫 Académico</span>
             <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Tutor CoRA</span></span>
           </nav>
-          <div style="display:flex;align-items:center;gap:12px;background:#faf5ff;border-radius:16px;padding:14px 18px">
+          <div style="display:flex;align-items:center;gap:12px;background:#faf5ff;border-radius:16px;padding:14px 18px;flex-wrap:wrap">
             <img src="./assets/cora-logo.png" alt="CoRA" style="height:34px;width:auto;display:block">
             <span style="font-size:12px;font-weight:600;color:#4A3FA0;background:#f3e8ff;border-radius:9999px;padding:4px 10px;white-space:nowrap">24/7</span>
+            <sc-if value="{{ tutorHasSources }}" hint-placeholder-val="{{ false }}">
+              <span style="font-size:12px;font-weight:600;color:#1e40af;background:#dbeafe;border-radius:9999px;padding:4px 10px;white-space:nowrap">📘 Modo Estudio</span>
+              <span style="font-size:11px;color:#9ca3af;white-space:nowrap">{{ tutorCourseCode }}</span>
+            </sc-if>
           </div>
           <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px">
             <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
@@ -2343,7 +2370,7 @@
             <div style="background:linear-gradient(to right,#eff6ff,#faf5ff);border:1px solid #f3e8ff;border-radius:16px;padding:16px">
               <h3 style="font-weight:700;color:#1A1040;font-size:12px;margin:0 0 6px">💬 Tutor CoRA vs 👨‍💼 Asesor</h3>
               <p style="font-size:12px;color:#4b5563;margin:0"><strong>Tutor CoRA (aquí):</strong> Dudas académicas, ejercicios</p>
-              <p style="font-size:12px;color:#4b5563;margin:2px 0 0"><strong>Asesor Académico:</strong> Consejería de carrera, seguimiento</p>
+              <p style="font-size:12px;color:#4b5563;margin:2px 0 0"><strong>Asesor de Acompañamiento Académico:</strong> Consejería de carrera, seguimiento</p>
             </div>
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -2352,23 +2379,47 @@
             </sc-for>
           </div>
           <p style="font-size:12px;color:#9ca3af;margin:-8px 0 0">{{ tutorCourseDesc }}</p>
-          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1);min-height:420px">
-            <div style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px">
-              <sc-for list="{{ msgs }}" as="m" hint-placeholder-count="2">
-                <div style="{{ m.rowStyle }}">
-                  <sc-if value="{{ m.isBot }}" hint-placeholder-val="{{ true }}">
-                    <div style="width:28px;height:28px;background:#7B68EE;border-radius:9999px;display:flex;align-items:center;justify-content:center;margin-right:8px;flex-shrink:0;box-shadow:0 1px 3px 0 rgba(0,0,0,.1)"><span style="color:#fff;font-size:12px;font-weight:700">C</span></div>
-                  </sc-if>
-                  <div style="{{ m.bubbleStyle }}">{{ m.text }}</div>
+          <div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap">
+            <div style="flex:1;min-width:280px;background:#fff;border:1px solid #f3f4f6;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1);min-height:420px">
+              <div style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px">
+                <sc-for list="{{ msgs }}" as="m" hint-placeholder-count="2">
+                  <div style="{{ m.rowStyle }}">
+                    <sc-if value="{{ m.isBot }}" hint-placeholder-val="{{ true }}">
+                      <div style="width:28px;height:28px;background:#7B68EE;border-radius:9999px;display:flex;align-items:center;justify-content:center;margin-right:8px;flex-shrink:0;box-shadow:0 1px 3px 0 rgba(0,0,0,.1)"><span style="color:#fff;font-size:12px;font-weight:700">C</span></div>
+                    </sc-if>
+                    <div style="{{ m.bubbleStyle }}">{{ m.text }}</div>
+                  </div>
+                </sc-for>
+              </div>
+              <sc-if value="{{ tutorHasQuickActions }}" hint-placeholder-val="{{ false }}">
+                <div style="border-top:1px solid #f3f4f6;padding:12px;display:flex;flex-direction:column;gap:6px">
+                  <sc-for list="{{ tutorQuickActions }}" as="qa" hint-placeholder-count="4">
+                    <button onClick="{{ qa.onClick }}" style="text-align:left;width:100%;background:#faf5ff;border:1px solid #f3e8ff;border-radius:12px;padding:8px 12px;font-size:12px;color:#4A3FA0;cursor:pointer;font-family:inherit" style-hover="background:#f3e8ff">{{ qa.label }}</button>
+                  </sc-for>
                 </div>
-              </sc-for>
+              </sc-if>
+              <div style="border-top:1px solid #f3f4f6;padding:12px;display:flex;gap:8px">
+                <button style="padding:8px;color:#9ca3af;background:none;border:0;border-radius:12px;cursor:pointer;display:flex" style-hover="color:#7B68EE;background:#faf5ff"><dc-import name="Icon" i="paperclip" s="15" hint-size="15px,15px"></dc-import></button>
+                <button style="padding:8px;color:#9ca3af;background:none;border:0;border-radius:12px;cursor:pointer;display:flex" style-hover="color:#7B68EE;background:#faf5ff"><dc-import name="Icon" i="mic" s="15" hint-size="15px,15px"></dc-import></button>
+                <input value="{{ tutorInput }}" onChange="{{ tutorChange }}" onKeyDown="{{ tutorKey }}" placeholder="{{ tutorPlaceholder }}" style="flex:1;border:1px solid #e5e7eb;border-radius:12px;padding:8px 16px;font-size:14px;font-family:inherit;color:#374151;outline:none">
+                <button onClick="{{ tutorSend }}" style="background:#7B68EE;color:#fff;border:0;padding:10px;border-radius:12px;cursor:pointer;display:flex" style-hover="background:#6A58DC"><dc-import name="Icon" i="send" s="15" hint-size="15px,15px"></dc-import></button>
+              </div>
             </div>
-            <div style="border-top:1px solid #f3f4f6;padding:12px;display:flex;gap:8px">
-              <button style="padding:8px;color:#9ca3af;background:none;border:0;border-radius:12px;cursor:pointer;display:flex" style-hover="color:#7B68EE;background:#faf5ff"><dc-import name="Icon" i="paperclip" s="15" hint-size="15px,15px"></dc-import></button>
-              <button style="padding:8px;color:#9ca3af;background:none;border:0;border-radius:12px;cursor:pointer;display:flex" style-hover="color:#7B68EE;background:#faf5ff"><dc-import name="Icon" i="mic" s="15" hint-size="15px,15px"></dc-import></button>
-              <input value="{{ tutorInput }}" onChange="{{ tutorChange }}" onKeyDown="{{ tutorKey }}" placeholder="{{ tutorPlaceholder }}" style="flex:1;border:1px solid #e5e7eb;border-radius:12px;padding:8px 16px;font-size:14px;font-family:inherit;color:#374151;outline:none">
-              <button onClick="{{ tutorSend }}" style="background:#7B68EE;color:#fff;border:0;padding:10px;border-radius:12px;cursor:pointer;display:flex" style-hover="background:#6A58DC"><dc-import name="Icon" i="send" s="15" hint-size="15px,15px"></dc-import></button>
-            </div>
+            <sc-if value="{{ tutorHasSources }}" hint-placeholder-val="{{ false }}">
+              <div style="width:240px;flex-shrink:0;background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+                <h3 style="font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;margin:0 0 12px">{{ tutorSourcesLabel }}</h3>
+                <sc-for list="{{ tutorSources }}" as="doc" hint-placeholder-count="4">
+                  <div style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #f9fafb">
+                    <dc-import name="Icon" i="clipboard-list" s="13" c="#7B68EE" hint-size="13px,13px"></dc-import>
+                    <span style="font-size:12px;color:#374151;line-height:1.4">{{ doc.name }}</span>
+                  </div>
+                </sc-for>
+                <div style="background:#eff6ff;border-radius:12px;padding:10px;margin-top:12px">
+                  <p style="font-weight:700;font-size:11px;color:#1e3a8a;margin:0 0 2px">Modo Estudio activo</p>
+                  <p style="font-size:11px;color:#1d4ed8;margin:0;line-height:1.5">CoRA revisa estos documentos del curso antes de responder, y te dice de cuál sale cada respuesta.</p>
+                </div>
+              </div>
+            </sc-if>
           </div>
         </div>
       </sc-if>
@@ -3093,13 +3144,95 @@ class Component extends DCLogic {
       desc:"Estrategias de marketing digital orientadas a mercados globales.", comp:["Marketing","Digital"] }
   ];
 
+  /* Sílabo por semana de las asignaturas del ciclo actual — es lo que le
+     permite al Tutor CoRA saber "en qué semana del ciclo está" y avisar de
+     evaluaciones antes de que pasen, no solo responder dudas sueltas.
+     Dato de ejemplo, como el resto del repositorio: cuando llegue el
+     calendario académico real, esto se reemplaza semana por semana, sin
+     tocar la lógica que lo consume (`renderVals`, sección Tutor CoRA). */
+  SYLLABUS = {
+    "Estadística Inferencial": [
+      { week:1, unidad:"Unidad 1", tema:"Introducción a la inferencia estadística y distribuciones muestrales" },
+      { week:2, unidad:"Unidad 1", tema:"Estimación puntual y por intervalos de confianza" },
+      { week:3, unidad:"Unidad 1", tema:"Tamaño de muestra y errores de estimación",
+        evaluacion:{ nombre:"Práctica Calificada 1 (PC1)", fecha:"27 mar", peso:10 } },
+      { week:4, unidad:"Unidad 2", tema:"Introducción a la prueba de hipótesis" },
+      { week:5, unidad:"Unidad 2", tema:"Prueba de hipótesis para la proporción y la media de una población",
+        evaluacion:{ nombre:"Examen Parcial (EP)", fecha:"17 abr", peso:25 } },
+      { week:6, unidad:"Unidad 2", tema:"Prueba de hipótesis para la diferencia de medias" },
+      { week:7, unidad:"Unidad 3", tema:"Análisis de varianza (ANOVA) de un factor" },
+      { week:8, unidad:"Unidad 3", tema:"Regresión lineal simple y correlación",
+        evaluacion:{ nombre:"Práctica Calificada 2 (PC2)", fecha:"15 may", peso:10 } }
+    ],
+    "English Course 1": [
+      { week:1, unidad:"Unit 1", tema:"Introductions and daily routines" },
+      { week:2, unidad:"Unit 1", tema:"Present simple vs. present continuous" },
+      { week:3, unidad:"Unit 2", tema:"Talking about the past: simple past tense" },
+      { week:4, unidad:"Unit 2", tema:"Past continuous and storytelling",
+        evaluacion:{ nombre:"Quiz 1", fecha:"3 abr", peso:5 } },
+      { week:5, unidad:"Unit 3", tema:"Future plans: going to vs. will" },
+      { week:6, unidad:"Unit 3", tema:"Comparatives and superlatives",
+        evaluacion:{ nombre:"Midterm Exam", fecha:"24 abr", peso:25 } },
+      { week:7, unidad:"Unit 4", tema:"Modal verbs: advice and obligation" },
+      { week:8, unidad:"Unit 4", tema:"Writing a short opinion paragraph" }
+    ],
+    "Costos y Presupuestos": [
+      { week:1, unidad:"Unidad 1", tema:"Introducción a la contabilidad de costos" },
+      { week:2, unidad:"Unidad 1", tema:"Costos fijos, variables y mixtos" },
+      { week:3, unidad:"Unidad 1", tema:"Sistemas de costeo por órdenes de trabajo",
+        evaluacion:{ nombre:"Práctica Calificada 1", fecha:"27 mar", peso:10 } },
+      { week:4, unidad:"Unidad 2", tema:"Costeo por procesos" },
+      { week:5, unidad:"Unidad 2", tema:"Costeo basado en actividades (ABC)" },
+      { week:6, unidad:"Unidad 2", tema:"Punto de equilibrio y análisis costo-volumen-utilidad",
+        evaluacion:{ nombre:"Examen Parcial", fecha:"24 abr", peso:25 } },
+      { week:7, unidad:"Unidad 3", tema:"Elaboración de presupuestos operativos" },
+      { week:8, unidad:"Unidad 3", tema:"Presupuesto maestro y flujo de caja proyectado" }
+    ],
+    "Marketing": [
+      { week:1, unidad:"Unidad 1", tema:"Fundamentos del marketing y el mercado" },
+      { week:2, unidad:"Unidad 1", tema:"Comportamiento del consumidor" },
+      { week:3, unidad:"Unidad 2", tema:"Segmentación, targeting y posicionamiento",
+        evaluacion:{ nombre:"Práctica Calificada 1", fecha:"27 mar", peso:10 } },
+      { week:4, unidad:"Unidad 2", tema:"Investigación de mercados" },
+      { week:5, unidad:"Unidad 3", tema:"Producto: ciclo de vida y desarrollo de nuevos productos" },
+      { week:6, unidad:"Unidad 3", tema:"Precio: estrategias de fijación de precios" },
+      { week:7, unidad:"Unidad 3", tema:"Plaza y canales de distribución",
+        evaluacion:{ nombre:"Examen Parcial", fecha:"1 may", peso:25 } },
+      { week:8, unidad:"Unidad 4", tema:"Promoción: comunicación integrada de marketing" }
+    ]
+  };
+  /* Material de referencia por asignatura — lo que vería el Tutor CoRA en
+     "Modo Estudio" (maqueta): documentos de ejemplo, nunca material real
+     cargado ni un buscador de verdad detrás. `codigo` es el código de curso
+     ficticio que se muestra junto al nombre. */
+  TUTOR_SOURCES = {
+    "Estadística Inferencial": { codigo:"ASUC01274", docs:[
+      "Manual de Estadística Aplicada para la Gestión",
+      "Guía de ejercicios resueltos — Estadística Inferencial",
+      "Calendario Académico 2026",
+      "Sílabo del curso 2026-I" ] },
+    "English Course 1": { codigo:"IDUC00231", docs:[
+      "Course Book — English Course 1",
+      "Guía de gramática y vocabulario",
+      "Calendario Académico 2026" ] },
+    "Costos y Presupuestos": { codigo:"CPUC00589", docs:[
+      "Manual de Costos y Presupuestos",
+      "Casos prácticos resueltos — Costeo ABC",
+      "Calendario Académico 2026",
+      "Sílabo del curso 2026-I" ] },
+    "Marketing": { codigo:"MKUC00412", docs:[
+      "Manual de Fundamentos de Marketing",
+      "Casos de segmentación y posicionamiento",
+      "Calendario Académico 2026" ] }
+  };
+
   /* Predictibilidad: cruce del histórico de notas del estudiante con el
      desempeño histórico de la asignatura. `risk` es la probabilidad de dificultad. */
   PREDICT = [
     { course:"Gerencia de Operaciones", cycle:7, risk:78, level:"alto",
       basis:"Tu promedio en Estadística y Probabilidades (12,4) está por debajo de la media de quienes aprueban esta asignatura a la primera (15,1).",
       cohort:"El 41 % de los estudiantes de tu ruta desaprueba esta asignatura en el primer intento.",
-      plan:["Refuerzo de Estadística aplicada — 4 sesiones","Simulacro diagnóstico antes de matrícula","Seguimiento quincenal con tu Asesor Académico"] },
+      plan:["Refuerzo de Estadística aplicada — 4 sesiones","Simulacro diagnóstico antes de matrícula","Seguimiento quincenal con tu Asesor de Acompañamiento Académico"] },
     { course:"Formulación y Evaluación de Proyectos", cycle:8, risk:54, level:"medio",
       basis:"Tu desempeño en asignaturas con carga de trabajo grupal es irregular (13,8 de promedio).",
       cohort:"El 24 % de los estudiantes con tu perfil arrastra esta asignatura a un segundo ciclo.",
@@ -3119,11 +3252,35 @@ class Component extends DCLogic {
       duracion:"Al momento, sin agendar — cuando lo necesites",
       progreso:"Resuelves tu duda en la misma conversación",
       porque:"Es la vía más rápida para una duda puntual de una asignatura." },
-    { key:"asesor", icon:"👨‍💼", name:"Asesor Académico", role:"Seguimiento personal",
+    { key:"asesor", icon:"👨‍💼", name:"Asesor de Acompañamiento Académico", role:"Seguimiento personal",
       desc:"Persona real que da seguimiento a tu plan de acompañamiento y te da consejería de carrera.",
       duracion:"Sesiones agendadas de ~30 min",
       progreso:"Revisa tu avance cada 2 a 4 semanas",
       porque:"CoRA lo recomienda cuando detecta riesgo alto o medio en una asignatura próxima." }
+  ];
+  /* Recursos reales de la oficina de Acompañamiento Integral (Angélica),
+     mencionados en la reunión del 10 ago 2026 — todavía sin el link/contacto
+     definitivo de cada uno (llega vía Edith). Estructura lista para
+     recibirlos: solo hay que completar "cta" con la acción real cuando
+     llegue. Mismo formato que SUPPORT_TYPES (desc/duracion/progreso/porque)
+     a propósito, para que se vean como la misma familia de tarjeta — pero
+     son datos distintos: SUPPORT_TYPES son las 2 relaciones de seguimiento
+     (chat IA / persona), esto son programas puntuales a los que el
+     estudiante entra por su cuenta. El Asesor de Acompañamiento Académico
+     NO se repite aquí — ya tiene su propia tarjeta arriba. */
+  ACOMP_RESOURCES = [
+    { key:"buddy", icon:"👥", name:"Grupo BUDDY", role:"Apoyo entre pares",
+      desc:"Estudiantes que ya aprobaron esta asignatura, disponibles para ayudarte a resolver dudas — hay grupos por horario y por sede.",
+      duracion:"Sesiones informales, en el horario del grupo",
+      progreso:"Coordinas directamente con tu grupo BUDDY",
+      porque:"Un par que ya vivió la asignatura entiende justo dónde te trabas.",
+      cta:"Unirme a un grupo BUDDY" },
+    { key:"fortalecimiento", icon:"🎓", name:"Plan de Fortalecimiento Académico", role:"Talleres de refuerzo",
+      desc:"Talleres organizados por cohortes para reforzar asignaturas específicas. Revisa cuáles están abiertas en este momento.",
+      duracion:"Talleres por cohorte, con fecha de inicio fija",
+      progreso:"Avanzas junto con tu cohorte del taller",
+      porque:"Refuerzo estructurado cuando una asignatura te queda grande.",
+      cta:"Ver cohortes abiertas" }
   ];
 
   /* Recomendaciones del ecosistema CIE, previas a la exploración libre. */
@@ -3394,7 +3551,11 @@ class Component extends DCLogic {
 
 
   /* Datos del estudiante. El correo no es editable: viene del sistema académico. */
-  STUDENT = { email:"alejandro.garcia@continental.edu.pe", cycle:4, career:"Ingeniería Comercial", code:"75842301" };
+  STUDENT = { email:"alejandro.garcia@continental.edu.pe", cycle:4, career:"Ingeniería Comercial", code:"75842301",
+    /* Semana del ciclo académico actual — dato fijo de ejemplo, como el resto
+       de STUDENT. En cuanto llegue el calendario académico real, esto debería
+       salir de la fecha de hoy comparada con el inicio de ciclo, no quedar fijo. */
+    cycleWeek:5 };
   /* Solo hay un plan de estudios vigente por cohorte — se nombra explícito
      para que nunca parezca que el estudiante tiene que elegir entre varios. */
   PLAN_YEAR = "2024";
@@ -3550,7 +3711,7 @@ class Component extends DCLogic {
        no una sola bandeja compartida entre todos. */
     msgsByCourse:{
       "General":[{from:"bot",text:"¡Hola! Soy CoRA, tu asistente académico disponible 24/7. ¿Cuál es tu pregunta de hoy?"},
-        {from:"bot",text:"Soy una IA — puedo ayudarte con dudas de matemática, química, economía y cualquier asignatura de tu malla. Si tu situación necesita seguimiento personal, te conecto con tu Asesor Académico."}]
+        {from:"bot",text:"Soy una IA — puedo ayudarte con dudas de matemática, química, economía y cualquier asignatura de tu malla. Si tu situación necesita seguimiento personal, te conecto con tu Asesor de Acompañamiento Académico."}]
     },
     input:"", tutorCourse:"General", editing:false, dark:false, fontSize:"medium", themeAccent:"morado",
     notifs:{ email:true, platform:true, reminders:false }, accDone:[],
@@ -3558,9 +3719,9 @@ class Component extends DCLogic {
        calculado en renderVals) + asignaturas de refuerzo que el estudiante agrega
        por su cuenta, además de los que CoRA detecta en PREDICT. */
     accWeeks:[
-      { id:"w1", week:"Semana 1", topic:"", label:"📞 Reunión con tu Asesor Académico", cta:"Agendar" },
+      { id:"w1", week:"Semana 1", topic:"", label:"📞 Reunión con tu Asesor de Acompañamiento Académico", cta:"Agendar" },
       { id:"w4", week:"Semana 4", topic:"", label:"📝 Simulacro de la asignatura de riesgo", cta:"Ir a simulacro" },
-      { id:"w8", week:"Semana 8", topic:"", label:"📊 Revisión de progreso con tu Asesor Académico", cta:"Ver progreso" },
+      { id:"w8", week:"Semana 8", topic:"", label:"📊 Revisión de progreso con tu Asesor de Acompañamiento Académico", cta:"Ver progreso" },
       { id:"w12", week:"Semana 12", topic:"", label:"📚 Preparación examen final", cta:"Ver recursos" }
     ],
     accWeekModal:false, accWeekWeek:"", accWeekLabel:"",
@@ -3645,6 +3806,19 @@ class Component extends DCLogic {
           { from:"user", text:question },
           { from:"bot", text:"Buena pregunta. Para darte una respuesta más útil: ¿ya probaste algo al respecto, o partimos de cero?" }
         ]) }) };
+    });
+  }
+  /* Igual que askAssistant, pero para una acción rápida dentro de la
+     asignatura que ya estás viendo en el Tutor CoRA (no cambia de
+     asignatura ni de pantalla). fallbackMsgs es el saludo por defecto de esa
+     asignatura, para no perderlo si es la primera interacción del hilo. */
+  courseAsk(course, fallbackMsgs, question, reply) {
+    this.setState(st => {
+      const cur = st.msgsByCourse[course] || fallbackMsgs;
+      return { msgsByCourse: Object.assign({}, st.msgsByCourse, { [course]: cur.concat([
+        { from:"user", text:question },
+        { from:"bot", text:reply }
+      ]) }) };
     });
   }
 
@@ -4785,6 +4959,27 @@ class Component extends DCLogic {
       };
     });
 
+    /* Estructura lista para los 3 recursos reales que confirmó Angélica —
+       "cta" hoy no navega a nada (sin link real todavía); en cuanto llegue
+       la info de Edith, este es el único lugar que hay que completar. */
+    /* Misma forma de tarjeta que v.supportTypes (arriba) — a propósito,
+       para que se vean como la misma familia visual. */
+    v.acompResources = this.ACOMP_RESOURCES.map((r, i) => {
+      const c = i === 0 ? ["#eff6ff","#dbeafe","#1e40af","#2563eb","#1d4ed8"] : ["#faf5ff","#f3e8ff","#4A3FA0","#7B68EE","#6A58DC"];
+      return {
+        icon:r.icon, name:r.name, role:r.role, desc:r.desc, duracion:r.duracion, progreso:r.progreso, porque:r.porque,
+        btnLabel:r.cta,
+        cardStyle:{ background:c[0], border:"1px solid " + c[1], borderRadius:"16px", padding:"16px" },
+        titleStyle:{ fontWeight:700, color:c[2], fontSize:"14px", margin:"0 0 2px" },
+        roleStyle:{ fontSize:"11px", fontWeight:600, color:c[3], margin:"0 0 8px", textTransform:"uppercase", letterSpacing:".04em" },
+        descStyle:{ fontSize:"12px", color:c[2], margin:"0 0 10px", lineHeight:1.5 },
+        metaBoxStyle:{ background:"rgba(255,255,255,.6)", borderRadius:"10px", padding:"8px 10px", marginBottom:"12px" },
+        metaLineStyle:{ fontSize:"11px", color:"#4b5563", margin:"0 0 4px", lineHeight:1.5 },
+        btnStyle:{ width:"100%", background:c[3], color:"#fff", border:0, borderRadius:"12px", padding:"8px 0",
+          fontSize:"12px", fontWeight:500, cursor:"pointer", fontFamily:"inherit" }
+      };
+    });
+
     /* ---------- predictibilidad académica ----------
        Cruza el histórico de notas del estudiante con el desempeño histórico del
        asignatura. Cuando detecta riesgo, propone un plan de acompañamiento. */
@@ -4815,7 +5010,7 @@ class Component extends DCLogic {
         onToggle: () => this.setState({ predictOpen: open ? null : p.course }),
         plan: p.plan.map(x => ({ label:x })),
         canSchedule: p.risk >= 50,
-        schedLabel: done ? "✓ Tutoría agendada" : "📅 Agendar con tu Asesor Académico",
+        schedLabel: done ? "✓ Tutoría agendada" : "📅 Agendar con tu Asesor de Acompañamiento Académico",
         schedStyle:{ fontSize:"12px", fontWeight:600, padding:"8px 14px", borderRadius:"10px", border:0, cursor:"pointer",
           fontFamily:"inherit", background: done ? "#dcfce7" : "#7B68EE", color: done ? "#15803d" : "#fff" },
         onSchedule: () => this.toggleIn("scheduled", p.course)
@@ -4902,7 +5097,11 @@ class Component extends DCLogic {
     const selBtn = sel => ({ width:"100%", textAlign:"left", padding:"12px 16px", borderRadius:"12px", fontSize:"14px",
       fontFamily:"inherit", cursor:"pointer", transition:"all .15s", background: sel ? "#faf5ff" : "#fff",
       border:"2px solid " + (sel ? "#7B68EE" : "#f3f4f6"), color: sel ? "#7B68EE" : "#374151", fontWeight: sel ? 500 : 400 });
-    v.pCourses = ["Matemática I","Química General","Economía I","Contabilidad I","Estadística I"].map(c => ({
+    /* Las asignaturas del ciclo actual del estudiante — mismas que se ven
+       "EN CURSO" en la malla — no una lista suelta desconectada de sus datos. */
+    const cycleCourseNames = ((this.CURRICULUM.find(c => c.cycle === this.STUDENT.cycle) || { courses:[] }).courses)
+      .filter(c => c.cat !== "electivo").map(c => c.name);
+    v.pCourses = cycleCourseNames.map(c => ({
       label:c, style:selBtn(s.pCourse === c), onClick: () => this.setState({ pCourse:c }) }));
     v.pTopics = ["Ecuaciones cuadráticas","Funciones polinomiales","Trigonometría","Números complejos","Límites"].map(t => {
       const sel = s.pTopics.includes(t);
@@ -4951,7 +5150,19 @@ class Component extends DCLogic {
     v.pNextStyle = { flex:1, background:"#7B68EE", color:"#fff", border:0, borderRadius:"12px", padding:"10px 0", fontSize:"14px",
       fontWeight:500, fontFamily:"inherit", display:"flex", alignItems:"center", justifyContent:"center", gap:"8px",
       cursor: pAns ? "pointer" : "not-allowed", opacity: pAns ? 1 : 0.4 };
-    v.pNext = () => { if (!pAns) return; if (s.pIndex === QS.length - 1) this.setState({ pPhase:"results" }); else this.setState({ pIndex: s.pIndex + 1 }); };
+    v.pNext = () => {
+      if (!pAns) return;
+      if (s.pIndex === QS.length - 1) {
+        /* Mismo cálculo que v.pXpLabel más abajo — se suman de verdad al
+           saldo real (this.complete), no solo se muestran en pantalla. */
+        const correct = Object.keys(s.pAnswers).filter(i => QS[+i] && QS[+i].opts[QS[+i].correct] === s.pAnswers[i]).length;
+        const gain = correct * 5 + 50 + (s.pDiff === "advanced" ? 20 : s.pDiff === "medium" ? 10 : 0);
+        this.complete("practico", gain);
+        this.setState({ pPhase:"results" });
+      } else {
+        this.setState({ pIndex: s.pIndex + 1 });
+      }
+    };
 
     const di = s.pDetail;
     if (di !== null && QS[di]) {
@@ -4969,13 +5180,18 @@ class Component extends DCLogic {
     const pCorrect = Object.keys(s.pAnswers).filter(i => QS[+i] && QS[+i].opts[QS[+i].correct] === s.pAnswers[i]).length;
     const pScore = Math.round((pCorrect / QS.length) * 100);
     v.pScoreLabel = pScore + "/100";
+    v.pScoreFormula = "Tu puntaje se calcula como (Preguntas correctas / Total) × 100 = (" +
+      pCorrect + " / " + QS.length + ") × 100 = " + pScore + "/100.";
     v.pScoreEmoji = pScore >= 90 ? "🏆" : pScore >= 70 ? "🎉" : "💪";
     v.pScoreCircleStyle = { width:"96px", height:"96px", borderRadius:"9999px", display:"flex", alignItems:"center",
       justifyContent:"center", fontSize:"36px", lineHeight:"40px", margin:"0 auto 16px", background: pScore >= 70 ? "#dcfce7" : "#ffedd5" };
     v.pCourseName = s.pCourse;
     v.pCorrectLabel = pCorrect + "/" + QS.length;
     v.pWrongLabel = (QS.length - pCorrect) + "/" + QS.length;
-    v.pXpLabel = "+" + (pCorrect * 5 + 50 + (s.pDiff === "advanced" ? 20 : s.pDiff === "medium" ? 10 : 0));
+    const pDiffBonus = s.pDiff === "advanced" ? 20 : s.pDiff === "medium" ? 10 : 0;
+    v.pXpLabel = "+" + (pCorrect * 5 + 50 + pDiffBonus);
+    v.pXpDetail = "Correctas: " + pCorrect + " × 5 = +" + (pCorrect * 5) + " · Completar el simulacro: +50" +
+      (pDiffBonus ? " · Dificultad: +" + pDiffBonus : "");
     v.pReview = QS.map((qq, i) => {
       const ok = s.pAnswers[i] === qq.opts[qq.correct];
       return { label:"Pregunta " + (i + 1) + ": " + qq.topic, icon: ok ? "check-circle" : "x-circle",
@@ -4994,7 +5210,7 @@ class Component extends DCLogic {
     v.isFlashSetup = isF && s.fPhase === "setup";
     v.isFlashCards = isF && s.fPhase === "cards";
     v.isFlashDone = isF && s.fPhase === "done";
-    v.fCourses = ["Matemática I","Química General","Economía I"].map(c => ({
+    v.fCourses = cycleCourseNames.map(c => ({
       label:c, onClick: () => this.setState({ fCourse:c }),
       style:{ width:"100%", textAlign:"left", padding:"12px 16px", borderRadius:"12px", fontSize:"14px", fontFamily:"inherit",
         cursor:"pointer", transition:"all .15s", background: s.fCourse === c ? "#faf5ff" : "#fff",
@@ -5011,7 +5227,13 @@ class Component extends DCLogic {
     v.fFront = fc.front; v.fBack = fc.back;
     v.fFlipped = s.fFlipped; v.fNotFlipped = !s.fFlipped;
     v.fFlip = () => this.setState({ fFlipped: !s.fFlipped });
-    v.fEnd = () => this.setState({ fPhase:"done" });
+    v.fEnd = () => {
+      /* Mismo cálculo que v.fXpLabel más abajo — crédito parcial por las
+         tarjetas ya calificadas, sumado de verdad (this.complete). */
+      const dominated = Object.keys(s.fRatings).map(k => s.fRatings[k]).filter(r => r === "know").length;
+      this.complete("flashcards", 50 + dominated * 2);
+      this.setState({ fPhase:"done" });
+    };
     v.fCardStyle = { background: s.fFlipped ? "rgba(250,245,255,.5)" : "#fff", borderRadius:"16px", padding:"32px", minHeight:"224px",
       display:"flex", alignItems:"center", justifyContent:"center", cursor:"pointer", marginBottom:"16px", transition:"all .15s",
       userSelect:"none", boxShadow:"0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)",
@@ -5022,11 +5244,15 @@ class Component extends DCLogic {
       label: r.e + " " + r.l,
       style:{ flex:1, border:"2px solid " + r.b, background:"#fff", color:r.c, borderRadius:"12px", padding:"12px 0", fontSize:"12px",
         fontWeight:500, cursor:"pointer", fontFamily:"inherit", transition:"all .15s" },
-      onClick: () => this.setState(st => {
-        const ratings = Object.assign({}, st.fRatings, { [st.fIdx]: r.id });
-        if (st.fIdx < CARDS.length - 1) return { fRatings:ratings, fFlipped:false, fIdx: st.fIdx + 1 };
-        return { fRatings:ratings, fFlipped:false, fPhase:"done" };
-      }) }));
+      onClick: () => {
+        const ratings = Object.assign({}, s.fRatings, { [s.fIdx]: r.id });
+        if (s.fIdx < CARDS.length - 1) { this.setState({ fRatings:ratings, fFlipped:false, fIdx: s.fIdx + 1 }); return; }
+        /* Mismo cálculo que v.fXpLabel más abajo — se suma de verdad al
+           saldo real (this.complete), no solo se muestra en pantalla. */
+        const dominated = Object.keys(ratings).map(k => ratings[k]).filter(x => x === "know").length;
+        this.complete("flashcards", 50 + dominated * 2);
+        this.setState({ fRatings:ratings, fFlipped:false, fPhase:"done" });
+      } }));
     v.fPrev = () => this.setState({ fIdx: Math.max(0, s.fIdx - 1), fFlipped:false });
     v.fNext = () => this.setState({ fIdx: Math.min(CARDS.length - 1, s.fIdx + 1), fFlipped:false });
     v.fPrevStyle = { padding:"10px 16px", border:"1px solid #e5e7eb", background:"#fff", borderRadius:"12px", fontSize:"12px",
@@ -5045,18 +5271,15 @@ class Component extends DCLogic {
 
     v.isTutor = on("tutor");
     /* Cada asignatura tiene su propio hilo de conversación (s.msgsByCourse) — no
-       una sola bandeja compartida entre todas las asignaturas. */
-    const TUTOR_COURSE_DESC = {
-      "Matemática I":"Fórmulas, ejercicios y conceptos de cálculo y álgebra.",
-      "Química General":"Dudas sobre estequiometría, enlaces y reacciones.",
-      "Economía I":"Oferta, demanda, indicadores macro y microeconomía.",
-      "General":"Cualquier otra duda académica que no sea de una asignatura específica."
-    };
+       una sola bandeja compartida entre todas las asignaturas. Las 4 asignaturas
+       de siempre son las reales del ciclo actual (cycleCourseNames, calculado
+       más arriba para Práctico/Flashcards) — no una lista suelta aparte. */
+    const TUTOR_COURSE_DESC = { "General":"Cualquier otra duda académica que no sea de una asignatura específica." };
     /* Si llegas al Asistente desde "Consultar CoRA sobre este curso" en la
        malla, s.tutorCourse puede ser cualquier asignatura real (no solo las
-       4 de siempre) — se agrega como un chip más, y su descripción sale de
+       de siempre) — se agrega como un chip más, y su descripción sale de
        CURRICULUM o del catálogo de electivos, no queda en blanco. */
-    const tutorChipNames = Object.keys(TUTOR_COURSE_DESC);
+    const tutorChipNames = cycleCourseNames.concat(["General"]);
     if (s.tutorCourse && !tutorChipNames.includes(s.tutorCourse)) tutorChipNames.push(s.tutorCourse);
     v.tutorCourses = tutorChipNames.map(c => ({
       label:c, onClick: () => this.setState({ tutorCourse:c }),
@@ -5068,17 +5291,75 @@ class Component extends DCLogic {
       return elective ? elective.desc : "";
     };
     v.tutorCourseDesc = TUTOR_COURSE_DESC[s.tutorCourse] || findRealCourseDesc(s.tutorCourse) || "";
+
+    /* "Modo Estudio" (maqueta): panel de fuentes al lado del chat. Documentos
+       de ejemplo, sin búsqueda ni RAG real detrás — solo para mostrar cómo se
+       vería que el Tutor cite material del curso. */
+    const tutorSrc = this.TUTOR_SOURCES[s.tutorCourse];
+    v.tutorHasSources = !!tutorSrc;
+    v.tutorCourseCode = tutorSrc ? tutorSrc.codigo : "";
+    v.tutorSourcesLabel = tutorSrc ? "Fuentes (" + tutorSrc.docs.length + ")" : "";
+    v.tutorSources = tutorSrc ? tutorSrc.docs.map(d => ({ name:d })) : [];
+
+    /* Sílabo: si la asignatura tiene semanas en SYLLABUS, el saludo avisa en
+       qué semana del ciclo está, qué toca según el sílabo, y si hay una
+       evaluación esta semana o próxima — en vez de un saludo genérico. */
+    const cycleWeek = this.STUDENT.cycleWeek;
+    const buildSyllabusMsg = course => {
+      const syll = this.SYLLABUS[course];
+      const thisWk = syll && syll.find(w => w.week === cycleWeek);
+      if (!thisWk) return null;
+      let text = "Estamos en la Semana " + cycleWeek + " del ciclo.\nSegún el sílabo, esta semana corresponde a " +
+        thisWk.unidad + ": " + thisWk.tema + ".";
+      if (thisWk.evaluacion) {
+        text += "\n\n📌 Esta semana tienes evaluación: " + thisWk.evaluacion.nombre + " — " + thisWk.evaluacion.fecha + ", vale " + thisWk.evaluacion.peso + "%.";
+      } else {
+        const nextEv = syll.filter(w => w.week > cycleWeek && w.evaluacion).sort((a, b) => a.week - b.week)[0];
+        if (nextEv) text += "\n\n📌 Tu próxima evaluación es " + nextEv.evaluacion.nombre + " en la Semana " + nextEv.week + " (" + nextEv.evaluacion.fecha + "), vale " + nextEv.evaluacion.peso + "%.";
+      }
+      const src = this.TUTOR_SOURCES[course];
+      if (src) {
+        const silabo = src.docs.find(d => d.toLowerCase().includes("sílabo")) || src.docs[0];
+        text += "\n\n📄 Esto lo veo en tu " + silabo + ".";
+      }
+      return text + "\n\n¿Qué te gustaría hacer hoy?";
+    };
     const defaultMsgsFor = course => [
       { from:"bot", text:"¡Hola! Soy CoRA, tu Asistente académico — una IA disponible 24/7, no una persona." },
-      { from:"bot", text:"Puedo ayudarte con " + (TUTOR_COURSE_DESC[course] || findRealCourseDesc(course) || "tu pregunta") + " Si tu situación necesita seguimiento personal (no una duda puntual), te conecto con tu Asesor Académico." }
+      { from:"bot", text: buildSyllabusMsg(course) || ("Puedo ayudarte con " + (TUTOR_COURSE_DESC[course] || findRealCourseDesc(course) || "tu pregunta") + " Si tu situación necesita seguimiento personal (no una duda puntual), te conecto con tu Asesor de Acompañamiento Académico.") }
     ];
     const courseMsgs = s.msgsByCourse[s.tutorCourse] || defaultMsgsFor(s.tutorCourse);
     v.msgs = courseMsgs.map(m => ({
       text:m.text, isBot: m.from === "bot",
       rowStyle:{ display:"flex", justifyContent: m.from === "user" ? "flex-end" : "flex-start" },
-      bubbleStyle:{ maxWidth:"384px", borderRadius:"16px", padding:"10px 16px", fontSize:"14px", lineHeight:1.625,
+      bubbleStyle:{ maxWidth:"384px", borderRadius:"16px", padding:"10px 16px", fontSize:"14px", lineHeight:1.625, whiteSpace:"pre-line",
         background: m.from === "user" ? "#7B68EE" : "#f3f4f6", color: m.from === "user" ? "#fff" : "#1f2937",
         borderTopRightRadius: m.from === "user" ? "2px" : "16px", borderTopLeftRadius: m.from === "user" ? "16px" : "2px" } }));
+
+    /* Sugerencias rápidas basadas en el sílabo — solo si la asignatura tiene
+       semanas cargadas. Cada una entra al chat como si el estudiante la
+       hubiera escrito (mismo patrón que askAssistant/hzChips). */
+    v.tutorQuickActions = [];
+    const tutorSyll = this.SYLLABUS[s.tutorCourse];
+    if (tutorSyll) {
+      const course = s.tutorCourse;
+      const fallback = defaultMsgsFor(course);
+      const thisWk = tutorSyll.find(w => w.week === cycleWeek);
+      const nextEv = tutorSyll.filter(w => w.week >= cycleWeek && w.evaluacion).sort((a, b) => a.week - b.week)[0];
+      const prevWeeks = tutorSyll.filter(w => w.week < cycleWeek);
+      const add = (label, reply) => v.tutorQuickActions.push({ label, onClick: () => this.courseAsk(course, fallback, label, reply) });
+      const manual = tutorSrc && (tutorSrc.docs.find(d => d.toLowerCase().includes("manual")) || tutorSrc.docs[0]);
+      if (thisWk) add("📖 Repasar el tema de esta semana: " + thisWk.tema,
+        "Claro, repasemos " + thisWk.tema + ". ¿Prefieres que te explique la teoría, veamos un ejemplo resuelto, o pasamos directo a practicar?" +
+        (manual ? " (Según tu " + manual + ".)" : ""));
+      add("🧮 Resolver ejercicios paso a paso",
+        "Perfecto. Mándame un ejercicio de " + course + " y lo resolvemos juntos, paso a paso, explicando el porqué de cada uno.");
+      if (nextEv) add("🎯 Prepararte para tu próxima evaluación",
+        "Tu próxima evaluación es " + nextEv.evaluacion.nombre + " — Semana " + nextEv.week + " (" + nextEv.evaluacion.fecha + "), vale " + nextEv.evaluacion.peso + "%. ¿Armamos un plan de repaso o prefieres practicar con preguntas tipo examen?");
+      if (prevWeeks.length) add("🔄 Revisar un tema de semanas anteriores",
+        "Estos son los temas que ya vimos:\n" + prevWeeks.map(w => "• Semana " + w.week + ": " + w.tema).join("\n") + "\n\n¿Cuál quieres repasar?");
+    }
+    v.tutorHasQuickActions = v.tutorQuickActions.length > 0;
     v.tutorInput = s.input;
     v.tutorPlaceholder = "Escribe tu pregunta" + (s.tutorCourse ? " sobre " + s.tutorCourse : "") + "...";
     v.tutorChange = e => this.setState({ input:e.target.value });
@@ -5167,10 +5448,10 @@ class Component extends DCLogic {
         transform: val ? "translateX(22px)" : "translateX(3px)" } });
     /* Antes había dos toggles casi idénticos ("tutor académico" y "asesor de
        carrera") — se fusionaron en uno solo para no repetir el mismo rol con
-       dos nombres distintos. Tu Asesor Académico es la persona de seguimiento
+       dos nombres distintos. Tu Asesor de Acompañamiento Académico es la persona de seguimiento
        personal (ver leyenda en Acompañamiento); ve tu avance, riesgo y plan. */
     v.shareRows = [
-      Object.assign({ label:"Compartir mi progreso con mi Asesor Académico", desc:"Ve tu avance, asignaturas de riesgo, plan de acompañamiento y tu horizonte profesional." },
+      Object.assign({ label:"Compartir mi progreso con mi Asesor de Acompañamiento Académico", desc:"Ve tu avance, asignaturas de riesgo, plan de acompañamiento y tu horizonte profesional." },
         mkToggle(s.shareAdvisor, () => this.setState({ shareAdvisor: !s.shareAdvisor })))
     ];
     v.suggestions = [

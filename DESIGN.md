@@ -691,7 +691,7 @@ de Egresados/Empleabilidad — nunca una inferida de un perfil público.
 
 El umbral de «riesgo» que dispara la propuesta de plan es **50 %**.
 
-### Roles: Tutor CoRA vs. Asesor Académico (Acompañamiento)
+### Roles: Tutor CoRA vs. Asesor de Acompañamiento Académico (Acompañamiento)
 
 Dos tipos de apoyo, cada uno con su propia tarjeta (`SUPPORT_TYPES`, con
 `desc`/`duracion`/`progreso`/`porque`) — nunca se mezclan bajo el mismo nombre:
@@ -699,12 +699,41 @@ Dos tipos de apoyo, cada uno con su propia tarjeta (`SUPPORT_TYPES`, con
 | Rol | Qué es | Cuándo |
 |---|---|---|
 | 💬 Tutor CoRA | IA, chat, disponible 24/7 | Dudas académicas puntuales — fórmulas, ejercicios, conceptos |
-| 👨‍💼 Asesor Académico | Persona real, sesiones agendadas (~30 min) | Seguimiento personal — CoRA lo recomienda si detecta riesgo alto/medio |
+| 👨‍💼 Asesor de Acompañamiento Académico | Persona real, sesiones agendadas (~30 min) | Seguimiento personal — CoRA lo recomienda si detecta riesgo alto/medio |
 
 No existe un tercer rol "tutor académico": toda mención a agendar o dar
-seguimiento usa "Asesor Académico". El toggle de "compartir mi progreso"
+seguimiento usa "Asesor de Acompañamiento Académico". El toggle de "compartir mi progreso"
 (`s.shareAdvisor`, antes eran dos toggles casi idénticos) también apunta a
 este único rol.
+
+**Recursos de Acompañamiento — misma tarjeta que `SUPPORT_TYPES`, a
+propósito.** Debajo de las 2 tarjetas de rol hay una segunda grilla de 2
+tarjetas con recursos reales de la oficina de Acompañamiento Integral
+(`ACOMP_RESOURCES`), confirmados en la reunión con Angélica del 10 ago 2026:
+
+| Recurso | Qué es |
+|---|---|
+| 👥 Grupo BUDDY | Estudiantes pares que ya aprobaron la asignatura — grupos por horario y sede |
+| 🎓 Plan de Fortalecimiento Académico | Talleres de refuerzo por cohortes abiertas |
+
+Angélica mencionó un tercer recurso ("encuentra a tu Asesor de
+Acompañamiento Académico"), pero **no se repite aquí** — ya tiene su propia
+tarjeta arriba, en `SUPPORT_TYPES`; repetirlo hubiera sido la misma
+información dos veces con distinta forma. `ACOMP_RESOURCES` usa exactamente
+el mismo formato de dato que `SUPPORT_TYPES` (`desc`/`duracion`/`progreso`/
+`porque`) y el mismo componente de tarjeta (icono + nombre, etiqueta,
+descripción, caja de meta con ⏱️/📈/💡, botón morado o azul alternado) —
+para que ambas grillas se lean como la misma familia visual, no como dos
+sistemas distintos.
+
+Estos son programas a los que el estudiante entra por su cuenta — la propia
+Angélica insistió en que el flujo es "el estudiante se contacta con el
+equipo", no al revés. **El botón todavía no tiene destino real**
+(`btnLabel` es solo texto, sin acción) porque el link/contacto definitivo de
+cada recurso llega vía Edith — cuando llegue, `v.acompResources` en
+`renderVals()` es el único lugar que hay que tocar. Mientras tanto, la
+estructura ya está completa a propósito: es lo que necesita quien programe
+esta pantalla, aunque el botón todavía no haga nada.
 
 **Plan flexible, no rígido.** El timeline semanal vive en `s.accWeeks`
 (editable: agregar/quitar semana con su propia actividad, no un arreglo fijo)
@@ -722,9 +751,55 @@ de asignatura no borra ni mezcla el historial de otra. Cada asignatura tiene una
 descripción de una línea (`TUTOR_COURSE_DESC`), visible bajo el selector de
 asignatura. El primer mensaje de cada asignatura aclara explícitamente que es una IA,
 no una persona, y en qué momento deriva a un humano: "Si tu situación
-necesita seguimiento personal, te conecto con tu Asesor Académico." El
+necesita seguimiento personal, te conecto con tu Asesor de Acompañamiento Académico." El
 widget flotante (fuera de todo `sc-if` de sección, visible en toda la
 plataforma) comparte exactamente los mismos `v.msgs`/`v.tutorCourse`.
+
+Los 4 chips de asignatura de siempre ya no son una lista suelta
+("Matemática I", "Química General", "Economía I") — son `cycleCourseNames`,
+las asignaturas reales del ciclo actual del estudiante (mismo dato que ya
+usan Práctico y Flashcards), más "General" como cajón de sastre.
+
+**El Tutor sabe en qué semana del ciclo está.** `STUDENT.cycleWeek` (dato
+fijo de ejemplo, como el resto de `STUDENT` — el candidato natural a
+reemplazar cuando llegue el calendario académico real) se cruza con
+`SYLLABUS[asignatura]`, un sílabo semana por semana con el tema del sílabo y,
+si corresponde, una evaluación (`{ nombre, fecha, peso }`). El segundo
+mensaje de bienvenida de cada asignatura con sílabo cargado (`buildSyllabusMsg`)
+avisa: en qué semana está, qué toca según el sílabo, y si hay evaluación esa
+semana — o si no, cuál es la próxima y cuándo. Las asignaturas sin sílabo
+cargado (`General`, o cualquiera fuera del ciclo actual) siguen con el saludo
+genérico anterior — `buildSyllabusMsg` devuelve `null` y cae al `||`.
+
+Debajo de la conversación aparecen hasta 4 sugerencias rápidas
+(`v.tutorQuickActions`, solo si la asignatura tiene sílabo): repasar el tema
+de esta semana, resolver ejercicios, prepararse para la próxima evaluación,
+o repasar un tema de una semana anterior (solo si ya hay alguna). Tocar una
+entra al chat exactamente como si el estudiante la hubiera escrito
+(`this.courseAsk`, mismo patrón que `askAssistant`) — sin perder el saludo
+si es la primera interacción del hilo.
+
+**"Modo Estudio" — maqueta visual, sin RAG real detrás.** Cuando la
+asignatura tiene material cargado (`TUTOR_SOURCES[asignatura]`: un código de
+curso ficticio + una lista de documentos de ejemplo), aparecen dos cosas
+nuevas, condicionadas a `v.tutorHasSources`:
+
+1. Un chip "📘 Modo Estudio" junto al "24/7" del encabezado, con el código
+   de curso al lado (`v.tutorCourseCode`).
+2. Un panel "Fuentes (N)" a la derecha del chat (`v.tutorSources`), con la
+   lista de documentos de ejemplo — mismo patrón visual que el panel de
+   detalle de asignatura de la malla, pero como columna fija junto al chat,
+   no como modal.
+
+El saludo de bienvenida y la sugerencia "Repasar el tema de esta semana"
+citan uno de esos documentos ("📄 Esto lo veo en tu Sílabo del curso
+2026-I.", "Según tu Manual de..."), para mostrar cómo se vería que el tutor
+respalde sus respuestas en material real — **sin búsqueda ni RAG real
+detrás**: son los mismos 3-4 nombres de documento inventados por asignatura,
+no un sistema que busque nada. El desarrollo real de esto (perfil de
+dominio por concepto, RAG de verdad, prompt pedagógico, backend) está fuera
+de esta maqueta a propósito — ver `TUTOR-IA-ROADMAP.md` en la raíz del
+repositorio, guardado el 10 ago 2026 para no perder esa conversación.
 
 ### Progreso: CoRAzones explicados, insignias y fórmulas (`progreso`)
 
@@ -749,6 +824,32 @@ nombre propio que alude a la marca en vez de una sigla técnica.
   fija: sale del siguiente paso pendiente del Recomendador (`FLOW`), del
   asignatura de mayor riesgo en `PREDICT` y de la racha actual — si ya no aplica
   una meta (por ejemplo, ya se completó todo el Recomendador), desaparece sola.
+
+**Práctico y Flashcards ahora suman CoRAzones de verdad.** Antes, terminar un
+simulacro o un set mostraba "+X CoRAzones ganados" pero ese número nunca se
+sumaba al saldo real (`s.xp`) ni marcaba la pantalla como completada en
+`s.completed` — por eso "📚 Académico" en Mi Progreso se quedaba en 0/3 para
+siempre. Ahora ambas pantallas llaman a `this.complete(id, ganancia)`, la
+misma función que ya usaban las 7 pantallas del Recomendador:
+
+- **Práctico** (`v.pNext`, al terminar la última pregunta): la ganancia es
+  el mismo cálculo que ya se mostraba en pantalla (`v.pXpLabel`) — 5 puntos
+  por respuesta correcta + 50 por terminar + un extra según la dificultad
+  elegida. El puntaje final (`v.pScoreLabel`) ahora también lleva su fórmula
+  en un `Tip` (`v.pScoreFormula`), igual que el progreso general en Mi
+  Progreso, y hay una línea de desglose (`v.pXpDetail`) igual a la que ya
+  tenía Flashcards.
+- **Flashcards** (al calificar la última tarjeta, o al tocar "Terminar"
+  antes de acabar el set): la ganancia es 50 por completar + 2 por cada
+  tarjeta marcada "Lo sé" hasta ese momento — crédito parcial si se sale
+  antes de tiempo, para que el número mostrado y el número sumado sean
+  siempre el mismo.
+- Las asignaturas que ofrecen ambas pantallas (`v.pCourses`, `v.fCourses`)
+  ya no son una lista suelta ("Matemática I", "Química General"…):
+  ahora son las asignaturas reales del ciclo actual del estudiante
+  (`CURRICULUM`, mismas que se ven "EN CURSO" en la malla), sin contar
+  electivos. Es el mismo criterio que ya usaba Acompañamiento para sugerir
+  qué reforzar.
 
 ### Inicio (`inicio`) y CoRA me conoce (`formulario`)
 
