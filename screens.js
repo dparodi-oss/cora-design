@@ -46,14 +46,19 @@ var CORA_SCREENS = [
     requiere: 'malla'
   },
   {
-    id: 'horizonte', emoji: '🌅', label: 'Veo mi Horizonte', group: '🟣 Recomendador',
+    id: 'horizonte', emoji: '🌅', label: 'Veo mi horizonte profesional', group: '🟣 Recomendador',
     desc: 'Proyección laboral de la carrera elegida: la diferencia entre RUTA y HORIZONTE, y salarios por nivel de experiencia.',
     requiere: 'perfil-cora'
   },
   {
-    id: 'acompanamiento', emoji: '⚠️', label: 'Acompañamiento', group: '🟣 Recomendador',
-    desc: 'Predictibilidad académica: cruza tus notas con el histórico de la asignatura, anticipa las que se te pueden complicar y propone plan y tutoría.',
+    id: 'cv', emoji: '📄', label: 'Crea mi CV', group: '🟣 Recomendador',
+    desc: 'Cuestionario para armar un CV: mezcla datos ya guardados en CoRA (perfil, ruta, notas, Ecosistema CIE) con experiencia, proyectos e idiomas que cuenta el estudiante. Tres formatos elegibles.',
     requiere: 'horizonte'
+  },
+  {
+    id: 'acompanamiento', emoji: '⚠️', label: 'Acompañamiento Académico', group: '🟣 Recomendador',
+    desc: 'Predictibilidad académica: cruza tus notas con el histórico de la asignatura, anticipa las que se te pueden complicar y propone plan y tutoría.',
+    requiere: 'cv'
   },
 
   {
@@ -89,26 +94,8 @@ var CORA_SCREENS = [
   }
 ];
 
-/* Variantes visuales pendientes de decisión.
- *
- * Son la MISMA pantalla renderizada con una prop distinta, para poder
- * compararlas una al lado de otra en el tablero. Cuando se elija una,
- * se fija como valor por defecto de la prop y se borra este bloque.
- */
-var CORA_VARIANTS = [
-  {
-    id: 'ctx-dashboard', screen: 'inicio', props: { contextVariant: 'dashboard' },
-    emoji: '📊', label: 'Contexto · Dashboard',
-    desc: 'Cuatro métricas en rejilla, barra de avance y chips con las notas de las últimas asignaturas. La más informativa.'
-  },
-  {
-    id: 'ctx-tarjeta', screen: 'inicio', props: { contextVariant: 'tarjeta' },
-    emoji: '🗂️', label: 'Contexto · Tarjeta',
-    desc: 'Dos tarjetas enfrentadas: el ciclo en morado sólido y el detalle de notas al lado. La más jerárquica.'
-  },
-  {
-    id: 'ctx-banner', screen: 'inicio', props: { contextVariant: 'banner' },
-    emoji: '📐', label: 'Contexto · Banner',
-    desc: 'Una sola franja horizontal con lo esencial. La más discreta: deja el foco en el formulario.'
-  }
-];
+/* Ya no hay variantes pendientes de decisión — el bloque de contexto del
+ * estudiante en "Inicio" se resolvió como parte del dashboard nuevo (ver
+ * DESIGN.md). CORA_VARIANTS queda vacío (no se borra la variable: pantalla.html
+ * todavía la referencia para el parámetro ?v=, aunque ya nunca encuentre nada). */
+var CORA_VARIANTS = [];

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CORA · Tablero de pantallas</title>
-<meta name="description" content="Tablero de las 13 pantallas de CORA, el sistema de orientación académica de la Universidad Continental.">
+<meta name="description" content="Tablero de las 15 pantallas de CORA, el sistema de orientación académica de la Universidad Continental.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap">
@@ -175,15 +175,14 @@
   <span class="eyebrow">Universidad Continental · Fase 2</span>
   <h2>Tablero de pantallas</h2>
   <p class="lede">
-    Las 13 pantallas de CORA, tal cual salen del sistema de diseño. Cada tarjeta es una
+    Las 15 pantallas de CORA, tal cual salen del sistema de diseño. Cada tarjeta es una
     vista en vivo del diseño real — no una captura — así que lo que ves aquí es
     exactamente lo que se está construyendo. Haz clic en cualquiera para abrirla a
-    tamaño completo. Al final del tablero están las variantes pendientes de decisión.
+    tamaño completo.
   </p>
   <div class="facts">
-    <div class="fact"><strong>13</strong><span>Pantallas</span></div>
-    <div class="fact"><strong>3</strong><span>Módulos</span></div>
-    <div class="fact"><strong>3</strong><span>Variantes a comparar</span></div>
+    <div class="fact"><strong>15</strong><span>Pantallas</span></div>
+    <div class="fact"><strong>4</strong><span>Módulos</span></div>
     <div class="fact"><strong>HTML</strong><span>Sin build, sin framework</span></div>
   </div>
 </div>
@@ -235,11 +234,7 @@
   var jump  = document.getElementById('jump');
   var frames = [];
 
-  /* Las variantes se muestran como un grupo más, al final del tablero. */
-  var GROUPS = CORA_GROUPS.concat([{
-    id: 'variantes', label: '🎨 Variantes a comparar', variants: true,
-    desc: 'La misma pantalla con tres tratamientos distintos del bloque de contexto del estudiante. Elige una y la fijamos como definitiva.'
-  }]);
+  var GROUPS = CORA_GROUPS;
 
   GROUPS.forEach(function (g) {
     var mine = g.variants
