@@ -400,7 +400,7 @@
             <div style="margin-bottom:24px">
               <p style="font-size:12px;font-weight:700;color:#1A1040;margin:0 0 4px">🗺️ Explora todo CoRA</p>
               <p style="font-size:11px;color:#9ca3af;margin:0 0 14px">Lo atenuado con candado se activa a medida que avanzas — también puedes navegar desde el menú de la izquierda.</p>
-              <sc-for list="{{ dashGroups }}" as="grp" hint-placeholder-count="4">
+              <sc-for list="{{ dashGroups }}" as="grp" hint-placeholder-count="2">
                 <p style="font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;margin:0 0 8px">{{ grp.label }}</p>
                 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:16px">
                   <sc-for list="{{ grp.items }}" as="item" hint-placeholder-count="4">
@@ -4783,11 +4783,18 @@ class Component extends DCLogic {
       iconCircleStyle:{ width:"32px", height:"32px", borderRadius:"9999px", flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center", background:accent[0] },
       cardIconColor: accent[1]
     });
+    /* "Crea tu Ruta" y "Ajustes" ya no aparecen acá (12 ago 2026, a pedido
+       explícito). "Crea tu Ruta": sus 4 pasos ya tienen su propia tarjeta
+       arriba ("Sigue con: X" / "0 de 4" antes de empezar), repetirlos como
+       grupo era información duplicada. "Ajustes" (Mi progreso/Perfil/
+       Configuración) no es parte del "mapa de CoRA" que esta sección
+       promete explorar — es configuración de la cuenta, no contenido de la
+       plataforma. Los dos grupos siguen disponibles en el sidebar
+       (`v.navConfig`/`v.navSet`), que es donde vive el contador real de
+       "Crea tu Ruta". */
     v.dashGroups = [
-      { label:"🟣 Crea tu Ruta", items:v.navConfig.map(dashToCard(["#faf5ff","#7B68EE"])) },
       { label:"✨ Explora CoRA", items:v.navReco.map(dashToCard(["#eff6ff","#2563eb"])) },
-      { label:"📚 CoRA Académico", items:v.navAca.map(dashToCard(["#fff7ed","#c2410c"])) },
-      { label:"⚙️ Ajustes", items:v.navSet.map(dashToCard(["#f9fafb","#6b7280"])) }
+      { label:"📚 CoRA Académico", items:v.navAca.map(dashToCard(["#fff7ed","#c2410c"])) }
     ];
 
     v.dashHasRoute = !!s.selectedRoute;

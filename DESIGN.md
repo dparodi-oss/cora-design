@@ -387,15 +387,24 @@ De arriba hacia abajo:
    estudiante lleva ahora mismo (`this.PREDICT` es sobre ciclos futuros) — no
    se inventó uno nuevo para esta sección, a propósito.
 5. **🗺️ Explora todo CoRA** (`v.dashGroups`, **siempre visible, en los dos
-   estados**) — el mapa completo, en el lenguaje del estudiante: los mismos
-   4 grupos y nombres del sidebar (Crea tu Ruta / Explora CoRA / CoRA
-   Académico / Ajustes), nunca "pantalla 3 de 15". Reusa `v.navConfig`/
-   `v.navReco`/`v.navAca`/`v.navSet` tal cual (ya calculados para el sidebar,
-   con su `done`/`locked`) y les agrega `cardStyle`/`iconCircleStyle`/
-   `cardIconColor` propios para el formato de tarjeta grande (`dashToCard`),
-   sin tocar el dato original. Lo bloqueado se ve atenuado con candado — se
-   activa solo a medida que avanza, igual que en el sidebar; **nunca hay que
-   elegir entre verlo aquí o en el menú, ambos navegan al mismo lugar.**
+   estados**) — el mapa completo, en el lenguaje del estudiante: solo 2 de
+   los 4 grupos del sidebar (Explora CoRA / CoRA Académico), nunca "pantalla
+   3 de 15". **"Crea tu Ruta" y "Ajustes" no se repiten acá (12 ago 2026, a
+   pedido explícito).** "Crea tu Ruta": sus 4 pasos ya tienen su propia
+   tarjeta arriba, la de "Sigue con: X →" (antes de terminar) o
+   "✓ Completado" (después), así que mostrarlos otra vez como grupo era
+   información duplicada. "Ajustes" (Mi progreso/Perfil/Configuración): no
+   es contenido de la plataforma que esta sección invita a "explorar", es
+   configuración de la cuenta — no encaja en la promesa del título. Los dos
+   siguen disponibles en el sidebar (`v.navConfig`/`v.navSet`), que es donde
+   vive el contador real de "Crea tu Ruta" ("X de 4"). Reusa `v.navReco`/
+   `v.navAca` tal cual (ya calculados para el sidebar, con su
+   `done`/`locked`) y les agrega
+   `cardStyle`/`iconCircleStyle`/`cardIconColor` propios para el formato de
+   tarjeta grande (`dashToCard`), sin tocar el dato original. Lo bloqueado se
+   ve atenuado con candado — se activa solo a medida que avanza, igual que en
+   el sidebar; **nunca hay que elegir entre verlo aquí o en el menú, ambos
+   navegan al mismo lugar.**
 6. **📍 Tu progreso** — el bloque de estadísticas que antes tenía 3
    variantes pendientes de decisión (dashboard/tarjeta/banner). Se
    **retiraron las 3** (decisión propia: con un dashboard nuevo completo,
