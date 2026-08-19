@@ -51,6 +51,7 @@ class Component extends DCLogic {
     "globe": [["circle",{cx:12,cy:12,r:10}],["path",{d:"M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"}],["path",{d:"M2 12h20"}]],
     "route": [["path",{d:"M6 4h9a3 3 0 0 1 0 6H6a3 3 0 0 0 0 6h9"}]],
     "external-link": [["path",{d:"M15 3h6v6"}],["path",{d:"M10 14 21 3"}],["path",{d:"M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"}]],
+    "users": [["path",{d:"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"}],["circle",{cx:9,cy:7,r:4}],["path",{d:"M22 21v-2a4 4 0 0 0-3-3.87"}],["path",{d:"M16 3.13a4 4 0 0 1 0 7.75"}]],
     "graduation-cap": [["path",{d:"M21.42 10.92a1 1 0 0 0-.02-1.83L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.83l8.57 3.9a2 2 0 0 0 1.66 0z"}],["path",{d:"M22 10.5v5.5"}],["path",{d:"M6 12.5V16a6 3 0 0 0 12 0v-3.5"}]],
     "phone-idea": [["rect",{x:6,y:2,width:12,height:20,rx:2}],["circle",{cx:12,cy:9.5,r:2.2}],["path",{d:"M10.7 13h2.6"}],["path",{d:"M11.2 15h1.6"}],["path",{d:"M11 18h2"}]],
     "briefcase": [["rect",{x:2,y:7,width:20,height:13,rx:2}],["path",{d:"M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"}],["path",{d:"M2 13h20"}]],
@@ -60,7 +61,8 @@ class Component extends DCLogic {
     "layers": [["path",{d:"M12 2 2 7l10 5 10-5Z"}],["path",{d:"M2 17l10 5 10-5"}],["path",{d:"M2 12l10 5 10-5"}]],
     "bar-chart": [["line",{x1:5,y1:20,x2:5,y2:12}],["line",{x1:12,y1:20,x2:12,y2:6}],["line",{x1:19,y1:20,x2:19,y2:15}],["path",{d:"M3 20h18"}]],
     "user": [["path",{d:"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"}],["circle",{cx:12,cy:7,r:4}]],
-    "sliders": [["line",{x1:4,y1:6,x2:16,y2:6}],["circle",{cx:18,cy:6,r:2}],["line",{x1:8,y1:12,x2:20,y2:12}],["circle",{cx:6,cy:12,r:2}],["line",{x1:4,y1:18,x2:16,y2:18}],["circle",{cx:18,cy:18,r:2}]]
+    "sliders": [["line",{x1:4,y1:6,x2:16,y2:6}],["circle",{cx:18,cy:6,r:2}],["line",{x1:8,y1:12,x2:20,y2:12}],["circle",{cx:6,cy:12,r:2}],["line",{x1:4,y1:18,x2:16,y2:18}],["circle",{cx:18,cy:18,r:2}]],
+    "file-text": [["path",{d:"M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"}],["path",{d:"M14 2v4a2 2 0 0 0 2 2h4"}],["path",{d:"M10 9H8"}],["path",{d:"M16 13H8"}],["path",{d:"M16 17H8"}]]
   };
   renderVals() {
     const size = this.props.s ?? 16;
