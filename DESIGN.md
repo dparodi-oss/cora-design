@@ -1404,6 +1404,15 @@ igual que ya no cuentan para el total de la carrera.
 
 ### Equivalencias CFU elegidas (Malla)
 
+**Solo se ofrecen asignaturas de ciclos que faltan por cursar (20 ago 2026).**
+`EQUIV_CFU` tiene equivalencias desde el ciclo 1 hasta el 10, pero listarlas
+todas sin filtrar dejaba elegir "cambiar por CFU" asignaturas de ciclos que
+el estudiante ya cursó en Perú — no tiene sentido convalidar algo que ya
+está hecho. Ahora `equivMatched` excluye `e.cycle < STUDENT.cycle` (mismo
+criterio de "ya cursada" que usa el resto de la maqueta, ver "Progreso real
+de créditos"), así que los chips de filtro por ciclo (`v.equivCycles`)
+tampoco ofrecen ciclos pasados como opción.
+
 Desde 🌍 Experiencias Internacionales, en Ecosistema CIE, el estudiante puede
 marcar una asignatura UC como "elegido por CFU" (botón "+ Elegir por CFU" en
 `EQUIV_CFU`, guardado en `s.cfuChosen` por nombre de asignatura UC). Esa elección

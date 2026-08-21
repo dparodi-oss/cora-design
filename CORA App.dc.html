@@ -5635,9 +5635,13 @@ class Component extends DCLogic {
       { name:"Emprendimiento Digital", mode:"Presencial", dur:"6 semanas", cost:"GRATUITO" },
       { name:"Comunicación Efectiva", mode:"Virtual", dur:"3 semanas", cost:"S/. 150" }
     ].map(mkEco);
-    /* Equivalencias UC ↔ CFU (Continental Florida University), filtrables por ciclo. */
+    /* Equivalencias UC ↔ CFU (Continental Florida University), filtrables por ciclo.
+       No se ofrecen asignaturas de ciclos que el estudiante ya cursó (mismo
+       criterio de "ya cursada" que usa el resto de la maqueta: cycle < STUDENT.cycle,
+       ver "Progreso real de créditos" más abajo) — no tiene sentido elegir
+       "cambiar por CFU" algo que ya se estudió en Perú. */
     const equivActiveCycle = s.equivCycle;
-    const equivMatched = this.EQUIV_CFU.filter(e => e.cfu);
+    const equivMatched = this.EQUIV_CFU.filter(e => e.cfu && e.cycle >= this.STUDENT.cycle);
     const equivAllCycles = Array.from(new Set(equivMatched.map(e => e.cycle))).sort((a, b) => a - b);
     v.equivCycles = [{ id:"todos", label:"Todos" }].concat(equivAllCycles.map(c => ({ id:String(c), label:"C" + c }))).map(c => ({
       label:c.label, onClick: () => this.setState({ equivCycle:c.id }),
