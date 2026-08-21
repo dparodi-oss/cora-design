@@ -105,15 +105,21 @@
           </button>
         </sc-for>
       </div>
-      <sc-if value="{{ hasCurrentRoute }}" hint-placeholder-val="{{ false }}">
-        <button onClick="{{ goCurrentRoute }}" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;margin:-8px 0 4px;background:#faf5ff;border:1px solid #f3e8ff;border-radius:12px;cursor:pointer;font-family:inherit;text-align:left" style-hover="background:#f3e8ff">
-          <dc-import name="Icon" i="graduation-cap" s="14" c="#7B68EE" hint-size="14px,14px"></dc-import>
-          <span style="flex:1;min-width:0">
-            <span style="display:block;font-size:9px;color:#9ca3af;text-transform:uppercase;letter-spacing:.04em">Tu ruta actual</span>
-            <span style="display:block;font-size:12px;font-weight:600;color:#4A3FA0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ currentRouteLabel }}</span>
-          </span>
+      <div style="display:flex;flex-direction:column;gap:8px;margin:-8px 0 4px">
+        <button onClick="{{ goMiMalla }}" style="{{ miMallaStyle }}" style-hover="background:#6A58DC">
+          <dc-import name="Icon" i="{{ miMallaIcon }}" s="16" c="{{ miMallaIconColor }}" hint-size="16px,16px"></dc-import>
+          <span style="flex:1">{{ miMallaLabel }}</span>
         </button>
-      </sc-if>
+        <sc-if value="{{ hasCurrentRoute }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ goCurrentRoute }}" style="width:100%;display:flex;align-items:center;gap:8px;padding:10px 12px;background:#faf5ff;border:2px solid #7B68EE;border-radius:12px;cursor:pointer;font-family:inherit;text-align:left" style-hover="background:#f3e8ff">
+            <dc-import name="Icon" i="route" s="16" c="#7B68EE" hint-size="16px,16px"></dc-import>
+            <span style="flex:1;min-width:0">
+              <span style="display:block;font-size:9px;font-weight:700;color:#7B68EE;text-transform:uppercase;letter-spacing:.04em">Mi Ruta</span>
+              <span style="display:block;font-size:13px;font-weight:700;color:#4A3FA0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ currentRouteLabel }} · {{ currentRoutePct }}</span>
+            </span>
+          </button>
+        </sc-if>
+      </div>
       <div style="position:relative">
         <button onClick="{{ toggleConfig }}" onMouseEnter="{{ configTipShow }}" onMouseLeave="{{ configTipHide }}" style="{{ configHeaderStyle }}" style-hover="background:#faf5ff">
           <span style="font-size:9px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.1em">🟣 CREA TU RUTA</span>
@@ -220,6 +226,19 @@
         <dc-import name="Icon" i="help" s="13" c="#7B68EE" hint-size="13px,13px"></dc-import>
         <span style="font-size:12px;font-weight:600;color:#7B68EE;white-space:nowrap">Guía</span>
       </button>
+      <!-- Mismos dos atajos del sidebar ("Mi Malla" / "Mi Ruta"), repetidos
+           acá junto a "Guía" para que estén al alcance desde cualquier
+           pantalla sin abrir el menú (12 ago 2026, a pedido explícito). -->
+      <button onClick="{{ goMiMalla }}" style="display:flex;align-items:center;gap:6px;background:#7B68EE;border:0;border-radius:9999px;padding:6px 12px;cursor:pointer;font-family:inherit" style-hover="background:#6A58DC">
+        <dc-import name="Icon" i="graduation-cap" s="13" c="#ffffff" hint-size="13px,13px"></dc-import>
+        <span style="font-size:12px;font-weight:600;color:#fff;white-space:nowrap">Mi Malla</span>
+      </button>
+      <sc-if value="{{ hasCurrentRoute }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ goCurrentRoute }}" style="display:flex;align-items:center;gap:6px;background:#fff;border:2px solid #7B68EE;border-radius:9999px;padding:5px 12px;cursor:pointer;font-family:inherit" style-hover="background:#faf5ff">
+          <dc-import name="Icon" i="route" s="13" c="#7B68EE" hint-size="13px,13px"></dc-import>
+          <span style="font-size:12px;font-weight:700;color:#7B68EE;white-space:nowrap">Mi Ruta: {{ currentRouteLabel }}</span>
+        </button>
+      </sc-if>
       <!-- El contador de racha diaria ("{{ streak }} días") se quitó del header
            (11 ago 2026, punto 6 del feedback de diseño): la hipótesis de uso
            diario no está validada, y un contador de días pegado al de
@@ -272,7 +291,19 @@
       </div>
     </sc-if>
 
-    <main style="flex:1;padding:24px;max-width:1024px;width:100%;box-sizing:border-box">
+    <!-- padding-bottom:96px (en vez de 24px), en el `<main>` compartido por
+         las 15 pantallas: deja espacio de sobra para el botón flotante del
+         Asistente CoRA (fixed;bottom:24px, ~49px de alto) al llegar al
+         final de una pantalla larga — corregido 12 ago 2026, a pedido
+         explícito (la primera corrección solo subió los 4 botones que ya
+         eran sticky dentro del flujo malla/ecosistema; quedaban todos los
+         demás botones "Continuar →" de fin de pantalla — Mi Perfil CoRA,
+         Veo mi horizonte profesional, Crea mi CV, etc. — que no son
+         sticky, así que el último elemento de esas pantallas caía justo
+         donde está el widget al llegar al final del scroll). Al ser un
+         padding en el contenedor compartido, corrige las 15 pantallas de
+         una sola vez, no una por una. -->
+    <main style="flex:1;padding:24px 24px 96px;max-width:1024px;width:100%;box-sizing:border-box">
 
       <sc-if value="{{ isAnalyzing }}" hint-placeholder-val="{{ false }}">
         <div style="display:flex;align-items:center;justify-content:center;min-height:60vh">
@@ -506,7 +537,7 @@
                   <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:16px;margin:0 0 4px">Opción Rápida</h3>
                   <p style="font-size:12px;color:#9ca3af;margin:0 0 12px">6 preguntas concisas</p>
                   <ul style="list-style:none;padding:0;margin:0 0 16px;display:flex;flex-direction:column;gap:6px">
-                    <li style="display:flex;align-items:center;gap:8px;font-size:12px;color:#4b5563"><dc-import name="Icon" i="check" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Análisis rápido de tu perfil</li>
+                    <li style="display:flex;align-items:center;gap:6px;font-size:12px;color:#4b5563"><dc-import name="Icon" i="check" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Análisis rápido de tu perfil<dc-import name="Tip" text="El rápido no cruza tantas variables de tu perfil como el detallado: con 6 preguntas en una sola pantalla te da una orientación general — sirve para curiosear, no para tu decisión final. Puedes cambiar de versión más adelante sin perder tus respuestas." hint-size="13px,13px"></dc-import></li>
                     <li style="display:flex;align-items:center;gap:8px;font-size:12px;color:#4b5563"><dc-import name="Icon" i="check" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Recomendaciones básicas</li>
                     <li style="display:flex;align-items:center;gap:8px;font-size:12px;color:#4b5563"><dc-import name="Icon" i="check" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Acceso a malla y Horizonte</li>
                   </ul>
@@ -532,7 +563,7 @@
                   <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:16px;margin:0 0 4px">Opción Detallada</h3>
                   <p style="font-size:12px;color:#9ca3af;margin:0 0 12px">5 pasos, más detalle</p>
                   <ul style="list-style:none;padding:0;margin:0 0 16px;display:flex;flex-direction:column;gap:6px">
-                    <li style="display:flex;align-items:center;gap:8px;font-size:12px;color:#4b5563"><dc-import name="Icon" i="check" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Análisis profundo y personalizado</li>
+                    <li style="display:flex;align-items:center;gap:6px;font-size:12px;color:#4b5563"><dc-import name="Icon" i="check" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Análisis profundo y personalizado<dc-import name="Tip" text="El detallado recorre 5 pasos y cruza más variables de tu perfil para encontrar las carreras más compatibles contigo, con recomendaciones más precisas. Puedes cambiar de versión más adelante sin perder tus respuestas." hint-size="13px,13px"></dc-import></li>
                     <li style="display:flex;align-items:center;gap:8px;font-size:12px;color:#4b5563"><dc-import name="Icon" i="check" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Recomendaciones precisas</li>
                     <li style="display:flex;align-items:center;gap:8px;font-size:12px;color:#4b5563"><dc-import name="Icon" i="check" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Acceso COMPLETO al ecosistema</li>
                     <li style="display:flex;align-items:center;gap:8px;font-size:12px;color:#4b5563"><dc-import name="Icon" i="check" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Plan de acompañamiento activo</li>
@@ -548,13 +579,6 @@
                   </div>
                 </sc-if>
               </div>
-            </div>
-
-            <div style="background:#eff6ff;border:1px solid #dbeafe;border-radius:16px;padding:12px 16px;display:flex;align-items:center;gap:10px">
-              <div style="color:#3b82f6;display:flex"><dc-import name="Icon" i="info" s="16" c="#3b82f6" hint-size="16px,16px"></dc-import></div>
-              <p style="font-weight:600;color:#1e3a8a;font-size:14px;margin:0;display:flex;align-items:center;gap:6px">🔍 ¿Qué significa "Análisis"?
-                <dc-import name="Tip" text="El formulario detallado recorre 5 pasos y cruza más variables de tu perfil para encontrar las carreras más compatibles contigo, con recomendaciones más precisas. El rápido no corre este cruce: con 6 preguntas en una sola pantalla te da una orientación general — sirve para curiosear, no para tu decisión final. Puedes cambiar de versión más adelante sin perder tus respuestas." hint-size="14px,14px"></dc-import>
-              </p>
             </div>
           </div>
         </div>
@@ -603,7 +627,13 @@
                         <sc-for list="{{ q.chips }}" as="c" hint-placeholder-count="8">
                           <button onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.label }}</button>
                         </sc-for>
+                        <sc-if value="{{ q.hasOtro }}" hint-placeholder-val="{{ false }}">
+                          <button onClick="{{ q.onToggleOtro }}" style="{{ q.otroChipStyle }}">Otro</button>
+                        </sc-if>
                       </div>
+                      <sc-if value="{{ q.otroOpen }}" hint-placeholder-val="{{ false }}">
+                        <input value="{{ q.otroValue }}" onChange="{{ q.onOtroChange }}" placeholder="Escribe tu propia opción…" style="{{ q.otroFieldStyle }}" />
+                      </sc-if>
                     </sc-if>
                     <sc-if value="{{ q.isChipsBig }}" hint-placeholder-val="{{ false }}">
                       <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:8px">
@@ -641,6 +671,7 @@
                             <div style="display:flex;gap:6px;flex-shrink:0">
                               <button onClick="{{ r.onYa }}" style="{{ r.yaStyle }}">Ya lo hago</button>
                               <button onClick="{{ r.onQuiero }}" style="{{ r.quieroStyle }}">Quiero explorarlo</button>
+                              <button onClick="{{ r.onNo }}" style="{{ r.noStyle }}">No me interesa</button>
                             </div>
                           </div>
                         </sc-for>
@@ -676,7 +707,13 @@
                       <sc-for list="{{ q.chips }}" as="c" hint-placeholder-count="8">
                         <button onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.label }}</button>
                       </sc-for>
+                      <sc-if value="{{ q.hasOtro }}" hint-placeholder-val="{{ false }}">
+                        <button onClick="{{ q.onToggleOtro }}" style="{{ q.otroChipStyle }}">Otro</button>
+                      </sc-if>
                     </div>
+                    <sc-if value="{{ q.otroOpen }}" hint-placeholder-val="{{ false }}">
+                      <input value="{{ q.otroValue }}" onChange="{{ q.onOtroChange }}" placeholder="Escribe tu propia opción…" style="{{ q.otroFieldStyle }}" />
+                    </sc-if>
                   </sc-if>
                   <sc-if value="{{ q.isCards }}" hint-placeholder-val="{{ false }}">
                     <div style="display:grid;grid-template-columns:{{ q.gridCols }};gap:10px;margin-top:8px">
@@ -802,25 +839,6 @@
               </div>
             </sc-for>
           </div>
-          <!-- Aclaración pedida por la universidad: Ruta y Horizonte se confunden.
-               Ruta = lo que estudias; Horizonte = a dónde te lleva laboralmente. -->
-          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:24px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
-            <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:14px;margin:0 0 4px">¿Cuál es la diferencia?</h3>
-            <p style="font-size:12px;color:#9ca3af;margin:0 0 16px">Ruta y Horizonte no son lo mismo — cada uno responde una pregunta distinta.</p>
-            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-              <div style="flex:1;min-width:180px;background:#faf5ff;border:1px solid #f3e8ff;border-radius:12px;padding:14px">
-                <p style="font-size:11px;font-weight:700;color:#7B68EE;margin:0 0 4px;text-transform:uppercase;letter-spacing:.05em">📚 Ruta</p>
-                <p style="font-size:12px;color:#4A3FA0;margin:0;line-height:1.5">Las <strong>asignaturas</strong> que vas a tomar en tu malla — lo que estudias.</p>
-              </div>
-              <div style="flex-shrink:0;color:#c4b5fd;display:flex;align-items:center;justify-content:center;padding:0 4px">
-                <dc-import name="Icon" i="chevron-right" s="20" c="#c4b5fd" hint-size="20px,20px"></dc-import>
-              </div>
-              <div style="flex:1;min-width:180px;background:#eff6ff;border:1px solid #dbeafe;border-radius:12px;padding:14px">
-                <p style="font-size:11px;font-weight:700;color:#1d4ed8;margin:0 0 4px;text-transform:uppercase;letter-spacing:.05em">🌅 Horizonte laboral</p>
-                <p style="font-size:12px;color:#1e3a8a;margin:0;line-height:1.5">Los <strong>trabajos</strong> a los que esa ruta te lleva — a dónde llegas.</p>
-              </div>
-            </div>
-          </div>
           <sc-if value="{{ confirmShow }}" hint-placeholder-val="{{ false }}">
             <div style="position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.5);padding:16px">
               <div style="background:#fff;border-radius:16px;box-shadow:0 25px 50px -12px rgba(0,0,0,.25);padding:28px;max-width:384px;width:100%;text-align:center">
@@ -909,25 +927,33 @@
                     </sc-for>
                   </div>
                 </sc-if>
+                <sc-if value="{{ cyc.hasEcoExtras }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding:0 12px 12px">
+                    <p style="font-size:10px;font-weight:700;color:#6b21a8;margin:0 0 4px">🎓 De Ecosistema CIE:</p>
+                    <sc-for list="{{ cyc.ecoExtras }}" as="ex" hint-placeholder-count="1">
+                      <div style="{{ ex.style }}">{{ ex.label }}</div>
+                    </sc-for>
+                  </div>
+                </sc-if>
               </div>
             </sc-for>
           </div>
-          <div style="display:flex;gap:12px;position:sticky;bottom:16px">
+          <div style="display:flex;gap:12px;position:sticky;bottom:88px">
             <div style="position:relative;flex:1" onMouseEnter="{{ hoverExploreExtra }}" onMouseLeave="{{ hoverNone }}">
               <sc-if value="{{ isExploreExtraHover }}" hint-placeholder-val="{{ false }}">
                 <div style="position:absolute;bottom:100%;left:0;right:0;margin-bottom:10px;z-index:20;background:#1A1040;color:#fff;font-size:12px;border-radius:12px;padding:12px 14px;box-shadow:0 20px 25px -5px rgba(0,0,0,.15),0 8px 10px -6px rgba(0,0,0,.1)">
-                  <p style="margin:0;line-height:1.5">Mira cursos complementarios recomendados para tu ruta antes de seguir. Es opcional — puedes volver a esto después.</p>
+                  <p style="margin:0;line-height:1.5">Mira cursos complementarios recomendados para tu ruta antes de seguir a Ecosistema CIE.</p>
                 </div>
               </sc-if>
-              <button onClick="{{ goExploreExtra }}" style="width:100%;background:#fff;color:#7B68EE;border:2px solid #7B68EE;border-radius:16px;padding:13px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit" style-hover="background:#faf5ff">🎓 Explorar más extracurriculares</button>
+              <button onClick="{{ goExploreExtra }}" style="width:100%;background:#fff;color:#7B68EE;border:2px solid #7B68EE;border-radius:16px;padding:13px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit" style-hover="background:#faf5ff">🎓 Explorar Extracurriculares</button>
             </div>
             <div style="position:relative;flex:1" onMouseEnter="{{ hoverContinueEco }}" onMouseLeave="{{ hoverNone }}">
               <sc-if value="{{ isContinueEcoHover }}" hint-placeholder-val="{{ false }}">
                 <div style="position:absolute;bottom:100%;left:0;right:0;margin-bottom:10px;z-index:20;background:#1A1040;color:#fff;font-size:12px;border-radius:12px;padding:12px 14px;box-shadow:0 20px 25px -5px rgba(0,0,0,.15),0 8px 10px -6px rgba(0,0,0,.1)">
-                  <p style="margin:0;line-height:1.5">Sáltate los extracurriculares por ahora y pasa directo a explorar el Ecosistema CIE completo.</p>
+                  <p style="margin:0;line-height:1.5">Primero entra a "Explorar Extracurriculares" — recién ahí se activa este botón.</p>
                 </div>
               </sc-if>
-              <button onClick="{{ goContinueEco }}" style="width:100%;background:#7B68EE;color:#fff;border:0;border-radius:16px;padding:14px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff" style-hover="background:#6A58DC">Continuar a Ecosistema CIE →</button>
+              <button onClick="{{ goContinueEco }}" style="{{ continueEcoStyle }}">{{ continueEcoLabel }}</button>
             </div>
           </div>
         </div>
@@ -953,7 +979,7 @@
               </div>
             </sc-for>
           </div>
-          <button onClick="{{ confirmExtraStep }}" style="width:100%;background:#7B68EE;color:#fff;border:0;border-radius:16px;padding:14px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff;position:sticky;bottom:16px" style-hover="background:#6A58DC">Continuar a Ecosistema CIE →</button>
+          <button onClick="{{ confirmExtraStep }}" style="width:100%;background:#7B68EE;color:#fff;border:0;border-radius:16px;padding:14px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff;position:sticky;bottom:88px" style-hover="background:#6A58DC">Continuar a Ecosistema CIE →</button>
         </div>
         </sc-if>
         </div>
@@ -1276,17 +1302,24 @@
           <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px">
             <div>
               <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:32px;font-weight:700;color:#1A1040;margin:0 0 4px">📋 Tu Malla Curricular</h1>
-              <p style="color:#6b7280;font-size:14px;margin:0 0 6px">Ruta: <strong>{{ mallaCareer }}</strong> · 10 ciclos · {{ mallaCreditsProgressLabel }}</p>
+              <sc-if value="{{ mallaShowRouteInfo }}" hint-placeholder-val="{{ true }}">
+                <p style="color:#6b7280;font-size:14px;margin:0 0 6px">Ruta: <strong>{{ mallaCareer }}</strong> · 10 ciclos · {{ mallaCreditsProgressLabel }}</p>
+              </sc-if>
+              <sc-if value="{{ mallaBaseView }}" hint-placeholder-val="{{ false }}">
+                <p style="color:#6b7280;font-size:14px;margin:0 0 6px">Malla base — sin ninguna ruta resaltada · 10 ciclos · {{ mallaCreditsProgressLabel }}</p>
+              </sc-if>
               <span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:#4A3FA0;background:#faf5ff;border-radius:9999px;padding:3px 10px">📘 {{ planLabel }}</span>
             </div>
             <dc-import name="Tip" text="Las asignaturas de la ruta que elegiste se ven con borde morado grueso, fondo lleno y la insignia '🧭 Tu ruta' — mucho más resaltadas que el resto. Cada ciclo tiene un máximo de 25 créditos de malla curricular. Puedes agregar todos los extracurriculares que quieras al final de cada ciclo: elige uno de la lista y confirma — nunca se agregan solos y no cuentan para ese máximo ni para tus créditos de carrera." hint-size="14px,14px"></dc-import>
           </div>
           <!-- Leyenda de las tres categorías de asignatura + los electivos ya elegidos -->
           <div style="display:flex;flex-wrap:wrap;align-items:center;gap:18px;background:#fff;border:1px solid #f3f4f6;border-radius:12px;padding:12px 16px;margin-bottom:20px">
-            <div style="{{ mallaLegendRuta.style }}">
-              <span style="{{ mallaLegendRuta.labelStyle }}">{{ mallaLegendRuta.label }}</span>
-              <span style="{{ mallaLegendRuta.descStyle }}">{{ mallaLegendRuta.desc }}</span>
-            </div>
+            <sc-if value="{{ mallaShowRouteInfo }}" hint-placeholder-val="{{ true }}">
+              <div style="{{ mallaLegendRuta.style }}">
+                <span style="{{ mallaLegendRuta.labelStyle }}">{{ mallaLegendRuta.label }}</span>
+                <span style="{{ mallaLegendRuta.descStyle }}">{{ mallaLegendRuta.desc }}</span>
+              </div>
+            </sc-if>
             <sc-for list="{{ mallaLegend }}" as="lg" hint-placeholder-count="4">
               <div style="display:flex;align-items:center;gap:8px">
                 <span style="{{ lg.swatchStyle }}"></span>
@@ -1340,6 +1373,14 @@
                       </sc-for>
                     </div>
                   </sc-if>
+                  <sc-if value="{{ cyc.hasEcoExtras }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-bottom:8px">
+                      <p style="font-size:11px;font-weight:700;color:#6b21a8;margin:0 0 4px">🎓 De Ecosistema CIE:</p>
+                      <sc-for list="{{ cyc.ecoExtras }}" as="ex" hint-placeholder-count="1">
+                        <div style="{{ ex.style }}">{{ ex.label }}</div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
                   <sc-if value="{{ cyc.canAdd }}" hint-placeholder-val="{{ true }}">
                     <button onClick="{{ cyc.onAdd }}" style="width:100%;font-size:12px;background:#faf5ff;color:#7B68EE;border:0;border-radius:12px;padding:8px 0;font-weight:500;display:flex;align-items:center;justify-content:center;gap:4px;cursor:pointer;font-family:inherit" style-hover="background:#f3e8ff">
                       <dc-import name="Icon" i="plus" s="11" hint-size="11px,11px"></dc-import> Agregar extracurricular
@@ -1351,28 +1392,44 @@
           </div>
           <!-- Los electivos que el estudiante eligió del Ecosistema CIE se ven todos
                juntos, en una franja horizontal debajo de la malla — antes vivían
-               repartidos dentro de cada tarjeta de ciclo. -->
-          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:16px 20px;margin-bottom:24px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
-            <p style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:14px;margin:0 0 4px">⭐ Tus electivos del Ecosistema CIE</p>
-            <p style="font-size:11px;color:#9ca3af;margin:0 0 10px">Agregas los que quieras, sin límite — eliges uno por uno y confirmas; no se suman solos ni cuentan para los {{ mallaTotalCredits }} créditos de tu carrera.</p>
-            <sc-if value="{{ hasChosenElectives }}" hint-placeholder-val="{{ false }}">
-              <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px">
-                <sc-for list="{{ chosenElectives }}" as="e" hint-placeholder-count="3">
-                  <div style="{{ e.style }}">
-                    <span style="font-size:9px;font-weight:700;color:#0ea5e9;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap">{{ e.cycleLabel }}</span>
-                    <span style="font-size:12px;color:#0369a1;white-space:nowrap">{{ e.label }}</span>
-                    <button onClick="{{ e.onRemove }}" style="color:#0284c7;background:none;border:0;cursor:pointer;display:flex;padding:0;flex-shrink:0" style-hover="color:#dc2626"><dc-import name="Icon" i="x" s="10" hint-size="10px,10px"></dc-import></button>
-                  </div>
-                </sc-for>
-              </div>
-            </sc-if>
-            <sc-if value="{{ noChosenElectives }}" hint-placeholder-val="{{ false }}">
-              <p style="font-size:12px;color:#9ca3af;margin:0">Todavía no elegiste ninguno — usa "Agregar extracurricular" en el ciclo que quieras.</p>
-            </sc-if>
-          </div>
-          <div style="display:flex;gap:12px;position:sticky;bottom:16px">
-            <button onClick="{{ mallaConfirm }}" style="flex:1;background:#7B68EE;color:#fff;border:0;border-radius:16px;padding:12px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff" style-hover="background:#6A58DC">✓ Confirmar malla final →</button>
-          </div>
+               repartidos dentro de cada tarjeta de ciclo. Se oculta entera en "Mi
+               Malla" (vista base): no hay "Agregar extracurricular" que ofrecer ahí. -->
+          <sc-if value="{{ mallaShowRouteInfo }}" hint-placeholder-val="{{ true }}">
+            <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:16px 20px;margin-bottom:24px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+              <p style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:14px;margin:0 0 4px">⭐ Tus electivos del Ecosistema CIE</p>
+              <p style="font-size:11px;color:#9ca3af;margin:0 0 10px">Agregas los que quieras, sin límite — eliges uno por uno y confirmas; no se suman solos ni cuentan para los {{ mallaTotalCredits }} créditos de tu carrera.</p>
+              <sc-if value="{{ hasChosenElectives }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px">
+                  <sc-for list="{{ chosenElectives }}" as="e" hint-placeholder-count="3">
+                    <div style="{{ e.style }}">
+                      <span style="font-size:9px;font-weight:700;color:#0ea5e9;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap">{{ e.cycleLabel }}</span>
+                      <span style="font-size:12px;color:#0369a1;white-space:nowrap">{{ e.label }}</span>
+                      <button onClick="{{ e.onRemove }}" style="color:#0284c7;background:none;border:0;cursor:pointer;display:flex;padding:0;flex-shrink:0" style-hover="color:#dc2626"><dc-import name="Icon" i="x" s="10" hint-size="10px,10px"></dc-import></button>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ noChosenElectives }}" hint-placeholder-val="{{ false }}">
+                <p style="font-size:12px;color:#9ca3af;margin:0">Todavía no elegiste ninguno — usa "Agregar extracurricular" en el ciclo que quieras.</p>
+              </sc-if>
+            </div>
+          </sc-if>
+          <!-- Lo que se agregó en Ecosistema CIE sin ciclo asociado (ej. una
+               maestría, que se cursa después de egresar, no dentro de los 10
+               ciclos) no encaja en ninguna tarjeta de ciclo — se avisa aparte. -->
+          <sc-if value="{{ hasEcoAddedNoCycle }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#faf5ff;border:1px solid #e9d5ff;border-radius:16px;padding:14px 16px;margin-bottom:24px;display:flex;align-items:center;gap:10px">
+              <span style="font-size:18px">🎓</span>
+              <p style="font-size:12px;color:#6b21a8;margin:0"><strong>De Ecosistema CIE, para después de egresar:</strong> {{ ecoAddedNoCycleLabel }}</p>
+            </div>
+          </sc-if>
+          <!-- "Mi Malla" es una foto fija, sin nada que confirmar — el botón
+               solo tiene sentido viendo la malla CON una ruta (v.mallaShowRouteInfo). -->
+          <sc-if value="{{ mallaShowRouteInfo }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;gap:12px;position:sticky;bottom:88px">
+              <button onClick="{{ mallaConfirm }}" style="flex:1;background:#7B68EE;color:#fff;border:0;border-radius:16px;padding:12px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff" style-hover="background:#6A58DC">✓ Confirmar malla final →</button>
+            </div>
+          </sc-if>
           <sc-if value="{{ extModalShow }}" hint-placeholder-val="{{ false }}">
             <div style="position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.5);padding:16px">
               <div style="background:#fff;border-radius:16px;box-shadow:0 25px 50px -12px rgba(0,0,0,.25);padding:24px;max-width:384px;width:100%">
@@ -1403,6 +1460,25 @@
             <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import>Elijo mi Ruta (Malla)</span>
             <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">¡Listo!</span></span>
           </nav>
+          <div style="display:flex;align-items:center;margin-bottom:20px">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:0 0 auto;width:100px">
+              <div style="{{ rphStep1.dotStyle }}">{{ rphStep1.icon }}</div>
+              <span style="{{ rphStep1.labelStyle }}">{{ rphStep1.label }}</span>
+              <span style="{{ rphStep1.whyStyle }}">{{ rphStep1.why }}</span>
+            </div>
+            <div style="{{ rphLink1 }}"></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:0 0 auto;width:100px">
+              <div style="{{ rphStep2.dotStyle }}">{{ rphStep2.icon }}</div>
+              <span style="{{ rphStep2.labelStyle }}">{{ rphStep2.label }}</span>
+              <span style="{{ rphStep2.whyStyle }}">{{ rphStep2.why }}</span>
+            </div>
+            <div style="{{ rphLink2 }}"></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:0 0 auto;width:100px">
+              <div style="{{ rphStep3.dotStyle }}">{{ rphStep3.icon }}</div>
+              <span style="{{ rphStep3.labelStyle }}">{{ rphStep3.label }}</span>
+              <span style="{{ rphStep3.whyStyle }}">{{ rphStep3.why }}</span>
+            </div>
+          </div>
           <div style="text-align:center;background:linear-gradient(135deg,#7B68EE,#6A58DC);border-radius:20px;padding:32px 24px;margin-bottom:20px;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff">
             <div style="display:flex;justify-content:center;margin-bottom:12px">
               <div style="background:rgba(255,255,255,.2);border-radius:9999px;padding:14px;display:flex"><dc-import name="Icon" i="check-circle" s="32" c="#fff" hint-size="32px,32px"></dc-import></div>
@@ -1450,11 +1526,14 @@
             </div>
           </div>
 
-          <div style="display:flex;gap:12px;margin-bottom:16px">
-            <button style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 0;border:1px solid #e5e7eb;border-radius:16px;font-size:14px;font-weight:500;color:#4b5563;background:#fff;cursor:pointer;font-family:inherit" style-hover="background:#f9fafb">
+          <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap">
+            <button style="flex:1;min-width:140px;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 0;border:1px solid #e5e7eb;border-radius:16px;font-size:14px;font-weight:500;color:#4b5563;background:#fff;cursor:pointer;font-family:inherit" style-hover="background:#f9fafb">
               <dc-import name="Icon" i="download" s="15" hint-size="15px,15px"></dc-import> Descargar malla PDF
             </button>
-            <button onClick="{{ mallaEdit }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 0;border:1px solid #e9d5ff;border-radius:16px;font-size:14px;font-weight:600;color:#7B68EE;background:#faf5ff;cursor:pointer;font-family:inherit" style-hover="background:#f3e8ff">
+            <button onClick="{{ mallaEdit }}" style="flex:1;min-width:140px;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 0;border:1px solid #e9d5ff;border-radius:16px;font-size:14px;font-weight:600;color:#7B68EE;background:#faf5ff;cursor:pointer;font-family:inherit" style-hover="background:#f3e8ff">
+              <dc-import name="Icon" i="eye" s="15" hint-size="15px,15px"></dc-import> Ver mi malla
+            </button>
+            <button onClick="{{ mallaEdit }}" style="flex:1;min-width:140px;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 0;border:1px solid #e9d5ff;border-radius:16px;font-size:14px;font-weight:600;color:#7B68EE;background:#faf5ff;cursor:pointer;font-family:inherit" style-hover="background:#f3e8ff">
               <dc-import name="Icon" i="edit" s="15" hint-size="15px,15px"></dc-import> Personalizar de nuevo
             </button>
           </div>
@@ -1479,12 +1558,44 @@
             </sc-if>
           </div>
 
-          <sc-if value="{{ mallaShowProfileCta }}" hint-placeholder-val="{{ false }}">
-            <div style="background:linear-gradient(to bottom right,#faf5ff,#eef2ff);border:1px solid #f3e8ff;border-radius:16px;padding:24px">
-              <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:16px;margin:0 0 8px">✨ ¿Quieres saber quién eres detrás de esta ruta?</h3>
-              <p style="font-size:13px;color:#4b5563;line-height:1.6;margin:0 0 20px">Tu ruta te dice qué vas a estudiar. Tu perfil de identidad te dice por qué esa ruta tiene sentido para ti — y hacia dónde te puede llevar.</p>
+          <p style="font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;margin:0 0 10px">Desde aquí puedes ir a dos partes — ninguna bloquea a la otra</p>
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start">
+            <sc-if value="{{ mallaShowProfileCta }}" hint-placeholder-val="{{ false }}">
+              <div style="background:linear-gradient(to bottom right,#faf5ff,#eef2ff);border:1px solid #f3e8ff;border-radius:16px;padding:24px">
+                <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:16px;margin:0 0 8px">🧭 ¿Quieres saber quién eres detrás de esta ruta?</h3>
+                <p style="font-size:13px;color:#4b5563;line-height:1.6;margin:0 0 20px">Tu perfil de identidad explica por qué esa ruta tiene sentido para ti, y hace que tu horizonte laboral salga hecho a tu medida, no genérico.</p>
+                <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:20px">
+                  <sc-for list="{{ perfilCtaItems }}" as="it" hint-placeholder-count="3">
+                    <div style="text-align:center">
+                      <div style="width:40px;height:40px;border-radius:9999px;background:{{ it.bg }};display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 8px">{{ it.icon }}</div>
+                      <p style="font-size:12px;font-weight:700;color:#1A1040;margin:0 0 2px">{{ it.label }}</p>
+                      <p style="font-size:11px;color:#6b7280;margin:0">{{ it.caption }}</p>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #f3f4f6;border-radius:12px;padding:10px 14px;margin-bottom:16px">
+                  <dc-import name="Icon" i="clock" s="14" c="#9ca3af" hint-size="14px,14px"></dc-import>
+                  <p style="font-size:12px;color:#6b7280;margin:0">18 preguntas · menos de 3 minutos · puedes hacerlo ahora o después</p>
+                </div>
+                <div style="display:flex;gap:12px;margin-bottom:16px">
+                  <button onClick="{{ discoverProfile }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 0;border:1px solid #e9d5ff;border-radius:16px;font-size:14px;font-weight:600;color:#7B68EE;background:#fff;cursor:pointer;font-family:inherit" style-hover="background:#f3e8ff">Descubrir mi perfil <dc-import name="Icon" i="chevron-right" s="14" hint-size="14px,14px"></dc-import></button>
+                  <button onClick="{{ deferProfile }}" style="flex:1;padding:12px 0;border:1px solid #e5e7eb;border-radius:16px;font-size:14px;font-weight:500;color:#4b5563;background:#fff;cursor:pointer;font-family:inherit" style-hover="background:#f9fafb">Lo hago después</button>
+                </div>
+                <p style="font-size:11px;color:#9ca3af;text-align:center;margin:0">Tu ruta ya está guardada. El perfil de identidad la enriquece, pero no la cambia.</p>
+              </div>
+            </sc-if>
+            <sc-if value="{{ !mallaShowProfileCta }}" hint-placeholder-val="{{ true }}">
+              <div style="background:linear-gradient(to bottom right,#faf5ff,#eef2ff);border:1px solid #f3e8ff;border-radius:16px;padding:24px;display:flex;flex-direction:column">
+                <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:16px;margin:0 0 8px">🧭 Ya conoces tu perfil de identidad</h3>
+                <p style="font-size:13px;color:#4b5563;line-height:1.6;margin:0 0 20px;flex:1">Sigue hacia tu horizonte laboral para ver, con datos reales, a dónde te puede llevar esta ruta.</p>
+                <button onClick="{{ mallaSummaryNext }}" style="width:100%;background:#7B68EE;color:#fff;border:0;border-radius:16px;padding:12px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit" style-hover="background:#6A58DC">Continuar a Veo mi horizonte profesional →</button>
+              </div>
+            </sc-if>
+            <div style="background:linear-gradient(to bottom right,#f0fdf4,#ecfdf5);border:1px solid #bbf7d0;border-radius:16px;padding:24px;display:flex;flex-direction:column">
+              <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:16px;margin:0 0 8px">📈 ¿Ya sabes cómo te está yendo en tus cursos?</h3>
+              <p style="font-size:13px;color:#4b5563;line-height:1.6;margin:0 0 20px">Acompañamiento Académico cruza tus notas con el histórico de cada asignatura y te avisa antes de que curses las que se te pueden complicar.</p>
               <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:20px">
-                <sc-for list="{{ perfilCtaItems }}" as="it" hint-placeholder-count="3">
+                <sc-for list="{{ acompCtaItems }}" as="it" hint-placeholder-count="3">
                   <div style="text-align:center">
                     <div style="width:40px;height:40px;border-radius:9999px;background:{{ it.bg }};display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 8px">{{ it.icon }}</div>
                     <p style="font-size:12px;font-weight:700;color:#1A1040;margin:0 0 2px">{{ it.label }}</p>
@@ -1492,20 +1603,11 @@
                   </div>
                 </sc-for>
               </div>
-              <div style="display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #f3f4f6;border-radius:12px;padding:10px 14px;margin-bottom:16px">
-                <dc-import name="Icon" i="clock" s="14" c="#9ca3af" hint-size="14px,14px"></dc-import>
-                <p style="font-size:12px;color:#6b7280;margin:0">18 preguntas · menos de 3 minutos · puedes hacerlo ahora o después</p>
-              </div>
-              <div style="display:flex;gap:12px;margin-bottom:16px">
-                <button onClick="{{ discoverProfile }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 0;border:1px solid #e9d5ff;border-radius:16px;font-size:14px;font-weight:600;color:#7B68EE;background:#fff;cursor:pointer;font-family:inherit" style-hover="background:#f3e8ff">Descubrir mi perfil <dc-import name="Icon" i="chevron-right" s="14" hint-size="14px,14px"></dc-import></button>
-                <button onClick="{{ deferProfile }}" style="flex:1;padding:12px 0;border:1px solid #e5e7eb;border-radius:16px;font-size:14px;font-weight:500;color:#4b5563;background:#fff;cursor:pointer;font-family:inherit" style-hover="background:#f9fafb">Lo hago después</button>
-              </div>
-              <p style="font-size:11px;color:#9ca3af;text-align:center;margin:0">Tu ruta ya está guardada. El perfil de identidad la enriquece, pero no la cambia.</p>
+              <div style="flex:1"></div>
+              <button onClick="{{ mallaGoAcompanamiento }}" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 0;border:0;border-radius:16px;font-size:14px;font-weight:700;color:#fff;background:#15803d;cursor:pointer;font-family:inherit;margin-bottom:16px" style-hover="background:#166534">Ir a Acompañamiento Académico <dc-import name="Icon" i="chevron-right" s="14" c="#fff" hint-size="14px,14px"></dc-import></button>
+              <p style="font-size:11px;color:#9ca3af;text-align:center;margin:0">No depende de tu perfil ni de tu horizonte — puedes entrar cuando quieras.</p>
             </div>
-          </sc-if>
-          <sc-if value="{{ !mallaShowProfileCta }}" hint-placeholder-val="{{ true }}">
-            <button onClick="{{ mallaSummaryNext }}" style="width:100%;background:#7B68EE;color:#fff;border:0;border-radius:16px;padding:14px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff" style-hover="background:#6A58DC">Continuar a Veo mi horizonte profesional →</button>
-          </sc-if>
+          </div>
         </div>
         </sc-if>
         </div>
@@ -1514,9 +1616,28 @@
       <sc-if value="{{ showCoraQuiz }}" hint-placeholder-val="{{ false }}">
         <div>
           <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
-            <span style="white-space:nowrap">✨ Explora CoRA</span>
+            <button onClick="{{ exploraBack }}" style="white-space:nowrap;background:none;border:0;padding:0;margin:0;font:inherit;color:#9ca3af;cursor:pointer;font-family:inherit" style-hover="color:#7B68EE;text-decoration:underline">✨ Explora CoRA</button>
             <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Mi Perfil CoRA</span></span>
           </nav>
+          <div style="display:flex;align-items:center;margin-bottom:20px">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:0 0 auto;width:100px">
+              <div style="{{ rphStep1.dotStyle }}">{{ rphStep1.icon }}</div>
+              <span style="{{ rphStep1.labelStyle }}">{{ rphStep1.label }}</span>
+              <span style="{{ rphStep1.whyStyle }}">{{ rphStep1.why }}</span>
+            </div>
+            <div style="{{ rphLink1 }}"></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:0 0 auto;width:100px">
+              <div style="{{ rphStep2.dotStyle }}">{{ rphStep2.icon }}</div>
+              <span style="{{ rphStep2.labelStyle }}">{{ rphStep2.label }}</span>
+              <span style="{{ rphStep2.whyStyle }}">{{ rphStep2.why }}</span>
+            </div>
+            <div style="{{ rphLink2 }}"></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:0 0 auto;width:100px">
+              <div style="{{ rphStep3.dotStyle }}">{{ rphStep3.icon }}</div>
+              <span style="{{ rphStep3.labelStyle }}">{{ rphStep3.label }}</span>
+              <span style="{{ rphStep3.whyStyle }}">{{ rphStep3.why }}</span>
+            </div>
+          </div>
           <div style="background:#fff;border:1px solid rgba(243,232,255,.6);border-radius:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1);padding:24px;margin-bottom:16px">
             <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px;flex-wrap:wrap">
               <div style="display:flex;align-items:center;gap:12px">
@@ -1560,9 +1681,28 @@
       <sc-if value="{{ showCoraResults }}" hint-placeholder-val="{{ false }}">
         <div>
           <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
-            <span style="white-space:nowrap">✨ Explora CoRA</span>
+            <button onClick="{{ exploraBack }}" style="white-space:nowrap;background:none;border:0;padding:0;margin:0;font:inherit;color:#9ca3af;cursor:pointer;font-family:inherit" style-hover="color:#7B68EE;text-decoration:underline">✨ Explora CoRA</button>
             <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Mi Perfil CoRA</span></span>
           </nav>
+          <div style="display:flex;align-items:center;margin-bottom:20px">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:0 0 auto;width:100px">
+              <div style="{{ rphStep1.dotStyle }}">{{ rphStep1.icon }}</div>
+              <span style="{{ rphStep1.labelStyle }}">{{ rphStep1.label }}</span>
+              <span style="{{ rphStep1.whyStyle }}">{{ rphStep1.why }}</span>
+            </div>
+            <div style="{{ rphLink1 }}"></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:0 0 auto;width:100px">
+              <div style="{{ rphStep2.dotStyle }}">{{ rphStep2.icon }}</div>
+              <span style="{{ rphStep2.labelStyle }}">{{ rphStep2.label }}</span>
+              <span style="{{ rphStep2.whyStyle }}">{{ rphStep2.why }}</span>
+            </div>
+            <div style="{{ rphLink2 }}"></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:0 0 auto;width:100px">
+              <div style="{{ rphStep3.dotStyle }}">{{ rphStep3.icon }}</div>
+              <span style="{{ rphStep3.labelStyle }}">{{ rphStep3.label }}</span>
+              <span style="{{ rphStep3.whyStyle }}">{{ rphStep3.why }}</span>
+            </div>
+          </div>
           <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px">
             <div>
               <p style="font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.08em;margin:0 0 6px">✨ Tu perfil de identidad · CoRA</p>
@@ -1578,11 +1718,15 @@
               <span style="{{ c.style }}">{{ c.label }}</span>
             </sc-for>
           </div>
-          <div style="background:#fffbeb;border:1px solid #fef3c7;border-radius:16px;padding:12px 16px;margin-bottom:24px;display:flex;align-items:center;gap:10px">
+          <div style="background:#F5F3FF;border:1px dashed #C9BFFA;border-radius:12px;padding:12px 16px;margin-bottom:16px">
+            <p style="font-size:12px;color:#4A3FA0;line-height:1.6;margin:0"><strong>¿De dónde salen tus respuestas?</strong> {{ coraSourceNote }}</p>
+            <sc-if value="{{ coraIsDefaultArchetype }}" hint-placeholder-val="{{ false }}">
+              <p style="font-size:12px;color:#4A3FA0;line-height:1.6;margin:8px 0 0">{{ coraSourceExtra }}</p>
+            </sc-if>
+          </div>
+          <div style="background:#fffbeb;border:1px solid #fef3c7;border-radius:16px;padding:12px 16px;margin-bottom:24px;display:flex;align-items:flex-start;gap:10px">
             <span style="font-size:20px;line-height:28px">🔗</span>
-            <p style="font-weight:600;color:#78350f;font-size:14px;margin:0;display:flex;align-items:center;gap:6px">PERFIL CoRA vs HORIZONTE
-              <dc-import name="Tip" text="PERFIL CoRA = quién eres HOY, en tus 6 dimensiones. HORIZONTE = a dónde te puede llevar eso — uno explica el otro." hint-size="14px,14px"></dc-import>
-            </p>
+            <p style="font-size:13px;color:#78350f;margin:0;line-height:1.55"><strong style="color:#1A1040">Tu Perfil CoRA</strong> es quién eres hoy, en tus 6 dimensiones. El siguiente paso es tu <strong style="color:#1A1040">Horizonte</strong>: ahí usamos este mismo perfil para mostrarte a dónde te puede llevar.</p>
           </div>
           <div style="background:#fff;border:1px solid rgba(243,232,255,.6);border-radius:16px;padding:20px;margin-bottom:24px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
             <h2 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:14px;margin:0 0 16px">Gráfico Radar — 6 Dimensiones</h2>
@@ -1659,6 +1803,19 @@
               </div>
             </div>
           </div>
+          <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+            <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:14px;margin:0 0 4px">Comparte tu perfil</h3>
+            <p style="font-size:12px;color:#9ca3af;margin:0 0 14px">Guárdalo o llévalo a tu perfil de LinkedIn.</p>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+              <button style="flex:1;min-width:160px;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 0;border:1px solid #e5e7eb;border-radius:16px;font-size:14px;font-weight:500;color:#4b5563;background:#fff;cursor:pointer;font-family:inherit" style-hover="background:#f9fafb">
+                <dc-import name="Icon" i="download" s="15" hint-size="15px,15px"></dc-import> Descargar en PDF
+              </button>
+              <button style="flex:1;min-width:160px;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 0;border:1px solid #e9d5ff;border-radius:16px;font-size:14px;font-weight:600;color:#7B68EE;background:#faf5ff;cursor:pointer;font-family:inherit" style-hover="background:#f3e8ff">
+                <dc-import name="Icon" i="external-link" s="15" hint-size="15px,15px"></dc-import> Descargar para LinkedIn
+              </button>
+            </div>
+            <p style="font-size:11px;color:#9ca3af;margin:12px 0 0;line-height:1.5">La versión para LinkedIn es una imagen que puedes subir en la sección "Destacado" de tu perfil. Ambas descargas son una maqueta — en la versión real generarían el archivo real.</p>
+          </div>
           <button onClick="{{ perfilCoraNext }}" style="width:100%;background:#7B68EE;color:#fff;border:0;border-radius:16px;padding:14px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff" style-hover="background:#6A58DC">Continuar a Veo mi horizonte profesional →</button>
           <button onClick="{{ retakeCora }}" style="width:100%;background:none;border:0;color:#7B68EE;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;padding:10px 0 0;display:flex;align-items:center;justify-content:center;gap:4px" style-hover="text-decoration:underline"><dc-import name="Icon" i="rotate-ccw" s="12" hint-size="12px,12px"></dc-import>Repetir el cuestionario</button>
         </div>
@@ -1667,16 +1824,33 @@
       <sc-if value="{{ isHorizonte }}" hint-placeholder-val="{{ false }}">
         <div>
           <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
-            <span style="white-space:nowrap">✨ Explora CoRA</span>
+            <button onClick="{{ exploraBack }}" style="white-space:nowrap;background:none;border:0;padding:0;margin:0;font:inherit;color:#9ca3af;cursor:pointer;font-family:inherit" style-hover="color:#7B68EE;text-decoration:underline">✨ Explora CoRA</button>
             <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Veo mi horizonte profesional</span></span>
           </nav>
+          <div style="display:flex;align-items:center;margin-bottom:20px">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:0 0 auto;width:100px">
+              <div style="{{ rphStep1.dotStyle }}">{{ rphStep1.icon }}</div>
+              <span style="{{ rphStep1.labelStyle }}">{{ rphStep1.label }}</span>
+              <span style="{{ rphStep1.whyStyle }}">{{ rphStep1.why }}</span>
+            </div>
+            <div style="{{ rphLink1 }}"></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:0 0 auto;width:100px">
+              <div style="{{ rphStep2.dotStyle }}">{{ rphStep2.icon }}</div>
+              <span style="{{ rphStep2.labelStyle }}">{{ rphStep2.label }}</span>
+              <span style="{{ rphStep2.whyStyle }}">{{ rphStep2.why }}</span>
+            </div>
+            <div style="{{ rphLink2 }}"></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:0 0 auto;width:100px">
+              <div style="{{ rphStep3.dotStyle }}">{{ rphStep3.icon }}</div>
+              <span style="{{ rphStep3.labelStyle }}">{{ rphStep3.label }}</span>
+              <span style="{{ rphStep3.whyStyle }}">{{ rphStep3.why }}</span>
+            </div>
+          </div>
           <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:32px;font-weight:700;color:#1A1040;margin:0 0 4px">🌅 Tu Horizonte Laboral</h1>
           <p style="color:#6b7280;font-size:14px;margin:0 0 20px">Ruta: <strong>{{ mallaCareer }}</strong></p>
-          <div style="background:#fffbeb;border:1px solid #fef3c7;border-radius:16px;padding:12px 16px;margin-bottom:24px;display:flex;align-items:center;gap:10px">
+          <div style="background:#fffbeb;border:1px solid #fef3c7;border-radius:16px;padding:12px 16px;margin-bottom:24px;display:flex;align-items:flex-start;gap:10px">
             <span style="font-size:20px;line-height:28px">🔗</span>
-            <p style="font-weight:600;color:#78350f;font-size:14px;margin:0;display:flex;align-items:center;gap:6px">RUTA vs HORIZONTE
-              <dc-import name="Tip" text="RUTA = las asignaturas que cursarás. HORIZONTE = los trabajos que obtendrás — tu ruta académica está diseñada para llevarte exactamente a estas oportunidades laborales." hint-size="14px,14px"></dc-import>
-            </p>
+            <p style="font-size:13px;color:#78350f;margin:0;line-height:1.55"><strong style="color:#1A1040">Tu Ruta</strong> te dice qué vas a estudiar. <strong style="color:#1A1040">Tu Horizonte</strong> te muestra los trabajos a los que esa ruta te lleva — por eso van juntos.</p>
           </div>
           <sc-if value="{{ perfilCoraDone }}" hint-placeholder-val="{{ false }}">
             <div style="background:#faf5ff;border:1px solid #f3e8ff;border-radius:16px;padding:16px;margin-bottom:20px;display:flex;align-items:flex-start;gap:12px">
@@ -1710,10 +1884,18 @@
                 </div>
                 <div style="display:flex;flex-wrap:wrap;gap:6px">
                   <sc-for list="{{ hzRoleChips }}" as="c" hint-placeholder-count="3">
-                    <span onClick="{{ c.onToggle }}" style="{{ c.style }}">{{ c.label }}<dc-import name="Icon" i="star" s="12" c="{{ c.starColor }}" hint-size="12px,12px"></dc-import></span>
+                    <span onClick="{{ c.onToggle }}" style="{{ c.style }}">{{ c.label }}<dc-import name="Icon" i="{{ c.icon }}" s="12" c="{{ c.iconColor }}" hint-size="12px,12px"></dc-import></span>
                   </sc-for>
+                  <span onClick="{{ hzOpenAddRole }}" style="display:inline-flex;align-items:center;font-size:12px;font-weight:700;padding:5px 12px;border-radius:9999px;background:#fff;color:#9ca3af;border:1.5px dashed #d8d2f0;cursor:pointer">+ Agregar</span>
                 </div>
-                <p style="font-size:10px;color:#9ca3af;margin:8px 0 0">⭐ Toca un rol para guardarlo como tu meta.</p>
+                <sc-if value="{{ hzAddOpenRole }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+                    <input value="{{ hzNewGoalLabel }}" onChange="{{ hzNewGoalLabelChange }}" placeholder="Ej. Analista de riesgos" style="flex:1;min-width:160px;border:1px solid #e5e7eb;border-radius:10px;padding:7px 10px;font-size:12px;font-family:inherit;box-sizing:border-box">
+                    <button onClick="{{ hzConfirmGoalAdd }}" style="font-size:12px;font-weight:600;color:#fff;background:#7B68EE;border:0;border-radius:9999px;padding:0 14px;cursor:pointer;font-family:inherit" style-hover="background:#6A58DC">Agregar</button>
+                    <button onClick="{{ hzCloseGoalAdd }}" style="font-size:12px;font-weight:600;color:#9ca3af;background:none;border:0;cursor:pointer;font-family:inherit" style-hover="color:#dc2626">Cancelar</button>
+                  </div>
+                </sc-if>
+                <p style="font-size:10px;color:#9ca3af;margin:8px 0 0">⭐ Toca un rol para guardarlo como tu meta, o agrega el tuyo.</p>
               </div>
               <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:18px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
                 <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
@@ -1722,10 +1904,18 @@
                 </div>
                 <div style="display:flex;flex-wrap:wrap;gap:6px">
                   <sc-for list="{{ hzCompanyChips }}" as="c" hint-placeholder-count="5">
-                    <span onClick="{{ c.onToggle }}" style="{{ c.style }}">{{ c.label }}<dc-import name="Icon" i="star" s="12" c="{{ c.starColor }}" hint-size="12px,12px"></dc-import></span>
+                    <span onClick="{{ c.onToggle }}" style="{{ c.style }}">{{ c.label }}<dc-import name="Icon" i="{{ c.icon }}" s="12" c="{{ c.iconColor }}" hint-size="12px,12px"></dc-import></span>
                   </sc-for>
+                  <span onClick="{{ hzOpenAddCompany }}" style="display:inline-flex;align-items:center;font-size:12px;font-weight:700;padding:5px 12px;border-radius:9999px;background:#fff;color:#9ca3af;border:1.5px dashed #d8d2f0;cursor:pointer">+ Agregar</span>
                 </div>
-                <p style="font-size:10px;color:#9ca3af;margin:8px 0 0">⭐ Toca una empresa para guardarla como tu meta.</p>
+                <sc-if value="{{ hzAddOpenCompany }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+                    <input value="{{ hzNewGoalLabel }}" onChange="{{ hzNewGoalLabelChange }}" placeholder="Ej. Un banco local que te interesa" style="flex:1;min-width:160px;border:1px solid #e5e7eb;border-radius:10px;padding:7px 10px;font-size:12px;font-family:inherit;box-sizing:border-box">
+                    <button onClick="{{ hzConfirmGoalAdd }}" style="font-size:12px;font-weight:600;color:#fff;background:#7B68EE;border:0;border-radius:9999px;padding:0 14px;cursor:pointer;font-family:inherit" style-hover="background:#6A58DC">Agregar</button>
+                    <button onClick="{{ hzCloseGoalAdd }}" style="font-size:12px;font-weight:600;color:#9ca3af;background:none;border:0;cursor:pointer;font-family:inherit" style-hover="color:#dc2626">Cancelar</button>
+                  </div>
+                </sc-if>
+                <p style="font-size:10px;color:#9ca3af;margin:8px 0 0">⭐ Toca una empresa para guardarla como tu meta, o agrega la tuya.</p>
               </div>
               <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:18px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
                 <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
@@ -1734,10 +1924,18 @@
                 </div>
                 <div style="display:flex;flex-wrap:wrap;gap:6px">
                   <sc-for list="{{ hzVentureChips }}" as="c" hint-placeholder-count="3">
-                    <span onClick="{{ c.onToggle }}" style="{{ c.style }}">{{ c.label }}<dc-import name="Icon" i="star" s="12" c="{{ c.starColor }}" hint-size="12px,12px"></dc-import></span>
+                    <span onClick="{{ c.onToggle }}" style="{{ c.style }}">{{ c.label }}<dc-import name="Icon" i="{{ c.icon }}" s="12" c="{{ c.iconColor }}" hint-size="12px,12px"></dc-import></span>
                   </sc-for>
+                  <span onClick="{{ hzOpenAddVenture }}" style="display:inline-flex;align-items:center;font-size:12px;font-weight:700;padding:5px 12px;border-radius:9999px;background:#fff;color:#9ca3af;border:1.5px dashed #d8d2f0;cursor:pointer">+ Agregar</span>
                 </div>
-                <p style="font-size:10px;color:#9ca3af;margin:8px 0 0">⭐ Toca una idea para guardarla como tu meta.</p>
+                <sc-if value="{{ hzAddOpenVenture }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+                    <input value="{{ hzNewGoalLabel }}" onChange="{{ hzNewGoalLabelChange }}" placeholder="Ej. Una idea de negocio propia" style="flex:1;min-width:160px;border:1px solid #e5e7eb;border-radius:10px;padding:7px 10px;font-size:12px;font-family:inherit;box-sizing:border-box">
+                    <button onClick="{{ hzConfirmGoalAdd }}" style="font-size:12px;font-weight:600;color:#fff;background:#7B68EE;border:0;border-radius:9999px;padding:0 14px;cursor:pointer;font-family:inherit" style-hover="background:#6A58DC">Agregar</button>
+                    <button onClick="{{ hzCloseGoalAdd }}" style="font-size:12px;font-weight:600;color:#9ca3af;background:none;border:0;cursor:pointer;font-family:inherit" style-hover="color:#dc2626">Cancelar</button>
+                  </div>
+                </sc-if>
+                <p style="font-size:10px;color:#9ca3af;margin:8px 0 0">⭐ Toca una idea para guardarla como tu meta, o agrega la tuya.</p>
               </div>
               <sc-if value="{{ hzHasStory }}" hint-placeholder-val="{{ false }}">
                 <div style="background:linear-gradient(to bottom right,#faf5ff,#eef2ff);border:1px solid #f3e8ff;border-radius:16px;padding:18px">
@@ -1810,10 +2008,18 @@
               </div>
               <div style="display:flex;flex-wrap:wrap;gap:6px">
                 <sc-for list="{{ hzRoleChips }}" as="c" hint-placeholder-count="3">
-                  <span onClick="{{ c.onToggle }}" style="{{ c.style }}">{{ c.label }}<dc-import name="Icon" i="star" s="12" c="{{ c.starColor }}" hint-size="12px,12px"></dc-import></span>
+                  <span onClick="{{ c.onToggle }}" style="{{ c.style }}">{{ c.label }}<dc-import name="Icon" i="{{ c.icon }}" s="12" c="{{ c.iconColor }}" hint-size="12px,12px"></dc-import></span>
                 </sc-for>
+                <span onClick="{{ hzOpenAddRole }}" style="display:inline-flex;align-items:center;font-size:12px;font-weight:700;padding:5px 12px;border-radius:9999px;background:#fff;color:#9ca3af;border:1.5px dashed #d8d2f0;cursor:pointer">+ Agregar</span>
               </div>
-              <p style="font-size:10px;color:#9ca3af;margin:8px 0 0">⭐ Toca un rol para guardarlo como tu meta.</p>
+              <sc-if value="{{ hzAddOpenRole }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+                  <input value="{{ hzNewGoalLabel }}" onChange="{{ hzNewGoalLabelChange }}" placeholder="Ej. Analista de riesgos" style="flex:1;min-width:160px;border:1px solid #e5e7eb;border-radius:10px;padding:7px 10px;font-size:12px;font-family:inherit;box-sizing:border-box">
+                  <button onClick="{{ hzConfirmGoalAdd }}" style="font-size:12px;font-weight:600;color:#fff;background:#7B68EE;border:0;border-radius:9999px;padding:0 14px;cursor:pointer;font-family:inherit" style-hover="background:#6A58DC">Agregar</button>
+                  <button onClick="{{ hzCloseGoalAdd }}" style="font-size:12px;font-weight:600;color:#9ca3af;background:none;border:0;cursor:pointer;font-family:inherit" style-hover="color:#dc2626">Cancelar</button>
+                </div>
+              </sc-if>
+              <p style="font-size:10px;color:#9ca3af;margin:8px 0 0">⭐ Toca un rol para guardarlo como tu meta, o agrega el tuyo.</p>
             </div>
             <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:16px">
               <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:16px;padding:18px">
@@ -1854,27 +2060,59 @@
               <div style="display:flex;flex-direction:column;gap:8px">
                 <sc-for list="{{ hzRoadmap }}" as="rm" hint-placeholder-count="3">
                   <div style="display:flex;gap:10px;align-items:flex-start;background:#faf5ff;border-radius:12px;padding:10px 12px">
-                    <span style="font-size:11px;font-weight:700;color:#7B68EE;background:#f3e8ff;border-radius:9999px;padding:3px 10px;white-space:nowrap;flex-shrink:0">{{ rm.cycleLabel }}</span>
-                    <p style="font-size:12px;color:#4A3FA0;margin:0;line-height:1.5">{{ rm.note }}</p>
+                    <span style="{{ rm.badgeStyle }}">{{ rm.cycleLabel }}</span>
+                    <p style="font-size:12px;color:#4A3FA0;margin:0;line-height:1.5;flex:1">{{ rm.note }}</p>
+                    <sc-if value="{{ rm.mine }}" hint-placeholder-val="{{ false }}">
+                      <button onClick="{{ rm.onRemove }}" style="color:#9ca3af;background:none;border:0;cursor:pointer;flex-shrink:0;display:flex" style-hover="color:#dc2626"><dc-import name="Icon" i="x" s="12" hint-size="12px,12px"></dc-import></button>
+                    </sc-if>
                   </div>
                 </sc-for>
               </div>
+              <sc-if value="{{ hzRoadmapAddOpen }}" hint-placeholder-val="{{ false }}">
+                <div style="background:#fff;border:1px dashed #e5e7eb;border-radius:12px;padding:12px;margin-top:10px">
+                  <input value="{{ hzNewRoadmapWhen }}" onChange="{{ hzNewRoadmapWhenChange }}" placeholder="¿Cuándo? Ej. Antes de julio" style="width:100%;border:1px solid #e5e7eb;border-radius:10px;padding:8px 10px;font-size:12px;font-family:inherit;box-sizing:border-box;margin-bottom:8px">
+                  <input value="{{ hzNewRoadmapNote }}" onChange="{{ hzNewRoadmapNoteChange }}" placeholder="¿Qué quieres recordar?" style="width:100%;border:1px solid #e5e7eb;border-radius:10px;padding:8px 10px;font-size:12px;font-family:inherit;box-sizing:border-box;margin-bottom:8px">
+                  <div style="display:flex;gap:8px">
+                    <button onClick="{{ hzConfirmRoadmapAdd }}" style="font-size:12px;font-weight:600;color:#fff;background:#7B68EE;border:0;border-radius:9999px;padding:6px 14px;cursor:pointer;font-family:inherit" style-hover="background:#6A58DC">Agregar</button>
+                    <button onClick="{{ hzCloseRoadmapAdd }}" style="font-size:12px;font-weight:600;color:#9ca3af;background:none;border:0;cursor:pointer;font-family:inherit" style-hover="color:#dc2626">Cancelar</button>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ !hzRoadmapAddOpen }}" hint-placeholder-val="{{ true }}">
+                <button onClick="{{ hzOpenRoadmapAdd }}" style="width:100%;display:flex;align-items:center;justify-content:center;gap:6px;background:#faf5ff;color:#7B68EE;border:0;border-radius:12px;padding:8px 0;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:10px" style-hover="background:#f3e8ff"><dc-import name="Icon" i="plus" s="11" hint-size="11px,11px"></dc-import>Agregar tu propio recordatorio</button>
+              </sc-if>
             </div>
           </sc-if>
 
-          <sc-if value="{{ hzHasFavorite }}" hint-placeholder-val="{{ false }}">
-            <div style="background:#faf5ff;border:1px solid #f3e8ff;border-radius:16px;padding:16px;margin-bottom:16px">
-              <p style="font-size:11px;font-weight:700;color:#9333ea;margin:0 0 10px;text-transform:uppercase;letter-spacing:.05em">⭐ Tus metas guardadas</p>
-              <div style="display:flex;flex-direction:column;gap:8px">
-                <sc-for list="{{ hzFavorites }}" as="fv" hint-placeholder-count="2">
-                  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-                    <p style="font-size:13px;color:#4A3FA0;margin:0;font-weight:600">{{ fv.emoji }} {{ fv.label }}</p>
-                    <button onClick="{{ fv.onClear }}" style="background:none;color:#9333ea;border:1px solid #f3e8ff;border-radius:9999px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#f3e8ff">Quitar</button>
+          <div style="background:#faf5ff;border:1px solid #f3e8ff;border-radius:16px;padding:16px;margin-bottom:16px">
+            <p style="font-size:11px;font-weight:700;color:#9333ea;margin:0 0 10px;text-transform:uppercase;letter-spacing:.05em">🧭 Mi plan profesional</p>
+            <sc-if value="{{ !hzHasGoals }}" hint-placeholder-val="{{ true }}">
+              <p style="font-size:12px;color:#6b7280;margin:0 0 12px;line-height:1.5">Este espacio es tuyo: guarda con la estrella lo que te propone CoRA, o agrega directamente lo tuyo — un rol, una empresa, un contacto, una idea.</p>
+            </sc-if>
+            <sc-if value="{{ hzHasGoals }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
+                <sc-for list="{{ hzGoalsList }}" as="g" hint-placeholder-count="2">
+                  <div style="background:#fff;border:1px solid #f3f4f6;border-radius:12px;padding:10px 12px">
+                    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:6px">
+                      <p style="font-size:13px;color:#1A1040;margin:0;font-weight:600;display:flex;align-items:center;gap:6px;flex-wrap:wrap">{{ g.emoji }} {{ g.label }} <span style="{{ g.tagStyle }}">{{ g.tagLabel }}</span></p>
+                      <button onClick="{{ g.onRemove }}" style="background:none;color:#9333ea;border:1px solid #f3e8ff;border-radius:9999px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;flex-shrink:0" style-hover="background:#f3e8ff">Quitar</button>
+                    </div>
+                    <input value="{{ g.note }}" onChange="{{ g.onNoteChange }}" placeholder="Agrega una nota (opcional)" style="width:100%;border:1px solid #f3f4f6;border-radius:8px;padding:6px 10px;font-size:12px;font-family:inherit;box-sizing:border-box;background:#fafafa">
                   </div>
                 </sc-for>
               </div>
-            </div>
-          </sc-if>
+            </sc-if>
+            <sc-if value="{{ hzAddOpenCustom }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;gap:6px;flex-wrap:wrap">
+                <input value="{{ hzNewGoalLabel }}" onChange="{{ hzNewGoalLabelChange }}" placeholder="Rol, empresa, idea, contacto, lo que sea" style="flex:1;min-width:200px;border:1px solid #e5e7eb;border-radius:10px;padding:8px 10px;font-size:12px;font-family:inherit;box-sizing:border-box;background:#fff">
+                <button onClick="{{ hzConfirmGoalAdd }}" style="font-size:12px;font-weight:600;color:#fff;background:#7B68EE;border:0;border-radius:9999px;padding:0 14px;cursor:pointer;font-family:inherit" style-hover="background:#6A58DC">Agregar</button>
+                <button onClick="{{ hzCloseGoalAdd }}" style="font-size:12px;font-weight:600;color:#9ca3af;background:none;border:0;cursor:pointer;font-family:inherit" style-hover="color:#dc2626">Cancelar</button>
+              </div>
+            </sc-if>
+            <sc-if value="{{ !hzAddOpenCustom }}" hint-placeholder-val="{{ true }}">
+              <button onClick="{{ hzOpenAddCustom }}" style="width:100%;text-align:left;background:#fff;border:1.5px dashed #d8d2f0;border-radius:12px;padding:10px 12px;font-size:12px;font-weight:600;color:#7B68EE;cursor:pointer;font-family:inherit" style-hover="background:#faf5ff">+ Agregar algo tuyo (rol, empresa, idea, contacto, lo que sea)</button>
+            </sc-if>
+          </div>
 
           <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:18px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
@@ -2044,7 +2282,7 @@
       <sc-if value="{{ isCV }}" hint-placeholder-val="{{ false }}">
         <div>
           <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
-            <span style="white-space:nowrap">✨ Explora CoRA</span>
+            <button onClick="{{ exploraBack }}" style="white-space:nowrap;background:none;border:0;padding:0;margin:0;font:inherit;color:#9ca3af;cursor:pointer;font-family:inherit" style-hover="color:#7B68EE;text-decoration:underline">✨ Explora CoRA</button>
             <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Crea mi CV</span></span>
           </nav>
           <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:32px;font-weight:700;color:#1A1040;margin:0 0 4px">📄 Crea mi CV</h1>
@@ -2053,6 +2291,25 @@
           <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:20px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
             <sc-if value="{{ cvShowForm }}" hint-placeholder-val="{{ true }}">
               <div style="display:flex;flex-direction:column;gap:20px">
+                <div style="background:#faf5ff;border:1px dashed #e9d5ff;border-radius:16px;padding:18px">
+                  <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+                    <dc-import name="Icon" i="upload" s="16" c="#7B68EE" hint-size="16px,16px"></dc-import>
+                    <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:13px;margin:0">¿Ya tienes un CV armado?</h3>
+                  </div>
+                  <p style="font-size:12px;color:#6b7280;margin:0 0 12px;line-height:1.5">Súbelo y lo usamos como base — así te saltas las preguntas de experiencia, proyectos, habilidades, idiomas y certificaciones.</p>
+                  <sc-if value="{{ !cvHasUpload }}" hint-placeholder-val="{{ true }}">
+                    <label style="display:inline-flex;align-items:center;gap:8px;background:#7B68EE;color:#fff;border-radius:9999px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit" style-hover="background:#6A58DC">
+                      <dc-import name="Icon" i="upload" s="13" c="#fff" hint-size="13px,13px"></dc-import>Subir mi CV (PDF o Word)
+                      <input type="file" accept=".pdf,.doc,.docx" onChange="{{ cvFileUpload }}" style="display:none">
+                    </label>
+                  </sc-if>
+                  <sc-if value="{{ cvHasUpload }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;background:#fff;border:1px solid #f3e8ff;border-radius:12px;padding:10px 14px">
+                      <span style="display:flex;align-items:center;gap:8px;font-size:12px;color:#15803d;font-weight:600"><dc-import name="Icon" i="check-circle" s="14" c="#22c55e" hint-size="14px,14px"></dc-import>{{ cvUploadedName }} cargado</span>
+                      <button onClick="{{ cvRemoveUpload }}" style="color:#9ca3af;background:none;border:0;cursor:pointer;font-size:11px;font-family:inherit" style-hover="color:#dc2626">Quitar</button>
+                    </div>
+                  </sc-if>
+                </div>
                 <div>
                   <h3 style="font-size:12px;font-weight:700;color:#1A1040;text-transform:uppercase;letter-spacing:.04em;margin:0 0 10px">1. Elige un formato</h3>
                   <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px">
@@ -2070,6 +2327,8 @@
                   <p style="font-size:12px;color:#4b5563;margin:0;line-height:1.6">{{ cvName }} · {{ cvCareer }}, ciclo {{ cvCycle }}<sc-if value="{{ cvHasRoute }}" hint-placeholder-val="{{ true }}"> · Ruta: {{ cvRoute }}</sc-if> · Promedio {{ cvAvgLabel }}</p>
                 </div>
 
+                <sc-if value="{{ cvShowManualSections }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;flex-direction:column;gap:20px">
                 <div>
                   <h3 style="font-size:12px;font-weight:700;color:#1A1040;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px">2. Objetivo profesional</h3>
                   <textarea value="{{ cvObjetivo }}" onChange="{{ cvObjetivoChange }}" placeholder="En una o dos frases, ¿qué buscas?" style="width:100%;min-height:56px;border:1px solid #e5e7eb;border-radius:12px;padding:10px 12px;font-size:13px;font-family:inherit;color:#374151;box-sizing:border-box;resize:vertical"></textarea>
@@ -2201,6 +2460,15 @@
                   </div>
                 </div>
 
+                </div>
+                </sc-if>
+                <sc-if value="{{ !cvShowManualSections }}" hint-placeholder-val="{{ false }}">
+                  <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
+                    <span style="font-size:12px;color:#15803d;line-height:1.5">✓ Objetivo, experiencia, proyectos, habilidades, idiomas y certificaciones los tomamos de {{ cvUploadedName }}.</span>
+                    <button onClick="{{ cvToggleManual }}" style="font-size:12px;font-weight:600;color:#7B68EE;background:#fff;border:0;border-radius:9999px;padding:6px 12px;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#faf5ff">{{ cvManualToggleLabel }}</button>
+                  </div>
+                </sc-if>
+
                 <div>
                   <h3 style="font-size:12px;font-weight:700;color:#1A1040;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px">8. Datos de contacto</h3>
                   <p style="font-size:11px;color:#9ca3af;margin:0 0 8px">Tu correo institucional ({{ cvEmail }}) ya va incluido.</p>
@@ -2300,7 +2568,7 @@
             </sc-if>
           </div>
 
-          <button onClick="{{ cvNext }}" style="{{ cvNextStyle }}">Continuar a Acompañamiento Académico →</button>
+          <button onClick="{{ cvNext }}" style="{{ cvNextStyle }}">Volver al Dashboard →</button>
         </div>
       </sc-if>
 
@@ -2505,7 +2773,7 @@
       <sc-if value="{{ isPracticoSetup }}" hint-placeholder-val="{{ false }}">
         <div>
           <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
-            <span style="white-space:nowrap">⭕ Académico</span>
+            <span style="white-space:nowrap">📚 CoRA Académico</span>
             <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Práctico para examen</span></span>
           </nav>
           <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:32px;font-weight:700;color:#1A1040;margin:0 0 4px">📝 Práctico para mi Examen</h1>
@@ -2636,7 +2904,7 @@
       <sc-if value="{{ isPracticoResults }}" hint-placeholder-val="{{ false }}">
         <div>
           <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
-            <span style="white-space:nowrap">⭕ Académico</span>
+            <span style="white-space:nowrap">📚 CoRA Académico</span>
             <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import>Práctico</span>
             <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Resultados</span></span>
           </nav>
@@ -2684,7 +2952,7 @@
       <sc-if value="{{ isFlashSetup }}" hint-placeholder-val="{{ false }}">
         <div>
           <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
-            <span style="white-space:nowrap">🎴 Académico</span>
+            <span style="white-space:nowrap">📚 CoRA Académico</span>
             <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Mis Flashcards</span></span>
           </nav>
           <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:32px;font-weight:700;color:#1A1040;margin:0 0 4px">🎴 Mis Flashcards</h1>
@@ -2804,7 +3072,7 @@
       <sc-if value="{{ isTutor }}" hint-placeholder-val="{{ false }}">
         <div style="display:flex;flex-direction:column;gap:16px">
           <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:8px;flex-wrap:wrap">
-            <span style="white-space:nowrap">👨‍🏫 Académico</span>
+            <span style="white-space:nowrap">📚 CoRA Académico</span>
             <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Tutor CoRA</span></span>
           </nav>
           <div style="display:flex;align-items:center;gap:12px;background:#faf5ff;border-radius:16px;padding:14px 18px;flex-wrap:wrap">
@@ -3301,7 +3569,9 @@
             </div>
           </div>
         </sc-if>
-        <button onClick="{{ courseDetail.onToggleMove }}" style="width:100%;background:#faf5ff;color:#7B68EE;border:0;border-radius:12px;padding:10px 0;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;margin-bottom:8px">↕️ Mover a otro ciclo</button>
+        <sc-if value="{{ courseDetail.hasMoveOptions }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ courseDetail.onToggleMove }}" style="width:100%;background:#faf5ff;color:#7B68EE;border:0;border-radius:12px;padding:10px 0;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;margin-bottom:8px">↕️ Mover a otro ciclo</button>
+        </sc-if>
         <button onClick="{{ courseDetail.onConsult }}" style="width:100%;background:#1A1040;color:#fff;border:0;border-radius:12px;padding:12px 0;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit" style-hover="background:#2d1b69">Consultar CoRA sobre este curso</button>
       </div>
     </div>
@@ -3402,22 +3672,22 @@ class Component extends DCLogic {
        En los tres casos, ninguna asignatura pertenece a un ciclo que el estudiante
        ya cursó — solo desde STUDENT.cycle en adelante. */
     { id:1, name:"Ingeniería Comercial", match:94, top:true, kind:"curricular", tags:["Gestión","Análisis","Negocios"], desc:"Ruta enfocada en gestión, análisis y administración de empresas. Alta demanda laboral.", icon:"🏆",
-      courses:["Investigación de Mercados","Gestión Internacional e Intercultural","Gestión del Talento Humano","Gerencia de Operaciones","Estrategia Competitiva","Plan de Negocios Internacionales"],
+      courses:["Gestión del Talento Humano","Gerencia de Operaciones","Análisis de Recursos y Capacidades Organizacionales","Estrategia Competitiva"],
       matchWhy:{ interes:95, fortaleza:96, objetivo:90, bestFor:"Trabajar en una empresa grande o liderar equipos" } },
     { id:2, name:"Administración de Empresas", match:89, top:false, kind:"curricular", tags:["Liderazgo","Estrategia","Planificación"], desc:"Formación integral en dirección, planificación y organización de empresas medianas y grandes.", icon:"📊",
-      courses:["Entorno Global para los Negocios","Decisiones Basadas en Datos","Gestión del Talento Humano","Formulación y Evaluación de Proyectos","Análisis de Recursos y Capacidades Organizacionales"],
+      courses:["Gestión del Talento Humano","Agilidad para la Gestión de Proyectos","Análisis de Recursos y Capacidades Organizacionales","Decisiones Basadas en Datos"],
       matchWhy:{ interes:88, fortaleza:85, objetivo:93, bestFor:"Dirigir o emprender tu propio negocio" } },
     { id:3, name:"Marketing y Gestión Comercial", match:85, top:false, kind:"curricular", tags:["Marketing","Digital","Ventas"], desc:"Especialización en estrategias de mercado, branding y comunicación en entornos digitales.", icon:"📣",
       courses:["Marketing","Investigación de Mercados","Inteligencia de Mercados Internacionales","Desarrollo de Productos y Servicios Internacionales"],
       matchWhy:{ interes:90, fortaleza:80, objetivo:85, bestFor:"Crear estrategias de marca, ventas y comunicación" } },
     { id:4, name:"Contabilidad y Finanzas", match:81, top:false, kind:"curricular", tags:["Finanzas","Contabilidad","Análisis"], desc:"Dominio de gestión financiera, auditoría y análisis económico en organizaciones públicas y privadas.", icon:"💼",
-      courses:["Decisiones Basadas en Datos","Finanzas 1","Finanzas 2","Costos y Presupuestos","Costos, Precios y Cotizaciones Internacionales"],
+      courses:["Costos y Presupuestos","Finanzas 1","Finanzas 2","Costos, Precios y Cotizaciones Internacionales"],
       matchWhy:{ interes:75, fortaleza:90, objetivo:78, bestFor:"Análisis financiero y control de gestión" } },
     { id:5, name:"Economía", match:78, top:false, kind:"curricular", tags:["Economía","Política","Investigación"], desc:"Análisis macroeconómico y microeconómico con enfoque en políticas públicas e investigación.", icon:"📈",
-      courses:["Investigación Académica","Investigación 1 en Administración","Decisiones Basadas en Datos","Política Económica Internacional"],
+      courses:["Estadística Inferencial","Investigación Académica","Política Económica Internacional","Investigación 1 en Administración"],
       matchWhy:{ interes:80, fortaleza:85, objetivo:70, bestFor:"Investigación y políticas públicas" } },
     { id:6, name:"Ingeniería Industrial", match:74, top:false, kind:"curricular", tags:["Ingeniería","Procesos","Logística"], desc:"Optimización de procesos productivos, gestión de operaciones y sistemas industriales.", icon:"⚙️",
-      courses:["Distribución Física Internacional","Estadística Inferencial","Gerencia de Operaciones","Análisis de Recursos y Capacidades Organizacionales","Estándares Internacionales de Calidad"],
+      courses:["Estadística Inferencial","Distribución Física Internacional","Gerencia de Operaciones","Análisis de Recursos y Capacidades Organizacionales"],
       matchWhy:{ interes:70, fortaleza:82, objetivo:70, bestFor:"Optimizar procesos y operaciones" } },
     { id:7, name:"Negocios Internacionales", match:70, top:false, kind:"extracurricular", tags:["Internacional","Comercio","Idiomas"], desc:"Formación complementaria del CIE en comercio exterior e idiomas, sin asignaturas de la malla.", icon:"🌍",
       /* `courseCycles` es paralelo a `courses`: el ciclo sugerido en el que se
@@ -3428,10 +3698,10 @@ class Component extends DCLogic {
       courseCycles:[4, 6, 9],
       matchWhy:{ interes:75, fortaleza:65, objetivo:70, bestFor:"Sumar un perfil internacional a tu carrera" } },
     { id:8, name:"Comercio Internacional y Negocios", match:68, top:false, kind:"curricular", tags:["Comercio Exterior","Calidad","Negociación"], desc:"Línea de especialización real de la malla 2024 de Administración y Negocios Internacionales: del comercio internacional al plan de negocios.", icon:"📦",
-      courses:["Gestión de Comercio Internacional","Estándares Internacionales de Calidad","Desarrollo de Productos y Servicios Internacionales","Plan de Negocios Internacionales","Negociaciones y Transacciones Internacionales"],
+      courses:["Gestión de Comercio Internacional","Desarrollo de Productos y Servicios Internacionales","Plan de Negocios Internacionales","Negociaciones y Transacciones Internacionales"],
       matchWhy:{ interes:70, fortaleza:68, objetivo:66, bestFor:"Especializarte en comercio exterior" } },
     { id:9, name:"Logística y Gestión Aduanera Internacional", match:65, top:false, kind:"curricular", tags:["Aduanas","Logística","Comercio Exterior"], desc:"Línea de especialización real de la malla 2024 de Administración y Negocios Internacionales: logística internacional y operaciones aduaneras.", icon:"🚢",
-      courses:["Gestión Internacional e Intercultural","Distribución Física Internacional","Gestión Aduanera y Cambiaria","Costos, Precios y Cotizaciones Internacionales","Gerencia Comercial Internacional"],
+      courses:["Distribución Física Internacional","Gestión Aduanera y Cambiaria","Costos, Precios y Cotizaciones Internacionales","Gerencia Comercial Internacional"],
       matchWhy:{ interes:62, fortaleza:68, objetivo:65, bestFor:"Operaciones aduaneras y logística internacional" } },
     /* Ruta "curricular": combina obligatorios de la malla con electivos de la
        propia malla — sigue siendo 100% malla, sin tocar el Ecosistema CIE. */
@@ -3443,7 +3713,7 @@ class Component extends DCLogic {
        de campos paralelos que en una ruta extracurricular) — las dos cosas a
        la vez, ninguna reemplaza a la otra. */
     { id:11, name:"Negocios Digitales con Perfil Internacional", match:58, top:false, kind:"combinada", tags:["Digital","Internacional","Innovación"], desc:"Combina asignaturas y electivos de tu malla con formación internacional del Ecosistema CIE — lo curricular y lo extracurricular, juntos.", icon:"🌐",
-      courses:["Transformación Digital","Negocios Digitales Globales","Electivo de Especialidad o Transversal 2"],
+      courses:["Herramientas Tecnológicas Aplicadas a los Negocios 1","Herramientas Tecnológicas Aplicadas a los Negocios 2","Transformación Digital"],
       extraCourses:["Inglés B2 — Business English (Centro de Idiomas)","Taller de Innovación Digital (extracurricular CIE)"],
       extraCourseCycles:[4, 7],
       matchWhy:{ interes:66, fortaleza:60, objetivo:64, bestFor:"Sumar perfil digital e internacional sin elegir solo uno de los dos" } }
@@ -3803,12 +4073,20 @@ class Component extends DCLogic {
     mixto:       { objetivo:1, habilidades:2, experiencia:3, formacion:4, idiomas:5, certificaciones:6 }
   };
 
-  /* Recomendaciones del ecosistema CIE, previas a la exploración libre. */
+  /* Recomendaciones del ecosistema CIE, previas a la exploración libre.
+     `cycle` — a qué ciclo de la malla pertenece cada una, para poder
+     mostrarla ahí cuando el estudiante la agrega (12 ago 2026, a pedido
+     explícito: lo que se agrega en Ecosistema CIE debe verse reflejado en la
+     malla, igual que un electivo elegido). Se toma del propio texto de
+     `why` cuando lo menciona explícitamente; "Inglés B2 — Business English"
+     reusa el ciclo 4 ya establecido para esa misma asignatura en
+     `ROUTES` (ids 7 y 11). La maestría no tiene ciclo — se cursa después de
+     egresar, fuera de los 10 ciclos de la malla — por eso `cycle:null`. */
   ECO_RECO = [
-    { cat:"Educación continua", em:"🎓", name:"Analítica de Negocios con Power BI", why:"Refuerza la asignatura de riesgo detectado en el ciclo 7.", meta:"6 semanas · Virtual", cost:"GRATUITO" },
-    { cat:"Centro de Idiomas", em:"🗣️", name:"Inglés B2 — Business English", why:"Tu ruta incluye comercio exterior; B2 es el nivel que piden las empresas del horizonte.", meta:"2 ciclos · Híbrido", cost:"INCLUIDO" },
-    { cat:"Instituto", em:"🛠️", name:"Especialización en Gestión Logística", why:"Complementa Logística y Cadena de Suministro del ciclo 7.", meta:"4 meses · Presencial", cost:"S/. 480" },
-    { cat:"Posgrado", em:"🎯", name:"Maestría en Dirección Comercial", why:"Continuación natural de tu horizonte a partir del año 3.", meta:"2 años · Semipresencial", cost:"Beca disponible" }
+    { cat:"Educación continua", em:"🎓", name:"Analítica de Negocios con Power BI", why:"Refuerza la asignatura de riesgo detectado en el ciclo 7.", meta:"6 semanas · Virtual", cost:"GRATUITO", cycle:7 },
+    { cat:"Centro de Idiomas", em:"🗣️", name:"Inglés B2 — Business English", why:"Tu ruta incluye comercio exterior; B2 es el nivel que piden las empresas del horizonte.", meta:"2 ciclos · Híbrido", cost:"INCLUIDO", cycle:4 },
+    { cat:"Instituto", em:"🛠️", name:"Especialización en Gestión Logística", why:"Complementa Logística y Cadena de Suministro del ciclo 7.", meta:"4 meses · Presencial", cost:"S/. 480", cycle:7 },
+    { cat:"Posgrado", em:"🎯", name:"Maestría en Dirección Comercial", why:"Continuación natural de tu horizonte a partir del año 3.", meta:"2 años · Semipresencial", cost:"Beca disponible", cycle:null }
   ];
 
   /* Programas del Centro de Idiomas Continental. */
@@ -3910,11 +4188,19 @@ class Component extends DCLogic {
     "mis-rutas":      { step:2, of:4, title:"Compara antes de decidir", body:"Abre el detalle de cada ruta para ver qué asignaturas incluye. Solo entonces elige." },
     "ecosistema":     { step:3, of:4, title:"Lo que suma a tu carrera", body:"CoRA te propone asignaturas del CIE que refuerzan tu ruta. Explora antes de continuar." },
     "malla":          { step:4, of:4, title:"Tu malla, ciclo a ciclo", body:"Las asignaturas de tu ruta se ven mucho más resaltadas, con borde morado grueso e insignia propia. Las demás son matrícula regular o electivos." },
-    "perfil-cora":    { title:"Tus seis dimensiones", body:"El radar resume cómo aprendes. Cada dimensión tiene recomendaciones concretas — vuelve cuando quieras, no es un paso que se termine." },
+    "perfil-cora":    { title:"Tus seis dimensiones", body:"Las descubrimos con el cuestionario 18REST: 18 preguntas sobre qué tanto te gustaría hacer distintas actividades, que revelan tu perfil. Al terminar verás tu código de 3 letras, tu arquetipo y el radar de tus 6 dimensiones, cada una con recomendaciones concretas. Puedes repetirlo las veces que quieras." },
     "horizonte":      { title:"Hacia dónde te lleva", body:"Roles, sueldos y empresas reales asociados a la ruta que elegiste. Cambia según tu ciclo, vuelve a mirarlo de vez en cuando." },
     "cv":             { title:"Cuenta tu historia", body:"Con lo que ya sabemos de ti y lo que nos cuentes, armamos un CV que puedes editar cuando quieras." },
     "acompanamiento": { title:"Prepárate con ventaja", body:"CoRA revisa tu historial y te prepara un acompañamiento a tu medida antes de que curses cada asignatura. Tu plan vivo — revísalo seguido, no solo una vez." }
   };
+  /* Catálogo único de rasgos académicos — unión de las dos listas separadas
+     que tenían antes "fortalezas" y "dificultades" (deduplicando solo el
+     literal repetido, "Trabajo en equipo"), para que ambas preguntas ofrezcan
+     el mismo universo de opciones. */
+  ACADEMIC_TRAITS = ["Redacción y escritura","Matemáticas y lógica","Exposiciones y presentaciones","Trabajo en equipo",
+    "Investigación","Diseño y creatividad","Programación","Organización y planificación","Resolución de problemas",
+    "Lectura comprensiva","Cálculo numérico","Idiomas","Hablar en público","Memorización extensa","Cumplir plazos",
+    "Leer textos largos","Concentración prolongada","Matemáticas","Trabajo bajo presión","Expresión escrita"];
   /* Formulario del recomendador, versión completa: 5 pasos. Cada pregunta
      declara su "kind" (chips / cards / text / textarea / rows / info) — el
      tipo decide qué widget se dibuja, `renderVals` solo añade los flags y
@@ -3932,17 +4218,22 @@ class Component extends DCLogic {
         ] }
     ] },
     { title:"Gustos y motivaciones", questions:[
-      { id:"actividades", kind:"rows", title:"¿Cuáles de estas actividades te interesan?", subtitle:"Marca si ya la practicas o si quieres explorarla",
+      { id:"actividades", kind:"rows", title:"¿Cuáles de estas actividades te interesan?", subtitle:"Marca si ya la practicas, si quieres explorarla o si no te interesa",
         items:["Creación de contenido (videos, posts, diseño)","Enseñanza o tutoría","Tecnología y programación","Arte, música o expresión creativa","Voluntariado e impacto social","Emprendimiento y negocios","Investigación y análisis","Deportes y actividad física","Cocina y gastronomía"] },
-      { id:"sin_pagar", kind:"chips", multi:false, title:"¿Qué harías aunque no te pagaran?", subtitle:"Elige la actividad que harías de forma desinteresada",
+      { id:"sin_pagar", kind:"chips", multi:true, title:"¿Qué harías aunque no te pagaran?", subtitle:"Elige todas las que harías de forma desinteresada",
         chips:["Ayudar a personas","Crear cosas nuevas","Investigar y aprender","Liderar proyectos","Organizar y planificar","Enseñar","Emprender","Construir o reparar"] }
     ] },
+    /* "fortalezas" y "dificultades" comparten el mismo catálogo de rasgos
+       académicos (unión de las dos listas que tenía cada pregunta por
+       separado, sin inventar rasgos nuevos) — a pedido explícito, para que
+       cualquier rasgo se pueda marcar como fortaleza O como dificultad,
+       nunca limitado a la lista más corta que le tocó originalmente. */
     { title:"Habilidades", questions:[
       { kind:"info", text:"Evaluar tus fortalezas y dificultades permite a CoRA recomendarte rutas, asignaturas y ritmos de estudio que realmente se adapten a ti." },
       { id:"fortalezas", kind:"chips", multi:true, title:"¿En qué actividades académicas destacas?", subtitle:"Selecciona todas las que apliquen",
-        chips:["Redacción y escritura","Matemáticas y lógica","Exposiciones y presentaciones","Trabajo en equipo","Investigación","Diseño y creatividad","Programación","Organización y planificación","Resolución de problemas","Lectura comprensiva","Cálculo numérico","Idiomas"] },
+        chips:this.ACADEMIC_TRAITS },
       { id:"dificultades", kind:"chips", multi:true, title:"¿Qué te cuesta más, incluso con esfuerzo?", subtitle:"Es normal tenerlas — nos ayuda a diseñar tu ruta",
-        chips:["Hablar en público","Memorización extensa","Cumplir plazos","Leer textos largos","Concentración prolongada","Matemáticas","Trabajo bajo presión","Trabajo en equipo","Expresión escrita"] }
+        chips:this.ACADEMIC_TRAITS }
     ] },
     { title:"Aspiraciones", questions:[
       { id:"horizonte_tiempo", kind:"chips", multi:false, big:true, title:"¿Cuál es tu horizonte para tu próxima meta?",
@@ -3981,7 +4272,7 @@ class Component extends DCLogic {
       cards:[ { label:"Ampliar mis horizontes", sub:"Perfil variado e interdisciplinario" }, { label:"Especializarme en algo", sub:"Profundidad en un área concreta" } ] },
     { id:"r_sector", kind:"cards", cols:2, title:"¿En qué sector te ves?",
       cards:[ { label:"Empresa privada" }, { label:"Emprendimiento propio" }, { label:"Sector público" }, { label:"Impacto social / ONGs" }, { label:"Academia / Investigación" }, { label:"Tecnología / Startups" } ] },
-    { id:"r_sinpagar", kind:"chips", multi:false, title:"¿Qué actividad harías aunque no te pagaran?",
+    { id:"r_sinpagar", kind:"chips", multi:true, title:"¿Qué actividad(es) harías aunque no te pagaran?",
       chips:["Ayudar a personas","Crear cosas nuevas","Investigar y aprender","Liderar proyectos","Organizar y planificar","Enseñar o explicar","Emprender","Construir o diseñar"] },
     { id:"r_meta", kind:"text", title:"¿A dónde quieres llegar? (en una frase)", placeholder:"Ej. quiero trabajar en una multinacional de logística o lanzar mi propio negocio" }
   ];
@@ -4227,8 +4518,14 @@ class Component extends DCLogic {
     /* formStarted: si ya se hizo clic en "Empezar formulario" desde la
        intro. formMode: qué versión del cuestionario se ve dentro de esa
        pantalla — completa (5 pasos) o rápida (1 pantalla). */
-    formStarted:false, formMode:"completa", formStep:0, formAnswers:{}, isAnalyzing:false, analysisStep:0,
-    blocked:null, hovered:null, confirmRoute:null, mallaPreview:false, extraStep:false,
+    formStarted:false, formMode:"completa", formStep:0, formAnswers:{},
+    /* "Otro": por pregunta de chips con selección múltiple, si el chip
+       "Otro" está abierto (formOtroOpen) y qué texto libre escribió
+       (formOtro) — ese texto se agrega/quita de formAnswers[qid] tal cual
+       se escribe, no es un dato aparte que haya que fusionar después. */
+    formOtroOpen:{}, formOtro:{},
+    isAnalyzing:false, analysisStep:0,
+    blocked:null, hovered:null, confirmRoute:null, mallaPreview:false, extraStep:false, exploredExtra:false, mallaBaseView:false,
     expanded:[], ecoVisited:[], added:[], openCycles:[1], extras:{}, extModal:null, mallaDone:false,
     /* Panel de detalle de asignatura: qué asignatura se está viendo (por
        nombre, siempre el nombre "de origen" en CURRICULUM aunque ya tenga un
@@ -4261,7 +4558,7 @@ class Component extends DCLogic {
     cvHabilidadInput:"", cvHabilidades:[],
     cvNewIdioma:{ idioma:"", nivel:"Básico" }, cvIdiomas:[],
     cvCertInput:"", cvCertificaciones:[],
-    cvTelefono:"", cvLinkedin:"",
+    cvTelefono:"", cvLinkedin:"", cvUploadedName:null, cvManualOverride:false,
     /* Entrada a CoRA: login (maqueta, sin autenticación real) → elegir entre
        crear tu ruta o seguir explorando. authStep:"done" salta ambas
        pantallas — pero si se abre vía pantalla.html/index.html (con
@@ -4298,7 +4595,14 @@ class Component extends DCLogic {
     ],
     accWeekModal:false, accWeekWeek:"", accWeekLabel:"",
     reinforceCourses:[], reinforceModal:false,
-    avatarBg:0, horizonteDetail:false, favoriteRole:null, favoriteCompany:null, favoriteVenture:null,
+    avatarBg:0, horizonteDetail:false,
+    /* "Mi plan profesional" (20 ago 2026): sustituye a las 3 metas sueltas
+       favoriteRole/Company/Venture (una por categoría) por una sola lista
+       que mezcla lo que el estudiante marca con estrella en los chips de
+       CoRA (source:"cora") con lo que agrega él mismo (source:"mine",
+       kind:"custom" si no viene de una fila de chips en particular). */
+    hzGoals:[], hzNewGoal:{ label:"", note:"", kind:null, source:"mine" }, hzGoalAddOpen:null,
+    hzRoadmapExtra:[], hzNewRoadmap:{ when:"", note:"" }, hzRoadmapAddOpen:false,
     /* Cuestionario 18REST: respuestas por id de pregunta (1-4). Las 18
        preguntas se muestran todas juntas — no hay "pregunta actual". */
     coraAnswers:{},
@@ -4313,7 +4617,10 @@ class Component extends DCLogic {
   nav(id) {
     const req = this.REQ[id];
     if (req && !this.state.completed.includes(req) && !this.props.unlockAll) { this.setState({ blocked:req }); return; }
-    this.setState({ section:id, isAnalyzing:false });
+    /* mallaBaseView se resetea en toda navegación normal — solo "Mi Malla"
+       (v.goMiMalla) lo vuelve a poner en true justo después de llamar nav(),
+       para pedir explícitamente la malla sin resaltar ninguna ruta. */
+    this.setState({ section:id, isAnalyzing:false, mallaBaseView:false });
   }
   complete(id, gain) {
     this.setState(s => ({ completed: s.completed.includes(id) ? s.completed : s.completed.concat([id]), xp: s.xp + gain }));
@@ -4329,6 +4636,51 @@ class Component extends DCLogic {
      a diferencia de answer() que guarda arreglos de opciones elegidas. */
   answerText(qid, value) {
     this.setState(s => ({ formAnswers: Object.assign({}, s.formAnswers, { [qid]: value }) }));
+  }
+  /* Pregunta tipo "rows" (Ya lo hago / Quiero explorarlo por ítem): antes
+     reusaba answer(rid, val, false), que con multi=false siempre vuelve a
+     poner [val] — clickear la opción ya elegida no la sacaba nunca. Ahora si
+     ya estaba elegida esa misma opción, la segunda vez la quita (deja el
+     ítem sin marcar); si estaba la otra opción, la reemplaza — sigue siendo
+     una u otra, nunca las dos a la vez. */
+  answerRow(rid, val) {
+    this.setState(s => {
+      const chosen = (s.formAnswers[rid] || [])[0];
+      const next = chosen === val ? [] : [val];
+      return { formAnswers: Object.assign({}, s.formAnswers, { [rid]: next }) };
+    });
+  }
+  /* "Otro": abre/cierra el campo de texto libre de una pregunta de chips.
+     Al cerrar, si había algo escrito, lo saca de formAnswers — no se queda
+     un valor fantasma sin chip visible que lo represente. */
+  toggleFormOtro(qid) {
+    this.setState(s => {
+      const wasOpen = !!s.formOtroOpen[qid];
+      if (wasOpen) {
+        const prev = s.formOtro[qid] || "";
+        const cur = s.formAnswers[qid] || [];
+        return {
+          formOtroOpen: Object.assign({}, s.formOtroOpen, { [qid]: false }),
+          formOtro: Object.assign({}, s.formOtro, { [qid]: "" }),
+          formAnswers: Object.assign({}, s.formAnswers, { [qid]: prev ? cur.filter(v => v !== prev) : cur })
+        };
+      }
+      return { formOtroOpen: Object.assign({}, s.formOtroOpen, { [qid]: true }) };
+    });
+  }
+  /* Cada tecleo reemplaza, dentro de formAnswers[qid], el texto anterior de
+     "Otro" por el nuevo — así el texto libre cuenta como una opción elegida
+     más, igual que un chip normal, sin duplicar entradas mientras escribe. */
+  setFormOtro(qid, text) {
+    this.setState(s => {
+      const prev = s.formOtro[qid] || "";
+      const cur = s.formAnswers[qid] || [];
+      const withoutPrev = prev ? cur.filter(v => v !== prev) : cur;
+      return {
+        formOtro: Object.assign({}, s.formOtro, { [qid]: text }),
+        formAnswers: Object.assign({}, s.formAnswers, { [qid]: text ? withoutPrev.concat([text]) : withoutPrev })
+      };
+    });
   }
   goFormStep(delta) {
     this.setState(s => ({ formStep: Math.max(0, Math.min(this.FORM_STEPS.length - 1, s.formStep + delta)) }));
@@ -4375,6 +4727,23 @@ class Component extends DCLogic {
   }
   removeCvEntry(listKey, index) {
     this.setState(s => ({ [listKey]: s[listKey].filter((_, i) => i !== index) }));
+  }
+  /* Editar un campo de un ítem que YA está en una lista (a diferencia de
+     updateCvField, que edita el mini-formulario antes de agregarlo) — lo usa
+     la nota de cada meta de "Mi plan profesional". */
+  updateListItem(listKey, index, field, value) {
+    this.setState(s => ({ [listKey]: s[listKey].map((item, i) => i === index ? Object.assign({}, item, { [field]:value }) : item) }));
+  }
+  /* Estrella de los chips de Horizonte (rol/empresa/idea que sugiere CoRA):
+     antes una sola meta por categoría (favoriteRole/Company/Venture); ahora
+     "marcar con estrella" es agregar/quitar una entrada de s.hzGoals, así
+     se puede guardar más de una por categoría y conviven con lo que el
+     estudiante agrega él mismo en el mismo lugar ("Mi plan profesional"). */
+  toggleHzGoal(kind, label) {
+    this.setState(s => {
+      const idx = s.hzGoals.findIndex(g => g.kind === kind && g.label === label && g.source === "cora");
+      return { hzGoals: idx >= 0 ? s.hzGoals.filter((_, i) => i !== idx) : s.hzGoals.concat([{ kind, label, note:"", source:"cora" }]) };
+    });
   }
   addCvChip(listKey, inputKey) {
     const s = this.state, val = s[inputKey].trim();
@@ -4506,19 +4875,53 @@ class Component extends DCLogic {
     v.xpLabel = s.xp.toLocaleString();
     /* Iconos de línea (Lucide, vía Icon.dc.html) en vez de emoji — más
        consistentes con el resto de la interfaz. */
-    v.navHome = [["inicio","home","Inicio"]].map(a => this.navItem(a[0], a[1], a[2]));
-    /* Recordatorio de la ruta elegida, justo debajo de Inicio — solo aparece
-       una vez que existe una ruta (s.selectedRoute), y lleva directo a la
-       malla ("Elijo mi Ruta") donde se ve el detalle completo. */
+    v.navHome = [["inicio","home","Dashboard"]].map(a => this.navItem(a[0], a[1], a[2]));
+    /* "Mi Malla" — atajo directo a la MALLA BASE (sin ninguna ruta
+       resaltada), siempre visible justo debajo de Dashboard, con colores
+       fuertes para que no se pierda entre el resto del menú (12 ago 2026, a
+       pedido explícito — antes solo se llegaba expandiendo "Crea tu Ruta" o
+       desde el único botón al fondo de Inicio). **Sin candado, a propósito**
+       (corregido 12 ago 2026: antes heredaba el `REQ` de "Elijo mi Ruta" y
+       quedaba bloqueado hasta terminar los 3 pasos previos — pero la malla
+       base es información genérica de la carrera, no algo que dependa de
+       haber elegido una ruta, así que siempre tiene que poder abrirse). Por
+       la misma razón bypassa `nav()` — no hay bloqueo que evaluar — y fuerza
+       `mallaDone:false` además de `mallaBaseView:true`, para que muestre
+       siempre la malla editable (no la pantalla "¡Tu malla está lista!" si
+       ya se había confirmado una malla antes). */
+    v.goMiMalla = () => this.setState({ section:"malla", isAnalyzing:false, mallaBaseView:true, mallaDone:false });
+    v.miMallaIcon = "graduation-cap";
+    v.miMallaLabel = "Mi Malla →";
+    v.miMallaStyle = { width:"100%", display:"flex", alignItems:"center", gap:"8px", padding:"10px 12px",
+      borderRadius:"12px", border:0, fontFamily:"inherit", fontSize:"13px", fontWeight:700, textAlign:"left",
+      cursor:"pointer", background:"#7B68EE", color:"#fff",
+      boxShadow:"0 4px 6px -1px #e9d5ff,0 2px 4px -2px #e9d5ff" };
+    v.miMallaIconColor = "#ffffff";
+    /* "Mi Ruta" — justo debajo de "Mi Malla", solo aparece una vez que existe
+       una ruta (s.selectedRoute). Misma pantalla que "Mi Malla", pero pide
+       la malla CON la ruta resaltada (mallaBaseView queda en false, el valor
+       por defecto que ya pone nav() en cualquier navegación normal) — y,
+       igual que "Mi Malla", fuerza `mallaDone:false` para mostrar la malla
+       editable con la ruta resaltada, no la pantalla de resumen (corregido
+       12 ago 2026: antes, si la malla ya se había confirmado una vez, "Mi
+       Ruta" caía en esa pantalla de resumen en vez de la malla en sí).
+       Recuadro con borde morado grueso — mucho más visible que la tarjeta
+       lavanda chica de antes ("Tu ruta actual"). */
     v.hasCurrentRoute = !!s.selectedRoute;
     v.currentRouteLabel = s.selectedRoute || "";
-    v.goCurrentRoute = () => this.nav("malla");
     /* El menú del Recomendador se parte en dos: "Crea tu Ruta" son
        las 4 pantallas que se hacen una sola vez para armar la ruta (llevan
        contador y se pueden colapsar); "Explora CoRA" son pantallas de
        referencia continua (perfil, horizonte, acompañamiento) — no llevan
        contador porque no son un trámite pendiente, son algo a lo que vuelves. */
     const configIds = ["formulario","mis-rutas","ecosistema","malla"];
+    /* El % de "Mi Ruta" es sobre estos mismos 4 pasos de "Crea tu Ruta"
+       (corregido 12 ago 2026, a pedido explícito) — antes usaba
+       `completed.length / 14`, las 14 pantallas de TODA la app, así que
+       nunca llegaba a 100% aunque la ruta ya estuviera armada del todo.
+       "Mi Ruta" es sobre la ruta, no sobre cuánto usaste el resto de CoRA. */
+    v.currentRoutePct = Math.round((configIds.filter(id => s.completed.includes(id)).length / configIds.length) * 100) + "%";
+    v.goCurrentRoute = () => { this.nav("malla"); this.setState({ mallaDone:false }); };
     v.navConfig = [["formulario","clipboard-list","CoRA me conoce"],["mis-rutas","route","Mis Rutas"],
       ["ecosistema","globe","Ecosistema CIE"],["malla","graduation-cap","Elijo mi Ruta"]].map(a => this.navItem(a[0], a[1], a[2]));
     v.navReco = [["perfil-cora","sparkles","Mi Perfil CoRA"],["horizonte","briefcase","Veo mi horizonte profesional"],
@@ -4577,6 +4980,11 @@ class Component extends DCLogic {
     v.isAnalyzing = s.isAnalyzing;
     const section = s.section || this.props.startSection || "inicio";
     const on = id => !s.isAnalyzing && section === id;
+    /* Breadcrumb "✨ Explora CoRA" de Mi Perfil CoRA/Horizonte/Crea mi CV:
+       el primer segmento ahora retrocede a la sección anterior del propio
+       recorrido (REQ[section]) en vez de ser puro texto — nunca se bloquea:
+       si ya estás en `section`, su requisito ya está completado. */
+    v.exploraBack = () => this.nav(this.REQ[section]);
 
     /* ---------- perfil resumido en la barra superior ---------- */
     const prof = s.profile;
@@ -4889,7 +5297,9 @@ class Component extends DCLogic {
     const fieldStyle = { width:"100%", border:"1px solid #e5e7eb", borderRadius:"10px", padding:"10px 12px", fontSize:"13px",
       fontFamily:"inherit", color:"#374151", background:"#f9fafb", boxSizing:"border-box" };
     const rowChipStyle = (active, tone) => {
-      const on_ = tone === "ya" ? { bg:"#f0fdf4", border:"#bbf7d0", text:"#15803d" } : { bg:"#fff7ed", border:"#ffedd5", text:"#b45309" };
+      const on_ = tone === "ya" ? { bg:"#f0fdf4", border:"#bbf7d0", text:"#15803d" }
+        : tone === "quiero" ? { bg:"#fff7ed", border:"#ffedd5", text:"#b45309" }
+        : { bg:"#f3f4f6", border:"#d1d5db", text:"#4b5563" };
       return { display:"inline-flex", alignItems:"center", padding:"6px 12px", borderRadius:"9999px", fontSize:"11px", fontWeight:600,
         cursor:"pointer", fontFamily:"inherit", whiteSpace:"nowrap",
         border:"1.5px solid " + (active ? on_.border : "#e5e7eb"), background: active ? on_.bg : "#fff",
@@ -4906,6 +5316,18 @@ class Component extends DCLogic {
           const isSel = sel.includes(label);
           return { label, style: q.big ? chipBigStyle(isSel) : chipStyle(isSel), onClick: () => this.answer(q.id, label, !!q.multi) };
         });
+        /* "Otro": solo en preguntas de selección múltiple — de elección
+           única ya hay una opción marcada, no tiene sentido sumar otra. */
+        base.hasOtro = !!q.multi;
+        if (base.hasOtro) {
+          const otroOpen = !!s.formOtroOpen[q.id];
+          base.otroOpen = otroOpen;
+          base.otroChipStyle = q.big ? chipBigStyle(otroOpen) : chipStyle(otroOpen);
+          base.onToggleOtro = () => this.toggleFormOtro(q.id);
+          base.otroValue = s.formOtro[q.id] || "";
+          base.onOtroChange = e => this.setFormOtro(q.id, e.target.value);
+          base.otroFieldStyle = Object.assign({}, fieldStyle, { marginTop:"8px", maxWidth:"320px" });
+        }
       } else if (q.kind === "cards") {
         const sel = s.formAnswers[q.id] || [];
         base.gridCols = "repeat(" + q.cols + ",minmax(0,1fr))";
@@ -4926,7 +5348,8 @@ class Component extends DCLogic {
           const rid = q.id + "_" + i;
           const chosen = (s.formAnswers[rid] || [])[0];
           return { label:item, yaStyle: rowChipStyle(chosen === "ya", "ya"), quieroStyle: rowChipStyle(chosen === "quiero", "quiero"),
-            onYa: () => this.answer(rid, "ya", false), onQuiero: () => this.answer(rid, "quiero", false) };
+            noStyle: rowChipStyle(chosen === "no", "no"),
+            onYa: () => this.answerRow(rid, "ya"), onQuiero: () => this.answerRow(rid, "quiero"), onNo: () => this.answerRow(rid, "no") };
         });
       }
       return base;
@@ -5069,19 +5492,29 @@ class Component extends DCLogic {
     v.showRouteList = !s.mallaPreview && !s.extraStep;
     v.showMallaPreview = s.mallaPreview;
     v.closeMallaPreview = () => this.setState({ mallaPreview:false });
-    /* Desde la vista previa de la malla hay dos caminos, no uno solo:
-       explorar extracurriculares recomendados (un paso más dentro de Mis
-       Rutas) o saltar directo al Ecosistema CIE. Los dos llevan al mismo
-       lugar al final; la diferencia es si paras antes a ver extracurriculares. */
-    v.goExploreExtra = () => this.setState({ mallaPreview:false, extraStep:true });
+    /* Antes se podía saltar directo al Ecosistema CIE sin ver los
+       extracurriculares recomendados — a pedido explícito (12 ago 2026) ya
+       no: "Continuar a Ecosistema CIE" en la vista previa de la malla queda
+       bloqueado hasta que el estudiante entra al menos una vez a "Explorar
+       Extracurriculares" (s.exploredExtra, se marca al entrar a esa
+       pantalla, no al agregar algo — igual que "visitar" una sección del
+       Ecosistema CIE no exige agregar nada). Mismo patrón visual que el
+       botón bloqueado del propio Ecosistema CIE (v.ecoCtaStyle). */
+    v.goExploreExtra = () => this.setState({ mallaPreview:false, extraStep:true, exploredExtra:true });
     v.goContinueEco = () => {
+      if (!s.exploredExtra) return;
       this.complete("mis-rutas", 100);
       this.setState({ mallaPreview:false, section:"ecosistema" });
     };
+    v.continueEcoLabel = s.exploredExtra ? "Continuar a Ecosistema CIE →" : "🔒 Explora Extracurriculares para continuar";
+    v.continueEcoStyle = { width:"100%", background: s.exploredExtra ? "#7B68EE" : "#e5e7eb",
+      color: s.exploredExtra ? "#fff" : "#9ca3af", border:0, borderRadius:"16px", padding:"14px 0", fontSize:"14px",
+      fontWeight:700, cursor: s.exploredExtra ? "pointer" : "not-allowed", fontFamily:"inherit",
+      boxShadow: s.exploredExtra ? "0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff" : "none" };
     v.hoverExploreExtra = () => this.setState({ hovered:"exploreExtra" });
     v.hoverContinueEco = () => this.setState({ hovered:"continueEco" });
     v.isExploreExtraHover = s.hovered === "exploreExtra";
-    v.isContinueEcoHover = s.hovered === "continueEco";
+    v.isContinueEcoHover = s.hovered === "continueEco" && !s.exploredExtra;
     v.showExtraStep = s.extraStep;
     v.backToMallaPreview = () => this.setState({ extraStep:false, mallaPreview:true });
     v.confirmExtraStep = () => {
@@ -5285,13 +5718,26 @@ class Component extends DCLogic {
        sesión (queda guardado), pero sí antes de avanzar a la malla. */
     v.ecoCtaLabel = v.ecoAllVisited ? "Continuar malla →" : "🔒 Explora las 5 secciones para continuar (" + v.ecoCountLabel + ")";
     v.ecoCtaStyle = { width:"100%", padding:"16px 0", borderRadius:"16px", fontSize:"14px", fontWeight:700, border:0,
-      fontFamily:"inherit", transition:"all .15s", position:"sticky", bottom:"16px",
+      fontFamily:"inherit", transition:"all .15s", position:"sticky", bottom:"88px",
       background: v.ecoAllVisited ? "#7B68EE" : "#e5e7eb", color: v.ecoAllVisited ? "#fff" : "#9ca3af",
       cursor: v.ecoAllVisited ? "pointer" : "not-allowed",
       boxShadow: v.ecoAllVisited ? "0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff" : "none" };
-    v.ecoCtaClick = () => { if (!v.ecoAllVisited) return; this.complete("ecosistema", 75); this.setState({ section:"malla" }); };
+    /* mallaDone:false — igual que "Mi Malla"/"Mi Ruta" (corregido 12 ago
+       2026): si el estudiante ya había confirmado una malla antes (en un
+       intento previo de armar su ruta) y la vuelve a rehacer, este botón
+       tiene que llevar a la malla editable de verdad, no a la pantalla de
+       resumen vieja "¡Tu malla está lista!" de la vez anterior. */
+    v.ecoCtaClick = () => { if (!v.ecoAllVisited) return; this.complete("ecosistema", 75); this.setState({ section:"malla", mallaBaseView:false, mallaDone:false }); };
 
     v.isMalla = on("malla");
+    /* "Mi Malla" (sidebar/header) pide la malla base, sin ninguna ruta
+       resaltada — ver goMiMalla y nav(). Con el flag en true se apaga el
+       resaltado morado de "Asignaturas de tu ruta" en toda la pantalla,
+       tanto en las tarjetas de cada ciclo como en la leyenda y el subtítulo;
+       "Mi Ruta" y cualquier otra entrada normal a esta pantalla lo dejan en
+       false, mostrando la ruta resaltada como siempre. */
+    v.mallaBaseView = !!s.mallaBaseView;
+    v.mallaShowRouteInfo = !v.mallaBaseView;
     v.mallaCareer = s.selectedRoute || "Ingeniería Comercial";
     const mallaTotalCreditsNum = this.CURRICULUM.reduce((sum, cyc) => sum + cyc.credits, 0);
     v.mallaTotalCredits = String(mallaTotalCreditsNum);
@@ -5314,7 +5760,7 @@ class Component extends DCLogic {
        slots (a diferencia de una coincidencia de nombre accidental). */
     const routeHasMalla = selectedRouteObj.kind === "curricular" || selectedRouteObj.kind === "combinada";
     const routeIsMalla = routeHasMalla;
-    const routeCourseNames = new Set(routeHasMalla ? selectedRouteObj.courses : []);
+    const routeCourseNames = new Set(routeHasMalla && !v.mallaBaseView ? selectedRouteObj.courses : []);
     /* Codificación oficial de la malla real: cada asignatura trae su categoría
        académica (`cat`), pintada como una etiqueta chica de punto + texto —
        igual que en el mapa curricular oficial. CAT_MAP: [color, etiqueta]. */
@@ -5358,7 +5804,7 @@ class Component extends DCLogic {
        los trae aparte, en `extraCourses`/`extraCourseCycles`, porque `courses`
        ya está ocupado con su parte de malla. */
     const routeExtraByCycle = {};
-    const extraSource = selectedRouteObj.kind === "extracurricular"
+    const extraSource = v.mallaBaseView ? null : selectedRouteObj.kind === "extracurricular"
       ? { list: selectedRouteObj.courses, cycles: selectedRouteObj.courseCycles }
       : selectedRouteObj.kind === "combinada"
       ? { list: selectedRouteObj.extraCourses, cycles: selectedRouteObj.extraCourseCycles }
@@ -5369,16 +5815,47 @@ class Component extends DCLogic {
         (routeExtraByCycle[cyc] = routeExtraByCycle[cyc] || []).push(name);
       });
     }
+    /* Lo que el estudiante agrega en Ecosistema CIE ("+ Añadir a mi plan",
+       s.ecoAdded) se refleja también en la malla, bajo el ciclo que le
+       corresponde según ECO_RECO[].cycle — mismo patrón que los
+       extracurriculares de una ruta (routeExtraByCycle), con su propia
+       etiqueta para no confundirlos. Lo que no tiene ciclo (la maestría, que
+       se cursa después de egresar) se junta aparte, en ecoAddedNoCycle. */
+    const ecoAddedByCycle = {};
+    const ecoAddedNoCycle = [];
+    /* "Mi Malla" es una foto fija del plan de estudios oficial: no cambia
+       con nada que el estudiante haya hecho — ruta elegida, recomendaciones
+       de Ecosistema CIE, electivos agregados, CFU, asignaturas movidas de
+       ciclo. Todas esas capas se leen como vacías mientras `mallaBaseView`
+       esté activo (12 ago 2026, a pedido explícito: antes solo se apagaba
+       el resaltado de ruta, pero el resto de la personalización seguía
+       filtrándose). El estado real (s.ecoAdded, s.extras, s.cfuChosen,
+       s.movedCourses, s.electiveChoices) no se toca — sigue intacto para
+       cuando se vuelva a ver con "Mi Ruta". */
+    if (!v.mallaBaseView) {
+      this.ECO_RECO.forEach(r => {
+        if (!s.ecoAdded.includes(r.name)) return;
+        if (r.cycle == null) { ecoAddedNoCycle.push(r.name); return; }
+        (ecoAddedByCycle[r.cycle] = ecoAddedByCycle[r.cycle] || []).push(r.name);
+      });
+    }
+    v.hasEcoAddedNoCycle = ecoAddedNoCycle.length > 0;
+    v.ecoAddedNoCycleLabel = ecoAddedNoCycle.join(" · ");
+    const effExtras = v.mallaBaseView ? {} : s.extras;
+    const effCfuChosen = v.mallaBaseView ? [] : s.cfuChosen;
+    const effElectiveChoices = v.mallaBaseView ? {} : s.electiveChoices;
+    const effMovedCourses = v.mallaBaseView ? {} : s.movedCourses;
     /* "Mover a otro ciclo" es una capa de estado más, igual que CFU o los
        electivos elegidos: no se reescribe CURRICULUM, se calcula en vivo en
        qué ciclo aparece cada asignatura. */
     const ELECTIVE_CHOSEN_ACCENT = ["#f0f9ff", "#bae6fd", "#0369a1", "#0ea5e9"];
     const allCourses = [];
     this.CURRICULUM.forEach(cyc0 => cyc0.courses.forEach(c => allCourses.push(Object.assign({ originalCycle:cyc0.cycle }, c))));
-    const effectiveCycle = c => s.movedCourses[c.name] || c.originalCycle;
+    const effectiveCycle = c => effMovedCourses[c.name] || c.originalCycle;
     v.cycles = this.CURRICULUM.map(cyc => {
-      const list = s.extras[cyc.cycle] || [];
+      const list = effExtras[cyc.cycle] || [];
       const routeExtraList = routeExtraByCycle[cyc.cycle] || [];
+      const ecoAddedList = ecoAddedByCycle[cyc.cycle] || [];
       const cycCourses = allCourses.filter(c => effectiveCycle(c) === cyc.cycle);
       /* Tres momentos de la malla respecto al ciclo en el que está el
          estudiante: ya cursado (más clarito), el actual (resaltado) y los
@@ -5462,7 +5939,7 @@ class Component extends DCLogic {
             style
           };
         }),
-        canAdd: true,
+        canAdd: !v.mallaBaseView,
         onAdd: () => this.setState({ extModal: cyc.cycle }),
         hasRouteExtras: routeExtraList.length > 0,
         /* Los extracurriculares de una ruta extracurricular aparecen debajo del
@@ -5470,7 +5947,15 @@ class Component extends DCLogic {
            pero con su propia etiqueta para no confundirlos. */
         routeExtras: routeExtraList.map(name => ({ label:name,
           style:{ fontSize:"11px", background:"#f0f9ff", border:"1px solid #bae6fd", borderLeft:"4px solid #0ea5e9",
-            color:"#0369a1", borderRadius:"10px", padding:"6px 8px", marginBottom:"4px" } }))
+            color:"#0369a1", borderRadius:"10px", padding:"6px 8px", marginBottom:"4px" } })),
+        /* Lo mismo, pero para lo que se agregó en Ecosistema CIE con "+
+           Añadir a mi plan" (s.ecoAdded vía ECO_RECO[].cycle) — etiqueta y
+           color propios para no confundirlo con la ruta ni con un electivo
+           elegido dentro de la malla. */
+        hasEcoExtras: ecoAddedList.length > 0,
+        ecoExtras: ecoAddedList.map(name => ({ label:name,
+          style:{ fontSize:"11px", background:"#faf5ff", border:"1px solid #e9d5ff", borderLeft:"4px solid #9333ea",
+            color:"#6b21a8", borderRadius:"10px", padding:"6px 8px", marginBottom:"4px" } }))
       };
     });
     /* ---------- Panel de detalle de asignatura ----------
@@ -5481,9 +5966,9 @@ class Component extends DCLogic {
     if (s.courseDetail) {
       const slot = allCourses.find(c => c.name === s.courseDetail);
       if (slot) {
-        const isCfu = s.cfuChosen.includes(slot.name);
+        const isCfu = effCfuChosen.includes(slot.name);
         const isElectiveSlot = slot.cat === "electivo";
-        const chosenName = isElectiveSlot ? s.electiveChoices[slot.name] : null;
+        const chosenName = isElectiveSlot ? effElectiveChoices[slot.name] : null;
         const chosen = chosenName ? this.ELECTIVE_CATALOG.find(e => e.name === chosenName) : null;
         const displayName = isCfu ? cfuByUcName.get(slot.name) : chosen ? chosen.name : slot.name;
         const displayDesc = chosen ? chosen.desc : slot.desc;
@@ -5492,8 +5977,10 @@ class Component extends DCLogic {
         const coveredByRoute = routeCourseNames.has(slot.name);
         /* Solo se recomienda cuando el cupo de electivo no viene ya sugerido
            por la ruta elegida ni fue elegido antes — así CoRA no repite una
-           recomendación sobre algo que ya está resuelto. */
-        const needsRecommendation = isElectiveSlot && !coveredByRoute && !chosen;
+           recomendación sobre algo que ya está resuelto. En "Mi Malla"
+           (vista base) nunca se recomienda ni se puede mover de ciclo —
+           es una foto fija, no una pantalla desde la que se personaliza. */
+        const needsRecommendation = !v.mallaBaseView && isElectiveSlot && !coveredByRoute && !chosen;
         let recommended = [];
         if (needsRecommendation) {
           const tier = /Especialidad|Transversal/.test(slot.name) ? "especialidad" : "general";
@@ -5511,10 +5998,12 @@ class Component extends DCLogic {
           }));
         };
         const moveOptions = [];
-        for (let cy = this.STUDENT.cycle; cy <= 10; cy++) {
-          if (cy === cycNow) continue;
-          moveOptions.push({ label:"Ciclo " + cy,
-            onClick: () => this.setState(st => ({ movedCourses: Object.assign({}, st.movedCourses, { [slot.name]: cy }), detailMoveOpen:false })) });
+        if (!v.mallaBaseView) {
+          for (let cy = this.STUDENT.cycle; cy <= 10; cy++) {
+            if (cy === cycNow) continue;
+            moveOptions.push({ label:"Ciclo " + cy,
+              onClick: () => this.setState(st => ({ movedCourses: Object.assign({}, st.movedCourses, { [slot.name]: cy }), detailMoveOpen:false })) });
+          }
         }
         v.courseDetail = {
           cycleLabel: "CICLO " + String(cycNow).padStart(2, "0"),
@@ -5537,6 +6026,7 @@ class Component extends DCLogic {
           onConsult: goConsult(false),
           moveOpen: s.detailMoveOpen,
           onToggleMove: () => this.setState(st => ({ detailMoveOpen: !st.detailMoveOpen })),
+          hasMoveOptions: moveOptions.length > 0,
           moveOptions,
           moved: cycNow !== slot.originalCycle
         };
@@ -5547,7 +6037,7 @@ class Component extends DCLogic {
        dentro de cada tarjeta de ciclo (ver arriba). */
     v.chosenElectives = [];
     this.CURRICULUM.forEach(cyc => {
-      (s.extras[cyc.cycle] || []).forEach((e, i) => {
+      (effExtras[cyc.cycle] || []).forEach((e, i) => {
         v.chosenElectives.push({
           label: e.split("(")[0].trim(), cycleLabel: "Ciclo " + cyc.cycle,
           style:{ display:"flex", alignItems:"center", gap:"8px", fontSize:"11px", flexShrink:0,
@@ -5590,6 +6080,21 @@ class Component extends DCLogic {
     v.discoverProfile = () => this.setState({ section:"perfil-cora" });
     v.deferProfile = () => this.setState({ profilePending:true, section:"horizonte" });
     v.mallaSummaryNext = () => { this.setState({ section:"horizonte" }); };
+
+    /* Componente 5: bifurcación real al cerrar la malla (20 ago 2026,
+       feedback de reunión — "de mi ruta se puede ir a dos partes"). Antes,
+       "Continuar" encadenaba Horizonte → Crea mi CV → Acompañamiento como un
+       solo trámite, aunque Acompañamiento en realidad solo exige "malla"
+       (ver REQ) — ninguna dependencia real con CV. Ahora, al lado de la
+       tarjeta de "Descubre quién eres" (perfil/horizonte/CV) se muestra
+       siempre esta segunda, hacia Acompañamiento — ninguna bloquea a la
+       otra, se puede entrar a las dos, en el orden que sea. */
+    v.acompCtaItems = [
+      { icon:"🎯", label:"Riesgo por curso", caption:"Antes de que curses cada uno", bg:"#f0fdf4" },
+      { icon:"📅", label:"Plan semanal", caption:"Se ajusta a tu ritmo", bg:"#eff6ff" },
+      { icon:"🧑‍🏫", label:"Tutoría a tiempo", caption:"Si algo se complica", bg:"#fffbeb" }
+    ];
+    v.mallaGoAcompanamiento = () => this.nav("acompanamiento");
     /* La pantalla de cierre reutiliza el mismo desglose de compatibilidad
        (intereses / fortaleza / objetivo) que ya se muestra en Mis Rutas —
        es literalmente cómo esta ruta se correlaciona con las respuestas
@@ -5697,6 +6202,13 @@ class Component extends DCLogic {
       v.coraCode = ranked.slice(0, 3).map(r => r.k).join(" · ");
       v.coraArchetype = this.ARCHETYPES[codeKey] || this.ARCHETYPES.default;
       v.coraNarrative = this.ARCHETYPE_TEXT[v.coraArchetype];
+      /* De dónde salen las 18 preguntas — visible siempre en la pantalla de
+         resultados, no solo dentro de un Tip. El arquetipo comodín ("default")
+         suma una frase aparte: no tener 3 dimensiones claramente dominantes
+         no es un resultado peor, es igual de válido dentro del mismo test. */
+      v.coraSourceNote = "Se calculan con el cuestionario 18REST (Ambiel et al., 2018), una versión breve del modelo RIASEC de Holland — 18 preguntas que miden 6 dimensiones de interés vocacional.";
+      v.coraIsDefaultArchetype = v.coraArchetype === this.ARCHETYPES.default;
+      v.coraSourceExtra = "No te da un molde fijo: no tener 3 dimensiones claramente más altas que las demás, como en tu caso, es un resultado igual de válido dentro del mismo test — solo significa que tus intereses están repartidos.";
       v.coraCodeChips = ranked.slice(0, 3).map(r => ({
         label: r.k + " = " + this.DIM_META[r.k].label,
         style:{ fontSize:"11px", fontWeight:700, padding:"4px 10px", borderRadius:"9999px",
@@ -5744,6 +6256,44 @@ class Component extends DCLogic {
     }
 
     v.isHorizonte = on("horizonte");
+
+    /* Franja "Tu Ruta → Tu Perfil → Tu Horizonte": el mismo mapa de 3 pasos,
+       siempre visible, en las 4 pantallas de este recorrido (cierre de la
+       malla, cuestionario, resultados y horizonte) — resalta en cuál estás,
+       para que la secuencia se explique sola sin depender de que alguien
+       lea los avisos de "X vs Y" de más abajo. */
+    /* v.mallaShowSummary por sí solo no basta: se queda en true para siempre
+       una vez que la malla está hecha (`s.mallaDone`), sin importar en qué
+       pantalla estés — hay que exigir además que la sección actual sea
+       "malla" para que el paso 1 no quede "activo" desde Perfil u Horizonte. */
+    const rphActive = (on("malla") && v.mallaShowSummary) ? 0 : v.isPerfilCora ? 1 : v.isHorizonte ? 2 : -1;
+    const RPH_META = [
+      { icon:"📋", label:"Tu Ruta", why:"Qué vas a estudiar" },
+      { icon:"✨", label:"Tu Perfil", why:"Por qué te queda bien" },
+      { icon:"🌅", label:"Tu Horizonte", why:"A dónde te puede llevar" }
+    ];
+    const rphNode = i => {
+      const state = i < rphActive ? "done" : i === rphActive ? "now" : "todo";
+      const dotBase = { width:"34px", height:"34px", borderRadius:"9999px", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"15px", flexShrink:0 };
+      const dotStyle = state === "now" ? Object.assign({}, dotBase, { background:"#7B68EE", color:"#fff", boxShadow:"0 0 0 4px #EDE9FE" })
+        : state === "done" ? Object.assign({}, dotBase, { background:"#7B68EE", color:"#fff", fontSize:"16px", fontWeight:800 })
+        : Object.assign({}, dotBase, { background:"#F3F4F6", color:"#9CA3AF", border:"2px solid #E5E7EB" });
+      /* El paso ya hecho muestra un check, no el mismo ícono repetido — así
+         "vas avanzando" se lee de un vistazo, no solo "cuál está resaltado". */
+      const icon = state === "done" ? "✓" : RPH_META[i].icon;
+      return {
+        icon, label: RPH_META[i].label, why: RPH_META[i].why, dotStyle,
+        labelStyle:{ fontSize:"11.5px", fontWeight:700, color: state === "todo" ? "#9CA3AF" : "#1A1040", textAlign:"center" },
+        whyStyle:{ fontSize:"9.5px", color:"#9CA3AF", textTransform:"uppercase", letterSpacing:".04em", textAlign:"center" }
+      };
+    };
+    v.rphStep1 = rphNode(0);
+    v.rphStep2 = rphNode(1);
+    v.rphStep3 = rphNode(2);
+    const rphLink = i => ({ flex:"1 1 auto", height:"2px", margin:"0 -6px", position:"relative", top:"-14px", background: i < rphActive ? "#7B68EE" : "#E5E7EB" });
+    v.rphLink1 = rphLink(0);
+    v.rphLink2 = rphLink(1);
+
     v.horizonteNext = () => { this.complete("horizonte", 60); this.setState({ section:"cv" }); };
     /* Tres capas (resumen, detalle, IA) que cambian de énfasis según el
        ciclo: ciclos tempranos inspiran, ciclos avanzados informan para
@@ -5778,28 +6328,70 @@ class Component extends DCLogic {
     v.hzIconSkills = iconBox("#f0fdf4"); v.hzIconWorld = iconBox("#fffbeb"); v.hzIconGap = iconBox("#fffbeb");
     v.hzIconCoverage = iconBox("#f0fdf4");
 
-    /* Chips seleccionables: una sola meta guardada a la vez por categoría
-       (s.favoriteRole/Company/Venture), disponible en los dos modos —
-       igual que cfuChosen/movedCourses en la malla, es una capa sobre el
-       dato fijo (H.roles/companies/ventures), nunca lo modifica. */
-    const favoriteChips = (names, stateKey, accent) => names.map(name => {
-      const fav = s[stateKey] === name;
-      return {
-        label:name, starColor: fav ? "#f59e0b" : accent[3],
+    /* Chips seleccionables: "estrella" = agregar/quitar una entrada de
+       s.hzGoals (source:"cora") — ya no una sola meta por categoría, ahora
+       conviven varias, y con lo que el estudiante agrega él mismo desde el
+       mismo lugar ("Mi plan profesional", más abajo). Es una capa sobre el
+       dato fijo (H.roles/companies/ventures), nunca lo modifica — igual que
+       cfuChosen/movedCourses en la malla. Cada fila de chips también suma,
+       al final, los que el propio estudiante agregó para esa categoría
+       (source:"mine"), con una "x" en vez de estrella porque tocarlos los
+       quita directamente, no los "desmarca". */
+    const favoriteChips = (names, kind, accent) => {
+      const coraChips = names.map(name => {
+        const fav = s.hzGoals.some(g => g.kind === kind && g.label === name && g.source === "cora");
+        return {
+          label:name, icon:"star", iconColor: fav ? "#f59e0b" : accent[3],
+          style:{ display:"inline-flex", alignItems:"center", gap:"6px", fontSize:"12px", fontWeight:600,
+            color:accent[1], background:accent[0], border:"1px solid " + (fav ? "#f59e0b" : accent[2]),
+            borderRadius:"9999px", padding:"5px 10px 5px 12px", cursor:"pointer" },
+          onToggle: () => this.toggleHzGoal(kind, name)
+        };
+      });
+      const mineChips = s.hzGoals.map((g, i) => ({ g, i })).filter(x => x.g.kind === kind && x.g.source === "mine").map(x => ({
+        label:x.g.label, icon:"x", iconColor:"#15803d",
         style:{ display:"inline-flex", alignItems:"center", gap:"6px", fontSize:"12px", fontWeight:600,
-          color:accent[1], background:accent[0], border:"1px solid " + (fav ? "#f59e0b" : accent[2]),
+          color:"#15803d", background:"#f0fdf4", border:"1px solid #bbf7d0",
           borderRadius:"9999px", padding:"5px 10px 5px 12px", cursor:"pointer" },
-        onToggle: () => this.setState({ [stateKey]: fav ? null : name })
-      };
-    });
-    v.hzRoleChips = favoriteChips(H.roles, "favoriteRole", [...CHIP_BLUE, "#93c5fd"]);
+        onToggle: () => this.removeCvEntry("hzGoals", x.i)
+      }));
+      return coraChips.concat(mineChips);
+    };
+    v.hzRoleChips = favoriteChips(H.roles, "role", [...CHIP_BLUE, "#93c5fd"]);
 
-    const favEntries = [];
-    if (s.favoriteRole) favEntries.push({ emoji:"💼", label:s.favoriteRole, onClear: () => this.setState({ favoriteRole:null }) });
-    if (s.favoriteCompany) favEntries.push({ emoji:"🏢", label:s.favoriteCompany, onClear: () => this.setState({ favoriteCompany:null }) });
-    if (s.favoriteVenture) favEntries.push({ emoji:"🚀", label:s.favoriteVenture, onClear: () => this.setState({ favoriteVenture:null }) });
-    v.hzFavorites = favEntries;
-    v.hzHasFavorite = favEntries.length > 0;
+    /* "+ Agregar" al final de las 3 filas de chips (Roles/Empresas/Ideas de
+       negocio) y del panel general "Mi plan profesional": un solo mini-
+       formulario compartido (s.hzNewGoal/s.hzGoalAddOpen) — cuál caja está
+       abierta decide el "kind" con el que se guarda la entrada nueva. */
+    const goalAddOpener = kind => () => this.setState({ hzGoalAddOpen:kind, hzNewGoal:{ label:"", note:"", kind, source:"mine" } });
+    v.hzOpenAddRole = goalAddOpener("role");
+    v.hzOpenAddCompany = goalAddOpener("company");
+    v.hzOpenAddVenture = goalAddOpener("venture");
+    v.hzOpenAddCustom = goalAddOpener("custom");
+    v.hzCloseGoalAdd = () => this.setState({ hzGoalAddOpen:null });
+    v.hzAddOpenRole = s.hzGoalAddOpen === "role";
+    v.hzAddOpenCompany = s.hzGoalAddOpen === "company";
+    v.hzAddOpenVenture = s.hzGoalAddOpen === "venture";
+    v.hzAddOpenCustom = s.hzGoalAddOpen === "custom";
+    v.hzNewGoalLabel = s.hzNewGoal.label;
+    v.hzNewGoalLabelChange = e => this.updateCvField("hzNewGoal", "label", e.target.value);
+    v.hzConfirmGoalAdd = () => { this.addCvEntry("hzGoals", "hzNewGoal", { label:"", note:"", kind:null, source:"mine" }, ["label"]); this.setState({ hzGoalAddOpen:null }); };
+
+    /* "Mi plan profesional": el panel real de gestión, no solo un listado
+       de lo marcado con estrella — mezcla lo sugerido por CoRA con lo que el
+       estudiante agregó, cada uno con su etiqueta y una nota propia opcional
+       (updateListItem), y "Quitar" funciona igual sin importar el origen. */
+    v.hzGoalsList = s.hzGoals.map((g, i) => ({
+      emoji: g.kind === "role" ? "💼" : g.kind === "company" ? "🏢" : g.kind === "venture" ? "🚀" : "📌",
+      label:g.label, note:g.note,
+      tagLabel: g.source === "cora" ? "Sugerido por CoRA" : "Tú lo agregaste",
+      tagStyle: g.source === "cora"
+        ? { background:"#eff6ff", color:"#1d4ed8", fontSize:"9px", fontWeight:800, textTransform:"uppercase", letterSpacing:".04em", borderRadius:"9999px", padding:"2px 8px", whiteSpace:"nowrap" }
+        : { background:"#f0fdf4", color:"#15803d", fontSize:"9px", fontWeight:800, textTransform:"uppercase", letterSpacing:".04em", borderRadius:"9999px", padding:"2px 8px", whiteSpace:"nowrap" },
+      onNoteChange: e => this.updateListItem("hzGoals", i, "note", e.target.value),
+      onRemove: () => this.removeCvEntry("hzGoals", i)
+    }));
+    v.hzHasGoals = v.hzGoalsList.length > 0;
 
     /* Conexión con Perfil CoRA: cita las 3 dimensiones más altas ya
        calculadas arriba — mismo dato, no un texto nuevo inventado. */
@@ -5812,20 +6404,37 @@ class Component extends DCLogic {
 
     /* Mini-roadmap: hasta 3 ciclos siguientes, con una razón real (de tu
        malla) para volver a mirar Horizonte en cada uno — no una lista
-       fija de fechas sueltas. */
+       fija de fechas sueltas. Se le suman los recordatorios propios del
+       estudiante (s.hzRoadmapExtra: "cuándo" + "qué" en texto libre, no
+       atado a un ciclo del currículo), con su propia etiqueta y "Quitar". */
     const roadmapCycles = [];
     for (let cy = this.STUDENT.cycle + 1; cy <= Math.min(10, this.STUDENT.cycle + 3); cy++) roadmapCycles.push(cy);
-    v.hzHasRoadmap = roadmapCycles.length > 0;
-    v.hzRoadmap = roadmapCycles.map(cy => {
+    const roadmapBadge = { fontSize:"11px", fontWeight:700, color:"#7B68EE", background:"#f3e8ff", borderRadius:"9999px", padding:"3px 10px", whiteSpace:"nowrap", flexShrink:0 };
+    const roadmapBadgeMine = { fontSize:"11px", fontWeight:700, color:"#15803d", background:"#dcfce7", borderRadius:"9999px", padding:"3px 10px", whiteSpace:"nowrap", flexShrink:0 };
+    const curriculumRoadmap = roadmapCycles.map(cy => {
       const cyc = this.CURRICULUM.find(c => c.cycle === cy);
       const highlight = cyc ? cyc.courses.find(c => routeCourseNames.has(c.name)) : null;
       return {
-        cycleLabel:"Ciclo " + cy,
+        cycleLabel:"Ciclo " + cy, badgeStyle:roadmapBadge, mine:false,
         note: cy === 6 ? "Horizonte cambia a 'Modo Informar para Decidir': verás sueldos y demanda reales."
           : highlight ? "Cursarás " + highlight.name + " — vuelve a ver cómo conecta con tus roles."
           : "Sigue avanzando en tu malla — vuelve a revisar tu Horizonte."
       };
     });
+    const extraRoadmap = s.hzRoadmapExtra.map((r, i) => ({
+      cycleLabel:r.when, note:r.note, badgeStyle:roadmapBadgeMine, mine:true,
+      onRemove: () => this.removeCvEntry("hzRoadmapExtra", i)
+    }));
+    v.hzRoadmap = curriculumRoadmap.concat(extraRoadmap);
+    v.hzHasRoadmap = v.hzRoadmap.length > 0;
+    v.hzRoadmapAddOpen = s.hzRoadmapAddOpen;
+    v.hzOpenRoadmapAdd = () => this.setState({ hzRoadmapAddOpen:true, hzNewRoadmap:{ when:"", note:"" } });
+    v.hzCloseRoadmapAdd = () => this.setState({ hzRoadmapAddOpen:false });
+    v.hzNewRoadmapWhen = s.hzNewRoadmap.when;
+    v.hzNewRoadmapWhenChange = e => this.updateCvField("hzNewRoadmap", "when", e.target.value);
+    v.hzNewRoadmapNote = s.hzNewRoadmap.note;
+    v.hzNewRoadmapNoteChange = e => this.updateCvField("hzNewRoadmap", "note", e.target.value);
+    v.hzConfirmRoadmapAdd = () => { this.addCvEntry("hzRoadmapExtra", "hzNewRoadmap", { when:"", note:"" }, ["when", "note"]); this.setState({ hzRoadmapAddOpen:false }); };
 
     /* Alumni y empleabilidad — enlaces reales, verificados, nunca un perfil
        puntual elegido por el equipo de CoRA (ver conversación sobre ética de
@@ -5845,8 +6454,8 @@ class Component extends DCLogic {
 
     if (v.isInspireMode) {
       v.horizonteGreeting = firstName + ", esto es hacia dónde te puede llevar tu ruta";
-      v.hzCompanyChips = favoriteChips(H.companies.map(c => c.name), "favoriteCompany", [...CHIP_BLUE, "#93c5fd"]);
-      v.hzVentureChips = favoriteChips(H.ventures.map(x => x.name), "favoriteVenture", [...CHIP_PURPLE, "#c4b5fd"]);
+      v.hzCompanyChips = favoriteChips(H.companies.map(c => c.name), "company", [...CHIP_BLUE, "#93c5fd"]);
+      v.hzVentureChips = favoriteChips(H.ventures.map(x => x.name), "venture", [...CHIP_PURPLE, "#c4b5fd"]);
       v.hzWorldTeaser = H.worldTeaser;
       v.hzSkillsWorkChips = chipRow(H.skillsWorkSummary, CHIP_GREEN);
       v.hzSkillsSoftChips = chipRow(H.skillsSoftSummary, CHIP_GREEN);
@@ -5927,7 +6536,14 @@ class Component extends DCLogic {
     v.cvGenerated = s.cvGenerated;
     v.cvShowForm = !s.cvGenerated;
     v.cvShowPreview = s.cvGenerated;
-    v.cvNext = () => { this.complete("cv", 60); this.setState({ section:"acompanamiento" }); };
+    /* Ya no manda a Acompañamiento (20 ago 2026): Acompañamiento no depende
+       de haber hecho el CV (su REQ real es "malla", ver más abajo) —
+       encadenarlos con "Continuar →" prometía una secuencia que el propio
+       sistema no exige. Ahora cierra el recorrido de "Descubre quién eres"
+       (Perfil CoRA → Horizonte → CV) volviendo al Dashboard; a
+       Acompañamiento se llega por su propia bifurcación desde el cierre de
+       la malla (v.mallaGoAcompanamiento) o por el menú. */
+    v.cvNext = () => { this.complete("cv", 60); this.setState({ section:"inicio" }); };
     /* Jerarquía de botones corregida (revisión UX, 11 ago 2026): antes
        "Continuar a Acompañamiento" siempre se veía con el estilo de botón
        primario (sombra morada) mientras "Generar mi CV" — la acción real de
@@ -5947,6 +6563,24 @@ class Component extends DCLogic {
       : { width:"100%", background:"#fff", color:"#7B68EE", border:"2px solid #7B68EE", borderRadius:"16px", padding:"12px 0",
           fontSize:"14px", fontWeight:700, cursor:"pointer", fontFamily:"inherit" };
 
+    /* Subir un CV existente (20 ago 2026): la maqueta no puede leer el
+       contenido de un PDF/Word real, así que no finge extraer datos de él
+       — solo guarda el nombre del archivo y, con eso, oculta las preguntas
+       más largas (objetivo, experiencia, proyectos, habilidades, idiomas,
+       certificaciones), dejando el documento subido como la fuente de esa
+       información. Formato y datos de contacto siguen pidiéndose siempre:
+       son cortos y no dependen de lo que diga el CV. */
+    v.cvUploadedName = s.cvUploadedName;
+    v.cvHasUpload = !!s.cvUploadedName;
+    v.cvFileUpload = e => {
+      const f = e.target.files && e.target.files[0];
+      if (f) this.setState({ cvUploadedName:f.name, cvManualOverride:false });
+    };
+    v.cvRemoveUpload = () => this.setState({ cvUploadedName:null, cvManualOverride:false });
+    v.cvShowManualSections = !s.cvUploadedName || s.cvManualOverride;
+    v.cvToggleManual = () => this.setState(st => ({ cvManualOverride: !st.cvManualOverride }));
+    v.cvManualToggleLabel = s.cvManualOverride ? "Ocultar de nuevo estas preguntas" : "Prefiero completarlas aquí";
+
     const cvTaken = this.TAKEN;
     const cvAvg = cvTaken.length ? cvTaken.reduce((a, c) => a + c.grade, 0) / cvTaken.length : 0;
     v.cvName = s.profile.name || this.STUDENT.email;
@@ -5962,8 +6596,9 @@ class Component extends DCLogic {
     v.cvObjetivo = s.cvObjetivo;
     v.cvHasObjetivo = !!s.cvObjetivo.trim();
     v.cvObjetivoChange = e => this.setState({ cvObjetivo: e.target.value });
-    v.cvObjetivoSuggestion = s.favoriteRole
-      ? ("Estudiante de " + this.STUDENT.career + " (ciclo " + this.STUDENT.cycle + ") en búsqueda de un rol como " + s.favoriteRole + " donde aplicar lo aprendido en su carrera.")
+    const cvFavoriteRole = (s.hzGoals.find(g => g.kind === "role") || {}).label;
+    v.cvObjetivoSuggestion = cvFavoriteRole
+      ? ("Estudiante de " + this.STUDENT.career + " (ciclo " + this.STUDENT.cycle + ") en búsqueda de un rol como " + cvFavoriteRole + " donde aplicar lo aprendido en su carrera.")
       : ("Estudiante de " + this.STUDENT.career + " (ciclo " + this.STUDENT.cycle + ") en búsqueda de oportunidades para aplicar lo aprendido en su carrera.");
     v.cvHasObjetivoSuggestion = !s.cvObjetivo.trim();
     v.cvUseObjetivoSuggestion = () => this.setState({ cvObjetivo: v.cvObjetivoSuggestion });
@@ -6525,9 +7160,14 @@ class Component extends DCLogic {
     if (nextFlow) goals.push({ label:"Completa: " + this.NAMES[nextFlow], when:"Esta semana", why:"Es el siguiente paso pendiente de tu Recomendador." });
     if (topRisk) goals.push({ label:"Refuerza " + topRisk.course, when:"Ciclo " + topRisk.cycle, why:"CoRA detectó " + topRisk.risk + "% de riesgo — hay un plan en Acompañamiento Académico." });
     if (s.streak < 30) goals.push({ label:"Llega a 30 días de racha", when:"Llevas " + s.streak, why:"Cada 30 días de racha suman +100 CoRAzones." });
-    if (s.favoriteRole) goals.push({ label:"Prepárate para: " + s.favoriteRole, when:"Tu meta guardada", why:"Marcaste este rol como favorito en Veo mi horizonte profesional." });
-    if (s.favoriteCompany) goals.push({ label:"Investiga: " + s.favoriteCompany, when:"Tu meta guardada", why:"Marcaste esta empresa como favorita en Veo mi horizonte profesional." });
-    if (s.favoriteVenture) goals.push({ label:"Explora emprender: " + s.favoriteVenture, when:"Tu meta guardada", why:"Marcaste esta idea como favorita en Veo mi horizonte profesional." });
+    /* "Mi plan profesional" de Horizonte ya no es una meta por categoría —
+       es una lista (s.hzGoals), así que se recorre entera en vez de leer
+       3 valores sueltos. */
+    const goalVerb = { role:"Prepárate para: ", company:"Investiga: ", venture:"Explora emprender: ", custom:"Avanza en: " };
+    s.hzGoals.forEach(g => {
+      goals.push({ label:(goalVerb[g.kind] || goalVerb.custom) + g.label, when:"Tu meta guardada",
+        why: g.source === "mine" ? "Lo agregaste tú mismo en Veo mi horizonte profesional." : "Lo marcaste en Veo mi horizonte profesional." });
+    });
     v.nextGoals = goals;
     v.xpNext = (2000 - s.xp).toLocaleString();
     v.xpPct = Math.min(100, (s.xp / 2000) * 100) + "%";

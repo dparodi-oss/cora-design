@@ -243,10 +243,31 @@ para exigir los 4 pasos de "Crea tu Ruta" sin tener que sumar los tres de
 "Explora CoRA" (perfil-cora, horizonte, cv) — antes el estudiante tenía que
 recorrer todo el Recomendador antes de que se activara su plan de
 acompañamiento, aunque ese plan no depende de nada de lo que se contesta en
-Mi Perfil CoRA, Horizonte o el CV. El botón "Continuar a Acompañamiento
-Académico →" al final de Crea mi CV (`v.cvNext`) sigue funcionando igual —
-solo que ahora, cuando el estudiante llega ahí, Acompañamiento ya estaba
-desbloqueado desde antes.
+Mi Perfil CoRA, Horizonte o el CV.
+
+**La bifurcación se hizo explícita en el cierre de la malla (20 ago 2026,
+feedback de reunión: "de mi ruta se puede ir a dos partes").** Hasta acá
+el `REQ` ya dejaba entrar a Acompañamiento sin pasar por CV, pero el botón
+"Continuar" de cada pantalla (Horizonte → Crea mi CV → Acompañamiento)
+seguía encadenando las tres como si fueran un solo trámite obligatorio — el
+botón prometía una secuencia que el propio `REQ` ya no exigía. Se corrigió
+en el punto exacto donde ambos caminos comparten origen: la pantalla de
+cierre de la malla (`mallaShowSummary`) ahora muestra **dos tarjetas del
+mismo tamaño, lado a lado**, con el rótulo "Desde aquí puedes ir a dos
+partes — ninguna bloquea a la otra":
+
+- **Izquierda — "Descubre quién eres":** la tarjeta de invitación al perfil
+  de identidad que ya existía (`mallaShowProfileCta`), o si el perfil ya
+  está hecho, una versión corta que solo invita a continuar a Horizonte
+  (`v.mallaSummaryNext`) — la misma rama de siempre, sin cambios de fondo.
+- **Derecha — "Prepárate para tus cursos"** (nueva, `v.mallaGoAcompanamiento`):
+  entra a Acompañamiento directo con `this.nav("acompanamiento")` — sin
+  pasar por Perfil CoRA, Horizonte ni CV.
+
+El botón "Continuar a Acompañamiento Académico →" al final de Crea mi CV se
+quitó — ya no hace falta pasar por ahí para llegar. `v.cvNext` ahora cierra
+esa rama volviendo al Dashboard ("Volver al Dashboard →", navega a
+`"inicio"`), en vez de fingir que Acompañamiento es el paso siguiente.
 
 **"Crea tu Ruta" son las 4 pantallas que se hacen una sola vez**
 para armar la ruta — siguen encadenadas por el mismo `REQ` de siempre, esto
@@ -292,12 +313,24 @@ grupos del Recomendador/Académico a la vez — no hay un solo nombre de
 grupo al que mapear 1:1 ahí; si se quiere renombrar también, hace falta
 decidir un nombre nuevo que cubra a todos.
 
-**Las migas de pan de Tutor CoRA / Práctico / Flashcards siguen sin
-actualizar ("⭕ Académico" / "🎴 Académico" / "👨‍🏫 Académico" en vez de
-"📚 CoRA Académico")** — detectado en la misma revisión UX del 11 ago 2026,
-no forma parte de este cambio (que solo tocó la miga de Acompañamiento, la
-única de las cuatro pantallas del grupo que cambió de grupo real). Sigue
-pendiente si se quiere corregir.
+**Las migas de pan de Tutor CoRA / Práctico / Flashcards, corregido (12 ago
+2026).** Seguían diciendo "⭕ Académico" / "🎴 Académico" / "👨‍🏫 Académico"
+— detectado en la revisión UX del 11 ago 2026, quedó sin corregir en el
+momento porque ese cambio solo tocó la miga de Acompañamiento (la única de
+las cuatro pantallas del grupo que en ese momento cambiaba de grupo real).
+Las cuatro pantallas de "CoRA Académico" (Acompañamiento, Tutor CoRA,
+Práctico — inicio y resultados — y Flashcards) ya dicen todas
+"📚 CoRA Académico".
+
+**"✨ Explora CoRA" de la miga de pan retrocede a la sección anterior
+(20 ago 2026).** En Mi Perfil CoRA, Horizonte y Crea mi CV, ese primer
+segmento era texto suelto — ahora es un botón (`v.exploraBack`) que llama
+`this.nav(this.REQ[section])`: usa el mismo mapa `REQ` que ya bloquea el
+avance hacia adelante, así que retroceder nunca puede quedar bloqueado (si
+ya estás en `section`, su requisito ya está cumplido) y encadena bien salto
+a salto — Crea mi CV → Horizonte → Mi Perfil CoRA → Elijo mi Ruta (Malla).
+Estilo: gris igual que antes, morado + subrayado al pasar el mouse, para que
+se note que ahora es clicable sin cambiar cómo se ve por defecto.
 
 ### Popup de bienvenida: qué es CoRA (11 ago 2026)
 
@@ -520,16 +553,144 @@ arranque real de un estudiante". Si alguna vez se agrega una prop nueva de
 vista previa, revisar que también mande `unlockAll:true`, o el login se
 volverá a colar en el tablero.
 
-**"Tu ruta actual" — recordatorio persistente bajo Inicio.** Un chip fijo en
-el sidebar, justo debajo del ítem "Inicio" (`v.hasCurrentRoute = !!s.selectedRoute`,
-`v.currentRouteLabel`), visible en todas las pantallas una vez que existe una
-ruta. Tocarlo llama a `this.nav("malla")` — el mismo `nav()` de siempre, con
-el mismo bloqueo por `REQ`: si la ruta ya se eligió en Mis Rutas pero
-Ecosistema CIE o la malla todavía no se completaron, el chip lleva al modal
-de bloqueo normal en vez de saltarse pasos; una vez que "Elijo mi Ruta" está
-completo, lleva directo ahí. No es un enlace nuevo con su propia lógica —
-es la forma de que el estudiante, sin recordar en qué pantalla quedó, vuelva
-al lugar donde ve el detalle completo de la ruta que ya eligió.
+**"Inicio" se renombró a "Dashboard" (12 ago 2026, a pedido explícito).**
+Solo el label del ítem del sidebar (`v.navHome`) — el `id` de la sección
+sigue siendo `"inicio"` (regla 5: nunca se renombran los `id`, están
+enlazados con `REQ`, `screens.js` y las URL del tablero).
+
+**"Mi Malla" y "Mi Ruta" — dos atajos directos a la malla, mucho más
+visibles que antes (12 ago 2026, a pedido explícito tras una ronda de
+mockups comparando 4 alternativas — ver conversación).** Antes había un solo
+recordatorio ("Tu ruta actual", chip lavanda chico) y el único botón que
+decía claramente "ir a tu malla" vivía al final de todo Inicio, después de
+la dona de avance y "Tu progreso" — muy fácil de no encontrar. Ahora hay dos
+botones, uno junto al otro, repetidos en dos lugares (sidebar y header), y
+**apuntan a dos vistas distintas de la misma pantalla** — no son dos
+alias del mismo atajo:
+
+- **"Mi Malla"** (`v.goMiMalla`) — la **malla base**, sin ninguna ruta
+  resaltada, **siempre visible y siempre abierta**, tenga o no tenga ruta
+  elegida y sin importar cuánto del Recomendador esté completo. Estilo
+  sólido morado (`v.miMallaStyle`), el más fuerte de la barra lateral
+  después del ítem activo. **Sin candado, a propósito (corregido 12 ago
+  2026): al principio heredaba el `REQ` de "Elijo mi Ruta" y quedaba
+  bloqueado hasta terminar los 3 pasos previos — pero la malla base es
+  información genérica de la carrera, no depende de haber elegido una ruta,
+  así que debe poder abrirse siempre.** Por eso `v.goMiMalla` ya no pasa por
+  `nav()` (no hay bloqueo que evaluar) y hace su propio `setState`.
+- **"Mi Ruta"** (`v.hasCurrentRoute = !!s.selectedRoute`,
+  `v.currentRouteLabel`) — solo aparece una vez que existe una ruta, justo
+  debajo de "Mi Malla", y lleva a la malla **con la ruta resaltada** (como
+  siempre se vio esta pantalla; sigue respetando el `REQ` normal — a
+  diferencia de "Mi Malla", si Ecosistema CIE todavía no se completó, cae en
+  el modal de bloqueo de siempre). Antes era un chip lavanda con texto de
+  9-12px; ahora es un recuadro con **borde morado grueso (2px)**, texto más
+  grande, y suma el avance real al lado del nombre (`v.currentRoutePct`) —
+  "Ingeniería Comercial · 29%" en vez de solo el nombre. **El % es sobre los
+  4 pasos de "Crea tu Ruta" (`configIds`), no sobre las 14 pantallas de toda
+  la app (corregido 12 ago 2026, a pedido explícito).** La primera versión
+  reusaba `completed.length / 14 × 100` — el mismo cálculo que `v.dashRoutePct`/
+  `v.choiceRoutePct` — pero eso nunca llegaba a 100% aunque la ruta ya
+  estuviera completamente armada, porque contaba también Explora CoRA/CoRA
+  Académico/Ajustes. "Mi Ruta" es específicamente sobre haber armado la
+  ruta, así que ahora es `configIds.filter(completado).length / configIds.length`
+  — llega a 100% justo cuando termina "Crea tu Ruta" (formulario → mis-rutas
+  → ecosistema → malla), sin esperar nada más.
+
+**Ambos fuerzan `mallaDone:false` al navegar (corregido 12 ago 2026, segundo
+bug del mismo pedido).** La pantalla de malla tiene dos caras según
+`s.mallaDone` — la malla editable (`v.mallaEditing`) o la pantalla de
+resumen "¡Tu malla está lista!" (`v.mallaShowSummary`) que aparece una vez
+que se confirma con "Confirmar malla final" — y `s.mallaDone` nunca se
+resetea sola (solo con "Personalizar de nuevo"). Sin este ajuste, una vez
+que el estudiante confirmaba su malla una sola vez, "Mi Malla" y "Mi Ruta"
+quedaban rotos para el resto de la sesión: en vez de la malla (con o sin
+ruta resaltada, según el botón), siempre caían en la pantalla de resumen —
+que no muestra la malla ciclo a ciclo en absoluto. Ahora los dos atajos
+fuerzan `mallaDone:false` además de `mallaBaseView`, así que siempre
+muestran la malla editable, nunca el resumen — aunque ya se haya confirmado
+antes. Esto no afecta el flujo normal (`v.mallaConfirm`, "Personalizar de
+nuevo"): esos siguen funcionando exactamente igual que antes.
+
+**`v.ecoCtaClick` ("Continuar malla →" de Ecosistema CIE) tiene el mismo
+ajuste, por la misma razón.** Si el estudiante ya había confirmado una malla
+antes (en un intento previo de armar su ruta) y la rehace — vuelve a
+Formulario, elige otra ruta, pasa de nuevo por Ecosistema CIE —, `s.mallaDone`
+seguía en `true` de la vez anterior, y terminar Ecosistema CIE lo llevaba
+otra vez al resumen viejo en vez de a la malla real y editable con la ruta
+nueva. Ahora `v.ecoCtaClick` también resetea `mallaDone:false` al entrar a
+`malla`, igual que "Mi Malla" y "Mi Ruta".
+
+**`s.mallaBaseView` decide cuál de las dos vistas se muestra** — nuevo campo
+de estado, `false` por defecto. `nav(id)` lo resetea a `false` en *toda*
+navegación normal (formulario → mis-rutas → ecosistema → malla, el pill de
+Ecosistema CIE, el CTA de Inicio, el ítem "Elijo mi Ruta" del sidebar, etc.),
+así que por defecto la malla siempre se ve con la ruta resaltada, igual que
+antes de este cambio. Solo `v.goMiMalla` lo fuerza a `true` justo después de
+navegar.
+
+**"Mi Malla" es una foto fija del plan de estudios oficial — no varía con
+nada que el estudiante haya hecho, ni deja hacer nada nuevo desde ahí
+(corregido 12 ago 2026, segunda vuelta del mismo pedido: la primera versión
+solo apagaba el resaltado de ruta, pero el resto de la personalización
+seguía filtrándose).** Con `v.mallaBaseView:true`, cuatro capas de estado
+se leen como vacías dentro de esa pantalla — `effExtras`, `effCfuChosen`,
+`effElectiveChoices` y `effMovedCourses` son objetos/arreglos vacíos en vez
+de `s.extras`/`s.cfuChosen`/`s.electiveChoices`/`s.movedCourses` reales —
+sin tocar el estado real: `s.extras` etc. siguen intactos para cuando se
+vuelva a ver con "Mi Ruta". Con esas cuatro en vacío, apagado en cascada:
+- `routeCourseNames` queda vacío → ninguna asignatura recibe el resaltado
+  "🧭 Tu ruta" (borde grueso, fondo lleno);
+- `extraSource`/`routeExtraByCycle` (asignaturas del CIE de una ruta
+  extracurricular/combinada) y `ecoAddedByCycle`/`ecoAddedNoCycle`
+  (recomendaciones de Ecosistema CIE agregadas) quedan vacíos → nada bajo
+  los ciclos, ni la caja de "para después de egresar";
+- ninguna asignatura se muestra como elegida por CFU o como un electivo
+  específico ya elegido — se ve el cupo genérico ("Electivo General N") tal
+  cual está en `CURRICULUM`;
+- ninguna asignatura aparece movida a otro ciclo — cada una en su
+  `originalCycle` real;
+- el subtítulo cambia de "Ruta: {{ mallaCareer }} · …" a "Malla base — sin
+  ninguna ruta resaltada · …", y la insignia morada "Asignaturas de tu ruta"
+  de la leyenda se oculta entera (las demás entradas de la leyenda —
+  categorías, CFU, electivos elegidos — también dejan de aplicar, porque no
+  hay nada elegido que mostrar en esta vista);
+- **no hay nada que se pueda agregar, elegir ni mover desde acá**: el botón
+  "Agregar extracurricular" de cada ciclo (`cyc.canAdd`), la franja "⭐ Tus
+  electivos del Ecosistema CIE" completa, y — dentro del panel de detalle de
+  una asignatura — "💡 CoRA recomienda" (elegir un electivo) y "↕️ Mover a
+  otro ciclo" quedan ocultos; el panel de detalle sigue abriéndose (para
+  consultar sílabo, profesor, prerrequisito), solo sin las acciones que
+  personalizarían la malla;
+- **"✓ Confirmar malla final" se oculta entero** (a pedido explícito — "no
+  hay nada que confirmar" en una foto fija). Reusa el mismo
+  `v.mallaShowRouteInfo` que ya ocultaba la insignia de ruta, no es una
+  condición nueva.
+
+`v.ecoCtaClick` (el único otro lugar que cambia `section` a `"malla"` sin
+pasar por `nav()`) también resetea `mallaBaseView:false` explícitamente, para
+que no quede pegado en `true` si el estudiante entró por "Mi Malla" y después
+sigue el flujo normal del Recomendador sin volver a Inicio.
+
+**No confundir con la vista previa de "Así queda tu malla con…" dentro de
+Mis Rutas** (`s.mallaPreview`, sección `mis-rutas`, no `malla`) — esa pantalla
+siempre muestra la ruta que se acaba de confirmar, por diseño; `mallaBaseView`
+no la afecta (viven en secciones distintas).
+
+Los dos botones llaman a `this.nav("malla")` — el mismo `nav()` de siempre,
+con el mismo bloqueo por `REQ`: si la ruta ya se eligió en Mis Rutas pero
+Ecosistema CIE o la malla todavía no se completaron, llevan al modal de
+bloqueo normal en vez de saltarse pasos. No son enlaces nuevos con su propia
+lógica de navegación — son más formas de llegar al mismo lugar de siempre,
+solo que ahora ese lugar recuerda si se pidió con o sin ruta resaltada.
+
+**Los mismos dos atajos se repiten en el header, junto a "Guía"** — para que
+estén a un clic incluso sin abrir el menú lateral, en cualquiera de las 15
+pantallas. Mismos handlers (`goMiMalla`/`goCurrentRoute`), estilo de pill en
+vez de fila de sidebar: "Mi Malla" sólido morado, "Mi Ruta: {{ nombre }}" con
+borde morado grueso (con el nombre, a diferencia del sidebar no repite el
+`%` para no saturar el header). El pill de "Mi Ruta" en el header, igual que
+en el sidebar, solo aparece si `s.selectedRoute` existe.
 
 Antes decía "en RECOMENDADOR" a secas; con el sidebar partido en dos grupos
 (arriba), ese texto quedó ambiguo. Ahora `v.blockedGroupLabel` calcula "CREA
@@ -706,6 +867,30 @@ Mezcla dos fuentes:
   (`addCvEntry`/`removeCvEntry`/`addCvChip`/`removeCvChip`, class methods
   nuevos junto a `toggleIn`).
 
+**Subir un CV existente para saltarse las preguntas largas (20 ago 2026).**
+Encima de "1. Elige un formato" hay una tarjeta punteada "¿Ya tienes un CV
+armado?" con un `<input type="file" accept=".pdf,.doc,.docx">` disfrazado de
+botón morado (`<label>` envolviendo el input con `display:none`, patrón
+estándar para estilizar un file input sin CSS de terceros). La maqueta no
+puede leer el contenido real de un PDF/Word, así que **no finge extraerlo**:
+`v.cvFileUpload` solo guarda `f.name` (del `e.target.files[0]` del evento,
+nunca `e.target.value` — un input de archivo devuelve `"C:\fakepath\..."` en
+ese campo por seguridad del navegador, no el nombre limpio) en
+`s.cvUploadedName`. Con eso:
+
+- Las secciones 2-7 (Objetivo, Experiencia, Proyectos, Habilidades, Idiomas,
+  Certificaciones — las preguntas largas) se ocultan tras
+  `v.cvShowManualSections = !s.cvUploadedName || s.cvManualOverride`, y en su
+  lugar aparece un aviso verde: "✓ Objetivo, experiencia,... los tomamos de
+  {{ cvUploadedName }}" con un botón "Prefiero completarlas aquí"
+  (`v.cvToggleManual`) que las vuelve a mostrar sin perder el archivo
+  "subido" — no es una puerta sin vuelta.
+- Las secciones 1 (Formato) y 8 (Datos de contacto) **siguen pidiéndose
+  siempre**: son cortas, no dependen de lo que diga el CV, y el formato en
+  particular es indispensable para generar la vista previa.
+- "Quitar" (`v.cvRemoveUpload`) limpia `cvUploadedName` y vuelve a mostrar
+  el formulario completo.
+
 **3 formatos reales (`this.CV_FORMATS`), mismas secciones, distinto orden —
 no HTML triplicado.** Cronológico, Por habilidades y Mixto no son 3
 plantillas separadas: son las mismas 6 secciones (Objetivo, Formación,
@@ -725,15 +910,19 @@ final (`s.cvGenerated`); "✏️ Editar información" vuelve al formulario sin
 perder nada de lo ya escrito. El botón "Descargar PDF" es decorativo — dice
 explícitamente que es una maqueta.
 
-**Jerarquía de botones corregida (revisión UX, 11 ago 2026).** Mientras se
-llena el formulario, dos botones convivían en la misma pantalla: "✨ Generar
-mi CV" (dentro de la tarjeta, sin sombra, radio 12px) y, siempre visible
-debajo de todo, "Continuar a Acompañamiento Académico →" (con la sombra
-morada elevada que este archivo reserva para el botón primario de la
-pantalla). El patrón ya aprendido en el resto de la app — "el botón grande
-con sombra es el que sigue" — invitaba a pasar directo a Acompañamiento sin
-haber generado el CV. Se corrigió invirtiendo el protagonismo según
-`s.cvGenerated`:
+**Jerarquía de botones corregida (revisión UX, 11 ago 2026 — texto del botón
+actualizado el 20 ago 2026).** Mientras se llena el formulario, dos botones
+convivían en la misma pantalla: "✨ Generar mi CV" (dentro de la tarjeta, sin
+sombra, radio 12px) y, siempre visible debajo de todo, un botón "Continuar"
+(con la sombra morada elevada que este archivo reserva para el botón
+primario de la pantalla) — en su momento decía "Continuar a Acompañamiento
+Académico →"; desde que esa navegación se quitó (ver "La bifurcación se
+hizo explícita en el cierre de la malla" más arriba) dice "Volver al
+Dashboard →" y navega a `"inicio"`, pero el problema de jerarquía que
+resuelve esta sección es el mismo de siempre: el patrón ya aprendido en el
+resto de la app — "el botón grande con sombra es el que sigue" — invitaba a
+pasar de largo sin haber generado el CV. Se corrigió invirtiendo el
+protagonismo según `s.cvGenerated`:
 
 - **Sin generar (`v.cvGenerateStyle`)** — "Generar mi CV" pasa a tener la
   sombra elevada (protagonista); "Continuar" (`v.cvNextStyle`) baja a
@@ -799,9 +988,14 @@ intereses, fortaleza académica, objetivo profesional) con mini-barras, más una
 frase "🎯 Mejor si buscas: …". El objetivo es que el estudiante entienda *para
 qué* sirve cada ruta, no solo compare números.
 
-Debajo de la lista de rutas hay una aclaración fija "¿Cuál es la diferencia?"
-que distingue Ruta (las asignaturas que se toman) de Horizonte (los trabajos a los
-que lleva) — son las dos palabras que más se confunden en el producto.
+Debajo de la lista de rutas ya **no** hay una aclaración "¿Cuál es la
+diferencia?" entre Ruta y Horizonte (se quitó el 20 ago 2026): en Mis Rutas
+el estudiante todavía no ha visto Horizonte — nombrarlo ahí anticipa un
+concepto que no le sirve todavía y confunde más de lo que aclara. La misma
+aclaración (Ruta = asignaturas / Horizonte = trabajos) sigue viva donde sí
+corresponde por orden del recorrido: la franja "Tu Ruta → Tu Perfil → Tu
+Horizonte" y el aviso "🔗" reescrito dentro de la propia pantalla Horizonte
+(ver "Franja 'Tu Ruta → Tu Perfil → Tu Horizonte'" más abajo).
 
 ### Nomenclatura: "ruta" vs. "carrera"/"malla" (corregido 11 ago 2026)
 
@@ -864,11 +1058,33 @@ una cuarta categoría de "solo obligatorios":
 Se define en el campo `kind` de `ROUTES` (`"curricular"` \| `"extracurricular"`
 \| `"combinada"`).
 
-**Ninguna ruta incluye una asignatura de un ciclo que el estudiante ya cursó.**
-`ROUTES[].courses` (y `extraCourses` en las combinadas) solo trae asignaturas con
-ciclo `>= STUDENT.cycle` — se valida cruzando cada nombre contra el ciclo
-real en `CURRICULUM`. Si cambias `STUDENT.cycle` o la asignatura de una ruta,
-revisa que ningún nombre pertenezca a un ciclo anterior al actual.
+**Ninguna ruta incluye una asignatura de un ciclo que el estudiante ya cursó**
+— con una excepción explícita desde el 12 ago 2026: se permite hasta **una**
+asignatura ya cursada por ruta si hiciera falta (nunca más de una). Con el
+catálogo actual no hizo falta usar esa excepción — las 11 rutas siguen en 0
+asignaturas ya cursadas — pero si más adelante una ruta necesita incluir una
+para que tenga sentido narrativo, una sola está permitida.
+`ROUTES[].courses` (y `extraCourses` en las combinadas) trae asignaturas con
+ciclo `>= STUDENT.cycle` salvo esa excepción — se valida cruzando cada nombre
+contra el ciclo real en `CURRICULUM`. Si cambias `STUDENT.cycle` o la
+asignatura de una ruta, revisa cuántos nombres quedan en un ciclo anterior al
+actual (máximo 1).
+
+**Máximo 4 asignaturas por ruta, e idealmente ninguna repite ciclo (12 ago
+2026, a pedido explícito).** Antes varias rutas curriculares tenían 5 o 6
+asignaturas, algunas con 2 o 3 en el mismo ciclo (ej. "Ingeniería Comercial"
+tenía 3 asignaturas solo del ciclo 5) — una ruta así es difícil de leer de un
+vistazo y no se siente como una "ruta" con progresión por ciclos, sino como
+una lista larga apilada en pocos ciclos. Se recortaron las 8 rutas que
+excedían 4 (`id` 1, 2, 4, 5, 6, 8, 9, 11), eligiendo en cada caso las
+asignaturas más centrales al tema de la ruta y evitando repetir ciclo — las
+11 rutas terminan con 3 o 4 asignaturas, cada una en un ciclo distinto de las
+demás dentro de la misma ruta. "Marketing y Gestión Comercial" (id 3),
+"Negocios Internacionales" (id 7) y "Gestión de Talento y Proyectos" (id 10)
+ya cumplían esto y no se tocaron. Esta regla es sobre asignaturas dentro de
+UNA ruta — nada impide que la misma asignatura aparezca en rutas distintas
+(ej. "Gestión del Talento Humano" sigue en varias), eso no es lo que se pidió
+evitar.
 
 **Al confirmar una ruta, se ve reflejada en la malla.** La pantalla *Elijo mi
 Ruta* resuelve en vivo, por nombre contra `ROUTES[].courses`, qué asignaturas de
@@ -886,6 +1102,22 @@ pero con su propia etiqueta ("🌐 De tu ruta extracurricular"):
 extracurricular los trae en `courses`/`courseCycles`; combinada los trae
 aparte, en `extraCourses`/`extraCourseCycles`, porque `courses` ya está
 ocupado con su parte de malla.
+
+**Lo que se agrega en Ecosistema CIE también se ve en la malla (12 ago
+2026, a pedido explícito).** Antes, agregar algo en Ecosistema CIE con "+
+Añadir a mi plan" (`s.ecoAdded`, fase "reco") no se reflejaba en ningún
+lado hasta el CV — la malla no sabía nada de eso. Ahora `ECO_RECO[].cycle`
+dice a qué ciclo pertenece cada recomendación (tomado del propio texto de
+`why` cuando lo menciona explícitamente, o reusando el ciclo ya establecido
+en otro lugar de los datos — "Inglés B2" reusa el ciclo 4 que ya tenía en
+`ROUTES`), y `ecoAddedByCycle` (mismo patrón que `routeExtraByCycle`)
+muestra cada una bajo su ciclo, con su propia etiqueta ("🎓 De Ecosistema
+CIE", morado, para no confundirla con "🌐 De tu ruta extracurricular" en
+azul ni con un electivo elegido). Lo que no tiene ciclo dentro de los 10
+—hoy solo la maestría, que se cursa después de egresar (`cycle:null`)—
+no encaja en ninguna tarjeta: se avisa aparte, en una caja fija arriba del
+botón "Confirmar malla final" (`v.hasEcoAddedNoCycle`), en vez de forzarlo
+a un ciclo que no le corresponde.
 
 **Tres momentos de ciclo, según `STUDENT.cycle`:**
 
@@ -956,25 +1188,38 @@ quedar abierta al mismo tiempo, cada una independiente de las demás.
 
 Confirmar una ruta no salta directo a Ecosistema CIE: primero se ve la vista
 previa de la malla, todo dentro de la pantalla *Mis Rutas* (`s.mallaPreview` /
-`s.extraStep`). Desde ahí hay dos caminos, no uno solo:
+`s.extraStep`).
 
 ```
-                              ┌─ 🎓 Explorar más extracurriculares ─┐
-elegir ruta → confirmar → vista previa de la malla ─┤                                    ├─→ Ecosistema CIE
-                              └──────── Continuar a Ecosistema CIE ────────┘
+elegir ruta → confirmar → vista previa de la malla → 🎓 Explorar Extracurriculares → Continuar a Ecosistema CIE →
 ```
 
-1. **Vista previa de la malla** — cómo queda tu malla con la ruta elegida (ver arriba).
-   Al pie tiene dos botones, cada uno con su propio tooltip al pasar el mouse:
-   - **🎓 Explorar más extracurriculares** — abre el paso opcional de abajo.
-   - **Continuar a Ecosistema CIE →** — se salta ese paso e ingresa directo.
-2. **Explorar extracurriculares** (opcional) — los extracurriculares recomendados
-   (`ECO_RECO` vía `ecoExtra`) se revisan aquí, no en Ecosistema CIE.
+1. **Vista previa de la malla** — cómo queda tu malla con la ruta elegida (ver
+   arriba). Al pie tiene dos botones:
+   - **🎓 Explorar Extracurriculares** — entra al paso de abajo. Al entrar (no
+     al agregar nada — igual que "visitar" una sección del Ecosistema CIE no
+     exige agregar nada) marca `s.exploredExtra:true`, que no se resetea
+     nunca en la sesión.
+   - **Continuar a Ecosistema CIE →** — **bloqueado hasta que
+     `s.exploredExtra` sea `true`** (12 ago 2026, a pedido explícito — antes
+     este botón dejaba saltarse el paso anterior por completo, con un
+     tooltip que literalmente invitaba a "saltarse los extracurriculares").
+     Mismo patrón visual y de bloqueo que el botón de Ecosistema CIE
+     (`v.ecoCtaStyle`/`v.ecoCtaLabel`): gris + "not-allowed" +
+     "🔒 Explora Extracurriculares para continuar" mientras está bloqueado,
+     morado + label normal en cuanto se desbloquea. El `onClick`
+     (`v.goContinueEco`) también revisa la condición en el propio handler,
+     no solo en el estilo — un clic sobre el botón "bloqueado" no hace nada.
+2. **Explorar extracurriculares** — los extracurriculares recomendados
+   (`ECO_RECO` vía `ecoExtra`) se revisan aquí, no en Ecosistema CIE. Ya no es
+   un paso que se pueda saltar sin entrar.
 
 **Se puede retroceder en cualquier punto** — cada pantalla de este tramo tiene su
 "← Volver": de la vista previa a la lista de rutas, del paso de extracurriculares
 a la vista previa, y de Ecosistema CIE de vuelta a la vista previa
-(`backToMallaFromEco`), sin importar por cuál de los dos caminos se llegó.
+(`backToMallaFromEco`). Volver atrás no resetea `s.exploredExtra` — una vez
+explorado, el botón de "Continuar a Ecosistema CIE" queda desbloqueado el
+resto de la sesión, sin tener que volver a entrar cada vez.
 
 ### Ecosistema CIE
 
@@ -1269,8 +1514,13 @@ inspirador, y reúne:
    recordatorio fijo de que puede volver a personalizar cuando quiera.
 4. **Descargar malla PDF** — se movió aquí desde el pie de la malla editable;
    ya no vive en la pantalla de edición.
-5. **"✏️ Personalizar de nuevo"** (`v.mallaEdit`) — vuelve a `mallaEditing`
-   sin perder nada: `s.extras`, `s.cfuChosen` y `s.selectedRoute` no se tocan.
+5. **"👁️ Ver mi malla"** (12 ago 2026, a pedido explícito — junto a
+   "Descargar malla PDF") y **"✏️ Personalizar de nuevo"**, uno al lado del
+   otro: los dos llaman a `v.mallaEdit` y vuelven a `mallaEditing` sin
+   perder nada (`s.extras`, `s.cfuChosen` y `s.selectedRoute` no se tocan)
+   — son el mismo destino, con dos etiquetas para dos intenciones distintas
+   ("solo quiero mirarla" vs. "quiero cambiar algo"), no dos pantallas
+   separadas.
 6. **Historial de mallas guardadas** (`s.savedMallas`, nombre + fecha) — cada
    confirmación agrega un registro arriba de la lista (`v.mallaConfirm`), con
    la fecha del día (`this.today()`) y una etiqueta "Actual" en el más
@@ -1327,25 +1577,53 @@ hubiera escrito ahí (`s.assistantMsgs` — ver "Dos chats distintos" más
 abajo) — es la capa "interactiva y conversacional con IA" que pedía el
 documento, reutilizando el chat que ya existe en vez de construir uno nuevo.
 
-**Metas favoritas: roles, empresas e ideas de emprendimiento.** Las tres
-tarjetas de chips del modo Inspirar ("Roles a los que conecta", "Dónde
-podrías trabajar", "Y si quieres crear lo tuyo") son clicables — cada una
-tiene su propia meta guardada (`s.favoriteRole`, `s.favoriteCompany`,
-`s.favoriteVenture`; una por categoría, tocar el mismo chip la quita). Un
-único helper (`favoriteChips(names, stateKey, accent)`) genera los tres
-listados de chips con el mismo ícono `star` (ámbar si está guardado, tenue
-si no) — evita repetir la lógica de estilo/toggle tres veces. Ambos modos de
-`HORIZONTE` tienen `roles` (antes solo `inspire` lo tenía); companies/
-ventures con selección solo existen en el resumen del modo Inspirar, que es
-donde aparecen como chips (el modo Informar-decidir los muestra como
-mini-tarjetas con descripción, no como chips). Es una capa de estado sobre
-el dato fijo, igual que `s.cfuChosen` o `s.movedCourses` en la malla:
-`HORIZONTE.roles/companies/ventures` nunca se modifica. Si hay al menos una
-meta guardada aparece "⭐ Tus metas guardadas" con un botón "Quitar" por
-cada una, y cada meta se refleja también en "Próximas actividades
-recomendadas" de Mi Progreso (`v.nextGoals`) con un verbo distinto según la
-categoría: "Prepárate para" (rol), "Investiga" (empresa), "Explora
-emprender" (idea).
+**"Mi plan profesional" — Horizonte deja de ser solo lo que calcula CoRA
+(20 ago 2026).** Feedback de una reunión: el estudiante no tenía ningún
+lugar en Horizonte para meter lo suyo — todo era fijo. Se resolvió en tres
+partes que comparten un mismo dato de fondo, `s.hzGoals` (array de
+`{ kind:"role"|"company"|"venture"|"custom", label, note, source:"cora"|
+"mine" }`), que sustituye a las 3 metas sueltas de antes
+(`s.favoriteRole`/`favoriteCompany`/`favoriteVenture`, una por categoría —
+ese límite de "una sola" desapareció con el cambio, a propósito: ya no tiene
+sentido una vez que hay una lista real).
+
+1. **Estrella = agregar/quitar de `hzGoals` con `source:"cora"`.** Las tres
+   tarjetas de chips del modo Inspirar ("Roles a los que conecta", "Dónde
+   podrías trabajar", "Y si quieres crear lo tuyo") siguen siendo clicables
+   igual que antes (`favoriteChips(names, kind, accent)`, mismo helper
+   compartido) — solo que ahora pueden convivir varias marcadas por
+   categoría, no una sola.
+2. **"+ Agregar" al final de cada una de esas 3 filas de chips.** Abre un
+   mini-formulario de un solo campo (`s.hzNewGoal`/`s.hzGoalAddOpen`,
+   comparte mecánica con "Mi plan profesional" — cuál caja está abierta
+   decide el `kind` con el que se guarda) y agrega una entrada
+   `source:"mine"` de esa misma categoría, que aparece como chip adicional
+   al final de la fila con una "x" en vez de estrella (tocarla la quita
+   directo, no la "desmarca" — mismo lenguaje que ya usan los chips de
+   habilidades/idiomas del CV).
+3. **"🧭 Mi plan profesional"** (antes "⭐ Tus metas guardadas") es ahora el
+   panel real de gestión, siempre visible (antes solo aparecía si había algo
+   marcado): mezcla lo sugerido por CoRA con lo que el estudiante agregó,
+   cada fila con su etiqueta ("Sugerido por CoRA" / "Tú lo agregaste"), una
+   nota propia opcional por meta (`updateListItem`, edita un campo de un
+   ítem que ya está en una lista — distinto de `updateCvField`, que edita el
+   mini-formulario antes de agregarlo) y su propio "+ Agregar algo tuyo" que
+   no depende de que exista un chip de CoRA para eso (`kind:"custom"`).
+   "Quitar" (`removeCvEntry`, reusado tal cual) funciona igual sin importar
+   el origen, y si la entrada venía de una estrella, quitarla desde aquí
+   también la desmarca en su chip — es la misma lista, no hay que
+   sincronizar dos lugares.
+
+Es una capa de estado sobre el dato fijo, igual que `s.cfuChosen` o
+`s.movedCourses` en la malla: `HORIZONTE.roles/companies/ventures` nunca se
+modifica. Ambos modos de `HORIZONTE` tienen `roles` (antes solo `inspire` lo
+tenía); companies/ventures con selección solo existen en el resumen del modo
+Inspirar (el modo Informar-decidir los muestra como mini-tarjetas con
+descripción, no como chips, así que ahí no llevan "+ Agregar"). Cada entrada
+de `hzGoals` se refleja también en "Próximas actividades recomendadas" de Mi
+Progreso (`v.nextGoals`, ahora recorre la lista entera en vez de leer 3
+valores sueltos) y en la sugerencia de objetivo del CV (`v.cvObjetivoSuggestion`,
+busca la primera entrada `kind:"role"`).
 
 **Conexión con Perfil CoRA.** El cálculo de las 3 dimensiones más altas
 (antes solo corría dentro de la pantalla Mi Perfil CoRA, bajo `showCoraResults`)
@@ -1363,7 +1641,19 @@ dimensiones (`v.perfilTop3Labels`) que ya calcula y muestra Mi Perfil CoRA.
 razón real de volver ("Cursarás X — vuelve a ver cómo conecta con tus
 roles"); si el ciclo es el 6, avisa del cambio de modo Inspirar → Informar
 para Decidir en su lugar. No es una lista de fechas sueltas: si no quedan
-ciclos por delante, la tarjeta no se muestra (`v.hzHasRoadmap`).
+ciclos por delante ni hay recordatorios propios, la tarjeta no se muestra
+(`v.hzHasRoadmap`).
+
+**El roadmap también acepta recordatorios propios (20 ago 2026, extensión
+de "Mi plan profesional").** Debajo de la lista, "+ Agregar tu propio
+recordatorio" abre un mini-formulario de 2 campos en texto libre — "¿Cuándo?"
+y "¿Qué quieres recordar?" (`s.hzNewRoadmap`/`s.hzRoadmapAddOpen`) — porque a
+diferencia de los ciclos que calcula CoRA, un recordatorio propio no
+necesariamente cae en un ciclo del currículo ("Antes de julio", por
+ejemplo). Se guardan en `s.hzRoadmapExtra` y se concatenan a la lista
+calculada (`v.hzRoadmap = curriculumRoadmap.concat(extraRoadmap)`), con una
+insignia verde en vez de morada y su propio botón "×" para quitarlos —
+los del currículo no se pueden quitar, los propios sí.
 
 **Conecta con egresados + Empleabilidad — enlaces reales, nunca perfiles
 puntuales (actualizado 12 ago 2026).** "Alumni en LinkedIn" enlaza a
@@ -1700,6 +1990,57 @@ donde sea que esté el estudiante (`chatOpen:true`) sin cambiar de pantalla
 widget no tiene botón de "pantalla completa": no existe una pantalla propia
 para el Asistente, es solo este widget.
 
+**Los botones "continuar" pegados al fondo de la pantalla dejan un espacio
+para el widget, no se lo tapan (12 ago 2026, corregido).** El botón cerrado
+del Asistente CoRA es `position:fixed;bottom:24px` y mide ~49 px de alto —
+ocupa de los 24 a los ~73 px inferiores de la pantalla, siempre, en
+cualquier sección. Los botones de tipo "Continuar →" que se quedan pegados
+al hacer scroll (`position:sticky`) usaban `bottom:16px`, un valor pensado
+sin tener en cuenta el widget — cuando el estudiante llegaba al final de la
+pantalla, el botón del Asistente (con `z-index:40`, más alto) quedaba
+literalmente encima de la esquina derecha de estos botones, tapando el
+texto y absorbiendo el clic en esa zona. Se subieron los cuatro a
+`bottom:88px`, suficiente para dejar ~15 px libres por encima del widget sin
+importar el ancho de pantalla:
+- Los dos botones de la vista previa de la malla, "🎓 Explorar
+  Extracurriculares" / "Continuar a Ecosistema CIE →" (línea ~927).
+- "Continuar a Ecosistema CIE →" del paso de extracurriculares (línea ~968).
+- "✓ Confirmar malla final →" de Elijo mi Ruta (línea ~1385).
+- `v.ecoCtaStyle`, el botón de Ecosistema CIE ("Continuar malla →" /
+  "🔒 Explora las 5 secciones…").
+
+Si se agrega un nuevo botón sticky pegado al fondo de una pantalla, usar
+`bottom:88px`, no `16px` — ese valor sí choca con el widget.
+
+**Segunda vuelta del mismo bug (12 ago 2026): faltaban todos los botones
+"Continuar →" que NO son sticky — el arreglo de arriba solo cubría los 4
+botones que ya se quedaban pegados al hacer scroll dentro del flujo
+malla/ecosistema.** El resto de la app tiene muchos más botones "Continuar
+a X →" que simplemente son el último elemento de una pantalla larga (Mi
+Perfil CoRA, Veo mi horizonte profesional, Crea mi CV, etc.) — sin
+`position:sticky`, así que la corrección de `bottom:88px` no les aplicaba
+para nada. En esas pantallas, `<main>` tenía el mismo `padding:24px` en los
+cuatro lados; al llegar al final del scroll, ese botón caía exactamente en
+la esquina inferior derecha, tapado por el widget — confirmado con
+`getBoundingClientRect()` en varias pantallas (ej. "Continuar a Crea mi CV"
+en Veo mi horizonte profesional: ~25-49 px de superposición real, no solo
+visual).
+
+La solución esta vez fue en el contenedor compartido, no botón por botón:
+`<main>` (el que envuelve las 15 pantallas) pasó de `padding:24px` a
+`padding:24px 24px 96px` — 96 px libres abajo, en toda la app, de una sola
+vez. Con eso, ningún último elemento de ninguna pantalla llega a ocupar el
+espacio del widget al hacer scroll hasta el final, sea o no sticky. Los 4
+botones sticky de la corrección anterior no se tocaron — `bottom:88px`
+sigue siendo lo correcto para esos, el padding de `<main>` es la capa
+adicional para todo lo demás.
+
+**Nota para verificar este tipo de bug a futuro:** probarlo navegando a
+`CORA App.dc.html` directo (no `pantalla.html`) — el iframe de
+`pantalla.html` puede quedarse con una versión vieja del archivo cacheada
+en el navegador incluso después de guardar cambios, y un chequeo de
+posición hecho sobre esa copia vieja da falsos negativos.
+
 ### Progreso: CoRAzones explicados, insignias y fórmulas (`progreso`)
 
 El sistema de puntos se llama **"CoRAzones"** (💜, ícono `heart` en
@@ -1806,18 +2147,19 @@ La sección `formulario` tiene 2 pantallas propias, controladas por
 la ventanita "Paso 1 de 7" y el breadcrumb. "CoRA va a encontrar tu ruta
 ideal" + el comparador **Opción Rápida vs Opción Detallada** (2 tarjetas con
 hover — `isQuickHover`/`isDetailedHover` — que muestran un tooltip morado
-con el detalle de cada opción) + la caja "¿Qué significa 'Análisis'?".
-Elegir una tarjeta (`pickQuick`/`pickDetailed`) fija `s.formMode`
-("rapida"/"completa") y pasa a la pantalla 2.
+con el detalle de cada opción). Elegir una tarjeta (`pickQuick`/
+`pickDetailed`) fija `s.formMode` ("rapida"/"completa") y pasa a la
+pantalla 2.
 
-**La caja "¿Qué significa 'Análisis'?" quedó reducida a la etiqueta + un
-`Tip` (revisión UX, 11 ago 2026).** Antes tenía dos párrafos fijos siempre
-visibles explicando la diferencia entre lo que cruza el formulario
-detallado y el rápido — texto que un estudiante que vuelve a ver esta
-pantalla (p. ej. tras "Volver a formulario" desde Mis Rutas) no necesita
-releer completo cada vez. Ahora la caja solo muestra "🔍 ¿Qué significa
-'Análisis'?" con un ícono `Tip` al lado que lleva los dos párrafos
-combinados en un solo texto — el dato sigue disponible, a demanda.
+**Qué significa "Análisis" vive en cada tarjeta, no en una caja aparte
+(20 ago 2026).** Antes había una caja fija debajo de las 2 tarjetas ("🔍
+¿Qué significa 'Análisis'?") con un solo `Tip` que combinaba la explicación
+de ambas opciones — obligaba a leer sobre la opción que no te interesaba
+para entender la que sí. Se quitó esa caja y el bullet "Análisis rápido de
+tu perfil" / "Análisis profundo y personalizado" de cada tarjeta ahora lleva
+su propio `Tip`, con solo el párrafo que le corresponde a esa opción (más la
+nota de que se puede cambiar de versión después sin perder respuestas,
+repetida en las dos).
 
 **2. Cuestionario (`showFormQuestionnaire`, `s.formStarted:true`):** arriba,
 un toggle de 2 pestañas — "Versión completa (~5 min)" / "Versión rápida (~2
@@ -1843,18 +2185,56 @@ calcula los flags `isChips`/`isChipsBig`/`isCards`/`isText`/`isTextarea`/
 
 | kind | Qué se ve | Selección |
 |---|---|---|
-| `chips` | Chips en fila, `multi:true` los deja acumular, `multi:false` es única | Fondo lavanda + borde morado (`#faf5ff`/`#7B68EE`) |
-| `chips` + `big:true` | Como chips, pero más grandes (ej. "6 meses" / "1 año") | Igual, con más padding |
+| `chips` | Chips en fila, `multi:true` los deja acumular, `multi:false` es única. Si `multi:true`, se agrega un chip "Otro" al final con campo de texto libre | Fondo lavanda + borde morado (`#faf5ff`/`#7B68EE`) |
+| `chips` + `big:true` | Como chips, pero más grandes (ej. "6 meses" / "1 año") — sin "Otro" (son de selección única) | Igual, con más padding |
 | `cards` | Tarjetas en grilla (`cols`) con un círculo de radio a la izquierda; `centered:true` las centra sin subtítulo | Fondo lavanda + borde morado, círculo relleno |
 | `text` | `<input>` de una línea | — |
 | `textarea` | `<textarea rows="taRows">` | — |
-| `rows` | Lista de actividades, cada una con 2 chips exclusivos "Ya lo hago" (verde éxito) / "Quiero explorarlo" (ámbar aviso) — el id real de cada fila es `q.id + "_" + índice`, no un id de dato aparte | Verde `#f0fdf4`/`#15803d` o ámbar `#fff7ed`/`#b45309` |
+| `rows` | Lista de actividades, cada una con 3 chips exclusivos "Ya lo hago" (verde éxito) / "Quiero explorarlo" (ámbar aviso) / "No me interesa" (gris neutro, agregado 20 ago 2026 — antes solo había opción positiva, sin forma de decir explícitamente que no), se puede volver a dejar sin marcar clickeando la opción activa — el id real de cada fila es `q.id + "_" + índice`, no un id de dato aparte | Verde `#f0fdf4`/`#15803d`, ámbar `#fff7ed`/`#b45309` o gris `#f3f4f6`/`#4b5563` |
 | `info` | Caja informativa azul, sin pregunta | — |
 
-`answer(qid, val, multi)` (ya existía) sirve para chips/cards/filas —
+`answer(qid, val, multi)` (ya existía) sirve para chips/cards —
 `multi:false` siempre reemplaza la selección, igual que un radio button.
-`answerText(qid, val)` (nuevo) guarda strings de `text`/`textarea` tal cual,
-sin arreglos.
+`answerText(qid, val)` guarda strings de `text`/`textarea` tal cual, sin
+arreglos. Las filas (`rows`) usan su propio `answerRow(rid, val)` — ver el
+punto 3 más abajo.
+
+**Cuatro ajustes al formulario (12 ago 2026, a pedido explícito):**
+
+1. **"¿Qué harías aunque no te pagaran?" pasó de selección única a
+   múltiple** — tanto en la versión completa (`sin_pagar`) como en la
+   rápida (`r_sinpagar`, retitulada "¿Qué actividad(es) harías aunque no te
+   pagaran?"). Antes `multi:false` obligaba a elegir solo una actividad
+   desinteresada; ahora se pueden marcar varias, igual que el resto de
+   preguntas de chips de esa pantalla.
+2. **"Otro" en toda pregunta de chips con selección múltiple** — no es un
+   dato más de `q.chips` sino un chip especial que agrega `mapFormQuestions`
+   en tiempo de render (`q.hasOtro = !!q.multi`, nunca en preguntas de
+   selección única: ahí ya hay una opción marcada, no aplica). Al hacer clic
+   se abre un campo de texto libre debajo de los chips (`s.formOtroOpen`); lo
+   que se escribe (`s.formOtro`) se agrega a `formAnswers[qid]` tal cual se
+   teclea — cuenta como una opción elegida más, no un dato aparte que haya
+   que fusionar después (`toggleFormOtro`/`setFormOtro`, nuevos). Cerrar el
+   chip "Otro" saca ese texto de la selección, no deja un valor fantasma sin
+   chip visible que lo represente.
+3. **Bug corregido: en "¿Cuáles de estas actividades te interesan?" (tipo
+   `rows`), una vez marcado "Ya lo hago" o "Quiero explorarlo" no se podía
+   desmarcar.** La causa: los dos botones reusaban `answer(rid, val, false)`,
+   y con `multi:false` esa función siempre reemplaza por `[val]` sin importar
+   que ya fuera el valor actual — nunca vuelve a vaciar el arreglo. Nuevo
+   método dedicado `answerRow(rid, val)`: si el valor clickeado ya era el
+   elegido, lo saca (deja la fila sin marcar); si era el otro, lo reemplaza —
+   sigue siendo una opción u otra, nunca las dos, pero ahora sí se puede
+   volver a "ninguna".
+4. **"¿En qué actividades académicas destacas?" y "¿Qué te cuesta más,
+   incluso con esfuerzo?" ahora comparten el mismo catálogo de 20 rasgos**
+   (`this.ACADEMIC_TRAITS`, class field), la unión de las dos listas
+   separadas que tenía cada pregunta (12 y 9 rasgos, con "Trabajo en equipo"
+   repetido en ambas — deduplicado). Antes un rasgo solo podía vivir en una
+   lista o en la otra (p. ej. "Trabajo en equipo" no podía marcarse como
+   dificultad aunque para algunos estudiantes lo sea); ahora cualquiera de
+   los 20 se puede marcar como fortaleza, como dificultad, o como las dos —
+   sin inventar rasgos nuevos, solo juntando los que ya existían.
 
 ### Invitación al perfil de identidad (Componente 1, al final de la malla)
 
@@ -1907,10 +2287,90 @@ las 3 restantes en gris. El bloque "💡 Recomendaciones para Ti" (fortalezas /
 área de mejora / recursos) también sale de estos puntajes.
 
 **Pendiente (Componente 4, fuera de esta ronda):** facetas del arquetipo
-("Cómo piensas" / "Qué te energiza" / etc.), banner de conexión con la ruta y
-"Compartir mi perfil" no están implementados todavía — el resultado actual
-reutiliza las tarjetas de dimensión, el radar y el bloque de recomendaciones
-que ya existían en la maqueta.
+("Cómo piensas" / "Qué te energiza" / etc.) y banner de conexión con la ruta
+no están implementados todavía — el resultado actual reutiliza las tarjetas
+de dimensión, el radar y el bloque de recomendaciones que ya existían en la
+maqueta.
+
+**"Comparte tu perfil" (20 ago 2026):** tarjeta al final de los resultados,
+antes de "Continuar a Veo mi horizonte profesional →", con dos botones —
+"Descargar en PDF" y "Descargar para LinkedIn" — y una nota aclarando que la
+versión para LinkedIn es una imagen para subir en la sección "Destacado" del
+perfil, y que ambas descargas son una maqueta (mismo patrón de honestidad que
+ya usa la vista previa de "Crea mi CV": "la descarga es una maqueta — en la
+versión real este botón exportaría el archivo real"). Ningún botón tiene
+`onClick` — igual que "Descargar malla PDF" en el cierre de la malla, es un
+elemento visual, no una función real.
+
+**Cartel de bienvenida (`STEPPER["perfil-cora"]`, 20 ago 2026):** ya no
+asume que el cuestionario está hecho. Título "Tus seis dimensiones" + cuerpo
+que nombra el cuestionario, cuántas preguntas son y qué obtienes al
+terminarlo: "Las descubrimos con el cuestionario 18REST: 18 preguntas sobre
+qué tanto te gustaría hacer distintas actividades, que revelan tu perfil. Al
+terminar verás tu código de 3 letras, tu arquetipo y el radar de tus 6
+dimensiones, cada una con recomendaciones concretas. Puedes repetirlo las
+veces que quieras." — "puedes repetirlo las veces que quieras" en vez de
+"vuelve cuando quieras, no es un paso que se termine": más concreto sobre qué
+acción exacta puede repetir el estudiante.
+
+### Franja "Tu Ruta → Tu Perfil → Tu Horizonte" (autoexplicación del recorrido, 20 ago 2026)
+
+El estudiante pasa de la malla a Mi Perfil CoRA y de ahí a Horizonte, y esa
+secuencia no se explicaba sola — el único indicio eran unos avisos "🔗 X vs Y"
+que escondían la frase completa dentro de un `Tip` (hay que pasar el mouse).
+Se resolvió con dos cambios que se pueden leer juntos como una sola mejora:
+
+**1. Franja de 3 pasos, siempre visible.** Un mapa fijo — 📋 Tu Ruta ("Qué vas
+a estudiar") → ✨ Tu Perfil ("Por qué te queda bien") → 🌅 Tu Horizonte ("A
+dónde te puede llevar") — se repite igual, justo debajo del breadcrumb, en las
+4 pantallas de este recorrido: el cierre de la malla (`mallaShowSummary`), el
+cuestionario y los resultados de `perfil-cora` (`showCoraQuiz`/
+`showCoraResults`) y `horizonte`. Se calcula una sola vez por render
+(`rphStep1`/`rphStep2`/`rphStep3` + `rphLink1`/`rphLink2`, justo después de
+`v.isHorizonte` en `renderVals`) a partir de en cuál de las 3 pantallas está
+el estudiante — el paso resaltado (morado sólido, con halo), los ya pasados
+(morado sólido con un ✓ en vez del ícono de la etapa, para que "ya avancé" se
+lea de un vistazo y no solo por el color) y los que faltan (gris, con el
+ícono de la etapa apagado) — y ese mismo objeto se reutiliza tal cual en las
+4 pantallas. No hay componente compartido (este archivo no tiene mecanismo de
+includes de markup, solo `dc-import` para Icon/Tip): el bloque HTML se repite
+igual en cada `sc-if`, como ya pasa con el breadcrumb "✨ Explora CoRA".
+
+⚠️ Ojo con `v.mallaShowSummary` al calcular `rphActive`: ese flag es
+`s.mallaDone` a secas, así que se queda en `true` para siempre una vez
+terminada la malla, sin importar en qué pantalla estés después (Perfil,
+Horizonte...). El paso activo de la franja se calcula como
+`(on("malla") && v.mallaShowSummary) ? 0 : v.isPerfilCora ? 1 : v.isHorizonte ? 2 : -1`
+— la comprobación `on("malla")` adicional es la que evita que el paso 1 se
+quede pegado como "activo" para siempre después de terminar la malla.
+
+**2. Los avisos "🔗 X vs Y" ya no dependen del hover.** Se reescribieron
+"PERFIL CoRA vs HORIZONTE" (en los resultados del cuestionario) y "RUTA vs
+HORIZONTE" (en Horizonte) para que la frase completa esté siempre en el
+párrafo, sin el ícono `Tip` que antes escondía la mitad del mensaje:
+"Tu Perfil CoRA es quién eres hoy... El siguiente paso es tu Horizonte..." y
+"Tu Ruta te dice qué vas a estudiar. Tu Horizonte te muestra los trabajos a
+los que esa ruta te lleva — por eso van juntos." Conviven sin duplicar con los
+mensajes que ya existían en Horizonte (`hzProfileConnect` cuando el perfil ya
+está listo, o el CTA "Ir a Mi Perfil CoRA →" cuando falta) — esos siguen
+igual, son el detalle personalizado; la franja y los avisos reescritos son el
+mapa general.
+
+### De dónde salen las preguntas del Perfil CoRA (20 ago 2026)
+
+El respaldo real del cuestionario (18REST, Ambiel et al., 2018 — adaptación
+breve del modelo RIASEC de Holland) ya estaba citado en un comentario del
+código desde antes, pero nunca se mostraba en la pantalla: el estudiante no
+tenía forma de saber que las 18 preguntas no son un invento de CoRA. Ahora
+`showCoraResults` incluye una caja fija (fondo lavanda, borde punteado, antes
+del aviso "PERFIL CoRA vs HORIZONTE") con "¿De dónde salen tus respuestas?" y
+esa misma cita en lenguaje llano (`v.coraSourceNote`). Cuando el código de 3
+letras no tiene arquetipo exacto y cae en el comodín "El explorador con
+identidad propia" (`v.coraIsDefaultArchetype`, comparado contra
+`ARCHETYPES.default`), se agrega una segunda frase (`v.coraSourceExtra`)
+aclarando que no tener 3 dimensiones claramente dominantes es un resultado
+igual de válido dentro del mismo test — no una falla del cuestionario ni un
+dato inventado para rellenar el hueco.
 
 ### Avatar personalizable (`perfil`, compartido con el header global)
 
