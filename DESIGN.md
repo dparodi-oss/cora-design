@@ -143,7 +143,17 @@ Escala de 2 px, concentrada en pocos valores.
 - **`padding` de tarjeta:** `20` px estándar, `24` px en tarjetas amplias,
   `16` px en compactas.
 - **`padding` de página (`<main>`):** `24` px.
-- **`margin-bottom` entre tarjetas:** `16` px.
+- **`margin-bottom` entre tarjetas:** `16` px. **Cumplido en todo el archivo
+  desde el 21 ago 2026** — una revisión encontró 25 tarjetas repartidas en
+  8 pantallas (Inicio, Mis Rutas, Ecosistema CIE, Elijo mi Ruta, Mi Perfil
+  CoRA, Horizonte, Crea mi CV, Acompañamiento) que habían quedado en `20px`
+  o `24px` en distintas rondas de edición, sin ninguna razón de diseño —
+  simple arrastre. Esas pantallas se veían más largas que el resto solo por
+  esa acumulación de espacio de más entre tarjetas, no por tener más
+  contenido. Se normalizaron todas a `16px`. (Las franjas de leyenda —
+  `border-radius:12px`, ver "Patrones de componente" — son un componente
+  distinto a la tarjeta y mantienen su propio espaciado de `20px`, no forman
+  parte de esta regla.)
 
 ### 3.4 Radio de borde
 
