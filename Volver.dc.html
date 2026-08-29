@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/corav2-9d4988f6-df57-40ac-b271-8f4451a55acf/styles.css">
+</helmet>
+<button onClick="{{ onClick }}" style="display:flex;align-items:center;gap:6px;background:none;border:0;padding:0;margin-bottom:16px;cursor:pointer;color:#7B68EE;font-size:12px;font-family:inherit" style-hover="text-decoration:underline">
+  <dc-import name="Icon" i="chevron-left" s="13" hint-size="13px,13px"></dc-import>
+  {{ label }}
+</button>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:160,&quot;height&quot;:24},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Volver&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onClick&quot;:{&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      label: this.props.label ?? "Volver",
+      onClick: this.props.onClick ?? (() => {})
+    };
+  }
+}
+</script>
+</body>
+</html>

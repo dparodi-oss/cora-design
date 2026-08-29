@@ -129,8 +129,9 @@ Dos familias, cargadas desde Google Fonts en el `<helmet>`:
 **Pesos:** `500` (normal enfatizado), `600` (semi), `700` (títulos y botones),
 `900` (solo cifras heroicas). No se usa `400` explícito ni `800`.
 
-Los encabezados de grupo de la barra lateral van a `9px`, `700`,
-`text-transform:uppercase`, `letter-spacing:.1em`, color `#9ca3af`.
+Los encabezados de grupo de la barra lateral van a `12px`, `700`,
+`text-transform:uppercase`, `letter-spacing:.1em`, color `#6b7280` (subido
+desde `9px`/`#9ca3af` — GLOBAL-02, Fase 0: era muy tenue para leerse cómodo).
 
 > En elementos `<button>` hay que repetir `font-family:inherit`: el navegador no
 > hereda la fuente en controles de formulario.
@@ -342,35 +343,25 @@ a salto — Crea mi CV → Horizonte → Mi Perfil CoRA → Elijo mi Ruta (Malla
 Estilo: gris igual que antes, morado + subrayado al pasar el mouse, para que
 se note que ahora es clicable sin cambiar cómo se ve por defecto.
 
-### Popup de bienvenida: qué es CoRA (11 ago 2026)
+### Popup de bienvenida: qué es CoRA — retirado, fusionado con la Guía (27 ago 2026)
 
-Antes de que el estudiante toque nada en Inicio, aparece un popup grande y
-único explicando **qué es CoRA** — distinto de la "Guía" de 4 pasos que ya
-existía (`ONBOARDING`, botón "Guía" del header): esa explica **cómo se usa**
-la plataforma paso a paso (orden del recorrido, herramientas del día a día,
-el Asistente CoRA); este nuevo popup explica la misión antes de eso, sin
-que el estudiante tenga que abrirlo — aparece solo.
+Hubo, entre el 11 y el 27 de agosto de 2026, un popup aparte explicando
+**qué es CoRA** antes de la "Guía" de 4 pasos (`ONBOARDING`, botón "Guía"
+del header). Se retiró a pedido del diseñador: aparecía siempre antes de la
+Guía sin importar qué botón tocara el estudiante, así que eran dos popups
+seguidos para decir, en el fondo, una sola cosa. Su texto de "qué es CoRA"
+pasó a ser el primer paso de `ONBOARDING` (antes un paso genérico de
+"vamos a hacer un recorrido"), y ahora la Guía se dispara sola la primera
+vez que se llega a Inicio (`v.onboardShow` ya no depende de un flag previo
+tipo `seenIntro` — dispara directo con `on("inicio")`).
 
-- **Cuándo aparece:** `v.showIntroModal = on("inicio") && !s.seenIntro`.
-  Se muestra la primera vez que se llega a Inicio en la sesión (`s.seenIntro`
-  arranca en `false`) y nunca más — ni volviendo a Inicio, ni cerrando
-  sesión y entrando de nuevo (no se resetea, mismo patrón que
-  `s.hasVisitedBefore` para el saludo de la pantalla de elección).
-- **Contenido:** logo de CoRA, "¡Bienvenido a CoRA! 👋", dos frases (qué es
-  CoRA — sistema de recomendación y acompañamiento académico y profesional
-  para estudiantes de la Universidad Continental — y qué se puede hacer acá
-  — explorar y descubrir, según tus intereses y necesidades, rutas,
-  asignaturas y recomendaciones), y una grilla de 2×2 con los mismos 4
-  grupos del sidebar (`v.introPillars` — 🟣 Crea tu Ruta, ✨ Explora CoRA,
-  📚 CoRA Académico, ⚙️ Ajustes, cada uno con una frase de 1 línea) — no
-  inventa un mapa nuevo, resume el que ya existe en el menú.
-- **Dos salidas, nunca una sola:** "🟣 Empezar con CoRA me conoce →"
-  (`v.introStart`, botón protagonista con sombra) marca `seenIntro:true` Y
-  navega directo a `formulario` — para el estudiante que quiere que el
-  sistema lo guíe ya mismo, como pidió el diseñador. "Explorar por mi
-  cuenta" (`v.introDismiss`, enlace chico) solo cierra el popup y deja al
-  estudiante en Inicio, sin forzar el recorrido guiado a quien prefiere
-  mirar por su cuenta primero.
+- **Auto-scroll del resaltado (27 ago 2026):** el menú lateral tiene su
+  propio scroll (`<nav style="overflow-y:auto">`), y el grupo "📚 CoRA
+  Académico" —el último— quedaba tapado por el propio popup en pantallas
+  no muy altas. Al avanzar de paso con "Siguiente" (`v.onboardNext`), si el
+  paso siguiente resalta un grupo (`config`/`reco`/`aca`), se llama
+  `scrollIntoView` sobre ese grupo (`id="onboard-hl-<grupo>"`) para que
+  quede visible antes de que el estudiante lo busque.
 
 ### Inicio: dashboard con 2 estados (inicial / completo)
 
