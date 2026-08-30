@@ -144,7 +144,7 @@
             </button>
             <button onClick="{{ landingGoRoute }}" style="width:100%;text-align:left;background:#fff;border:2px solid #e5e7eb;border-radius:16px;padding:14px 18px;cursor:pointer;font-family:inherit" style-hover="background:#f9fafb">
               <span style="display:block;font-family:Poppins,sans-serif;font-size:15px;font-weight:700;color:#1A1040">Ver mi ruta de conocimiento en {{ landingRouteLabel }}</span>
-              <span style="display:block;font-size:12px;color:#6b7280;margin-top:2px">Tu ruta de conocimiento activa, creada el {{ landingRouteCreatedLabel }}.</span>
+              <span style="display:block;font-size:12px;color:#6b7280;margin-top:2px">Tu ruta de conocimiento, creada el {{ landingRouteCreatedLabel }}.</span>
             </button>
             <button onClick="{{ landingCreateRoute }}" style="width:100%;text-align:left;background:#fff;border:2px dashed #d1d5db;border-radius:16px;padding:14px 18px;cursor:pointer;font-family:inherit" style-hover="background:#f9fafb;border-color:#7B68EE">
               <span style="display:block;font-family:Poppins,sans-serif;font-size:15px;font-weight:700;color:#4b5563">+ Crear una nueva ruta de conocimiento</span>
@@ -467,10 +467,6 @@
                 </div>
               </sc-for>
             </div>
-            <div style="background:#faf5ff;border:1px solid #f3e8ff;border-radius:16px;padding:16px;text-align:left">
-              <p style="font-size:12px;font-weight:600;color:#7B68EE;margin:0 0 4px">💡 ¿Sabías que?</p>
-              <p style="font-size:12px;color:#4b5563;margin:0">El 87% de estudiantes que usan CoRA completo logran mejores decisiones académicas.</p>
-            </div>
           </div>
         </div>
       </sc-if>
@@ -614,7 +610,7 @@
             <!-- ===== Explora todo CoRA: el mapa completo, agrupado igual que el sidebar ===== -->
             <div style="margin-bottom:24px">
               <p style="font-size:12px;font-weight:700;color:#1A1040;margin:0 0 4px">🗺️ Explora todo CoRA</p>
-              <p style="font-size:11px;color:#9ca3af;margin:0 0 14px">Lo atenuado con candado se activa a medida que avanzas, también puedes navegar desde el menú de la izquierda.</p>
+              <p style="font-size:11px;color:#9ca3af;margin:0 0 14px">Lo atenuado con candado se activa a medida que avanzas. También puedes navegar desde el menú de la izquierda.</p>
               <sc-for list="{{ dashGroups }}" as="grp" hint-placeholder-count="2">
                 <p style="font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;margin:0 0 8px">{{ grp.label }}</p>
                 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:16px">
@@ -666,7 +662,7 @@
 
             <!-- ===== Qué es CoRA (condensado) ===== -->
             <div style="background:linear-gradient(to bottom right,#faf5ff,#eef2ff);border:1px solid #f3e8ff;border-radius:16px;padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
-              <p style="font-size:12px;color:#4b5563;margin:0;flex:1;min-width:200px"><strong style="color:#1A1040">CoRA:</strong> tu acompañante académico, no un catálogo de carreras.</p>
+              <p style="font-size:12px;color:#4b5563;margin:0;flex:1;min-width:200px">Ya elegiste tu carrera; <strong style="color:#1A1040">CoRA</strong> te acompaña en ella.</p>
               <div style="display:flex;gap:16px;flex-wrap:wrap">
                 <span style="font-size:11px;color:#4b5563;display:flex;align-items:center;gap:5px">🧭 Te orienta</span>
                 <span style="font-size:11px;color:#4b5563;display:flex;align-items:center;gap:5px">📈 Te anticipa</span>
@@ -707,8 +703,8 @@
                 <dc-import name="Icon" i="compass" s="22" c="#ffffff" hint-size="22px,22px"></dc-import>
               </div>
               <div>
-                <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:1.25;font-weight:700;color:#1A1040;margin:0">CoRA va a encontrar tu ruta de conocimiento ideal</h1>
-                <p style="color:#6b7280;font-size:14px;margin:4px 0 0">Cuéntanos sobre ti para personalizar tu experiencia académica completa.</p>
+                <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:1.25;font-weight:700;color:#1A1040;margin:0">Encontremos tu ruta de conocimiento</h1>
+                <p style="color:#6b7280;font-size:14px;margin:4px 0 0">Cuéntanos sobre ti para armar tu ruta de conocimiento.</p>
               </div>
             </div>
             <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#9ca3af;margin-bottom:28px">
@@ -716,7 +712,7 @@
               <span>Se guarda automáticamente · Puedes pausar y continuar en cualquier momento</span>
             </div>
 
-            <p style="font-size:13px;color:#4b5563;margin:0 0 12px;line-height:1.65">Elige cómo quieres que CoRA te conozca. <strong style="color:#1A1040">El rápido no es un resumen del detallado</strong>: cruza menos variables de tu perfil, así que sus recomendaciones son más generales: úsalo para un primer vistazo, no para decidir tu ruta de conocimiento final.</p>
+            <p style="font-size:13px;color:#4b5563;margin:0 0 12px;line-height:1.65">Elige cómo quieres que CoRA te conozca. <strong style="color:#1A1040">El rápido no es un resumen del detallado</strong>: cruza menos variables de tu perfil, así que sus recomendaciones son más generales. Úsalo para un primer vistazo, no para decidir tu ruta de conocimiento final.</p>
             <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;margin-bottom:24px">
               <div style="position:relative" onMouseEnter="{{ hoverQuick }}" onMouseLeave="{{ hoverNone }}">
                 <span style="position:absolute;top:-10px;left:16px;z-index:5;width:22px;height:22px;background:#9ca3af;color:#fff;border-radius:9999px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;box-shadow:0 1px 3px 0 rgba(0,0,0,.2)">1</span>
@@ -725,7 +721,7 @@
                   <h3 style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:16px;margin:0 0 4px">Opción Rápida</h3>
                   <p style="font-size:12px;color:#9ca3af;margin:0 0 12px">6 preguntas concisas</p>
                   <ul style="list-style:none;padding:0;margin:0 0 16px;display:flex;flex-direction:column;gap:6px">
-                    <li style="display:flex;align-items:center;gap:6px;font-size:12px;color:#4b5563"><dc-import name="Icon" i="check" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Análisis rápido de tu perfil<dc-import name="Tip" text="El rápido no cruza tantas variables de tu perfil como el detallado: con 6 preguntas en una sola pantalla te da una orientación general — sirve para curiosear, no para tu decisión final. Puedes cambiar de versión más adelante sin perder tus respuestas." hint-size="13px,13px"></dc-import></li>
+                    <li style="display:flex;align-items:center;gap:6px;font-size:12px;color:#4b5563"><dc-import name="Icon" i="check" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Análisis rápido de tu perfil<dc-import name="Tip" text="El rápido no cruza tantas variables de tu perfil como el detallado: con 6 preguntas en una sola pantalla te da una orientación general, sirve para curiosear, no para tu decisión final. Puedes cambiar de versión más adelante sin perder tus respuestas." hint-size="13px,13px"></dc-import></li>
                     <li style="display:flex;align-items:center;gap:8px;font-size:12px;color:#4b5563"><dc-import name="Icon" i="check" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Recomendaciones básicas</li>
                     <li style="display:flex;align-items:center;gap:8px;font-size:12px;color:#4b5563"><dc-import name="Icon" i="check" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Acceso a malla y Horizonte</li>
                   </ul>
@@ -1677,7 +1673,7 @@
               </sc-if>
               <span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:#4A3FA0;background:#faf5ff;border-radius:9999px;padding:3px 10px">📘 {{ planLabel }}</span>
             </div>
-            <dc-import name="Tip" text="Las asignaturas de la ruta de conocimiento que elegiste se ven con borde morado grueso, fondo lleno y la insignia '🧭 Tu ruta': mucho más resaltadas que el resto. Cada ciclo tiene un máximo de 25 créditos de malla curricular. Puedes agregar todos los extracurriculares que quieras al final de cada ciclo: elige uno de la lista y confirma, nunca se agregan solos y no cuentan para ese máximo ni para tus créditos de carrera." hint-size="14px,14px"></dc-import>
+            <dc-import name="Tip" text="Las asignaturas de la ruta de conocimiento que elegiste se ven con borde morado grueso, fondo lleno y la insignia '🧭 Tu ruta': mucho más resaltadas que el resto. Cada ciclo tiene un máximo de 25 créditos de malla curricular. Puedes agregar todos los extracurriculares que quieras al final de cada ciclo: elige uno de la lista y confirma. Nunca se agregan solos ni cuentan para ese máximo ni para tus créditos de carrera." hint-size="14px,14px"></dc-import>
           </div>
           <!-- MALLA-01: hace visible, antes de que el estudiante empiece a
                revisar los ciclos, que esto se puede personalizar: 3
@@ -1789,7 +1785,7 @@
           <sc-if value="{{ mallaShowRouteInfo }}" hint-placeholder-val="{{ true }}">
             <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:16px 20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
               <p style="font-family:Poppins,sans-serif;font-weight:700;color:#1A1040;font-size:14px;margin:0 0 4px">⭐ Tus electivos del Ecosistema CIE</p>
-              <p style="font-size:11px;color:#9ca3af;margin:0 0 10px">Agregas los que quieras, sin límite: eliges uno por uno y confirmas; no se suman solos ni cuentan para los {{ mallaTotalCredits }} créditos de tu carrera.</p>
+              <p style="font-size:11px;color:#9ca3af;margin:0 0 10px">Agregas los que quieras, sin límite: eliges uno por uno y confirmas. No se suman solos ni cuentan para los {{ mallaTotalCredits }} créditos de tu carrera.</p>
               <sc-if value="{{ hasChosenElectives }}" hint-placeholder-val="{{ false }}">
                 <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px">
                   <sc-for list="{{ chosenElectives }}" as="e" hint-placeholder-count="3">
@@ -3229,9 +3225,9 @@
           <dc-import name="Volver" label="Volver al Dashboard" onClick="{{ goBack }}" hint-size="140px,20px"></dc-import>
           <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
             <span style="white-space:nowrap">📚 CoRA Académico</span>
-            <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Práctico para examen</span></span>
+            <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Practico para mi examen</span></span>
           </nav>
-          <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:32px;font-weight:700;color:#1A1040;margin:0 0 4px">📝 Práctico para mi Examen</h1>
+          <h1 style="font-family:Poppins,sans-serif;font-size:24px;line-height:32px;font-weight:700;color:#1A1040;margin:0 0 4px">📝 Practico para mi Examen</h1>
           <p style="color:#6b7280;font-size:14px;margin:0 0 24px">Prepárate con simulacros basados en exámenes reales.</p>
 
           <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
@@ -3360,7 +3356,7 @@
         <div>
           <nav style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;margin-bottom:24px;flex-wrap:wrap">
             <span style="white-space:nowrap">📚 CoRA Académico</span>
-            <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import>Práctico</span>
+            <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import>Practico</span>
             <span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><dc-import name="Icon" i="chevron-right" s="12" hint-size="12px,12px"></dc-import><span style="color:#7B68EE;font-weight:600">Resultados</span></span>
           </nav>
           <div style="text-align:center;margin-bottom:28px">
@@ -3547,7 +3543,7 @@
                 <li style="display:flex;align-items:center;gap:8px"><dc-import name="Icon" i="check-circle" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Responder dudas académicas</li>
                 <li style="display:flex;align-items:center;gap:8px"><dc-import name="Icon" i="check-circle" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Explicar conceptos difíciles</li>
                 <li style="display:flex;align-items:center;gap:8px"><dc-import name="Icon" i="check-circle" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Guiarte en tu perfil y rutas de conocimiento</li>
-                <li style="display:flex;align-items:center;gap:8px"><dc-import name="Icon" i="check-circle" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Disponible 24/7: Respuesta inmediata</li>
+                <li style="display:flex;align-items:center;gap:8px"><dc-import name="Icon" i="check-circle" s="11" c="#22c55e" hint-size="11px,11px"></dc-import>Respuesta inmediata, 24/7</li>
               </ul>
             </div>
             <div style="background:linear-gradient(to right,#eff6ff,#faf5ff);border:1px solid #f3e8ff;border-radius:16px;padding:16px">
@@ -4613,7 +4609,7 @@ class Component extends DCLogic {
     { em:"👋", title:"¡Bienvenido a CoRA!", body:"CoRA es tu sistema de recomendación y acompañamiento académico y profesional para estudiantes de la Universidad Continental. Te mostramos las 3 partes de la plataforma: puedes saltar esto cuando quieras y volver a verlo después desde \"Guía\", arriba de la pantalla.", highlight:null },
     { em:"🟣", title:"Crea tu Ruta de Conocimiento", body:"CoRA me conoce, Mis Rutas de Conocimiento, Ecosistema CIE y Elijo mi Ruta de Conocimiento: 4 pasos, uno a la vez, que arman tu ruta de conocimiento personalizada.", highlight:"config" },
     { em:"✨", title:"Explora CoRA", body:"Tu Perfil de identidad, tu horizonte profesional y tu CV: para conocerte mejor y ver hacia dónde te puede llevar tu carrera.", highlight:"reco" },
-    { em:"📚", title:"CoRA Académico", body:"Acompañamiento, Tutor CoRA, Práctico y Flashcards: las herramientas que usas semana a semana durante el ciclo.", highlight:"aca" }
+    { em:"📚", title:"CoRA Académico", body:"Acompañamiento, Tutor CoRA, Practico y Flashcards: las herramientas que usas semana a semana durante el ciclo.", highlight:"aca" }
   ];
 
   /* Ventanita tipo stepper de cada sección del recorrido. */
@@ -5478,7 +5474,7 @@ class Component extends DCLogic {
       practico: "Simulacros de examen por asignatura y tema, con revisión pregunta por pregunta.",
       flashcards: "Tarjetas de estudio para memorizar conceptos clave de tus asignaturas."
     };
-    v.navAca = [["acompanamiento","life-buoy","Acompañamiento Académico"],["tutor","phone-idea","Tutor CoRA"],["practico","edit","Práctico para examen"],["flashcards","layers","Mis flashcards"]]
+    v.navAca = [["acompanamiento","life-buoy","Acompañamiento Académico"],["tutor","phone-idea","Tutor CoRA"],["practico","edit","Practico para mi examen"],["flashcards","layers","Mis flashcards"]]
       .map(a => Object.assign(this.navItem(a[0], a[1], a[2]), {
         infoText: ACA_INFO[a[0]],
         showInfoTip: s.acaTipId === a[0],

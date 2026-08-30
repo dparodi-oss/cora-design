@@ -67,7 +67,7 @@ var CORA_SCREENS = [
     requiere: 'acompanamiento'
   },
   {
-    id: 'practico', emoji: '📝', label: 'Práctico para examen', group: '📚 Académico',
+    id: 'practico', emoji: '📝', label: 'Practico para mi examen', group: '📚 Académico',
     desc: 'Generador de simulacros: se elige asignatura, temas y dificultad, y al terminar se revisa pregunta por pregunta.',
     requiere: 'acompanamiento'
   },
