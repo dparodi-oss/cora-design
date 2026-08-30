@@ -155,6 +155,14 @@
       </sc-if>
     </div>
 
+    <!-- LAND-02b (29 ago 2026, a pedido explícito): video real de la
+         experiencia completa, debajo del cuadro de decisión — no en el
+         hero, para no competir con la primera acción que tiene que tomar
+         el estudiante. -->
+    <div style="max-width:640px;margin:0 auto 64px;padding:0 24px">
+      <video src="./assets/cora-experiencia.mp4" autoplay="autoplay" muted="muted" loop="loop" playsinline="playsinline" controls="controls" style="width:100%;display:block;border-radius:16px;box-shadow:0 20px 35px -10px rgba(123,104,238,.25)"></video>
+    </div>
+
     <!-- LAND-04: las 4 áreas, siempre visibles debajo de la tarjeta de
          decisión (primera visita o de vuelta). -->
     <div style="background:#fff;border-top:1px solid rgba(243,232,255,.6);padding:56px 24px">
@@ -513,6 +521,36 @@
                   </sc-if>
                   <sc-if value="{{ dashRouteReady }}" hint-placeholder-val="{{ false }}">
                     <span style="font-size:11px;font-weight:700;color:#15803d;background:#dcfce7;border-radius:9999px;padding:4px 10px">✓ Crea tu Ruta completa</span>
+                  </sc-if>
+                </div>
+              </div>
+              <!-- Segunda dona, "Mi Perfil" (29 ago 2026, a pedido explícito):
+                   mismo trato visual que "Armando tu ruta de conocimiento",
+                   sobre Mi Perfil CoRA / Horizonte / CV. Apagada y sin botón
+                   mientras la ruta no esté lista (esos 3 pasos ni se pueden
+                   abrir todavía). -->
+              <div style="{{ dashPerfilWrapStyle }}">
+                <div style="position:relative;width:96px;height:96px;flex-shrink:0">
+                  <svg viewBox="0 0 100 100" width="96" height="96">
+                    <circle cx="50" cy="50" r="42" fill="none" stroke="#f3f4f6" stroke-width="10"></circle>
+                    <circle cx="50" cy="50" r="42" fill="none" stroke="#9333ea" stroke-width="10" stroke-linecap="round" stroke-dasharray="{{ dashPerfilDonutDash }}" transform="rotate(-90 50 50)"></circle>
+                  </svg>
+                  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+                    <span style="font-family:Poppins,sans-serif;font-size:18px;font-weight:800;color:#1A1040">{{ dashPerfilDonutPct }}</span>
+                  </div>
+                </div>
+                <div>
+                  <p style="font-size:12px;font-weight:700;color:#1A1040;margin:0 0 6px">{{ dashPerfilLabel }}</p>
+                  <sc-if value="{{ dashPerfilLocked }}" hint-placeholder-val="{{ false }}">
+                    <p style="font-size:11px;color:#9ca3af;margin:0">Se activa al completar tu ruta</p>
+                  </sc-if>
+                  <sc-if value="{{ !dashPerfilLocked }}" hint-placeholder-val="{{ true }}">
+                    <sc-if value="{{ dashPerfilNotReady }}" hint-placeholder-val="{{ true }}">
+                      <button onClick="{{ dashPerfilNextStepGo }}" style="font-size:12px;font-weight:600;color:#fff;background:#9333ea;border:0;border-radius:9999px;padding:7px 14px;cursor:pointer;font-family:inherit" style-hover="background:#7e22ce">Sigue con: {{ dashPerfilNextStepLabel }} →</button>
+                    </sc-if>
+                    <sc-if value="{{ dashPerfilReady }}" hint-placeholder-val="{{ false }}">
+                      <span style="font-size:11px;font-weight:700;color:#6b21a8;background:#f3e8ff;border-radius:9999px;padding:4px 10px">✓ Explora CoRA completo</span>
+                    </sc-if>
                   </sc-if>
                 </div>
               </div>
@@ -5658,6 +5696,27 @@ class Component extends DCLogic {
     const nextConfigId = dashConfigIds.find(id => !s.completed.includes(id));
     v.dashNextStepLabel = nextConfigId ? this.NAMES[nextConfigId] : "";
     v.dashNextStepGo = () => this.nav(nextConfigId || "formulario");
+
+    /* Segunda dona, "Mi Perfil" (29 ago 2026, a pedido explícito): mismo
+       trato que "Armando tu ruta de conocimiento", pero sobre el otro
+       trámite de 3 pasos — Mi Perfil CoRA / Horizonte / CV (mismo recoIds
+       que usa Mi Progreso para "✨ Explora CoRA"). Antes de terminar la
+       ruta, estos 3 pasos ni siquiera se pueden abrir (su REQ real es
+       "malla"), así que se muestra apagada, sin botón, con una nota de qué
+       falta — nunca invita a un choque con "Acceso Bloqueado". */
+    const perfilIds = ["perfil-cora","horizonte","cv"];
+    const perfilDone = perfilIds.filter(id => s.completed.includes(id)).length;
+    v.dashPerfilReady = perfilDone === perfilIds.length;
+    v.dashPerfilNotReady = !v.dashPerfilReady;
+    v.dashPerfilLocked = !v.dashRouteReady;
+    v.dashPerfilWrapStyle = { display:"flex", alignItems:"center", gap:"16px", opacity: v.dashPerfilLocked ? .5 : 1 };
+    const perfilPct = perfilDone / perfilIds.length;
+    v.dashPerfilDonutDash = (perfilPct * C_DASH).toFixed(1) + " " + C_DASH.toFixed(1);
+    v.dashPerfilDonutPct = Math.round(perfilPct * 100) + "%";
+    v.dashPerfilLabel = "Mi Perfil";
+    const nextPerfilId = perfilIds.find(id => !s.completed.includes(id));
+    v.dashPerfilNextStepLabel = nextPerfilId ? this.NAMES[nextPerfilId] : "";
+    v.dashPerfilNextStepGo = () => this.nav(nextPerfilId || "perfil-cora");
 
     /* Línea de historial: promedio POR CICLO (no las 9 notas sueltas, que
        se ven ruidosas) — 3 puntos reales de this.TAKEN. Disponible en los
