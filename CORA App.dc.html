@@ -119,34 +119,34 @@
     <!-- LAND-03 (sin ruta) / LAND-06 (con ruta) — nunca las dos a la vez. -->
     <div style="max-width:480px;margin:0 auto 64px;padding:0 24px">
       <sc-if value="{{ landingNoRoute }}" hint-placeholder-val="{{ true }}">
-        <div style="background:#fff;border-radius:24px;padding:28px;box-shadow:0 25px 50px -12px rgba(123,104,238,.15);text-align:center;box-sizing:border-box">
-          <p style="font-size:13px;color:#9ca3af;margin:0 0 20px">¿Qué quieres hacer primero?</p>
+        <div style="background:linear-gradient(135deg,#7B68EE,#6A58DC);border-radius:24px;padding:32px 28px;box-shadow:0 25px 50px -12px rgba(123,104,238,.4);text-align:center;box-sizing:border-box">
+          <p style="font-family:Poppins,sans-serif;font-size:22px;font-weight:800;color:#fff;margin:0 0 24px">¿Qué quieres hacer primero?</p>
           <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px">
-            <button onClick="{{ landingCreateRoute }}" style="width:100%;text-align:left;background:#fff;border:2px solid #e5e7eb;border-radius:16px;padding:14px 18px;cursor:pointer;font-family:inherit;transition:border-color .15s,background .15s" style-hover="background:#faf5ff;border-color:#7B68EE">
+            <button onClick="{{ landingCreateRoute }}" style="width:100%;text-align:left;background:#fff;border:2px solid transparent;border-radius:16px;padding:14px 18px;cursor:pointer;font-family:inherit;transition:border-color .15s,background .15s" style-hover="background:#faf5ff;border-color:#1A1040">
               <span style="display:block;font-family:Poppins,sans-serif;font-size:15px;font-weight:700;color:#1A1040">🟣 Crear mi primera ruta de conocimiento</span>
               <span style="display:block;font-size:12px;color:#6b7280;margin-top:2px">Responde unas preguntas y CoRA te recomienda tu ruta de conocimiento.</span>
             </button>
-            <button onClick="{{ landingGoInicio }}" style="width:100%;text-align:left;background:#fff;border:2px solid #e5e7eb;border-radius:16px;padding:14px 18px;cursor:pointer;font-family:inherit;transition:border-color .15s,background .15s" style-hover="background:#faf5ff;border-color:#7B68EE">
+            <button onClick="{{ landingGoInicio }}" style="width:100%;text-align:left;background:#fff;border:2px solid transparent;border-radius:16px;padding:14px 18px;cursor:pointer;font-family:inherit;transition:border-color .15s,background .15s" style-hover="background:#faf5ff;border-color:#1A1040">
               <span style="display:block;font-family:Poppins,sans-serif;font-size:15px;font-weight:700;color:#1A1040">✨ Explorar CoRA</span>
               <span style="display:block;font-size:12px;color:#6b7280;margin-top:2px">Mira el resto de la plataforma primero, sin crear tu ruta de conocimiento todavía.</span>
             </button>
           </div>
-          <button onClick="{{ landingGoInicio }}" style="background:none;border:0;color:#9ca3af;font-size:12px;cursor:pointer;font-family:inherit;padding:0" style-hover="color:#6b7280;text-decoration:underline">Decidir después</button>
+          <button onClick="{{ landingGoInicio }}" style="background:none;border:0;color:rgba(255,255,255,.75);font-size:12px;cursor:pointer;font-family:inherit;padding:0" style-hover="color:#fff;text-decoration:underline">Decidir después</button>
         </div>
       </sc-if>
       <sc-if value="{{ landingHasRoute }}" hint-placeholder-val="{{ false }}">
-        <div style="background:#fff;border-radius:24px;padding:28px;box-shadow:0 25px 50px -12px rgba(123,104,238,.15);text-align:center;box-sizing:border-box">
-          <p style="font-size:14px;font-weight:600;color:#1A1040;margin:0 0 20px">Bienvenido de nuevo. ¿Qué quieres hacer?</p>
+        <div style="background:linear-gradient(135deg,#7B68EE,#6A58DC);border-radius:24px;padding:32px 28px;box-shadow:0 25px 50px -12px rgba(123,104,238,.4);text-align:center;box-sizing:border-box">
+          <p style="font-family:Poppins,sans-serif;font-size:22px;font-weight:800;color:#fff;margin:0 0 24px">Bienvenido de nuevo. ¿Qué quieres hacer?</p>
           <div style="display:flex;flex-direction:column;gap:12px">
-            <button onClick="{{ landingGoInicio }}" style="width:100%;text-align:left;background:#7B68EE;color:#fff;border:0;border-radius:16px;padding:14px 18px;cursor:pointer;font-family:inherit;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff" style-hover="background:#6A58DC">
+            <button onClick="{{ landingGoInicio }}" style="width:100%;text-align:left;background:#1A1040;color:#fff;border:0;border-radius:16px;padding:14px 18px;cursor:pointer;font-family:inherit;box-shadow:0 10px 15px -3px rgba(0,0,0,.25),0 4px 6px -4px rgba(0,0,0,.25)" style-hover="background:#2d1b69">
               <span style="display:block;font-family:Poppins,sans-serif;font-size:15px;font-weight:700">Ir a mi Dashboard →</span>
-              <span style="display:block;font-size:12px;color:rgba(255,255,255,.85);margin-top:2px">Continúa donde lo dejaste: tu ruta de conocimiento, tu progreso y tus pendientes.</span>
+              <span style="display:block;font-size:12px;color:rgba(255,255,255,.75);margin-top:2px">Continúa donde lo dejaste: tu ruta de conocimiento, tu progreso y tus pendientes.</span>
             </button>
-            <button onClick="{{ landingGoRoute }}" style="width:100%;text-align:left;background:#fff;border:2px solid #e5e7eb;border-radius:16px;padding:14px 18px;cursor:pointer;font-family:inherit" style-hover="background:#f9fafb">
+            <button onClick="{{ landingGoRoute }}" style="width:100%;text-align:left;background:#fff;border:2px solid transparent;border-radius:16px;padding:14px 18px;cursor:pointer;font-family:inherit" style-hover="background:#faf5ff;border-color:#1A1040">
               <span style="display:block;font-family:Poppins,sans-serif;font-size:15px;font-weight:700;color:#1A1040">Ver mi ruta de conocimiento en {{ landingRouteLabel }}</span>
               <span style="display:block;font-size:12px;color:#6b7280;margin-top:2px">Tu ruta de conocimiento, creada el {{ landingRouteCreatedLabel }}.</span>
             </button>
-            <button onClick="{{ landingCreateRoute }}" style="width:100%;text-align:left;background:#fff;border:2px dashed #d1d5db;border-radius:16px;padding:14px 18px;cursor:pointer;font-family:inherit" style-hover="background:#f9fafb;border-color:#7B68EE">
+            <button onClick="{{ landingCreateRoute }}" style="width:100%;text-align:left;background:#fff;border:2px dashed #c7bffa;border-radius:16px;padding:14px 18px;cursor:pointer;font-family:inherit" style-hover="background:#faf5ff;border-color:#1A1040">
               <span style="display:block;font-family:Poppins,sans-serif;font-size:15px;font-weight:700;color:#4b5563">+ Crear una nueva ruta de conocimiento</span>
               <span style="display:block;font-size:12px;color:#6b7280;margin-top:2px">Explora otra especialización, sin perder la que ya tienes.</span>
             </button>
@@ -498,59 +498,98 @@
               </button>
             </sc-if>
 
-            <!-- ===== Tu avance: dona + línea de promedios ===== -->
-            <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1);display:flex;gap:28px;flex-wrap:wrap;align-items:center">
-              <div style="display:flex;align-items:center;gap:16px">
-                <div style="position:relative;width:96px;height:96px;flex-shrink:0">
-                  <svg viewBox="0 0 100 100" width="96" height="96">
-                    <circle cx="50" cy="50" r="42" fill="none" stroke="#f3f4f6" stroke-width="10"></circle>
-                    <circle cx="50" cy="50" r="42" fill="none" stroke="#7B68EE" stroke-width="10" stroke-linecap="round" stroke-dasharray="{{ dashDonutDash }}" transform="rotate(-90 50 50)"></circle>
-                  </svg>
-                  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
-                    <span style="font-family:Poppins,sans-serif;font-size:18px;font-weight:800;color:#1A1040">{{ dashDonutPct }}</span>
+            <!-- ===== Tu avance: resumen general + 3 donas + línea de promedios =====
+                 (30 ago 2026, a pedido explícito: antes la primera dona cambiaba
+                 de significado al terminar "Crea tu Ruta" — antes de eso medía
+                 esos 4 pasos, después medía el total de 14 — y eso parecía
+                 contradecir el 100% que ya mostraba el sidebar para esa misma
+                 ruta. Ahora "Tu avance en CoRA" es siempre el resumen general,
+                 fijo arriba, y cada dona de abajo mide siempre lo mismo: Crea
+                 tu Ruta, Mi Perfil y Acompañamiento, cada una con su propio %
+                 que nunca cambia de sentido. -->
+            <div style="background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+                <p style="font-size:12px;font-weight:700;color:#1A1040;margin:0">Tu avance en CoRA</p>
+                <span style="font-family:Poppins,sans-serif;font-size:16px;font-weight:800;color:#7B68EE">{{ dashOverallPct }}</span>
+              </div>
+              <div style="height:8px;background:#f3f4f6;border-radius:9999px;overflow:hidden;margin-bottom:20px">
+                <div style="height:100%;background:#7B68EE;border-radius:9999px;transition:all .7s;width:{{ dashOverallPct }}"></div>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(3,minmax(140px,1fr));gap:16px;padding-top:16px;border-top:1px solid #f3f4f6;margin-bottom:20px">
+                <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px">
+                  <div style="position:relative;width:80px;height:80px">
+                    <svg viewBox="0 0 100 100" width="80" height="80">
+                      <circle cx="50" cy="50" r="42" fill="none" stroke="#f3f4f6" stroke-width="10"></circle>
+                      <circle cx="50" cy="50" r="42" fill="none" stroke="#7B68EE" stroke-width="10" stroke-linecap="round" stroke-dasharray="{{ dashRutaDonutDash }}" transform="rotate(-90 50 50)"></circle>
+                    </svg>
+                    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+                      <span style="font-family:Poppins,sans-serif;font-size:15px;font-weight:800;color:#1A1040">{{ dashRutaDonutPct }}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <p style="font-size:12px;font-weight:700;color:#1A1040;margin:0 0 6px">Crea tu Ruta</p>
+                    <sc-if value="{{ dashNotReady }}" hint-placeholder-val="{{ true }}">
+                      <button onClick="{{ dashNextStepGo }}" style="font-size:12px;font-weight:600;color:#fff;background:#7B68EE;border:0;border-radius:9999px;padding:7px 14px;cursor:pointer;font-family:inherit" style-hover="background:#6A58DC">Sigue con: {{ dashNextStepLabel }} →</button>
+                    </sc-if>
+                    <sc-if value="{{ dashRouteReady }}" hint-placeholder-val="{{ false }}">
+                      <span style="font-size:11px;font-weight:700;color:#15803d;background:#dcfce7;border-radius:9999px;padding:4px 10px">✓ Completa</span>
+                    </sc-if>
                   </div>
                 </div>
-                <div>
-                  <p style="font-size:12px;font-weight:700;color:#1A1040;margin:0 0 6px">{{ dashDonutLabel }}</p>
-                  <sc-if value="{{ dashNotReady }}" hint-placeholder-val="{{ true }}">
-                    <button onClick="{{ dashNextStepGo }}" style="font-size:12px;font-weight:600;color:#fff;background:#7B68EE;border:0;border-radius:9999px;padding:7px 14px;cursor:pointer;font-family:inherit" style-hover="background:#6A58DC">Sigue con: {{ dashNextStepLabel }} →</button>
-                  </sc-if>
-                  <sc-if value="{{ dashRouteReady }}" hint-placeholder-val="{{ false }}">
-                    <span style="font-size:11px;font-weight:700;color:#15803d;background:#dcfce7;border-radius:9999px;padding:4px 10px">✓ Crea tu Ruta completa</span>
-                  </sc-if>
-                </div>
-              </div>
-              <!-- Segunda dona, "Mi Perfil" (29 ago 2026, a pedido explícito):
-                   mismo trato visual que "Armando tu ruta de conocimiento",
-                   sobre Mi Perfil CoRA / Horizonte / CV. Apagada y sin botón
-                   mientras la ruta no esté lista (esos 3 pasos ni se pueden
-                   abrir todavía). -->
-              <div style="{{ dashPerfilWrapStyle }}">
-                <div style="position:relative;width:96px;height:96px;flex-shrink:0">
-                  <svg viewBox="0 0 100 100" width="96" height="96">
-                    <circle cx="50" cy="50" r="42" fill="none" stroke="#f3f4f6" stroke-width="10"></circle>
-                    <circle cx="50" cy="50" r="42" fill="none" stroke="#9333ea" stroke-width="10" stroke-linecap="round" stroke-dasharray="{{ dashPerfilDonutDash }}" transform="rotate(-90 50 50)"></circle>
-                  </svg>
-                  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
-                    <span style="font-family:Poppins,sans-serif;font-size:18px;font-weight:800;color:#1A1040">{{ dashPerfilDonutPct }}</span>
+                <!-- Segunda dona, "Mi Perfil": Mi Perfil CoRA / Horizonte / CV.
+                     Apagada y sin botón mientras la ruta no esté lista (esos 3
+                     pasos ni se pueden abrir todavía). -->
+                <div style="{{ dashPerfilWrapStyle }}">
+                  <div style="position:relative;width:80px;height:80px">
+                    <svg viewBox="0 0 100 100" width="80" height="80">
+                      <circle cx="50" cy="50" r="42" fill="none" stroke="#f3f4f6" stroke-width="10"></circle>
+                      <circle cx="50" cy="50" r="42" fill="none" stroke="#9333ea" stroke-width="10" stroke-linecap="round" stroke-dasharray="{{ dashPerfilDonutDash }}" transform="rotate(-90 50 50)"></circle>
+                    </svg>
+                    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+                      <span style="font-family:Poppins,sans-serif;font-size:15px;font-weight:800;color:#1A1040">{{ dashPerfilDonutPct }}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <p style="font-size:12px;font-weight:700;color:#1A1040;margin:0 0 6px">{{ dashPerfilLabel }}</p>
+                    <sc-if value="{{ dashPerfilLocked }}" hint-placeholder-val="{{ false }}">
+                      <p style="font-size:11px;color:#9ca3af;margin:0">Se activa al completar tu ruta</p>
+                    </sc-if>
+                    <sc-if value="{{ !dashPerfilLocked }}" hint-placeholder-val="{{ true }}">
+                      <sc-if value="{{ dashPerfilNotReady }}" hint-placeholder-val="{{ true }}">
+                        <button onClick="{{ dashPerfilNextStepGo }}" style="font-size:12px;font-weight:600;color:#fff;background:#9333ea;border:0;border-radius:9999px;padding:7px 14px;cursor:pointer;font-family:inherit" style-hover="background:#7e22ce">Sigue con: {{ dashPerfilNextStepLabel }} →</button>
+                      </sc-if>
+                      <sc-if value="{{ dashPerfilReady }}" hint-placeholder-val="{{ false }}">
+                        <span style="font-size:11px;font-weight:700;color:#6b21a8;background:#f3e8ff;border-radius:9999px;padding:4px 10px">✓ Completo</span>
+                      </sc-if>
+                    </sc-if>
                   </div>
                 </div>
-                <div>
-                  <p style="font-size:12px;font-weight:700;color:#1A1040;margin:0 0 6px">{{ dashPerfilLabel }}</p>
-                  <sc-if value="{{ dashPerfilLocked }}" hint-placeholder-val="{{ false }}">
-                    <p style="font-size:11px;color:#9ca3af;margin:0">Se activa al completar tu ruta</p>
-                  </sc-if>
-                  <sc-if value="{{ !dashPerfilLocked }}" hint-placeholder-val="{{ true }}">
-                    <sc-if value="{{ dashPerfilNotReady }}" hint-placeholder-val="{{ true }}">
-                      <button onClick="{{ dashPerfilNextStepGo }}" style="font-size:12px;font-weight:600;color:#fff;background:#9333ea;border:0;border-radius:9999px;padding:7px 14px;cursor:pointer;font-family:inherit" style-hover="background:#7e22ce">Sigue con: {{ dashPerfilNextStepLabel }} →</button>
+                <!-- Tercera dona, "Acompañamiento": se activa al terminar Mi
+                     Perfil (su REQ real es "cv", el último de esos 3 pasos).
+                     El % es cuántas actividades de tu plan semanal ya
+                     marcaste como hechas. -->
+                <div style="{{ dashAcompWrapStyle }}">
+                  <div style="position:relative;width:80px;height:80px">
+                    <svg viewBox="0 0 100 100" width="80" height="80">
+                      <circle cx="50" cy="50" r="42" fill="none" stroke="#f3f4f6" stroke-width="10"></circle>
+                      <circle cx="50" cy="50" r="42" fill="none" stroke="#15803d" stroke-width="10" stroke-linecap="round" stroke-dasharray="{{ dashAcompDonutDash }}" transform="rotate(-90 50 50)"></circle>
+                    </svg>
+                    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+                      <span style="font-family:Poppins,sans-serif;font-size:15px;font-weight:800;color:#1A1040">{{ dashAcompDonutPct }}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <p style="font-size:12px;font-weight:700;color:#1A1040;margin:0 0 6px">Acompañamiento</p>
+                    <sc-if value="{{ dashAcompLocked }}" hint-placeholder-val="{{ true }}">
+                      <p style="font-size:11px;color:#9ca3af;margin:0">Se activa al completar Mi Perfil</p>
                     </sc-if>
-                    <sc-if value="{{ dashPerfilReady }}" hint-placeholder-val="{{ false }}">
-                      <span style="font-size:11px;font-weight:700;color:#6b21a8;background:#f3e8ff;border-radius:9999px;padding:4px 10px">✓ Explora CoRA completo</span>
+                    <sc-if value="{{ !dashAcompLocked }}" hint-placeholder-val="{{ false }}">
+                      <button onClick="{{ dashAcompGo }}" style="font-size:11px;font-weight:600;color:#fff;background:#15803d;border:0;border-radius:9999px;padding:7px 14px;cursor:pointer;font-family:inherit" style-hover="background:#166534">{{ dashAcompLabel }}</button>
                     </sc-if>
-                  </sc-if>
+                  </div>
                 </div>
               </div>
-              <div style="flex:1;min-width:220px">
+              <div style="padding-top:16px;border-top:1px solid #f3f4f6">
                 <p style="font-size:12px;font-weight:700;color:#1A1040;margin:0 0 8px">📈 Tu promedio por ciclo</p>
                 <svg viewBox="0 0 300 100" width="100%" height="90" style="display:block;overflow:visible">
                   <polygon points="{{ dashGradeArea }}" fill="#7B68EE" fill-opacity="0.12"></polygon>
@@ -1067,7 +1106,7 @@
           <div style="display:flex;align-items:center;gap:12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:16px;padding:16px 20px;margin-bottom:16px">
             <dc-import name="Icon" i="check-circle" s="20" c="#22c55e" hint-size="20px,20px"></dc-import>
             <div>
-              <h1 style="font-family:Poppins,sans-serif;font-size:18px;font-weight:700;color:#15803d;margin:0 0 2px">Así queda tu malla con "{{ mallaCareer }}"</h1>
+              <h1 style="font-family:Poppins,sans-serif;font-size:18px;font-weight:700;color:#15803d;margin:0 0 2px">Así queda tu malla con la ruta de "{{ mallaCareer }}"</h1>
               <p style="font-size:12px;color:#15803d;margin:0">Revisa qué asignaturas añade esta ruta de conocimiento antes de seguir al Ecosistema CIE.</p>
             </div>
             <dc-import name="Tip" text="Las asignaturas de tu ruta de conocimiento se ven con borde morado grueso, fondo lleno y la insignia '🧭 Tu ruta': mucho más resaltadas que el resto. Cada ciclo tiene un máximo de 25 créditos de malla curricular." hint-size="14px,14px"></dc-import>
@@ -1295,7 +1334,7 @@
                   <dc-import name="Icon" i="clock" s="14" c="#9ca3af" hint-size="14px,14px"></dc-import>
                   <p style="font-size:12px;color:#6b7280;margin:0">18 preguntas · menos de 3 minutos · puedes hacerlo ahora o después</p>
                 </div>
-                <button onClick="{{ discoverProfile }}" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 0;border:0;border-radius:16px;font-size:14px;font-weight:700;color:#fff;background:#7B68EE;cursor:pointer;font-family:inherit;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff;margin-bottom:10px" style-hover="background:#6A58DC">Descubrir mi perfil <dc-import name="Icon" i="chevron-right" s="14" c="#fff" hint-size="14px,14px"></dc-import></button>
+                <button onClick="{{ discoverProfile }}" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 0;border:0;border-radius:16px;font-size:14px;font-weight:700;color:#fff;background:#7B68EE;cursor:pointer;font-family:inherit;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff;margin-bottom:10px" style-hover="background:#6A58DC">Descubrir Mi Perfil CoRA <dc-import name="Icon" i="chevron-right" s="14" c="#fff" hint-size="14px,14px"></dc-import></button>
                 <button onClick="{{ deferProfile }}" style="width:100%;padding:8px 0;border:0;background:none;font-size:12px;font-weight:500;color:#9ca3af;cursor:pointer;font-family:inherit;margin-bottom:16px" style-hover="color:#6b7280">Lo hago después</button>
                 <p style="font-size:12px;color:#6b7280;text-align:center;margin:0">Tu ruta de conocimiento ya está guardada. El perfil de identidad la enriquece, pero no la cambia.</p>
               </div>
@@ -1358,8 +1397,8 @@
                   <dc-import name="Icon" i="star" s="18" c="#ffffff" hint-size="18px,18px"></dc-import>
                 </div>
                 <div>
-                  <h2 style="font-family:Poppins,sans-serif;font-size:16px;font-weight:700;color:#1A1040;margin:0 0 2px">Lo que CoRA te recomienda</h2>
-                  <p style="font-size:13px;color:#6b7280;margin:0;line-height:1.6">{{ ecoRecoCount }} propuestas elegidas a partir de tu ruta de conocimiento, tus notas y el horizonte que has visto.</p>
+                  <h2 style="font-family:Poppins,sans-serif;font-size:20px;line-height:28px;font-weight:700;color:#1A1040;margin:0 0 4px">Lo que CoRA te recomienda</h2>
+                  <p style="font-size:13px;color:#6b7280;margin:0;line-height:1.6">{{ ecoRecoCount }} propuestas elegidas de todas las unidades del Ecosistema CIE, pensadas para fortalecer tu perfil de egreso según tu cuestionario inicial.</p>
                 </div>
               </div>
               <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:20px">
@@ -1966,7 +2005,7 @@
                   <dc-import name="Icon" i="clock" s="14" c="#9ca3af" hint-size="14px,14px"></dc-import>
                   <p style="font-size:12px;color:#6b7280;margin:0">18 preguntas · menos de 3 minutos · puedes hacerlo ahora o después</p>
                 </div>
-                <button onClick="{{ discoverProfile }}" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 0;border:0;border-radius:16px;font-size:14px;font-weight:700;color:#fff;background:#7B68EE;cursor:pointer;font-family:inherit;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff;margin-bottom:10px" style-hover="background:#6A58DC">Descubrir mi perfil <dc-import name="Icon" i="chevron-right" s="14" c="#fff" hint-size="14px,14px"></dc-import></button>
+                <button onClick="{{ discoverProfile }}" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 0;border:0;border-radius:16px;font-size:14px;font-weight:700;color:#fff;background:#7B68EE;cursor:pointer;font-family:inherit;box-shadow:0 10px 15px -3px #e9d5ff,0 4px 6px -4px #e9d5ff;margin-bottom:10px" style-hover="background:#6A58DC">Descubrir Mi Perfil CoRA <dc-import name="Icon" i="chevron-right" s="14" c="#fff" hint-size="14px,14px"></dc-import></button>
                 <button onClick="{{ deferProfile }}" style="width:100%;padding:8px 0;border:0;background:none;font-size:12px;font-weight:500;color:#9ca3af;cursor:pointer;font-family:inherit;margin-bottom:16px" style-hover="color:#6b7280">Lo hago después</button>
                 <p style="font-size:12px;color:#6b7280;text-align:center;margin:0">Tu ruta de conocimiento ya está guardada. El perfil de identidad la enriquece, pero no la cambia.</p>
               </div>
@@ -5312,9 +5351,15 @@ class Component extends DCLogic {
        por login/registro: "Crear mi primera ruta de conocimiento",
        "Explorar CoRA" y "Decidir después" entran directo a la plataforma
        (LAND-01: explorar es libre, registrarse es aparte). */
-    v.landingHasRoute = !!s.selectedRoute;
-    v.landingNoRoute = !s.selectedRoute;
-    v.landingRouteLabel = s.selectedRoute || "";
+    /* ?regreso en la URL (solo para revisar el diseño): simula un estudiante
+       que ya se registró y ya eligió una ruta, sin tener que recorrer todo el
+       flujo a mano cada vez. No cambia nada del comportamiento real: si el
+       estudiante ya trae s.selectedRoute/s.registered de verdad (porque
+       avanzó en esta misma sesión), eso manda igual. */
+    const previewReturning = typeof window !== "undefined" && /[?&]regreso\b/.test(window.location.search);
+    v.landingHasRoute = !!s.selectedRoute || (previewReturning && !s.selectedRoute && s.authStep === "landing");
+    v.landingNoRoute = !v.landingHasRoute;
+    v.landingRouteLabel = s.selectedRoute || (v.landingHasRoute ? this.ROUTES[0].name : "");
     /* Fecha de creación de la ruta — dato fijo de ejemplo, como el resto de
        STUDENT/ROUTES: hoy no se guarda cuándo se confirmó una ruta (ver
        v.doConfirm). En cuanto exista ese dato real, debería salir de ahí. */
@@ -5322,7 +5367,7 @@ class Component extends DCLogic {
     v.landingCreateRoute = () => this.setState({ authStep:"done", section:"formulario", formStarted:false });
     v.landingGoInicio = () => this.setState({ authStep:"done", section:"inicio" });
     v.landingGoRoute = () => this.setState({ authStep:"done", section:"malla" });
-    v.registered = s.registered;
+    v.registered = s.registered || (previewReturning && s.authStep === "landing");
     /* Maqueta sin autenticación real: estos dos enlaces no cambian ninguna
        contraseña de verdad — solo explican qué haría cada uno en la versión
        final, para que quede claro que no es un enlace roto. */
@@ -5653,14 +5698,19 @@ class Component extends DCLogic {
     v.dashRouteReady = dashConfigDone === dashConfigIds.length;
     v.dashNotReady = !v.dashRouteReady;
 
-    /* Donut: antes de terminar la ruta, muestra ESE avance (4 pasos); una
-       vez lista, cambia a mostrar el avance general (14 pasos) — para que
-       se sienta que "sube de nivel", no que se queda pegado en 100%. */
+    /* Resumen general (30 ago 2026, a pedido explícito): antes esta misma
+       dona cambiaba de significado — 4 pasos de "Crea tu Ruta" mientras no
+       estaba lista, avance total de los 14 una vez lista — y eso hacía que
+       el 100% del sidebar y el % de acá parecieran contradecirse. Ahora
+       "Tu avance en CoRA" es siempre el total (14 pasos), fijo desde el
+       principio, y cada dona de abajo mide siempre lo mismo (nunca cambia
+       de significado). */
     const R_DASH = 42, C_DASH = 2 * Math.PI * R_DASH;
-    const donutPct = v.dashRouteReady ? (s.completed.length / 14) : (dashConfigDone / dashConfigIds.length);
-    v.dashDonutDash = (donutPct * C_DASH).toFixed(1) + " " + C_DASH.toFixed(1);
-    v.dashDonutPct = Math.round(donutPct * 100) + "%";
-    v.dashDonutLabel = v.dashRouteReady ? "Tu avance en CoRA" : "Armando tu ruta de conocimiento";
+    const overallPct = s.completed.length / 14;
+    v.dashOverallPct = Math.round(overallPct * 100) + "%";
+    const rutaPct = dashConfigDone / dashConfigIds.length;
+    v.dashRutaDonutDash = (rutaPct * C_DASH).toFixed(1) + " " + C_DASH.toFixed(1);
+    v.dashRutaDonutPct = Math.round(rutaPct * 100) + "%";
     /* Siguiente paso pendiente de "Crea tu Ruta", para el CTA del estado
        inicial — mismo criterio que "nextFlow" en Mi Progreso. */
     const nextConfigId = dashConfigIds.find(id => !s.completed.includes(id));
@@ -5679,7 +5729,7 @@ class Component extends DCLogic {
     v.dashPerfilReady = perfilDone === perfilIds.length;
     v.dashPerfilNotReady = !v.dashPerfilReady;
     v.dashPerfilLocked = !v.dashRouteReady;
-    v.dashPerfilWrapStyle = { display:"flex", alignItems:"center", gap:"16px", opacity: v.dashPerfilLocked ? .5 : 1 };
+    v.dashPerfilWrapStyle = { display:"flex", flexDirection:"column", alignItems:"center", textAlign:"center", gap:"10px", opacity: v.dashPerfilLocked ? .5 : 1 };
     const perfilPct = perfilDone / perfilIds.length;
     v.dashPerfilDonutDash = (perfilPct * C_DASH).toFixed(1) + " " + C_DASH.toFixed(1);
     v.dashPerfilDonutPct = Math.round(perfilPct * 100) + "%";
@@ -5687,6 +5737,23 @@ class Component extends DCLogic {
     const nextPerfilId = perfilIds.find(id => !s.completed.includes(id));
     v.dashPerfilNextStepLabel = nextPerfilId ? this.NAMES[nextPerfilId] : "";
     v.dashPerfilNextStepGo = () => this.nav(nextPerfilId || "perfil-cora");
+
+    /* Tercera dona, "Acompañamiento" (30 ago 2026, a pedido explícito):
+       Acompañamiento solo se desbloquea al terminar Mi Perfil CoRA/Horizonte/CV
+       (su REQ real es "cv", el último de esos tres), así que se apaga con el
+       mismo criterio que dashPerfilLocked usa para sí misma. El avance real
+       es cuántas actividades de tu plan semanal (s.accWeeks) ya marcaste
+       hechas (s.accDone) — no un paso más del Recomendador, por eso no suma
+       al total de 14 de "Tu avance en CoRA". */
+    v.dashAcompLocked = !v.dashPerfilReady;
+    const acompTotal = s.accWeeks.length;
+    const acompDone = s.accWeeks.filter(a => s.accDone.includes(a.id)).length;
+    const acompPct = acompTotal ? acompDone / acompTotal : 0;
+    v.dashAcompWrapStyle = { display:"flex", flexDirection:"column", alignItems:"center", textAlign:"center", gap:"10px", opacity: v.dashAcompLocked ? .5 : 1 };
+    v.dashAcompDonutDash = (acompPct * C_DASH).toFixed(1) + " " + C_DASH.toFixed(1);
+    v.dashAcompDonutPct = Math.round(acompPct * 100) + "%";
+    v.dashAcompLabel = acompDone + " de " + acompTotal + " actividades listas";
+    v.dashAcompGo = () => this.nav("acompanamiento");
 
     /* Línea de historial: promedio POR CICLO (no las 9 notas sueltas, que
        se ven ruidosas) — 3 puntos reales de this.TAKEN. Disponible en los
